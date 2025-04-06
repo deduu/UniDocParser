@@ -66,9 +66,10 @@ async def extract_pdf(
             }
         )
 
-@router.get("/download/{filename}")
+@router.get("/download/{filename}", name="download_file")
 async def download_file(filename: str):
-    file_path = os.path.join(settings.OUTPUT_DIR, filename)
+    file_path = os.path.join("outputs", filename)
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="File not found")
     return FileResponse(file_path, media_type="application/octet-stream", filename=filename)
+

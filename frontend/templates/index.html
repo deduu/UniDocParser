@@ -4,54 +4,307 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Extraction Service</title>
+    <!-- Tailwind CSS & FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="/static/css/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/markdown.min.js"></script>
+
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
-    <header class="bg-blue-600 text-white p-4 shadow-md">
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- HEADER -->
+    <header class="bg-gradient-to-r from-blue-700 to-blue-500 text-white p-4 shadow-lg">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">PDF Extraction Service</h1>
+            <div class="flex items-center">
+                <i class="fas fa-file-pdf text-2xl mr-3"></i>
+                <h1 class="text-2xl font-bold">PDF Extraction Pro</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#" class="hover:text-blue-200 transition">Home</a></li>
+                    <li><a href="#" class="hover:text-blue-200 transition">Documentation</a></li>
+                    <li><a href="#" class="hover:text-blue-200 transition">Contact</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
-
-    <main class="container mx-auto mt-8 flex-grow">
-        <div class="bg-white p-8 rounded-lg shadow-md">
-            <h2 class="text-xl font-semibold mb-4">Upload PDF for Extraction</h2>
-            
-            <form id="pdf-upload-form" class="space-y-4">
-                <div class="flex items-center justify-center w-full">
-                    <label class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                            <svg class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                            </svg>
-                            <p class="mb-2 text-sm text-gray-500">
-                                <span class="font-semibold">Click to upload</span> or drag and drop
-                            </p>
-                            <p class="text-xs text-gray-500">PDF files only</p>
+    
+    <!-- MAIN CONTENT -->
+    <main class="container mx-auto my-8 flex-grow px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Upload Panel -->
+            <div class="col-span-1 bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-gray-50 p-4 border-b">
+                    <h2 class="text-xl font-semibold text-gray-800">
+                        <i class="fas fa-upload mr-2 text-blue-600"></i>Upload PDF
+                    </h2>
+                </div>
+                
+                <div class="p-6">
+                    <form id="pdf-upload-form" class="space-y-4">
+                        <div class="flex items-center justify-center w-full">
+                            <label class="flex flex-col items-center justify-center w-full h-52 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-blue-50 transition duration-300 ease-in-out">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <i class="fas fa-cloud-upload-alt text-4xl mb-3 text-blue-500"></i>
+                                    <p class="mb-2 text-sm text-gray-700">
+                                        <span class="font-semibold">Click to upload</span> or drag and drop
+                                    </p>
+                                    <p class="text-xs text-gray-500">PDF files only (Max: 20MB)</p>
+                                    <p id="file-name" class="mt-2 text-sm text-blue-600 hidden"></p>
+                                </div>
+                                <input id="pdf-file" type="file" class="hidden" accept=".pdf" />
+                            </label>
                         </div>
-                        <input id="pdf-file" type="file" class="hidden" accept=".pdf" />
-                    </label>
+                        
+                        <div id="extraction-options" class="hidden">
+                            <h3 class="text-lg font-medium text-gray-700 mb-2">Extraction Options</h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="flex items-center space-x-2">
+                                        <input type="checkbox" id="extract-text" checked class="form-checkbox text-blue-600">
+                                        <span>Extract Text</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="flex items-center space-x-2">
+                                        <input type="checkbox" id="extract-tables" checked class="form-checkbox text-blue-600">
+                                        <span>Extract Tables</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="flex items-center space-x-2">
+                                        <input type="checkbox" id="extract-images" class="form-checkbox text-blue-600">
+                                        <span>Extract Images</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-700">Page Range:</label>
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <input type="text" id="page-range" placeholder="e.g., 1-5,7,9-10" class="form-input text-sm py-1 px-2 border rounded w-full">
+                                        <span class="text-xs text-gray-500">Optional</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button id="extract-button" type="button" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded w-full transition duration-200 flex justify-center items-center">
+                                <i class="fas fa-cogs mr-2"></i>
+                                Extract Content
+                            </button>
+                        </div>
+                        
+                        <div id="upload-progress" class="hidden space-y-2">
+                            <div class="flex justify-between text-xs text-gray-600">
+                                <span id="progress-label">Processing...</span>
+                                <span id="progress-percentage">0%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Preview Panel -->
+            <div class="col-span-1 lg:col-span-2">
+                <div id="result-tabs" class="hidden">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="border-b">
+                            <nav class="flex" aria-label="Tabs">
+                                <button id="tab-summary" class="tab-button text-blue-600 border-b-2 border-blue-600 py-4 px-6 font-medium">
+                                    <i class="fas fa-list-ul mr-2"></i>Summary
+                                </button>
+                                <button id="tab-json" class="tab-button text-gray-500 hover:text-gray-700 py-4 px-6 font-medium">
+                                    <i class="fas fa-code mr-2"></i>JSON
+                                </button>
+                                <button id="tab-markdown" class="tab-button text-gray-500 hover:text-gray-700 py-4 px-6 font-medium">
+                                    <i class="fas fa-file-alt mr-2"></i>Markdown
+                                </button>
+                                <button id="tab-preview" class="tab-button text-gray-500 hover:text-gray-700 py-4 px-6 font-medium">
+                                    <i class="fas fa-eye mr-2"></i>Preview
+                                </button>
+                            </nav>
+                        </div>
+                        
+                        <!-- Tab Content -->
+                        <div class="p-6">
+                            <div id="content-summary" class="tab-content">
+                                <div class="space-y-4">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+                                            <i class="fas fa-file-pdf text-blue-600 text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h3 id="file-title" class="text-lg font-medium">Document.pdf</h3>
+                                            <p id="file-details" class="text-sm text-gray-500">5 pages • 1.2 MB</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div class="bg-gray-50 p-4 rounded-lg">
+                                            <div class="text-sm text-gray-500">Pages Extracted</div>
+                                            <div id="pages-count" class="text-2xl font-bold text-gray-800">0</div>
+                                        </div>
+                                        <div class="bg-gray-50 p-4 rounded-lg">
+                                            <div class="text-sm text-gray-500">Text Blocks</div>
+                                            <div id="text-blocks-count" class="text-2xl font-bold text-gray-800">0</div>
+                                        </div>
+                                        <div class="bg-gray-50 p-4 rounded-lg">
+                                            <div class="text-sm text-gray-500">Tables</div>
+                                            <div id="tables-count" class="text-2xl font-bold text-gray-800">0</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="extraction-time" class="text-sm text-gray-500">
+                                        Extraction completed in 0 seconds
+                                    </div>
+                                    
+                                    <div class="pt-4 flex space-x-3">
+                                        <a id="download-json" href="#" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition inline-flex items-center">
+                                            <i class="fas fa-download mr-2"></i> Download JSON
+                                        </a>
+                                        <a id="download-markdown" href="#" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded transition inline-flex items-center">
+                                            <i class="fas fa-download mr-2"></i> Download Markdown
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="content-json" class="tab-content hidden">
+                                <div class="flex justify-between mb-2">
+                                    <div>
+                                        <button id="copy-json" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 py-1 px-3 rounded inline-flex items-center">
+                                            <i class="far fa-copy mr-1"></i> Copy
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <button id="expand-json" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 py-1 px-3 rounded mr-2">Expand All</button>
+                                        <button id="collapse-json" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 py-1 px-3 rounded">Collapse All</button>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-50 rounded-lg p-4 overflow-x-auto">
+                                    <pre><code id="json-code" class="language-json">// JSON content will appear here</code></pre>
+                                </div>
+                            </div>
+                            
+                            <div id="content-markdown" class="tab-content hidden">
+                                <div class="flex justify-between mb-2">
+                                    <button id="copy-markdown" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 py-1 px-3 rounded inline-flex items-center">
+                                        <i class="far fa-copy mr-1"></i> Copy
+                                    </button>
+                                </div>
+                                <div class="bg-gray-50 rounded-lg p-4 overflow-x-auto">
+                                    <pre><code id="markdown-code" class="language-markdown"><!-- Markdown content will appear here --></code></pre>
+                                </div>
+                            </div>
+                            
+                            <div id="content-preview" class="tab-content hidden">
+                                <div class="bg-white border rounded-lg p-6 markdown-preview">
+                                    <div id="markdown-preview">
+                                        <!-- Rendered markdown preview will appear here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div id="upload-progress" class="hidden w-full bg-gray-200 rounded-full h-2.5">
-                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+                <!-- Initial help panel -->
+                <div id="help-panel" class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4">How to Use PDF Extraction Pro</h2>
+                        
+                        <div class="space-y-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 text-blue-600 mr-4">
+                                    1
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-gray-800">Upload your PDF</h3>
+                                    <p class="text-gray-600">Drag and drop your PDF file or click to browse your files.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex">
+                                <div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 text-blue-600 mr-4">
+                                    2
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-gray-800">Configure extraction options</h3>
+                                    <p class="text-gray-600">Choose what content to extract and specify page ranges if needed.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex">
+                                <div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 text-blue-600 mr-4">
+                                    3
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-gray-800">Review and download</h3>
+                                    <p class="text-gray-600">Examine the extracted content in different formats and download what you need.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-lightbulb text-yellow-400 text-xl"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <h3 class="text-sm font-medium text-blue-800">Pro Tip</h3>
+                                    <p class="text-sm text-blue-700">For best results, ensure your PDF has clear text. Our service uses OCR for scanned documents, but quality may vary.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div id="extraction-results" class="mt-4 hidden">
-                    <h3 class="text-lg font-semibold mb-2">Extraction Results</h3>
-                    <div id="result-content" class="bg-gray-50 p-4 rounded-lg"></div>
-                </div>
-            </form>
+            </div>
         </div>
     </main>
-
-    <footer class="bg-gray-800 text-white p-4 mt-8">
-        <div class="container mx-auto text-center">
-            <p>&copy; 2024 PDF Extraction Service. All rights reserved.</p>
+    
+    <!-- FOOTER -->
+    <footer class="bg-gray-800 text-white p-6">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-3">PDF Extraction Pro</h3>
+                    <p class="text-gray-300 text-sm">Advanced PDF content extraction with structured output in multiple formats.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-3">Quick Links</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-300 hover:text-white">Home</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Documentation</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">API Reference</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-3">Contact</h3>
+                    <p class="text-gray-300 text-sm">Have questions? <a href="#" class="text-blue-300">support@pdfextraction.pro</a></p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-6 pt-4 text-center text-sm text-gray-400">
+                <p>&copy; 2024 PDF Extraction Pro. All rights reserved.</p>
+            </div>
         </div>
     </footer>
-
-    <script src="/static/js/app.js"></script>
+    
+    <!-- Your external script -->
+    <script>
+        // Generate a URL with a dummy filename, then remove that part
+        const DOWNLOAD_URL_BASE = "{{ url_for('download_file', filename='placeholder') }}".replace('placeholder', '');
+      </script>
+      <script src="/static/js/app.js"></script>
+      
+  
+      
 </body>
 </html>

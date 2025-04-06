@@ -5,27 +5,47 @@ from PIL import Image
 from backend.services.model_manager import YOLO_MODEL, VLM_PIPELINE
 
 # Extract figures from pages using the preloaded YOLO model
+import cv2
+import os
+import supervision as sv
+from PIL import Image
+from backend.services.model_manager import YOLO_MODEL
+
 def extract_figures(pages):
     for j, page in enumerate(pages):
-        image = cv2.imread(page['image'])
+        image = cv2.imread(page['image'])  # BGR
         results = YOLO_MODEL(image, conf=0.35, iou=0.7)[0]
         detections = sv.Detections.from_ultralytics(results)
+
         for i, class_name in enumerate(detections.data['class_name']):
             if class_name == 'figure':
                 x1, y1, x2, y2 = map(int, detections.xyxy[i])
+                # Crop the figure from the original BGR image
                 section = image[y1:y2, x1:x2]
-                output_filename = os.path.join("backend", "img", "figures", f"page_{j}_figure_{i}.png")
-                cv2.imwrite(output_filename, section)
+
+                # Convert BGR cropped image to RGB for PIL
+                section_rgb = cv2.cvtColor(section, cv2.COLOR_BGR2RGB)
+                pil_image = Image.fromarray(section_rgb)
+
+                # Save to disk for cross-checking
+                output_filename = os.path.join(
+                    "backend", "img", "figures", f"page_{j}_figure_{i}.png"
+                )
+                cv2.imwrite(output_filename, section)  # Writes the BGR image
+
+                # Store both the in-memory PIL image and the file path
                 metadata = {
                     "file_path": output_filename,
                     "bbox": [x1, y1, x2, y2],
                     "name": "",
                     "type": "",
                     "data": "",
-                    "description": ""
+                    "description": "",
+                    "pil_image": pil_image,  # in-memory version for immediate usage
                 }
                 page["figures"].append(metadata)
     return pages
+
 
 # Prompts for VLM processing
 SYSTEM_PROMPT = (
@@ -48,9 +68,9 @@ PROMPT_TEMPLATE = (
     "- Short Description: …\n"
 )
 
-def fig_to_table(image_path):
-    # Load the image using PIL and convert it to RGB
-    image = Image.open(image_path).convert("RGB")
+def fig_to_table(pil_image):
+    # pil_image is already a PIL image in RGB
+    
     messages = [
         {
             "role": "system",
@@ -61,14 +81,18 @@ def fig_to_table(image_path):
         {
             "role": "user",
             "content": [
-                {"type": "image", "image": image},
+                {"type": "image", "image": pil_image},  # in-memory PIL image
                 {"type": "text", "text": PROMPT_TEMPLATE}
             ]
         }
     ]
-    output = VLM_PIPELINE(text=messages, max_new_tokens=200)
+    
+    output = VLM_PIPELINE(text=messages, max_new_tokens=256)
+
+ 
     result = output[0]["generated_text"][-1]["content"]
     return result
+
 
 def take_data(result_text):
     if "```data" not in result_text:
@@ -102,7 +126,7 @@ def extract_images(pages):
     pages = extract_figures(pages)
     for page in pages:
         for figure in page['figures']:
-            fig2table = fig_to_table(figure['file_path'])
+            fig2table = fig_to_table(figure['pil_image'])
             name, type_, tab, desc = post_process_figures(fig2table)
             figure['name'] = name
             figure['type'] = type_

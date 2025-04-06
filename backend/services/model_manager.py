@@ -12,6 +12,8 @@ VLM_MODEL_ID = "google/gemma-3-4b-it"  # or change to a different variant if nee
 VLM_PIPELINE = pipeline(
     "image-text-to-text",
     model=VLM_MODEL_ID,
+    # device="cpu",
     device="cuda:0" if torch.cuda.is_available() else "cpu",
-    torch_dtype=torch.float16 if torch.cuda.is_available() else None
+    torch_dtype=torch.bfloat16
+    # torch_dtype=torch.float16 if torch.cuda.is_available() else None
 )
