@@ -1,6 +1,7 @@
 import cv2
 import os
 import supervision as sv
+from PIL import Image
 from backend.services.model_manager import YOLO_MODEL, VLM_PIPELINE
 
 # Extract figures from pages using the preloaded YOLO model
@@ -48,6 +49,8 @@ PROMPT_TEMPLATE = (
 )
 
 def fig_to_table(image_path):
+    # Load the image using PIL and convert it to RGB
+    image = Image.open(image_path).convert("RGB")
     messages = [
         {
             "role": "system",
@@ -58,7 +61,7 @@ def fig_to_table(image_path):
         {
             "role": "user",
             "content": [
-                {"type": "image", "image": image_path},
+                {"type": "image", "image": image},
                 {"type": "text", "text": PROMPT_TEMPLATE}
             ]
         }

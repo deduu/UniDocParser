@@ -8,7 +8,7 @@ from fastapi import APIRouter, File, UploadFile, HTTPException, BackgroundTasks,
 from fastapi.responses import JSONResponse, FileResponse
 
 from backend.services.pipeline import PDFExtractionPipeline
-from backend.core.config import UPLOAD_DIR, OUTPUT_DIR
+from backend.core.config import settings
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -30,8 +30,8 @@ async def extract_pdf(
     
     # Create a unique filename and ensure upload directory exists
     unique_filename = f"{uuid.uuid4()}_{file.filename}"
-    os.makedirs(UPLOAD_DIR, exist_ok=True)
-    pdf_path = os.path.join(UPLOAD_DIR, unique_filename)
+    os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
+    pdf_path = os.path.join(settings.UPLOAD_DIR, unique_filename)
 
     try:
         # Asynchronously save the uploaded PDF
@@ -44,7 +44,7 @@ async def extract_pdf(
         extraction_result = pipeline.process()
         
         # Save extraction results (JSON and Markdown outputs)
-        json_output_path, md_output_path = pipeline.save_results(unique_filename, OUTPUT_DIR)
+        json_output_path, md_output_path = pipeline.save_results(unique_filename, settings.OUTPUT_DIR)
 
         return {
             "message": "PDF extracted successfully",
@@ -68,7 +68,7 @@ async def extract_pdf(
 
 @router.get("/download/{filename}")
 async def download_file(filename: str):
-    file_path = os.path.join(OUTPUT_DIR, filename)
+    file_path = os.path.join(settings.OUTPUT_DIR, filename)
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="File not found")
     return FileResponse(file_path, media_type="application/octet-stream", filename=filename)
