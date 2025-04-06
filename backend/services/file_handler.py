@@ -29,7 +29,7 @@ def split_pdf(pdf_path, pages):
     for i, page in enumerate(page_images):
         # Save Image
         page = resize_img(image=page, width=1440)
-        path = f"./img/pages/page_{i}.png"
+        path = f"{DIRECTORIES[0]}/page_{i}.png"
         page.save(path, "PNG")
 
         # Save Page Metadata

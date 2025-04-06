@@ -46,7 +46,7 @@ async def extract_pdf(
             content = await file.read()
             buffer.write(content)
 
-        extraction_result =PDFExtractor.extract_pdf(pdf_path)
+        extraction_result = PDFExtractor.extract_pdf(pdf_path)
 
         json_output_path, md_output_path = PDFExtractor.save_extraction_results(extraction_result, os.path.join("outputs", f"{unique_filename}"))
         # Simulate extraction with model selections
