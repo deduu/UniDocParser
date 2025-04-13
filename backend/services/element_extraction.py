@@ -1,24 +1,28 @@
-from unstructured.partition.image import partition_image
+from unstructured.partition.pdf import partition_pdf
 import markdownify
 import re
 from langchain.prompts import ChatPromptTemplate
 from backend.services.model_manager import Formatter_PIPELINE
 
 # Function to extract elements from image pages
-def element_extractor(img_path):
-    raw_pdf_elements = []
-    print(f"img_path: {img_path}")
-    for page in img_path:
-        raw_pdf_element = partition_image(
-            filename=page,
-            extract_images_in_pdf=True,
-            infer_table_structure=True,
-            languages=["eng", "ind"]
-        )
-        raw_pdf_elements.append(raw_pdf_element)
+def element_extractor(pdf_path):
+    # Partitioning file
+    raw_pdf_elements = partition_pdf(
+        filename=pdf_path,
+        extract_images_in_pdf=True,
+        infer_table_structure=True,
+    )
 
-    return raw_pdf_elements
+    # split raw_pdf_elements per page_number
+    element_pages = []
 
+    for element in raw_pdf_elements:
+        page_number = element.metadata.page_number
+        if len(element_pages) < page_number:
+            element_pages.append([])
+        element_pages[page_number - 1].append(element)
+
+    return element_pages
 # Extract bounding box from the element
 def extract_bbox(element):
     element_metadata = element.metadata.to_dict()
@@ -89,12 +93,16 @@ def extract_elements_to_text(elements, figures):
 
 # Extract elements from PDF
 def extract_elements(pdf_path, pages):
-
-    # Extract all elements from the PDF pages
-    for page in enumerate(pages):
-        element = element_extractor(pages)
-        page["text"] = extract_elements_to_text(element, page["figures"])
-
+    elements = element_extractor(pdf_path)
+    print("Number of extracted elements:", len(elements))
+    print("Number of pages:", len(pages))
+    for i, page in enumerate(pages):
+        if i < len(elements):
+            page["text"] = extract_elements_to_text(elements[i], page["figures"])
+        else:
+            # Handle missing elements appropriately
+            page["text"] = ""
+            print(f"Warning: No elements found for page index {i}")
     return pages
 
 # Final formatting function to format the extracted text into Markdown
