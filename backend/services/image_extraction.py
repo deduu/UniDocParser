@@ -44,29 +44,38 @@ def extract_figures(pages):
                     "pil_image": pil_image,  # in-memory version for immediate usage
                 }
                 page["figures"].append(metadata)
+            # check duplicate figures by bounding box
+    for i, page in enumerate(pages):
+        figures = page['figures']
+        for j in range(len(figures)):
+            for k in range(j + 1, len(figures)):
+                if figures[j]['bbox'] == figures[k]['bbox']:
+                    # remove duplicate figure
+                    del figures[k]
+                    break
     return pages
 
 
-# Prompts for VLM processing
-SYSTEM_PROMPT = (
-    "You are a helpful assistant who helps users convert images into understandable formats. "
-    "First, provide the name of the image that you will receive. Then, determine if the image is a graph/chart or simply another type of image. "
-    "If it is a graph/chart, state the chart type and convert it to structured table data in Markdown format with a short explanation or context analysis. "
-    "If it is not a graph/chart, briefly describe the image's content in natural language using short sentences."
-)
+# Figure to Table VLM
+SYSTEM_FIGURE_PROMPT = """You are a helpful assistant who helps users convert images into understandable formats. 
+First, provide the name of the image that you will receive. Then, determine if the image is a graph/chart or simply another type of image. 
+If it is a graph/chart, state the chart type and convert it to structured table data in Markdown format with a short explanation or context analysis. 
+If it is not a graph/chart, briefly describe the image's content in natural language using short sentences."""
 
-PROMPT_TEMPLATE = (
-    "Convert the provided figure image into an understandable format.\n"
-    "Output format:\n"
-    "1.	Chart/graph:\n"
-    "- Figure Name: …\n"
-    "- Chart Type: …\n"
-    "```data\n| Structured Table Data |\n```\n"
-    "- Short Description: …\n\n"
-    "2.	If the image is not a chart:\n"
-    "- Figure Name: …\n"
-    "- Short Description: …\n"
-)
+PROMPT_FIGURE_TEMPLATE = """Convert the provided figure image into an understandable format.
+Output format:
+1.	Chart/graph:
+- Figure Name: …
+- Chart Type: …
+```data
+| Structured Table Data |
+```
+- Short Description: …
+
+2.	If the image is not a chart:
+- Figure Name: …
+- Short Description: …
+"""
 
 def fig_to_table(pil_image):
     # pil_image is already a PIL image in RGB
@@ -75,19 +84,19 @@ def fig_to_table(pil_image):
         {
             "role": "system",
             "content": [
-                {"type": "text", "text": SYSTEM_PROMPT}
+                {"type": "text", "text": SYSTEM_FIGURE_PROMPT}
             ]
         },
         {
             "role": "user",
             "content": [
                 {"type": "image", "image": pil_image},  # in-memory PIL image
-                {"type": "text", "text": PROMPT_TEMPLATE}
+                {"type": "text", "text": PROMPT_FIGURE_TEMPLATE}
             ]
         }
     ]
     
-    output = VLM_PIPELINE(text=messages, max_new_tokens=256)
+    output = VLM_PIPELINE(text=messages)
 
  
     result = output[0]["generated_text"][-1]["content"]
