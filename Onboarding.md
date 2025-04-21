@@ -14,7 +14,7 @@ You've been added as a **collaborator**. That means you can:
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/<org-or-user>/<repo-name>.git
+git clone https://github.com/deduu/UniDocParser.git
 cd <repo-name>
 ```
 
