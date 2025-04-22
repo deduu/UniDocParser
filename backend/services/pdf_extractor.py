@@ -16,11 +16,12 @@ class PDFExtractor:
             Dict: Extracted PDF content
         """
         from .file_handler import split_pdf
-        from .image_extraction import extract_images
-        from .element_extraction import extract_elements
+        from .image_extractor import extract_figures, extract_images
+        from .element_extractor import extract_elements
+        from .output_formatter import format_extracted_text, format_markdown
         
         # Initialize extraction result
-        pipeline_2 = {
+        output_metadata = {
             "source": os.path.basename(pdf_path),
             "pages": []
         }
@@ -29,34 +30,58 @@ class PDFExtractor:
         # Split PDF into pages
         pages = split_pdf(pdf_path, pages)
         
-        # Extract images
-        pages = extract_images(pages)
+        # Extract figures with YOLO
+        pages = extract_figures(pages)
         
         # Extract elements
-        pages = extract_elements(pdf_path, pages)
-        
+        pages = extract_elements(pages)
+
+        # Extract structured data from image elements
+        pages = extract_images(pages)
+
+        # Format extracted text and images
+        pages = format_extracted_text(pages)
+
+        # Format extracted text into Markdown
+        pages = format_markdown(pages)
+
         # Process pages
         for i, page in enumerate(pages):
             page_data = {
                 "index": i,
+                "markdown": page["markdown"],
                 "text": page["text"],
-                "images": []
+                "elements": []
             }
             
-            # Process images
-            for fig in page.get("figures", []):
-                page_data["images"].append({
-                    "index": os.path.basename(fig.get("file_path", "")),
-                    "bbox": fig.get("bbox", []),
-                    "name": fig.get("name", ""),
-                    "type": fig.get("type", ""),
-                    "data": fig.get("data", ""),
-                    "description": fig.get("description", "")
-                })
+            # Process Elements
+            for j, el in enumerate(page["elements"]):
+                if el["type"] == "image":
+                    page_data["elements"].append({
+                        "index": j,
+                        "type": "image",
+                        "bbox": el["bbox"],
+                        "text": el["text"],
+                        "image_metadata": [{
+                            "image_type": el["image_type"],
+                            "caption": el["caption"],
+                            "description": el["description"],
+                            "ocr_string": el["ocr_string"],
+                            "image_path": el["image_path"],
+                            "image_base64": el["image_base64"],
+                        }],
+                    })
+                else:
+                    page_data["elements"].append({
+                        "index": i,
+                        "type": el["type"],
+                        "bbox": el["bbox"],
+                        "text": el["text"],
+                    })
             
-            pipeline_2["pages"].append(page_data)
+            output_metadata["pages"].append(page_data)
         
-        return pipeline_2
+        return output_metadata
     
     @staticmethod
     def save_extraction_results(extraction_result: Dict, output_path: str):
@@ -67,6 +92,13 @@ class PDFExtractor:
             extraction_result (Dict): Extracted PDF content
             output_path (str): Base path for output files
         """
+        # Save text output
+        text_output_path = f"{output_path}.txt"
+        with open(text_output_path, "w") as f:
+            for page in extraction_result["pages"]:
+                f.write(page["text"])
+                f.write("\n\n---\n\n")
+
         # Save JSON output
         json_output_path = f"{output_path}.jsonl"
         with open(json_output_path, "w") as f:
@@ -76,7 +108,7 @@ class PDFExtractor:
         md_output_path = f"{output_path}.md"
         with open(md_output_path, "w") as f:
             for page in extraction_result["pages"]:
-                f.write(page["text"])
+                f.write(page["markdown"])
                 f.write("\n\n---\n\n")
         
         return json_output_path, md_output_path

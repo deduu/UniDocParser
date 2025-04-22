@@ -3,17 +3,25 @@ from pydantic import BaseModel
 from typing import List, Optional
 
 class ImageMetadata(BaseModel):
+    image_type: str
+    caption: str
+    description: str
+    ocr_string: str
+    image_path: str
+    image_base64: str
+
+class ElementMetadata(BaseModel):
     index: str
-    bbox: List[float]
-    name: str
     type: str
-    data: Optional[str] = None
-    description: Optional[str] = None
+    bbox: List[float]
+    text: Optional[str] = None
+    image_metadata: Optional[List[ImageMetadata]] = []
 
 class PageExtraction(BaseModel):
     index: int
+    markdown: str
     text: str
-    images: List[ImageMetadata] = []
+    elements: List[ElementMetadata] = []
 
 class ExtractionResult(BaseModel):
     source: str

@@ -1,5 +1,6 @@
 import os
 from pdf2image import convert_from_path
+from backend.utils.helpers import resize_img
 
 # Ensure directories for page images and figures exist
 def setup_directories():
@@ -12,18 +13,11 @@ def setup_directories():
 
 setup_directories()
 
-def resize_img(image, width=1440):
-    image = image.convert('RGB')
-    basewidth = width
-    wpercent = (basewidth / float(image.size[0]))
-    hsize = int((float(image.size[1]) * float(wpercent)))
-    return image.resize((basewidth, hsize))
-
 def split_pdf(pdf_path: str):
     pages = []
-    page_images = convert_from_path(pdf_path, 300)
+    page_images = convert_from_path(pdf_path, 400)
     for i, page in enumerate(page_images):
-        page = resize_img(page, width=1440)
+        page = resize_img(page, size=1440)
         page_img_path = os.path.join("backend", "img", "pages", f"page_{i}.png")
         page.save(page_img_path, "PNG")
         metadata = {
@@ -32,7 +26,10 @@ def split_pdf(pdf_path: str):
             "source": os.path.basename(pdf_path),
             "image": page_img_path,
             "text": "",
-            "figures": []
+            "markdown": "",
+            "yolo_used": True,
+            "yolo_figures": [],
+            "elements": [],
         }
         pages.append(metadata)
     return pages
