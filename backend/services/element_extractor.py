@@ -21,22 +21,12 @@ def element_extractor(image_path, page_num):
     )
     return raw_pdf_elements
 
-# Extract bounding box from the element
-def extract_bbox(element):
-    element_metadata = element.metadata.to_dict()
-    points = element_metadata["coordinates"]["points"]
-
-    # Extract x and y coordinates from the points
+# Function to extract bounding box coordinates from the element.
+def extract_bbox(points):
     x_coords = [point[0] for point in points]
     y_coords = [point[1] for point in points]
 
-    # Calculate the bounding box: [x1, y1, x2, y2]
-    x1 = min(x_coords)
-    y1 = min(y_coords)
-    x2 = max(x_coords)
-    y2 = max(y_coords)
-
-    return [x1, y1, x2, y2]
+    return [min(x_coords), min(y_coords), max(x_coords), max(y_coords)]
 
 # Function to convert an image to base64 string.
 def image_to_base64(image_path, quality=50):
