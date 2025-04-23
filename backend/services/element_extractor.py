@@ -113,7 +113,7 @@ def extract_elements(pages):
     print("Number of pages:", len(pages))
     for i, page in enumerate(pages):
         if i < len(elements):
-            page["elements"] = extract_elements_to_text(elements[i], page["figures"])
+            page["elements"] = extract_elements_to_text(elements[i], page["yolo_figures"])
         else:
             # Handle missing elements appropriately
             page["elements"] = []
