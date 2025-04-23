@@ -14,7 +14,7 @@ Fig2Tab_PIPELINE = pipeline(
     model=Fig2Tab_MODEL_ID,
     device="cuda:0" if torch.cuda.is_available() else "cpu",
     torch_dtype=torch.bfloat16,
-    max_new_tokens=300
+    max_new_tokens=1024
 )
 
 FORMATTER_MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"  # or change to a different variant if needed

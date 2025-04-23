@@ -162,8 +162,10 @@ def format_markdown(pages):
         ]
 
         # Generate the formatted text using the LLM
-        formatted_text = Formatter_PIPELINE(text=messages)
+        output = Formatter_PIPELINE(text=messages)
 
+        formatted_text = output[0]["generated_text"][-1]["content"]
+        
         # Clean the formatted text
         page["markdown"] = (clean_md(formatted_text))
 
