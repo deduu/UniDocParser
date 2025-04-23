@@ -1,7 +1,7 @@
 from unstructured.partition.image import partition_image
 import markdownify
 import os
-from PIL.Image import Image
+from PIL import Image
 from backend.utils.helpers import resize_img_from_path
 import io
 import base64
@@ -113,7 +113,7 @@ def extract_elements(pages):
     print("Number of pages:", len(pages))
     for i, page in enumerate(pages):
         if i < len(elements):
-            page["elements"] = extract_elements_to_text(elements[i], page["figures"])
+            page["elements"] = extract_elements_to_text(elements[i], page["yolo_figures"])
         else:
             # Handle missing elements appropriately
             page["elements"] = []
