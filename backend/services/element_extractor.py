@@ -1,7 +1,7 @@
 from unstructured.partition.image import partition_image
 import markdownify
 import os
-from PIL.Image import Image
+from PIL import Image
 from backend.utils.helpers import resize_img_from_path
 import io
 import base64
