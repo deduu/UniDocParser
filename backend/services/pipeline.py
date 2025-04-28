@@ -10,6 +10,7 @@ class PDFExtractionPipeline:
     def __init__(self, pdf_path: str):
         self.pdf_path = pdf_path
         self.pages = []
+        self.figure_list = []
 
     def process(self):
 
@@ -23,10 +24,10 @@ class PDFExtractionPipeline:
         self.pages = extract_figures(self.pages)
 
         # Extract textual elements and replace figures with table data where applicable
-        self.pages = extract_elements(self.pages)
+        self.pages, self.figure_list = extract_elements(self.pages)
 
         # Extract figures and enrich with metadata using deep learning models
-        self.pages = extract_images(self.pages)
+        self.pages = extract_images(self.pages, self.figure_list)
 
         # Format the extracted text and images
         self.pages = format_extracted_text(self.pages)

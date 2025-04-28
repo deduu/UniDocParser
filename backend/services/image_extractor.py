@@ -62,10 +62,11 @@ Classify the image:
 - If the image is a graph/chart, identify the type and convert the data into a structured table in Markdown format, providing a brief context or analysis.
 - If the image is a flowchart, convert it into Mermaid code, accompanied by a brief explanation or analysis.
 - If the image is not a graph/chart or flowchart, provide a concise description of the image’s content using short sentences.
+- If the image is a logo, write the description as the company name without any explanation.
 If the image contains caption or title, include it fully in the output. If not available, leave it blank.
 """
 
-USER_FIG_TEMPLATE = """Convert the provided figure image into an understandable format.
+PROMPT_FIG_TEMPLATE = """Convert the provided figure image into an understandable format.
 
 ---
 
@@ -94,47 +95,84 @@ enddata;
 Output format if another image:
 - Figure Caption: (image caption or title if available, otherwise "image")
 - Type: …
-- Short Description: …
+- Short Description: (Short description of the image, if it is a logo just write the company name)
 """
 
-def fig_to_table(pil_image):
-    # pil_image is already a PIL image in RGB
-    messages = [
-        {
-            "role": "system",
-            "content": [
-                {"type": "text", "text": SYSTEM_FIG_TEMPLATE}
-            ]
-        },
-        {
-            "role": "user",
-            "content": [
-                {"type": "image", "image": pil_image},  # in-memory PIL image
-                {"type": "text", "text": USER_FIG_TEMPLATE}
-            ]
-        }
-    ]
-    
+
+def fig_to_table(figure_list):
+    # image_batchs = [figure_list[i:i + batch_size] for i in range(0, len(figure_list), batch_size)]
+
+    # for i, image_batch in enumerate(image_batchs):
+    messages = []
+    for i, image in enumerate(figure_list):
+        image_path = image["image_path"]
+        messages.append([
+            {
+                "role": "system",
+                "content": [
+                    {"type": "text", "text": SYSTEM_FIG_TEMPLATE}
+                ]
+            },
+            {
+                "role": "user",
+                "content": [
+                    {"type": "image", "image": image_path},
+                    {"type": "text", "text": PROMPT_FIG_TEMPLATE}
+                ]
+            }
+        ])
+
     output = Fig2Tab_PIPELINE(text=messages)
 
-    result = output[0]["generated_text"][-1]["content"]
-    return result
+    results = []
+    # Exception for reformatting the output
+    for i, out in enumerate(output):
+        generated_text = out[0]["generated_text"][-1]["content"]
+        results.append({
+                "page_num": figure_list[i]["page_num"],
+                "idx": figure_list[i]["idx"],
+                "messages": messages[i],
+                "generated_text": generated_text
+        })
+
+    do_reformat = True
+    while do_reformat:
+        reformat_messages = []
+        reformat_index = []
+        for i, res in enumerate(results):
+            if "addCriterion" in res["generated_text"]:
+                reformat_messages.append(res["messages"])
+                reformat_index.append(i)
+                do_reformat = True
+        if len(reformat_index) == 0:
+            do_reformat = False
+            break
+        else:
+            reformat_output = Fig2Tab_PIPELINE(text=reformat_messages)
+            for i, out in enumerate(reformat_output):
+                generated_text = out[0]["generated_text"][-1]["content"]
+                results[reformat_index[i]]["generated_text"] = generated_text
+
+    for i, fig in enumerate(figure_list):
+        for j, res in enumerate(results):
+            if fig["page_num"] == res["page_num"] and fig["idx"] == res["idx"]:
+                figure_list[i]["generated_text"] = res["generated_text"]
+                break
+
+    return figure_list
 
 
 def take_data(result_text):
     data_text = result_text
-    # check if the text contains data:
-    if "data:" not in data_text:
-        return take_desc(result_text)
-    # split the text by data:
-    data_text = data_text.split("data:")[1].strip()
-
-    if "enddata;" in data_text:
-        data_text = data_text.split("enddata;")[0].strip()
+    if "data:" in data_text:
+        # split the text by data:
+        data_text = data_text.split("data:")[1].strip()
+        if "enddata;" in data_text:
+            data_text = data_text.split("enddata;")[0].strip()
+        else:
+            data_text = data_text.split("Short Description:")[0].strip()
     else:
-        data_text = data_text.split("Short Description:")[0].strip()
-
-    return data_text
+        return take_desc(result_text)
 
 def take_desc(result_text):
     desc_text = result_text
@@ -145,9 +183,13 @@ def take_desc(result_text):
 
 def take_caption(result_text):
     caption_text = result_text
-    if "Figure Caption:" not in caption_text:
+    # check if the text contains Figure Caption:
+    if "Figure Caption:" in caption_text:
+        caption_text = caption_text.split("Figure Caption:")[1].strip()
+    elif "addCriterion:" in caption_text:
+        caption_text = caption_text.split("addCriterion:")[1].strip()
+    else:
         return ""
-    caption_text = caption_text.split("Figure Caption:")[1].strip()
     caption_text = caption_text.split("\n")[0].strip()
     return caption_text
 
@@ -166,18 +208,21 @@ def post_process_figures(result):
     desc = take_desc(result)
     return caption, type_, tab, desc
 
-def extract_images(pages):
-    for i, page in enumerate(pages):
-        for j, element in enumerate(page['elements']):
-            if element['type'] == 'image':
-                print(f"Processing Page {i} - Figure {j}")
-                result = fig_to_table(element['pil_image'])
+def extract_images(pages, figure_list):
 
-                caption, img_type, data, desc = post_process_figures(result)
+    figure_list = fig_to_table(figure_list, batch_size=5)
 
-                # element["type"] = img_type.lower()
-                element["text"] = data
-                element["caption"] = caption
-                element["description"] = desc
+    for i, res in enumerate(figure_list):
+        # check if the result is empty
+        if res["result"] == "":
+            continue
+        
+        for el in pages[res["page_num"]]["elements"]:
+            if el["idx"] == res["idx"]:
+                el["text"] = take_data(res["result"])
+                el["description"] = take_desc(res["result"])
+                el["caption"] = take_caption(res["result"])
+                el["image_type"] = take_type(res["generated_text"])
+                break
 
     return pages

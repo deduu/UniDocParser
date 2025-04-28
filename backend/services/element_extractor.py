@@ -39,8 +39,9 @@ def image_to_base64(image_path, quality=50):
     return compressed_base64
 
 # Fuction to extract metadata from Unstructured elements
-def extract_elements_to_text(elements, figures):
+def extract_unstructured_elements(elements, figures, page_num):
     element_metadata = []
+    figure_list = []
 
     # Process elements and figure relationships
     for i, element in enumerate(elements):
@@ -73,20 +74,29 @@ def extract_elements_to_text(elements, figures):
                 element_bbox = fig_bbox
                 image_path = figures[yolo_idx]["file_path"]
             
-            pil_image = resize_img_from_path(image_path, size=720)
+            pil_image = resize_img_from_path(image_path, size=560)
 
             element_metadata.append({
+                "idx": i,
                 "type": "image",
+                "image_type": "",
                 "bbox": element_bbox,
                 "text": "",
                 "caption": "",
                 "description": "",
                 "ocr_string": element_text,
-                "image_path": image_path,
                 "pil_image": pil_image,
-                "image_base64": image_to_base64(image_path=image_path, quality=25),
+                "image_base64": image_to_base64(image_path=image_path, quality=20),
                 "yolo_index": yolo_idx
             })
+
+            figure_list.append({
+                "page_num": page_num,
+                "idx": i,
+                "pil_image": pil_image,
+                "generated_text": ""
+            })
+
         else:
             element_type = "text"
 
@@ -95,27 +105,28 @@ def extract_elements_to_text(elements, figures):
                 element_text = markdownify.markdownify(element.metadata.text_as_html)
 
             element_metadata.append({
-                # "idx": i,
+                "idx": i,
                 "type": element_type,
                 "bbox": element_bbox,
                 "text": element_text,
             })
 
-    return element_metadata
+    return element_metadata, figure_list
 
 # Extract elements from PDF
 def extract_elements(pages):
+    figure_list = []
     elements = []
     for i, page in enumerate(pages):
-        image_path = page["image"]
-        elements.append(element_extractor(image_path=image_path, page_num=i))
+        elements.append(element_extractor(image_path=page["image"], page_num=i))
             
     print("Number of pages:", len(pages))
     for i, page in enumerate(pages):
         if i < len(elements):
-            page["elements"] = extract_elements_to_text(elements[i], page["yolo_figures"])
+            page["elements"], figures = extract_unstructured_elements(elements=elements[i], figures=page["yolo_figures"], page_num=i)
+            figure_list += figures
         else:
             # Handle missing elements appropriately
             page["elements"] = []
             print(f"Warning: No elements found for page index {i}")
-    return pages
+    return pages, figure_list

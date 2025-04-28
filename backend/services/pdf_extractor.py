@@ -27,6 +27,7 @@ class PDFExtractor:
         }
         
         pages = []
+        fugure_list = []
         # Split PDF into pages
         pages = split_pdf(pdf_path, pages)
         
@@ -34,10 +35,10 @@ class PDFExtractor:
         pages = extract_figures(pages)
         
         # Extract elements
-        pages = extract_elements(pages)
+        pages, figure_list = extract_elements(pages)
 
         # Extract structured data from image elements
-        pages = extract_images(pages)
+        pages = extract_images(pages, figure_list)
 
         # Format extracted text and images
         pages = format_extracted_text(pages)
