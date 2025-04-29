@@ -210,7 +210,7 @@ def post_process_figures(result):
 
 def extract_images(pages, figure_list):
 
-    figure_list = fig_to_table(figure_list, batch_size=5)
+    figure_list = fig_to_table(figure_list)
 
     for i, res in enumerate(figure_list):
         # check if the result is empty
