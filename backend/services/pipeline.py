@@ -32,7 +32,7 @@ class PDFExtractionPipeline:
         self.pages = format_extracted_text(self.pages)
 
         # Format the extracted text into Markdown
-        self.pages = format_markdown(self.pages)
+        # self.pages = format_markdown(self.pages)
 
         end_time = time.time()
         processing_time = end_time - start_time  # time in seconds
