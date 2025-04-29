@@ -105,7 +105,7 @@ def fig_to_table(figure_list):
     # for i, image_batch in enumerate(image_batchs):
     messages = []
     for i, image in enumerate(figure_list):
-        image_path = image["image_path"]
+        pil_image = image["pil_image"]
         messages.append([
             {
                 "role": "system",
@@ -116,7 +116,7 @@ def fig_to_table(figure_list):
             {
                 "role": "user",
                 "content": [
-                    {"type": "image", "image": image_path},
+                    {"type": "image", "image": pil_image},
                     {"type": "text", "text": PROMPT_FIG_TEMPLATE}
                 ]
             }
