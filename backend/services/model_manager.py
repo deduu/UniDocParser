@@ -7,6 +7,12 @@ from backend.core.config import settings
 # Load the YOLO model once
 YOLO_MODEL = YOLO(settings.YOLO_MODEL_PATH)
 
+generate_kwargs = {
+    # "do_sample": True,
+    "temperature": 0.3,
+    "top_p": 0.5,
+}
+
 # Load the VLM pipeline once – adjust the device and dtype as needed
 Fig2Tab_MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"  # or change to a different variant if needed
 Fig2Tab_PIPELINE = pipeline(

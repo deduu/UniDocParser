@@ -4,7 +4,7 @@ import time
 from backend.services.file_handler import split_pdf
 from backend.services.image_extractor import extract_figures, extract_images
 from backend.services.element_extractor import extract_elements
-from backend.services.output_formatter import format_extracted_text, format_markdown
+from backend.services.output_formatter import format_extracted_text, format_markdown_batch, format_markdown
 
 class PDFExtractionPipeline:
     def __init__(self, pdf_path: str):
@@ -21,7 +21,7 @@ class PDFExtractionPipeline:
         print(f"pages: {self.pages}")
 
         # Extract figures using YOLO model
-        self.pages = extract_figures(self.pages)
+        # self.pages = extract_figures(self.pages)
 
         # Extract textual elements and replace figures with table data where applicable
         self.pages, self.figure_list = extract_elements(self.pages)

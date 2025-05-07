@@ -18,7 +18,7 @@ class PDFExtractor:
         from .file_handler import split_pdf
         from .image_extractor import extract_figures, extract_images
         from .element_extractor import extract_elements
-        from .output_formatter import format_extracted_text, format_markdown
+        from .output_formatter import format_extracted_text, format_markdown_batch, format_markdown
         
         # Initialize extraction result
         output_metadata = {
@@ -27,12 +27,11 @@ class PDFExtractor:
         }
         
         pages = []
-        fugure_list = []
         # Split PDF into pages
         pages = split_pdf(pdf_path, pages)
         
         # Extract figures with YOLO
-        pages = extract_figures(pages)
+        # pages = extract_figures(pages)
         
         # Extract elements
         pages, figure_list = extract_elements(pages)

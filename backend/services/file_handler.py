@@ -17,7 +17,7 @@ def split_pdf(pdf_path: str):
     pages = []
     page_images = convert_from_path(pdf_path, 400)
     for i, page in enumerate(page_images):
-        page = resize_img(page, size=1080)
+        page = resize_img(page, size=1440)
         page_img_path = os.path.join("backend", "img", "pages", f"page_{i}.png")
         page.save(page_img_path, "PNG")
         metadata = {
@@ -27,7 +27,7 @@ def split_pdf(pdf_path: str):
             "image": page_img_path,
             "text": "",
             "markdown": "",
-            "yolo_used": True,
+            "yolo_used": False,
             "yolo_figures": [],
             "elements": [],
         }

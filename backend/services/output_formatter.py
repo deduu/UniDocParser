@@ -3,8 +3,8 @@ import cv2
 from PIL import Image
 import numpy as np
 from langchain.prompts import ChatPromptTemplate
-from backend.services.model_manager import Formatter_PIPELINE
-from backend.utils.helpers import process_string
+from backend.services.model_manager import Formatter_PIPELINE, generate_kwargs
+from backend.utils.helpers import process_string, resize_img
 
 # Combining Extracted element into text
 # Function to clean the OCR text
@@ -144,7 +144,7 @@ Extracted Text:
 {extracted_text}
 """
 
-def format_markdown(pages, element_batch_size=10):
+def format_markdown_batch(pages, element_batch_size=10):
 
     results = []
 
@@ -259,6 +259,46 @@ def format_markdown(pages, element_batch_size=10):
         formatted_text = ""
         for res in results[k]["results"]:
             formatted_text += res["generated_text"] + "\n\n"
+
+        page["markdown"] = formatted_text
+
+    return pages
+
+def format_markdown(pages):
+
+    for k, page in enumerate(pages):
+        print("Processing page:", page["index"])
+
+        # load text
+        extracted_text = page["text"]
+
+        # load the image
+        pil_image = Image.open(page["image"])
+        pil_image = resize_img(pil_image, size=1080)
+
+        # create the prompt
+        prompt_template = ChatPromptTemplate.from_template(FORMAT_PROMPT_TEMPLATE)
+        prompt = prompt_template.format(extracted_text=extracted_text)
+
+        messages = [
+            {
+                "role": "system",
+                "content": [
+                    {"type": "text", "text": SYSTEM_FORMAT_PROMPT}
+                ]
+            },
+            {
+                "role": "user",
+                "content": [
+                    {"type": "image", "image": pil_image},
+                    {"type": "text", "text": prompt}
+                ]
+            }
+        ]
+
+        output = Formatter_PIPELINE(text=messages, generate_kwargs=generate_kwargs)
+
+        formatted_text = clean_md(output[0]["generated_text"][-1]["content"])
 
         page["markdown"] = formatted_text
 
