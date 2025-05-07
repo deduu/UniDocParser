@@ -25,6 +25,7 @@ class PDFExtractionPipeline:
 
         # Extract textual elements and replace figures with table data where applicable
         self.pages, self.figure_list = extract_elements(self.pages)
+        print(f"figure_list: {len(self.figure_list)}")
 
         # Extract figures and enrich with metadata using deep learning models
         self.pages = extract_images(self.pages, self.figure_list)
@@ -37,6 +38,8 @@ class PDFExtractionPipeline:
 
         end_time = time.time()
         processing_time = end_time - start_time  # time in seconds
+        print(f"Processing time: {processing_time:.2f} seconds")
+        print(self.pages[0]["markdown"])
         return {
             "source": os.path.basename(self.pdf_path),
             "pages": self.pages,

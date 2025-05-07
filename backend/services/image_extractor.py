@@ -212,17 +212,17 @@ def extract_images(pages, figure_list):
 
     figure_list = fig_to_table(figure_list)
 
-    for i, res in enumerate(figure_list):
+    for i, fig in enumerate(figure_list):
         # check if the result is empty
-        if res["result"] == "":
+        if fig["generated_text"] == "":
             continue
         
-        for el in pages[res["page_num"]]["elements"]:
-            if el["idx"] == res["idx"]:
-                el["text"] = take_data(res["result"])
-                el["description"] = take_desc(res["result"])
-                el["caption"] = take_caption(res["result"])
-                el["image_type"] = take_type(res["generated_text"])
+        for el in pages[fig["page_num"]]["elements"]:
+            if el["idx"] == fig["idx"]:
+                el["text"] = take_data(fig["generated_text"])
+                el["description"] = take_desc(fig["generated_text"])
+                el["caption"] = take_caption(fig["generated_text"])
+                el["image_type"] = take_type(fig["generated_text"])
                 break
 
     return pages

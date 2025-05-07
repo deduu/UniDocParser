@@ -26,3 +26,4 @@ class PageExtraction(BaseModel):
 class ExtractionResult(BaseModel):
     source: str
     pages: List[PageExtraction]
+    processing_time: Optional[float] = None

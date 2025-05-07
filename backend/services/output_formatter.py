@@ -86,7 +86,7 @@ def format_extracted_text(pages):
 # Final formatting function to format the extracted text into Markdown
 # Function to clean the markdown text
 def clean_md(result_text):
-    md_text = result_text[0]["generated_text"][-1]["content"]
+    md_text = result_text
 
     # markdown block handling
     if "```markdown" in md_text:
@@ -168,7 +168,7 @@ def format_markdown(pages, element_batch_size=10):
             cropped_image = []
             cropped_image_size = []
             for j, element in enumerate(elements):
-                text += element["text"] + "\n\n"
+                text += str(element["text"]) + "\n\n"
                 # crop the image to the element bounding box
                 x1 =  int(element["bbox"][0] )
                 y1 =  int(element["bbox"][1] )
