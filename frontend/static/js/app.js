@@ -253,9 +253,12 @@ function displayResults(data) {
     // Loop through each page and add its text (if available) to the markdown
     data.extraction_result.pages.forEach((page, index) => {
       markdownContent += `## Page ${index + 1}\n\n`;
-      if (page.text) {
-        markdownContent += `${page.text}\n\n`;
-      } else {
+      if (page.markdown) {
+        markdownContent += `${page.markdown}\n\n`;
+
+      } 
+
+      else {
         // Fallback: If no text field exists, output the entire page object as JSON
         markdownContent += `${JSON.stringify(page, null, 2)}\n\n`;
       }
@@ -308,6 +311,13 @@ function renderMarkdown(markdown) {
   });
 
   return `<p class="my-2">${html}</p>`;
+}
+
+function renderMarkdown_adv(markdownText) {
+  // Convert markdown → HTML with Marked…
+  const rawHtml = marked.parse(markdownText, { breaks: true });
+  // …then sanitize it so we don’t inject anything nasty
+  return DOMPurify.sanitize(rawHtml);
 }
 
 // == Step 8: Tab Switching ==

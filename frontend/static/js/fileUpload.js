@@ -46,13 +46,34 @@ export function initFileUpload() {
         return;
       }
       
+        // Define allowed MIME types
+      const allowedTypes = [
+        'application/pdf',
+        'image/jpeg',
+        'image/png',
+        'image/gif',
+        'image/webp',
+        'image/svg+xml' // Add other image types as needed
+        // You could also use file.type.startsWith('image/') for a broader match
+    ];
+       // Check if the file type is in the allowed list
+        if (!allowedTypes.includes(file.type)) {
+          // Update the error message to be more general
+          showError('Please upload a PDF or an image file (JPG, PNG, GIF, WebP, SVG)');
+          // Optionally clear the input if you want to prevent submission of the invalid file
+          // fileInput.value = ''; // Reset file input
+          // fileNameDisplay.textContent = ''; // Clear display
+          // fileNameDisplay.classList.add('hidden');
+          // extractionOptions.classList.add('hidden');
+          return; // Stop processing this file
+      }
       fileNameDisplay.textContent = file.name;
       fileNameDisplay.classList.remove('hidden');
       extractionOptions.classList.remove('hidden');
   
       // Update summary tab details
       document.getElementById('file-title').textContent = file.name;
-      document.getElementById('file-details').textContent = `Size: ${formatFileSize(file.size)}`;
+      document.getElementById('file-details').textContent = `Type: ${file.type}, Size: ${formatFileSize(file.size)}`; // Added file type display
     }
   
     function formatFileSize(bytes) {
