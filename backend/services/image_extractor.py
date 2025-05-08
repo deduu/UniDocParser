@@ -173,6 +173,8 @@ def take_data(result_text):
             data_text = data_text.split("Short Description:")[0].strip()
     else:
         return take_desc(result_text)
+    
+    return data_text
 
 def take_desc(result_text):
     desc_text = result_text
@@ -200,13 +202,6 @@ def take_type(result_text):
     type_text = type_text.split("Type:")[1].strip()
     type_text = type_text.split("\n")[0].strip()
     return type_text.lower()
-
-def post_process_figures(result):
-    caption = take_caption(result)
-    type_ = take_type(result)
-    tab = take_data(result)
-    desc = take_desc(result)
-    return caption, type_, tab, desc
 
 def extract_images(pages, figure_list):
 

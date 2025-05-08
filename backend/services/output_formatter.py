@@ -75,7 +75,7 @@ def format_extracted_text(pages):
                         else:
                             # delete the text element from the page
                             del page['elements'][j]
-            
+        for element in page['elements']:
             text += f"{element['text']}\n\n"
 
         # clean the text

@@ -11,6 +11,7 @@ generate_kwargs = {
     # "do_sample": True,
     "temperature": 0.3,
     "top_p": 0.5,
+    "max_new_tokens": 4096,
 }
 
 # Load the VLM pipeline once – adjust the device and dtype as needed
@@ -18,7 +19,7 @@ Fig2Tab_MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"  # or change to a different var
 Fig2Tab_PIPELINE = pipeline(
     "image-text-to-text",
     model=Fig2Tab_MODEL_ID,
-    device="cuda:0" if torch.cuda.is_available() else "cpu",
+    device="cuda:1" if torch.cuda.is_available() else "cpu",
     torch_dtype=torch.bfloat16,
     max_new_tokens=1024,
     batch_size=1,   # Adjust batch size as needed
@@ -28,7 +29,7 @@ FORMATTER_MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"  # or change to a different v
 Formatter_PIPELINE = pipeline(
     "image-text-to-text",
     model=FORMATTER_MODEL_ID,
-    device="cuda:1" if torch.cuda.is_available() else "cpu",
+    device="cuda:2" if torch.cuda.is_available() else "cpu",
     torch_dtype=torch.bfloat16,
     max_new_tokens=4096,
     batch_size=1,   # Adjust batch size as needed
