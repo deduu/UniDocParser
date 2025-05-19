@@ -3,7 +3,7 @@ import cv2
 from PIL import Image
 import numpy as np
 from langchain.prompts import ChatPromptTemplate
-from backend.services.model_manager import Formatter_PIPELINE, generate_kwargs
+from backend.services.model_manager import Formatter_PIPELINE, generate_kwargs, vlm_tokenizer
 from backend.utils.helpers import process_string, resize_img
 
 # Combining Extracted element into text
@@ -265,6 +265,7 @@ def format_markdown_batch(pages, element_batch_size=10):
     return pages
 
 def format_markdown(pages):
+    output_tokens_length = []
 
     for k, page in enumerate(pages):
         print("Processing page:", page["index"])
@@ -297,9 +298,11 @@ def format_markdown(pages):
         ]
 
         output = Formatter_PIPELINE(text=messages, generate_kwargs=generate_kwargs)
+        output_tokens = vlm_tokenizer(output[0]["generated_text"][-1]["content"], return_tensors="pt").input_ids
+        output_tokens_length.append(output_tokens.shape[1])
 
         formatted_text = clean_md(output[0]["generated_text"][-1]["content"])
 
         page["markdown"] = formatted_text
 
-    return pages
+    return pages, output_tokens_length

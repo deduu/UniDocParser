@@ -2,7 +2,7 @@ import cv2
 import os
 import supervision as sv
 from PIL import Image
-from backend.services.model_manager import YOLO_MODEL, Fig2Tab_PIPELINE
+from backend.services.model_manager import YOLO_MODEL, Fig2Tab_PIPELINE, vlm_tokenizer
 
 def extract_figures(pages):
     for j, page in enumerate(pages):
@@ -125,6 +125,7 @@ def fig_to_table(figure_list):
     output = Fig2Tab_PIPELINE(text=messages)
 
     results = []
+    output_tokens_length = []
     # Exception for reformatting the output
     for i, out in enumerate(output):
         generated_text = out[0]["generated_text"][-1]["content"]
@@ -134,6 +135,8 @@ def fig_to_table(figure_list):
                 "messages": messages[i],
                 "generated_text": generated_text
         })
+        output_tokens = vlm_tokenizer(out[0]["generated_text"][-1]["content"], return_tensors="pt").input_ids
+        output_tokens_length.append(output_tokens.shape[1])
 
     do_reformat = True
     while do_reformat:
@@ -159,7 +162,7 @@ def fig_to_table(figure_list):
                 figure_list[i]["generated_text"] = res["generated_text"]
                 break
 
-    return figure_list
+    return figure_list, output_tokens_length
 
 
 def take_data(result_text):
@@ -205,7 +208,7 @@ def take_type(result_text):
 
 def extract_images(pages, figure_list):
 
-    figure_list = fig_to_table(figure_list)
+    figure_list, output_tokens_length = fig_to_table(figure_list)
 
     for i, fig in enumerate(figure_list):
         # check if the result is empty
@@ -220,4 +223,4 @@ def extract_images(pages, figure_list):
                 el["image_type"] = take_type(fig["generated_text"])
                 break
 
-    return pages
+    return pages, output_tokens_length

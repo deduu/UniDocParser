@@ -254,8 +254,8 @@ function displayResults(data) {
     data.extraction_result.pages.forEach((page, index) => {
       markdownContent += `## Page ${index + 1}\n\n`;
       if (page.markdown) {
-        markdownContent += `${page.markdown}\n\n`;
-
+        markdownContent += `${page.markdown}`;
+        markdownContent += `\n\n---\n\n`;
       } 
 
       else {
@@ -275,40 +275,47 @@ function displayResults(data) {
 
 // == Step 7: Simple Markdown Rendering (Demo) ==
 function renderMarkdown(markdown) {
-  // Very simplistic parser for demonstration
-  let html = markdown
-    .replace(/^# (.*$)/gm, '<h1 class="text-2xl font-bold mt-4 mb-2">$1</h1>')
-    .replace(/^## (.*$)/gm, '<h2 class="text-xl font-semibold mt-4 mb-2">$1</h2>')
-    .replace(/^### (.*$)/gm, '<h3 class="text-lg font-medium mt-3 mb-2">$1</h3>')
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    .replace(/\n\n/g, '</p><p class="my-2">');
+  var showdown  = require('showdown');
+  var converter = new showdown.Converter();
+  converter.setOption('tables', true);
+  let html      = converter.makeHtml(markdown);
 
-  // Very basic table rendering
-  const tableRegex = /\n\|(.+)\|\n\|([-]+)\|\n((\|.+\|\n)+)/g;
-  html = html.replace(tableRegex, function(match) {
-    const rows = match.split('\n').filter(row => row.trim().length > 0);
-    let table = '<div class="my-4 overflow-x-auto"><table class="min-w-full border-collapse border border-gray-300">';
+  // // Very simplistic parser for demonstration
+  // let html = markdown
+  //   .replace(/^# (.*$)/gm, '<h1 class="text-2xl font-bold mt-4 mb-2">$1</h1>')
+  //   .replace(/^## (.*$)/gm, '<h2 class="text-xl font-semibold mt-4 mb-2">$1</h2>')
+  //   .replace(/^### (.*$)/gm, '<h3 class="text-lg font-medium mt-3 mb-2">$1</h3>')
+  //   .replace(/^#### (.*$)/gm, '<h4 class="text-md font-medium mt-3 mb-2">$1</h4>')
+  //   .replace(/^##### (.*$)/gm, '<h5 class="text-sm font-medium mt-3 mb-2">$1</h5>')
+  //   .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+  //   .replace(/\*(.*?)\*/g, '<em>$1</em>')
+  //   .replace(/\n\n/g, '</p><p class="my-2">');
 
-    // Header
-    table += '<thead><tr>';
-    rows[0].split('|').filter(cell => cell.trim().length > 0).forEach(cell => {
-      table += `<th class="border border-gray-300 px-4 py-2 bg-gray-100">${cell.trim()}</th>`;
-    });
-    table += '</tr></thead>';
+  // // Very basic table rendering
+  // const tableRegex = /\n\|(.+)\|\n\|([-]+)\|\n((\|.+\|\n)+)/g;
+  // html = html.replace(tableRegex, function(match) {
+  //   const rows = match.split('\n').filter(row => row.trim().length > 0);
+  //   let table = '<div class="my-4 overflow-x-auto"><table class="min-w-full border-collapse border border-gray-300">';
 
-    // Body
-    table += '<tbody>';
-    for (let i = 2; i < rows.length; i++) {
-      table += '<tr>';
-      rows[i].split('|').filter(cell => cell.trim().length > 0).forEach(cell => {
-        table += `<td class="border border-gray-300 px-4 py-2">${cell.trim()}</td>`;
-      });
-      table += '</tr>';
-    }
-    table += '</tbody></table></div>';
-    return table;
-  });
+  //   // Header
+  //   table += '<thead><tr>';
+  //   rows[0].split('|').filter(cell => cell.trim().length > 0).forEach(cell => {
+  //     table += `<th class="border border-gray-300 px-4 py-2 bg-gray-100">${cell.trim()}</th>`;
+  //   });
+  //   table += '</tr></thead>';
+
+  //   // Body
+  //   table += '<tbody>';
+  //   for (let i = 2; i < rows.length; i++) {
+  //     table += '<tr>';
+  //     rows[i].split('|').filter(cell => cell.trim().length > 0).forEach(cell => {
+  //       table += `<td class="border border-gray-300 px-4 py-2">${cell.trim()}</td>`;
+  //     });
+  //     table += '</tr>';
+  //   }
+  //   table += '</tbody></table></div>';
+  //   return table;
+  // });
 
   return `<p class="my-2">${html}</p>`;
 }
