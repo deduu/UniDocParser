@@ -3,20 +3,27 @@ import uuid
 import traceback
 import logging
 import aiofiles
-from PIL.Image import Image 
+from PIL.Image import Image
 from pydantic import BaseModel
-from typing   import List, Dict, Any
+from typing import List, Dict, Any
 import io
 import base64
 import json
-from fastapi import APIRouter, File, UploadFile, HTTPException, BackgroundTasks, Form
+from fastapi import APIRouter, File, UploadFile, HTTPException, BackgroundTasks, Form, Depends
 from fastapi.responses import JSONResponse, FileResponse, PlainTextResponse
 
 from backend.services.pipeline import PDFExtractionPipeline
 from backend.core.config import settings
 
+from backend.pipeline.model.schemas_dto import PDFContextOut
+
+from backend.pipeline.pdf_service import PDFService
+from backend.pipeline.pdf_handler import PDFHandler
+from backend.pipeline.model.schemas import SplitPDFResponse
+
 logger = logging.getLogger(__name__)
 router = APIRouter()
+
 
 class PageOut(BaseModel):
     page:  int
@@ -29,11 +36,39 @@ class ExtractOut(BaseModel):
     pages:           List[Dict[str, Any]]     # ← accept any dict here
     processing_time: float
 
+
 class ResponseModel(BaseModel):
     message:           str
     extraction_result: ExtractOut
     json_output:       str
     markdown_output:   str
+
+
+# ------------------------------------------------------------------------------
+@router.post("/ocrpdf", response_model=PDFContextOut)
+async def ocr_pdf(
+    file: UploadFile = File(...),
+    handler: PDFHandler = Depends(),
+) -> PDFContextOut:
+    return await handler.ocr(file)
+
+
+@router.post("/splitpdf", response_model=SplitPDFResponse)
+async def split_pdf(file: UploadFile = File(...), handler: PDFHandler = Depends()):
+    return await handler.split(file)
+
+
+@router.post(
+    "/extractpdf",
+    response_model=PDFContextOut,          # tell FastAPI what to expect
+)
+async def extract_pdf(
+    file: UploadFile = File(...),
+    handler: PDFHandler = Depends(),
+) -> PDFContextOut:
+    return await handler.full(file)
+# ------------------------------------------------------------------------------
+
 
 @router.post("/upload-pdf/", name="upload_pdf")
 async def upload_pdf(
@@ -48,8 +83,9 @@ async def upload_pdf(
     """
     # Validate file type
     if not file.filename or not file.filename.lower().endswith('.pdf'):
-        raise HTTPException(status_code=400, detail="Only PDF files are supported")
-    
+        raise HTTPException(
+            status_code=400, detail="Only PDF files are supported")
+
     # Create a unique filename and ensure upload directory exists
     try:
         unique_filename = f"{uuid.uuid4()}_{file.filename}"
@@ -58,7 +94,7 @@ async def upload_pdf(
         # Asynchronously save the uploaded PDF
         async with aiofiles.open(pdf_path, "wb") as buffer:
             content = await file.read()
-            await buffer.write(content)      
+            await buffer.write(content)
         return JSONResponse(
             status_code=200,
             content={
@@ -79,6 +115,7 @@ async def upload_pdf(
             }
         )
 
+
 @router.get("/extract-pdf/{filename}", name="extract_pdf")
 async def extract_pdf(filename: str):
     pdf_path = os.path.join(settings.UPLOAD_DIR, filename)
@@ -90,7 +127,8 @@ async def extract_pdf(filename: str):
 
         extraction = ExtractOut(**extraction_result)
         # Save extraction results (JSON and Markdown outputs)
-        json_output_path, md_output_path = pipeline.save_results(filename, settings.OUTPUT_DIR)
+        json_output_path, md_output_path = pipeline.save_results(
+            filename, settings.OUTPUT_DIR)
 
         return ResponseModel(
             message="PDF extracted successfully",
@@ -111,7 +149,8 @@ async def extract_pdf(filename: str):
                 "traceback": traceback.format_exc()
             }
         )
-    
+
+
 @router.get("/ocr-pdf/{filename}", name="ocr_pdf")
 async def ocr_pdf(filename: str):
     pdf_path = os.path.join(settings.UPLOAD_DIR, filename)
@@ -147,6 +186,7 @@ async def ocr_pdf(filename: str):
             }
         )
 
+
 @router.post("/extract-pdf/")
 async def extract_pdf(
     background_tasks: BackgroundTasks,
@@ -160,8 +200,9 @@ async def extract_pdf(
     """
     # Validate file type
     if not file.filename or not file.filename.lower().endswith('.pdf'):
-        raise HTTPException(status_code=400, detail="Only PDF files are supported")
-    
+        raise HTTPException(
+            status_code=400, detail="Only PDF files are supported")
+
     # Create a unique filename and ensure upload directory exists
     unique_filename = f"{uuid.uuid4()}_{file.filename}"
     os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
@@ -172,16 +213,17 @@ async def extract_pdf(
         async with aiofiles.open(pdf_path, "wb") as buffer:
             content = await file.read()
             await buffer.write(content)
-        
+
         # Process the PDF via the extraction pipeline
         pipeline = PDFExtractionPipeline(pdf_path)
         extraction_result = pipeline.process()
 
-        clean = convert_pil_to_data_uri(extraction_result)  
+        clean = convert_pil_to_data_uri(extraction_result)
 
         extraction = ExtractOut(**clean)
         # Save extraction results (JSON and Markdown outputs)
-        json_output_path, md_output_path = pipeline.save_results(unique_filename, settings.OUTPUT_DIR)
+        json_output_path, md_output_path = pipeline.save_results(
+            unique_filename, settings.OUTPUT_DIR)
 
         return ResponseModel(
             message="PDF extracted successfully",
@@ -202,7 +244,7 @@ async def extract_pdf(
                 "traceback": traceback.format_exc()
             }
         )
-    
+
 # @router.post("/ocr-pdf/")
 # async def ocr_pdf(
 #     # filename: str,
@@ -221,7 +263,7 @@ async def extract_pdf(
 #     unique_filename = f"{uuid.uuid4()}_{file.filename}"
 #     os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
 #     pdf_path = os.path.join(settings.UPLOAD_DIR, unique_filename)
-    
+
 #     # Process the PDF via the extraction pipeline
 #     try:
 #         # Asynchronously save the uploaded PDF
@@ -259,12 +301,14 @@ async def extract_pdf(
 #             }
 #         )
 
+
 @router.get("/download/{filename}", name="download_file")
 async def download_file(filename: str):
     file_path = os.path.join("outputs", filename)
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="File not found")
     return FileResponse(file_path, media_type="application/octet-stream", filename=filename)
+
 
 @router.get("/extracted-pdf/json-{filename}", name="extracted_pdf_json")
 async def extracted_pdf_json(filename: str):
@@ -275,7 +319,7 @@ async def extracted_pdf_json(filename: str):
     print(json_output_path)
     if not os.path.exists(json_output_path):
         raise HTTPException(status_code=404, detail="File not found")
-    
+
     async with aiofiles.open(json_output_path, "r") as f:
         content = await f.read()
 
@@ -285,8 +329,9 @@ async def extracted_pdf_json(filename: str):
     except json.JSONDecodeError as e:
         logger.error(f"JSON decode error: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to decode JSON")
-    
+
     return JSONResponse(content=content)
+
 
 @router.get("/extracted-pdf/md-{filename}", name="extracted_pdf_md")
 async def extracted_pdf_md(filename: str):
@@ -296,11 +341,12 @@ async def extracted_pdf_md(filename: str):
     md_output_path = os.path.join(settings.OUTPUT_DIR, f"{filename}.md")
     if not os.path.exists(md_output_path):
         raise HTTPException(status_code=404, detail="File not found")
-    
+
     async with aiofiles.open(md_output_path, "r") as f:
         content = await f.read()
-    
+
     return PlainTextResponse(content=content)
+
 
 def convert_pil_to_data_uri(obj: Any) -> Any:
     """

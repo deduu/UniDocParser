@@ -1,0 +1,30 @@
+# backend/pipeline/steps/markdown_step.py
+import os
+import logging
+from backend.pipeline.steps.step import PipelineStep
+from backend.pipeline.context import PDFContext, Page
+from backend.services.output_formatter import format_markdown  # same file as above
+
+logger = logging.getLogger(__name__)
+
+
+class MarkdownStep(PipelineStep):
+    """Turn each page's cleaned text into conversational Markdown."""
+
+    def __init__(self):
+        super().__init__(name="Format Markdown")
+
+    def run(self, ctx: PDFContext) -> PDFContext:
+        if not ctx.pages:
+            raise RuntimeError(
+                "MarkdownStep: pages are missing - run previous steps first")
+
+        pdf_name = os.path.basename(ctx.pdf_path)
+
+        raw_pages = [p.model_dump(mode="python") for p in ctx.pages]
+        updated_pages_raw = format_markdown(raw_pages, pdf_name)
+
+        ctx.pages = [Page(**p) for p in updated_pages_raw]
+
+        logger.info("%s completed", self.name)
+        return ctx

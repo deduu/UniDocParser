@@ -47,14 +47,16 @@ Output format if another image:
 """
 
 # VLM Fig2Tab class
+
+
 class Fig2Tab_PIPELINE:
     def __init__(
-        self, 
+        self,
         model_id=Fig2Tab_MODEL_ID,
         device="cuda:0" if torch.cuda.is_available() else "cpu",
         max_new_tokens=1024,
         batch_size=1,   # Adjust batch size as needed
-        system_prompt=SYSTEM_FIG_TEMPLATE, 
+        system_prompt=SYSTEM_FIG_TEMPLATE,
         prompt=PROMPT_FIG_TEMPLATE
     ):
         self.system_prompt = system_prompt
@@ -95,5 +97,6 @@ class Fig2Tab_PIPELINE:
         for out in output:
             generated_text.append(out[0]["generated_text"][-1]["content"])
         return generated_text
+
 
 fig2tab_vlm = Fig2Tab_PIPELINE()
