@@ -25,7 +25,7 @@ def split_pdf(pdf_path: str):
         page.save(page_img_path, "PNG")
         metadata = {
             "index": i,
-            "image": page_img_path,
+            "image_path": page_img_path,
             "text": "",
             "markdown": "",
         }

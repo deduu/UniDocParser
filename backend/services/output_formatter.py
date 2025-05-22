@@ -3,9 +3,9 @@ import cv2
 from PIL import Image
 import numpy as np
 from langchain.prompts import ChatPromptTemplate
-# from backend.services.model_manager import Formatter_PIPELINE, formatter_generate_kwargs, vlm_tokenizer
 from backend.utils.helpers import process_string, resize_img
-from backend.core.vlm_format_config import formatter_vlm
+from backend.core.vlm_ollama_config import VLM_Ollama
+from backend.core.prompt_config import Formatter_Prompt
 
 # Combining Extracted element into text
 # Function to clean the OCR text
@@ -130,14 +130,24 @@ def format_markdown(pages, pdf_name):
         # load text
         extracted_text = page["text"]
 
-        # load the image
-        pil_image = Image.open(page["image"])
-        pil_image = resize_img(pil_image, size=1080)
+        # Create a VLM instance
+        formatter_vlm = VLM_Ollama(
+            temperature=0.3,
+            top_p=0.5,
+        )
+
+        # Create a prompt instance
+        prompt = Formatter_Prompt()
+
+        # Generate the prompt for each page
+        output = formatter_vlm.generate(
+            image_path=page["image_path"],
+            system_prompt=prompt.get_system_prompt(),
+            prompt=prompt.get_prompt(extracted_text=extracted_text)
+        )
 
         # delete image path from page
-        page.pop("image")
-
-        output = formatter_vlm.generate(extracted_text=extracted_text, image=pil_image)
+        page.pop("image_path")
 
         formatted_text = clean_md(output)
 

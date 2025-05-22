@@ -45,6 +45,8 @@ def extract_unstructured_elements(elements, page_num):
             image_path = unstructured_element["image_path"]
             
             pil_image = resize_img_from_path(image_path, size=560)
+            new_image_path = image_path
+            pil_image.save(new_image_path, format="PNG")
 
             element_metadata.append({
                 "idx": i,
@@ -63,7 +65,7 @@ def extract_unstructured_elements(elements, page_num):
             figure_list.append({
                 "page_num": page_num,
                 "idx": i,
-                "pil_image": pil_image,
+                "image_path": new_image_path,
                 "generated_text": ""
             })
 
@@ -88,7 +90,7 @@ def extract_elements(pages):
     figure_list = []
     elements = []
     for i, page in enumerate(pages):
-        elements.append(element_extractor(image_path=page["image"]))
+        elements.append(element_extractor(image_path=page["image_path"]))
             
     print("Number of pages:", len(pages))
     for i, page in enumerate(pages):
