@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  unidocparser:
+    image: unidocparser
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: unidoc_parser_web
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app/backend
+      - ./frontend:/app/frontend
+      - ./uploads:/app/uploads
+      - ./outputs:/app/outputs
+      - ./img:/app/img  # Added to ensure the img directory is available
+      - ./weights:/app/weights # Added for YOLO model weights
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      # Add any other environment variables your app needs
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama_service
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+    # If you have a GPU and want Ollama to use it (requires NVIDIA Docker runtime):
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+volumes: # This top-level declaration defines the named volume
+  ollama_data:
