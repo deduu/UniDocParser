@@ -92,7 +92,6 @@ def extract_elements(pages):
     for i, page in enumerate(pages):
         elements.append(element_extractor(image_path=page["image_path"]))
             
-    print("Number of pages:", len(pages))
     for i, page in enumerate(pages):
         if i < len(elements):
             page["elements"], figures = extract_unstructured_elements(elements=elements[i], page_num=i)
