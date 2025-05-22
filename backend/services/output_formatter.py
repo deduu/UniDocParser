@@ -3,8 +3,9 @@ import cv2
 from PIL import Image
 import numpy as np
 from langchain.prompts import ChatPromptTemplate
-from backend.services.model_manager import Formatter_PIPELINE, generate_kwargs, vlm_tokenizer
+# from backend.services.model_manager import Formatter_PIPELINE, formatter_generate_kwargs, vlm_tokenizer
 from backend.utils.helpers import process_string, resize_img
+from backend.core.vlm_format_config import formatter_vlm
 
 # Combining Extracted element into text
 # Function to clean the OCR text
@@ -42,7 +43,7 @@ def format_extracted_text(pages):
 
         for j, element in enumerate(page['elements']):
             if element['type'] == 'image':
-                fig_caption = element['caption']
+                fig_caption = element['image_metadata']['caption']
                 fig_bbox = element['bbox']
                 bbox_idx = j
             else:
@@ -121,154 +122,10 @@ def clean_md(result_text):
     return md_text
 
 # load llm model
-# Prompt template
-SYSTEM_FORMAT_PROMPT = """You are a helpful assistant who helps users format the extracted data from a document page image into Markdown format.
-You are not allowed to change or summarize the given text; only reorder the wrong paragraph order, correct any broken words, and delete any unsuccessful OCR results, if any."""
-
-FORMAT_PROMPT_TEMPLATE = """Transform the extracted text and structured data from a page into Markdown format based on the image.
-Identify any possible headings or styles within the text and adjust it to create a page layout that resembles the original page.
-Sometimes there will be a failure in table extraction, fix it. Example:
-| Category | %  |
-|----------|----|
-| A        | 50 |
-| B        | 50 |
-ActualCategory1 ActualCategory2
-
-Ensure that you maintain the original numbering and overall structure from the provided page image, and arrange the extracted text and structured data in an order that reflects the reading sequence.
-
-Requirements:
-- Output Only Markdown: Return solely the Markdown content without any additional explanations or comments.
-- No Delimiters: Do not use code fences or delimiters like ```markdown.
-
-Extracted Text:
-{extracted_text}
-"""
-
-def format_markdown_batch(pages, element_batch_size=10):
-
-    results = []
+def format_markdown(pages, pdf_name):
 
     for k, page in enumerate(pages):
-        print("Processing page:", page["index"])
-        results.append({
-            "page": k,
-            "results": []
-        })
-        messages = []
-
-        # load the image
-        image_array = cv2.imread(page["image"])
-        image_array = cv2.cvtColor(image_array, cv2.COLOR_BGR2RGB)
-
-        # split the elements into batches
-        element_batch = [page["elements"][i:i + element_batch_size] for i in range(0, len(page["elements"]), element_batch_size)]
-
-        for i, elements in enumerate(element_batch):
-            text = ""
-            cropped_image = []
-            cropped_image_size = []
-            for j, element in enumerate(elements):
-                text += str(element["text"]) + "\n\n"
-                # crop the image to the element bounding box
-                x1 =  int(element["bbox"][0] )
-                y1 =  int(element["bbox"][1] )
-                x2 =  int(element["bbox"][2] )
-                y2 =  int(element["bbox"][3] )
-                cropped_image.append(image_array[y1:y2, x1:x2])
-                # save the cropped image
-                cv2.imwrite(f"{page['image'].replace('.png', '')}_element_{i}_{j}.png", cropped_image[-1])
-
-                cropped_image_size.append((cropped_image[-1].shape[1], cropped_image[-1].shape[0]))
-
-            # combine the cropped images into a single image vertically
-            combined_image = np.zeros((sum([size[1] for size in cropped_image_size]) + element_batch_size * 10, max([size[0] for size in cropped_image_size]), 3), dtype=np.uint8)
-            combined_image.fill(255)
-            y_offset = 0
-            for j, cropped in enumerate(cropped_image):
-                combined_image[y_offset:y_offset + cropped.shape[0], :cropped.shape[1]] = cropped
-                y_offset += cropped.shape[0] + 10
-
-            # get minimum and maximum width and height of the combined image
-            width = combined_image.shape[1]
-            height = combined_image.shape[0]
-
-            # if width or height < 56, add white space until 56
-            if width < 56:
-                combined_image = cv2.copyMakeBorder(combined_image, 0, 0, 0, 56 - width, cv2.BORDER_CONSTANT, value=(255, 255, 255))
-            elif height < 56:
-                combined_image = cv2.copyMakeBorder(combined_image, 0, 56 - height, 0, 0, cv2.BORDER_CONSTANT, value=(255, 255, 255))
-
-            # save image
-            cv2.imwrite(f"{page['image'].replace('.png', '')}_combined_{i}.png", combined_image)
-
-            # convert the combined image to PIL format
-            pil_image = Image.fromarray(combined_image)
-
-            # create the prompt
-            prompt_template = ChatPromptTemplate.from_template(FORMAT_PROMPT_TEMPLATE)
-            prompt = prompt_template.format(extracted_text=text)
-            messages.append([
-                {
-                    "role": "system",
-                    "content": [
-                        {"type": "text", "text": SYSTEM_FORMAT_PROMPT}
-                    ]
-                },
-                {
-                    "role": "user",
-                    "content": [
-                        {"type": "image", "image": pil_image},
-                        {"type": "text", "text": prompt}
-                    ]
-                }
-            ])
-
-        output = Formatter_PIPELINE(text=messages)
-
-        for i, out in enumerate(output):
-            # Get the formatted text from the output
-            generated_text = clean_md(out[0]["generated_text"][-1]["content"])
-            results[k]["results"].append({
-                "batch": i,
-                "elements": element_batch[i],
-                "generated_text": generated_text,
-                "messages": messages[i]
-            })
-
-        do_reformat = True
-        while do_reformat:
-            reformat_messages = []
-            reformat_index = []
-            for i, res in enumerate(results[k]["results"]):
-                if ("addCriterion" in res["generated_text"] or len(res["generated_text"])==0):
-                    reformat_messages.append(res["messages"])
-                    reformat_index.append(i)
-                    do_reformat = True
-            if len(reformat_messages) == 0:
-                do_reformat = False
-                break
-            else:
-                # Reformat the messages with the new text
-                reformat_output = Formatter_PIPELINE(text=reformat_messages)
-
-                for i, out in enumerate(reformat_output):
-                    # Get the formatted text from the output
-                    generated_text = clean_md(out[0]["generated_text"][-1]["content"])
-                    results[k]["results"][reformat_index[i]]["generated_text"] = generated_text
-
-        formatted_text = ""
-        for res in results[k]["results"]:
-            formatted_text += res["generated_text"] + "\n\n"
-
-        page["markdown"] = formatted_text
-
-    return pages
-
-def format_markdown(pages):
-    output_tokens_length = []
-
-    for k, page in enumerate(pages):
-        print("Processing page:", page["index"])
+        print(f"Processing {pdf_name} page {page['index']}")
 
         # load text
         extracted_text = page["text"]
@@ -277,32 +134,13 @@ def format_markdown(pages):
         pil_image = Image.open(page["image"])
         pil_image = resize_img(pil_image, size=1080)
 
-        # create the prompt
-        prompt_template = ChatPromptTemplate.from_template(FORMAT_PROMPT_TEMPLATE)
-        prompt = prompt_template.format(extracted_text=extracted_text)
+        # delete image path from page
+        page.pop("image")
 
-        messages = [
-            {
-                "role": "system",
-                "content": [
-                    {"type": "text", "text": SYSTEM_FORMAT_PROMPT}
-                ]
-            },
-            {
-                "role": "user",
-                "content": [
-                    {"type": "image", "image": pil_image},
-                    {"type": "text", "text": prompt}
-                ]
-            }
-        ]
+        output = formatter_vlm.generate(extracted_text=extracted_text, image=pil_image)
 
-        output = Formatter_PIPELINE(text=messages, generate_kwargs=generate_kwargs)
-        output_tokens = vlm_tokenizer(output[0]["generated_text"][-1]["content"], return_tensors="pt").input_ids
-        output_tokens_length.append(output_tokens.shape[1])
-
-        formatted_text = clean_md(output[0]["generated_text"][-1]["content"])
+        formatted_text = clean_md(output)
 
         page["markdown"] = formatted_text
 
-    return pages, output_tokens_length
+    return pages

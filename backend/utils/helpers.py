@@ -1,5 +1,7 @@
 from PIL import Image
 import re
+import io
+import base64
 
 # Function to convert a string to lowercase and remove leading/trailing whitespace.
 def process_string(string):
@@ -36,3 +38,13 @@ def resize_img_from_path(image_path: str, size=720) -> Image:
         image = image.resize((wsize, hsize))
     pil_image = image.copy()
     return pil_image
+
+# Function to convert an image to base64 string.
+def image_to_base64(image_path, quality=50):
+    img = Image.open(image_path)
+    img = img.convert("RGB")
+    buffer = io.BytesIO()
+    img.save(buffer, format="JPEG", quality=quality)
+    buffer.seek(0)
+    compressed_base64 = base64.b64encode(buffer.read()).decode("utf-8")
+    return f"data:image/jpeg;base64,{compressed_base64}"
