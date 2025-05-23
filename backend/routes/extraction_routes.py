@@ -38,10 +38,10 @@ class ExtractOut(BaseModel):
 
 
 class ResponseModel(BaseModel):
-    message:           str
-    extraction_result: ExtractOut
-    json_output:       str
-    markdown_output:   str
+    message: str
+    extraction_result: PDFContextOut
+    json_output: str
+    markdown_output: str
 
 
 # ------------------------------------------------------------------------------
@@ -60,13 +60,53 @@ async def split_pdf(file: UploadFile = File(...), handler: PDFHandler = Depends(
 
 @router.post(
     "/extractpdf",
-    response_model=PDFContextOut,          # tell FastAPI what to expect
+    response_model=ResponseModel,
 )
 async def extract_pdf(
     file: UploadFile = File(...),
     handler: PDFHandler = Depends(),
-) -> PDFContextOut:
-    return await handler.full(file)
+) -> ResponseModel:
+    # 1) Validate file type
+    if not file.filename or not file.filename.lower().endswith(".pdf"):
+        raise HTTPException(
+            status_code=400, detail="Only PDF files are supported")
+
+    # 2) Build a unique target name (for saving outputs later)
+    unique_filename = f"{uuid.uuid4()}_{file.filename}"
+
+    try:
+        # 3) Run the full pipeline (upload → OCR, split, extract, etc.)
+        dto: PDFContextOut = await handler.full_pipeline(file)
+
+        # 4) Persist JSONL & Markdown on disk
+        json_name, md_name = await handler.save_results(
+            dto,
+            unique_filename,
+        )
+
+        # 5) Return your typed response
+        return ResponseModel(
+            message="PDF extracted successfully",
+            extraction_result=dto,
+            json_output=json_name,
+            markdown_output=md_name,
+        )
+
+    except Exception as e:
+        # 6) Log, clean up, and return 500
+        # (If you want to delete the uploaded PDF,
+        # your handler._save_upload returned the path
+        # and you could store it in locals() here.)
+        traceback_str = traceback.format_exc()
+        return JSONResponse(
+            status_code=500,
+            content={
+                "message": "PDF extraction failed",
+                "error": str(e),
+                "traceback": traceback_str,
+            },
+        )
+
 # ------------------------------------------------------------------------------
 
 
