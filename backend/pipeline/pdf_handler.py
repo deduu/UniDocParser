@@ -129,11 +129,11 @@ class PDFHandler:
         json_path = Path(self.output_dir) / f"{unique_filename}.jsonl"
         md_path = Path(self.output_dir) / f"{unique_filename}.md"
 
+        source = unique_filename.split("_", 1)[1]
         payload = {
-            "pdf_path":        dto.pdf_path,
-            "ocr_pdf_path":    dto.ocr_pdf_path,
-            "processing_time": dto.processing_time,
+            "source":        source,
             "pages":           [p.dict() for p in dto.pages],
+            # "processing_time": dto.processing_time,
         }
 
         # --- write JSONL ---

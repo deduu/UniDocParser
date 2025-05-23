@@ -59,7 +59,7 @@ def extract_unstructured_elements(elements, page_num):
                     "caption": "",
                     "description": "",
                     "ocr_string": element_text,
-                    "image_base64": image_to_base64(image_path=image_path, quality=20),
+                    "image_base64": image_to_base64(image_path=image_path, quality=50),
                 },
             })
 

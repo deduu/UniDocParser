@@ -71,20 +71,18 @@ async def extract_pdf(
         raise HTTPException(
             status_code=400, detail="Only PDF files are supported")
 
-    # 2) Build a unique target name (for saving outputs later)
-    unique_filename = f"{uuid.uuid4()}_{file.filename}"
-
     try:
-        # 3) Run the full pipeline (upload → OCR, split, extract, etc.)
+        # 2) Run the full pipeline (upload → OCR, split, extract, etc.)
         dto: PDFContextOut = await handler.full_pipeline(file)
 
-        # 4) Persist JSONL & Markdown on disk
+        # 3) Persist JSONL & Markdown on disk
+        unique_filename = os.path.basename(dto.pdf_path)
         json_name, md_name = await handler.save_results(
             dto,
             unique_filename,
         )
 
-        # 5) Return your typed response
+        # 4) Return your typed response
         return ResponseModel(
             message="PDF extracted successfully",
             extraction_result=dto,
@@ -93,7 +91,7 @@ async def extract_pdf(
         )
 
     except Exception as e:
-        # 6) Log, clean up, and return 500
+        # 5) Log, clean up, and return 500
         # (If you want to delete the uploaded PDF,
         # your handler._save_upload returned the path
         # and you could store it in locals() here.)

@@ -35,7 +35,7 @@ def pil_to_base64(
     buffer = io.BytesIO()
     img.save(buffer, format=fmt, **save_kwargs)
     b64 = base64.b64encode(buffer.getvalue()).decode("ascii")
-    return b64
+    return f"data:image/png;base64,{b64}"
 
 
 async def _save_to_tmp(file: UploadFile, tmp_dir: str | None = None) -> str:
