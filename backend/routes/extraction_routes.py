@@ -54,7 +54,7 @@ async def ocr_pdf(
 
 
 @router.post("/splitpdf", response_model=SplitPDFResponse)
-async def split_pdf(file: UploadFile = File(...), handler: PDFHandler = Depends()):
+async def handle_file(file: UploadFile = File(...), handler: PDFHandler = Depends()):
     return await handler.split(file)
 
 

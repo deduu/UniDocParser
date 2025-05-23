@@ -3,18 +3,18 @@ import asyncio
 from pathlib import Path
 from backend.core.interfaces import Splitter, ElementExtractor, ImageEnhancer, Formatter
 from backend.utils.trackers import log_processing_time as timeit
-from backend.services.file_handler import split_pdf    # your existing
+from backend.services.file_handler import handle_file    # your existing
 from backend.services.element_extractor import extract_elements
 from backend.services.image_extractor import extract_images
 from backend.services.output_formatter import format_extracted_text, format_markdown
 
 
 class DefaultSplitter(Splitter):
-    @timeit("split_pdf")
+    @timeit("handle_file")
     async def split(self, pdf_path: Path):
         # wrap sync call in thread
         loop = asyncio.get_event_loop()
-        pages = await loop.run_in_executor(None, split_pdf, str(pdf_path))
+        pages = await loop.run_in_executor(None, handle_file, str(pdf_path))
         return pages
 
 

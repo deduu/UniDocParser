@@ -2,9 +2,7 @@ import os
 import json
 import time
 import datetime
-import numpy as np
-import re
-from backend.services.file_handler import split_pdf, ocr_pdf_to_pdf
+from backend.services.file_handler import handle_file, ocr_pdf_to_pdf
 from backend.services.image_extractor import extract_images
 from backend.services.element_extractor import extract_elements
 from backend.services.output_formatter import format_extracted_text, format_markdown
@@ -36,7 +34,7 @@ class PDFExtractionPipeline:
 
         # Split the PDF into pages and save page images
         start_file_handling_time = time.time()
-        self.pages = split_pdf(self.pdf_path)
+        self.pages = handle_file(self.pdf_path)
         end_file_handling_time = time.time()
         print(f"{pdf_name} num of pages: {len(self.pages)}")
         handling_time = end_file_handling_time - start_file_handling_time  # time in seconds

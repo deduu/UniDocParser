@@ -1,22 +1,28 @@
-import cv2
-import os
-from PIL import Image
-import re
-# from backend.services.model_manager import Fig2Tab_PIPELINE, vlm_tokenizer
-from backend.core.vlm_fig2tab_config import fig2tab_vlm
+from backend.core.vlm_ollama_config import VLM_Ollama
+from backend.core.prompt_config import Fig2Text_Prompt
 
 # Figure to Table VLM
 def fig_to_table(figure_list):
 
-    images = []
-    for i, image in enumerate(figure_list):
-        images.append(image["pil_image"])
+    # Create a VLM instance
+    fig2tab_vlm = VLM_Ollama(
+        model_id="qwen2.5vl:7b-q8_0",
+        temperature=0.0001,
+        top_p=0.95,
+        num_ctx=4096,
+        max_new_tokens=1024,
+    )
 
-    output = fig2tab_vlm.generate(images)
+    # Create a prompt instance
+    prompt = Fig2Text_Prompt()
 
-    # Exception for reformatting the output
-    for i, out in enumerate(output):
-        figure_list[i]["generated_text"] = out
+    # Generate the prompt for each figure
+    for fig in figure_list:
+        fig["generated_text"] = fig2tab_vlm.generate(
+            image_path=fig["image_path"],
+            system_prompt=prompt.get_system_prompt(),
+            prompt=prompt.get_prompt()
+        )
 
     return figure_list
 

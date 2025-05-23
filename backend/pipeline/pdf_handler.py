@@ -101,7 +101,7 @@ class PDFHandler:
             FigureOut(
                 page_num=f.page_num,
                 idx=f.idx,
-                pil_image=pil_to_base64(f.pil_image),
+                image_path=f.image_path,
                 generated_text=f.generated_text,
             )
             for f in ctx.figure_list

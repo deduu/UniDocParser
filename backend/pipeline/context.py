@@ -25,8 +25,7 @@ class Element(BaseModel):
 class Figure(BaseModel):
     page_num: int
     idx: int
-    # instead of PIL image, store a path or base64 string
-    pil_image: Image.Image
+    image_path: str
     generated_text: str = ""
 
     # ➋ Pydantic v2

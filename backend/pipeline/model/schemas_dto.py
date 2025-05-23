@@ -31,7 +31,7 @@ class PageOut(BaseModel):
 class FigureOut(BaseModel):
     page_num: int
     idx: int
-    pil_image: str          # base-64 string *or* URL
+    image_path: str          # base-64 string *or* URL
     generated_text: str
 
 

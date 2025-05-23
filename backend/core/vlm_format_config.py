@@ -1,46 +1,23 @@
 import torch
 from transformers import pipeline
 from langchain.prompts import ChatPromptTemplate
-from backend.utils.helpers import process_string, resize_img
+from backend.core.prompt_config import Formatter_Prompt
 
-# Default VLM Model ID
-FORMATTER_MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"
-
-# Default Prompt for VLM Markdown Formatting
-SYSTEM_FORMAT_PROMPT = """You are a helpful assistant who helps users format the extracted data from a document page image into Markdown format.
-You are not allowed to change or summarize the given text; only reorder the wrong paragraph order, correct any broken words, and delete any unsuccessful OCR results, if any."""
-
-FORMAT_PROMPT_TEMPLATE = """Transform the extracted text and structured data from a page into Markdown format based on the image.
-Identify any possible headings or styles within the text and adjust it to create a page layout that resembles the original page.
-Sometimes there will be a failure in table extraction, fix it. Example:
-| Category | %  |
-|----------|----|
-| A        | 50 |
-| B        | 50 |
-ActualCategory1 ActualCategory2
-
-Ensure that you maintain the original numbering and overall structure from the provided page image, and arrange the extracted text and structured data in an order that reflects the reading sequence.
-
-Requirements:
-- Output Only Markdown: Return solely the Markdown content without any additional explanations or comments.
-- No Delimiters: Do not use code fences or delimiters like ```markdown.
-
-Extracted Text:
-{extracted_text}
-"""
+# Create a prompt instance
+prompt = Formatter_Prompt()
 
 # VLM Formatter class
 class Formatter_PIPELINE:
     def __init__(
         self,
-        model_id=FORMATTER_MODEL_ID,
+        model_id="Qwen/Qwen2.5-VL-7B-Instruct",
         device="cuda:1" if torch.cuda.is_available() else "cpu",
         do_sample=True,
         temperature=0.3,
         top_p=0.5,
         max_new_tokens=4096,
-        system_prompt=SYSTEM_FORMAT_PROMPT, 
-        prompt=FORMAT_PROMPT_TEMPLATE
+        system_prompt=prompt.get_system_prompt(), 
+        prompt=prompt.get_prompt()
     ):
         self.system_prompt = system_prompt
         self.prompt = prompt
@@ -63,13 +40,13 @@ class Formatter_PIPELINE:
         Process a list of images and return the results.
         """
         # create the prompt
-        prompt_template = ChatPromptTemplate.from_template(FORMAT_PROMPT_TEMPLATE)
+        prompt_template = ChatPromptTemplate.from_template(self.prompt)
         prompt = prompt_template.format(extracted_text=extracted_text)
         messages = [
             {
                 "role": "system",
                 "content": [
-                    {"type": "text", "text": SYSTEM_FORMAT_PROMPT}
+                    {"type": "text", "text": self.prompt}
                 ]
             },
             {
