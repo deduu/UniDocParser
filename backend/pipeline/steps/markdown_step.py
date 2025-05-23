@@ -26,5 +26,5 @@ class MarkdownStep(PipelineStep):
 
         ctx.pages = [Page(**p) for p in updated_pages_raw]
 
-        logger.info("%s completed", self.name)
+        # logger.info("%s completed", self.name)
         return ctx

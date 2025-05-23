@@ -33,6 +33,8 @@ class PDFHandler:
         await run_in_threadpool(os.makedirs, self.upload_dir, exist_ok=True)
         unique_name = f"{uuid.uuid4()}_{file.filename}"
         dest = os.path.join(self.upload_dir, unique_name)
+
+        print(f"dest: {dest}")
         async with aiofiles.open(dest, "wb") as buf:
             await buf.write(await file.read())
         return dest
@@ -126,9 +128,11 @@ class PDFHandler:
         """
         await run_in_threadpool(os.makedirs, self.output_dir, exist_ok=True)
 
+        print(f"unique_filename: {unique_filename}")
+        print(f"self.output_dir: {self.output_dir}")
         json_path = Path(self.output_dir) / f"{unique_filename}.jsonl"
         md_path = Path(self.output_dir) / f"{unique_filename}.md"
-
+        print(f"json_path: {json_path}")
         payload = {
             "pdf_path":        dto.pdf_path,
             "ocr_pdf_path":    dto.ocr_pdf_path,
@@ -151,5 +155,5 @@ class PDFHandler:
                     md_file.write("\n\n---\n\n")
 
         await run_in_threadpool(_write_md)
-
+        print(f"json_path_name: {json_path.name}")
         return json_path.name, md_path.name
