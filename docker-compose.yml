@@ -6,16 +6,17 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    container_name: unidoc_parser_web
+    container_name: unidocparser
     ports:
       - "8000:8000"
     volumes:
+      # Code mounts (keep as bind mounts for development)
       - ./backend:/app/backend
       - ./frontend:/app/frontend
-      - ./uploads:/app/uploads
-      - ./outputs:/app/outputs
-      - ./img:/app/img  # Added to ensure the img directory is available
-      - ./weights:/app/weights # Added for YOLO model weights
+      # Data mounts (use named volumes)
+      - uploads_vol:/app/uploads
+      - outputs_vol:/app/outputs
+      - img_vol:/app/img
     depends_on:
       - ollama
     environment:
@@ -27,18 +28,21 @@ services:
     image: ollama/ollama:latest
     container_name: ollama_service
     ports:
-      - "11434:11434"
+      - "11435:11434"
     volumes:
       - ollama_data:/root/.ollama
     restart: unless-stopped
     # If you have a GPU and want Ollama to use it (requires NVIDIA Docker runtime):
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: 1
-    #           capabilities: [gpu]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
 
 volumes: # This top-level declaration defines the named volume
+  uploads_vol:
+  outputs_vol:
+  img_vol:
   ollama_data:

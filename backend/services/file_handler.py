@@ -5,17 +5,6 @@ from backend.utils.helpers import resize_img
 import ocrmypdf
 from backend.core.config import settings
 
-# Ensure directories for page images and figures exist
-def setup_directories():
-    directories = [
-        os.path.join(settings.IMG_DIR, "pages"),
-        os.path.join(settings.IMG_DIR, "figures")
-    ]
-    for directory in directories:
-        os.makedirs(directory, exist_ok=True)
-
-setup_directories()
-
 def handle_file(file_path: str):
     pages = []
 
@@ -26,7 +15,7 @@ def handle_file(file_path: str):
             pdf_name = os.path.basename(file_path).replace('.pdf', '')
             for i, page in enumerate(page_images):
                 page = resize_img(page, size=1440)
-                page_img_path = os.path.join(settings.IMG_DIR, "pages", f"{pdf_name}_{i}.png")
+                page_img_path = os.path.join(settings.IMG_PAGES_DIR, f"{pdf_name}_{i}.png")
                 page.save(page_img_path, "PNG")
                 metadata = {
                     "index": i,
@@ -43,14 +32,14 @@ def handle_file(file_path: str):
         try:
             img = Image.open(file_path)
             img = resize_img(img, size=1440)
-            img_path = os.path.join(settings.IMG_DIR, "pages", os.path.basename(file_path))
+            img_path = os.path.join(settings.IMG_PAGES_DIR, os.path.basename(file_path))
             # change the file extension to png
             if img_path.lower().endswith(('.jpg', '.jpeg')):
                 img_path = img_path.replace('.jpg', '.png').replace('.jpeg', '.png')
             elif img_path.lower().endswith('.png'):
                 img_path = img_path.replace('.png', '.png')
             else:
-                img_path = os.path.join(settings.IMG_DIR, "pages", os.path.basename(file_path).replace('.jpg', '.png').replace('.jpeg', '.png'))
+                img_path = os.path.join(settings.IMG_PAGES_DIR, os.path.basename(file_path).replace('.jpg', '.png').replace('.jpeg', '.png'))
             img.save(img_path, "PNG")
             metadata = {
                 "index": 0,
@@ -71,5 +60,5 @@ def handle_file(file_path: str):
 def ocr_pdf_to_pdf(pdf_path, output_dir):
     new_filename = os.path.basename(pdf_path).replace('.pdf', '_ocr.pdf')
     new_pdf_path = os.path.join(output_dir, os.path.basename(new_filename))
-    ocrmypdf.ocr(pdf_path, new_pdf_path, use_threads=True, skip_text=True, output_type="pdf")
+    ocrmypdf.ocr(pdf_path, new_pdf_path, use_threads=True, force_ocr=True, output_type="pdf")
     return new_pdf_path
