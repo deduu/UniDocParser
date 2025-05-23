@@ -30,9 +30,6 @@ class PDFExtractor:
         # Split PDF into pages
         pages = split_pdf(pdf_path, pages)
         
-        # Extract figures with YOLO
-        # pages = extract_figures(pages)
-        
         # Extract elements
         pages, figure_list = extract_elements(pages)
 
