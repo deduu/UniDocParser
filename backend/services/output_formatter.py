@@ -1,9 +1,5 @@
 import re
-import cv2
-from PIL import Image
-import numpy as np
-from langchain.prompts import ChatPromptTemplate
-from backend.utils.helpers import process_string, resize_img
+from backend.utils.helpers import process_string
 from backend.core.vlm_ollama_config import VLM_Ollama
 from backend.core.prompt_config import Formatter_Prompt
 

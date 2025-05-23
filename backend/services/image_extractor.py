@@ -1,7 +1,3 @@
-import cv2
-import os
-from PIL import Image
-import re
 from backend.core.vlm_ollama_config import VLM_Ollama
 from backend.core.prompt_config import Fig2Text_Prompt
 

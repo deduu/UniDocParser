@@ -2,8 +2,6 @@ import os
 import json
 import time
 import datetime
-import numpy as np
-import re
 from backend.services.file_handler import handle_file, ocr_pdf_to_pdf
 from backend.services.image_extractor import extract_images
 from backend.services.element_extractor import extract_elements

@@ -1,7 +1,6 @@
 import torch
 from transformers import pipeline
 from langchain.prompts import ChatPromptTemplate
-from backend.utils.helpers import process_string, resize_img
 from backend.core.prompt_config import Formatter_Prompt
 
 # Create a prompt instance

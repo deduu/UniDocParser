@@ -8,7 +8,7 @@ from backend.core.config import settings
 # Function to extract elements from image pages
 def element_extractor(image_path):
     image_name = os.path.basename(image_path).replace('.png', '')
-    image_filepath = os.path.join(settings.IMG_DIR, "figures", f"{image_name}_figures")
+    image_filepath = os.path.join(settings.IMG_FIGURES_DIR, f"{image_name}_figures")
 
     raw_pdf_elements = partition_image(
         filename=image_path,
