@@ -256,7 +256,7 @@ async def extract_pdf(
         pipeline = PDFExtractionPipeline(pdf_path)
         extraction_result = pipeline.process()
 
-        clean = convert_pil_to_data_uri(extraction_result)
+        clean = extraction_result
 
         extraction = ExtractOut(**clean)
         # Save extraction results (JSON and Markdown outputs)
@@ -384,33 +384,3 @@ async def extracted_pdf_md(filename: str):
         content = await f.read()
 
     return PlainTextResponse(content=content)
-
-
-def convert_pil_to_data_uri(obj: Any) -> Any:
-    """
-    Recursively walk through dicts/lists/tuples and:
-      • for any PIL.Image.Image, return a data-URI string
-      • for any dict, list or tuple, recurse into its elements
-      • otherwise return the object unchanged
-    """
-    # 1) If it’s a PIL image, encode to data URI
-    if isinstance(obj, Image):
-        buffer = io.BytesIO()
-        obj.save(buffer, format="PNG")
-        b64 = base64.b64encode(buffer.getvalue()).decode("ascii")
-        return f"data:image/png;base64,{b64}"
-
-    # 2) If it’s a dict, recurse on its values
-    if isinstance(obj, dict):
-        return {k: convert_pil_to_data_uri(v) for k, v in obj.items()}
-
-    # 3) If it’s a list, recurse on each element
-    if isinstance(obj, list):
-        return [convert_pil_to_data_uri(v) for v in obj]
-
-    # 4) If it’s a tuple, recurse and rebuild a tuple
-    if isinstance(obj, tuple):
-        return tuple(convert_pil_to_data_uri(v) for v in obj)
-
-    # 5) Otherwise, leave it as-is
-    return obj

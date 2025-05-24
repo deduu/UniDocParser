@@ -90,7 +90,7 @@ class PDFHandler:
             pages.append(
                 PageOut(
                     index=p.index,
-                    image=pil_to_base64(Image.open(p.image)),
+                    image=pil_to_base64(img=Image.open(p.image), fmt="JPEG", size=720, quality=95),
                     text=p.text,
                     markdown=p.markdown,
                     elements=elements_out,

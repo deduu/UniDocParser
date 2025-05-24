@@ -44,7 +44,7 @@ def image_to_base64(image_path, quality=50):
     img = Image.open(image_path)
     img = img.convert("RGB")
     buffer = io.BytesIO()
-    img.save(buffer, format="PNG", quality=quality)
+    img.save(buffer, format="JPEG", quality=quality)
     buffer.seek(0)
     compressed_base64 = base64.b64encode(buffer.read()).decode("ascii")
-    return f"data:image/png;base64,{compressed_base64}"
+    return f"data:image/jpeg;base64,{compressed_base64}"
