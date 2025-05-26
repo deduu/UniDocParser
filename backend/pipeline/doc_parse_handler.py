@@ -12,17 +12,17 @@ from fastapi import Depends, HTTPException, UploadFile
 from PIL import Image
 from backend.pipeline.model.schemas import SplitPDFResponse
 from backend.pipeline.utils import _save_to_tmp
-from backend.pipeline.pdf_service import PDFService
-from backend.pipeline.context import PDFContext
+from backend.pipeline.doc_parse_service import DocParserService
+from backend.pipeline.doc_parser_steps.context import DocParserContext
 from backend.pipeline.model.schemas_dto import (
-    PageOut, ElementOut, ImageMetadataOut, FigureOut, PDFContextOut
+    PageOut, ElementOut, ImageMetadataOut, FigureOut, DocParserContextOut
 )
 from backend.pipeline.utils import pil_to_base64
 from backend.core.config import settings
 
 
-class PDFHandler:
-    def __init__(self, svc: PDFService = Depends(PDFService)):
+class DocParserHandler:
+    def __init__(self, svc: DocParserService = Depends(DocParserService)):
         self.svc = svc
         # now your handler “knows” where to put files:
         self.upload_dir = settings.UPLOAD_DIR
@@ -39,7 +39,7 @@ class PDFHandler:
             await buf.write(await file.read())
         return dest
 
-    async def ocr(self, file: UploadFile) -> PDFContextOut:
+    async def ocr(self, file: UploadFile) -> DocParserContextOut:
         path = await self._save_upload(file)
         try:
             ctx = await self.svc.ocr(path)
@@ -55,7 +55,7 @@ class PDFHandler:
             raise HTTPException(500, f"Split failed: {e}")
         return SplitPDFResponse.from_context(ctx)
 
-    async def full_pipeline(self, file: UploadFile) -> PDFContextOut:
+    async def full_pipeline(self, file: UploadFile) -> DocParserContextOut:
         path = await self._save_upload(file)
         try:
             ctx = await self.svc.full(path)
@@ -63,8 +63,8 @@ class PDFHandler:
             raise HTTPException(500, f"Full pipeline failed: {e}")
         return self._dto_from_ctx(ctx)
 
-    def _dto_from_ctx(self, ctx: PDFContext) -> PDFContextOut:
-        """Convert internal PDFContext → API DTO."""
+    def _dto_from_ctx(self, ctx: DocParserContext) -> DocParserContextOut:
+        """Convert internal DocParserContext → API DTO."""
         pages = []
         for p in ctx.pages:
             elements_out = []
@@ -109,7 +109,7 @@ class PDFHandler:
             for f in ctx.figure_list
         ]
 
-        return PDFContextOut(
+        return DocParserContextOut(
             pdf_path=ctx.pdf_path,
             ocr_pdf_path=ctx.ocr_pdf_path,
             pages=pages,
@@ -119,7 +119,7 @@ class PDFHandler:
 
     async def save_results(
         self,
-        dto: PDFContextOut,
+        dto: DocParserContextOut,
         unique_filename: str,
     ) -> Tuple[str, str]:
         """

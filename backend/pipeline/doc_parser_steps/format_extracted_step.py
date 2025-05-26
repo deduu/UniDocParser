@@ -1,13 +1,13 @@
 # backend/pipeline/steps/format_extracted_text_step.py
 import logging
-from backend.pipeline.steps.step import PipelineStep
-from backend.pipeline.context import PDFContext, Page
+from backend.pipeline.doc_parser_steps.doc_parser_step import DocParserStep
+from backend.pipeline.doc_parser_steps.context import DocParserContext, Page
 from backend.services.output_formatter import format_extracted_text
 
 logger = logging.getLogger(__name__)
 
 
-class FormatExtractedTextStep(PipelineStep):
+class FormatExtractedTextStep(DocParserStep):
     """
     • Receives ctx.pages (List[Page])
     • Calls the blocking helper `format_extracted_text`
@@ -17,7 +17,7 @@ class FormatExtractedTextStep(PipelineStep):
     def __init__(self):
         super().__init__(name="Format Extracted Text")
 
-    def run(self, ctx: PDFContext) -> PDFContext:
+    def run(self, ctx: DocParserContext) -> DocParserContext:
         if not ctx.pages:
             raise RuntimeError(
                 "FormatExtractedTextStep: pages are missing – run previous steps first")

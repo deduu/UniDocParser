@@ -16,10 +16,10 @@ from fastapi.responses import JSONResponse, FileResponse, PlainTextResponse
 from backend.services.pipeline import PDFExtractionPipeline
 from backend.core.config import settings
 
-from backend.pipeline.model.schemas_dto import PDFContextOut
+from backend.pipeline.model.schemas_dto import DocParserContextOut
 
-from backend.pipeline.pdf_service import PDFService
-from backend.pipeline.pdf_handler import PDFHandler
+from backend.pipeline.doc_parse_service import DocParserService
+from backend.pipeline.doc_parse_handler import DocParserHandler
 from backend.pipeline.model.schemas import SplitPDFResponse
 
 logger = logging.getLogger(__name__)
@@ -40,22 +40,22 @@ class ExtractOut(BaseModel):
 
 class ResponseModel(BaseModel):
     message: str
-    extraction_result: PDFContextOut
+    extraction_result: DocParserContextOut
     json_output: str
     markdown_output: str
 
 
 # ------------------------------------------------------------------------------
-@router.post("/ocrpdf", response_model=PDFContextOut)
+@router.post("/ocrpdf", response_model=DocParserContextOut)
 async def ocr_pdf(
     file: UploadFile = File(...),
-    handler: PDFHandler = Depends(),
-) -> PDFContextOut:
+    handler: DocParserHandler = Depends(),
+) -> DocParserContextOut:
     return await handler.ocr(file)
 
 
 @router.post("/splitpdf", response_model=SplitPDFResponse)
-async def split_pdf(file: UploadFile = File(...), handler: PDFHandler = Depends()):
+async def split_pdf(file: UploadFile = File(...), handler: DocParserHandler = Depends()):
     return await handler.split(file)
 
 
@@ -65,7 +65,7 @@ async def split_pdf(file: UploadFile = File(...), handler: PDFHandler = Depends(
 )
 async def extract_pdf(
     file: UploadFile = File(...),
-    handler: PDFHandler = Depends(),
+    handler: DocParserHandler = Depends(),
 ) -> ResponseModel:
     # 1) Validate file type
     if not file.filename or not file.filename.lower().endswith(".pdf"):
@@ -77,7 +77,7 @@ async def extract_pdf(
 
     try:
         # 3) Run the full pipeline (upload → OCR, split, extract, etc.)
-        dto: PDFContextOut = await handler.full_pipeline(file)
+        dto: DocParserContextOut = await handler.full_pipeline(file)
         print(f"dto.pdf_path: {dto.pdf_path}")
         # 4) Persist JSONL & Markdown on disk
         json_name, md_name = await handler.save_results(
@@ -285,62 +285,6 @@ async def extract_pdf(
                 "traceback": traceback.format_exc()
             }
         )
-
-# @router.post("/ocr-pdf/")
-# async def ocr_pdf(
-#     # filename: str,
-#     background_tasks: BackgroundTasks,
-#     file: UploadFile = File(...),
-#     extraction_model: str = Form("default"),
-#     image_model: str = Form("basic"),
-#     text_model: str = Form("plain")
-# ):
-#     # pdf_path = os.path.join(settings.UPLOAD_DIR, filename)
-#     # Validate file type
-#     if not file.filename or not file.filename.lower().endswith('.pdf'):
-#         raise HTTPException(status_code=400, detail="Only PDF files are supported")
-
-#     # Create a unique filename and ensure upload directory exists
-#     unique_filename = f"{uuid.uuid4()}_{file.filename}"
-#     os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
-#     pdf_path = os.path.join(settings.UPLOAD_DIR, unique_filename)
-
-#     # Process the PDF via the extraction pipeline
-#     try:
-#         # Asynchronously save the uploaded PDF
-#         async with aiofiles.open(pdf_path, "wb") as buffer:
-#             content = await file.read()
-#             await buffer.write(content)
-
-#         pipeline = PDFExtractionPipeline(pdf_path)
-#         ocr_pdf_path = pipeline.ocr_pdf(settings.OUTPUT_DIR)
-#         return JSONResponse(
-#             status_code=200,
-#             content={
-#                 "message": "PDF OCR completed successfully",
-#                 "ocr_pdf_path": ocr_pdf_path
-#             }
-#         )
-#     except FileNotFoundError as e:
-#         logger.error(f"File not found: {e}")
-#         return JSONResponse(
-#             status_code=404,
-#             content={
-#                 "message": "File not found",
-#                 "error": str(e)
-#             }
-#         )
-#     except Exception as e:
-#         logger.error(f"OCR PDF error: {str(e)}")
-#         logger.error(traceback.format_exc())
-#         return JSONResponse(
-#             status_code=500,
-#             content={
-#                 "message": "PDF OCR failed",
-#                 "error": str(e),
-#                 "traceback": traceback.format_exc()
-#             }
-#         )
 
 
 @router.get("/download/{filename}", name="download_file")

@@ -44,7 +44,7 @@ class Page(BaseModel):
     elements: List[Element] = Field(default_factory=list)
 
 
-class PDFContext(BaseModel):
+class DocParserContext(BaseModel):
     pdf_path: str
     ocr_pdf_path: Optional[str] = None
     pages: List[Page] = Field(default_factory=list)

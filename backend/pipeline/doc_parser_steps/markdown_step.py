@@ -1,20 +1,20 @@
 # backend/pipeline/steps/markdown_step.py
 import os
 import logging
-from backend.pipeline.steps.step import PipelineStep
-from backend.pipeline.context import PDFContext, Page
+from backend.pipeline.doc_parser_steps.doc_parser_step import DocParserStep
+from backend.pipeline.doc_parser_steps.context import DocParserContext, Page
 from backend.services.output_formatter import format_markdown  # same file as above
 
 logger = logging.getLogger(__name__)
 
 
-class MarkdownStep(PipelineStep):
+class MarkdownStep(DocParserStep):
     """Turn each page's cleaned text into conversational Markdown."""
 
     def __init__(self):
         super().__init__(name="Format Markdown")
 
-    def run(self, ctx: PDFContext) -> PDFContext:
+    def run(self, ctx: DocParserContext) -> DocParserContext:
         if not ctx.pages:
             raise RuntimeError(
                 "MarkdownStep: pages are missing - run previous steps first")

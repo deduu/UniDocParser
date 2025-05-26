@@ -1,16 +1,16 @@
 # backend/pipeline/steps/extract_images_step.py
-from backend.pipeline.steps.step import PipelineStep
-from backend.pipeline.context import PDFContext, Page
+from backend.pipeline.doc_parser_steps.doc_parser_step import DocParserStep
+from backend.pipeline.doc_parser_steps.context import DocParserContext, Page
 from backend.services.image_extractor import extract_images
 
 
-class ExtractImagesStep(PipelineStep):
+class ExtractImagesStep(DocParserStep):
     """Replace figure placeholders with real images + DL metadata."""
 
     def __init__(self):
         super().__init__(name="Extract Images")
 
-    def run(self, ctx: PDFContext) -> PDFContext:
+    def run(self, ctx: DocParserContext) -> DocParserContext:
         if not ctx.pages:
             raise ValueError(
                 "ExtractImagesStep: ctx.pages is empty – did you run Split & ExtractElements?")

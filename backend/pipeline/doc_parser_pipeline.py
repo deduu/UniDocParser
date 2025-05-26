@@ -2,8 +2,8 @@
 import asyncio
 from typing import List
 import time
-from backend.pipeline.steps.step import PipelineStep
-from backend.pipeline.context import PDFContext
+from backend.pipeline.doc_parser_steps.doc_parser_step import DocParserStep
+from backend.pipeline.doc_parser_steps.context import DocParserContext
 
 import logging
 
@@ -11,12 +11,12 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class PDFExtractionPipeline:
-    def __init__(self, steps: List[PipelineStep]):
+class DocParserPipeline:
+    def __init__(self, steps: List[DocParserStep]):
         self.steps = steps
 
-    async def process(self, pdf_path: str) -> PDFContext:
-        ctx = PDFContext(pdf_path=pdf_path)
+    async def process(self, pdf_path: str) -> DocParserContext:
+        ctx = DocParserContext(pdf_path=pdf_path)
 
         start = time.time()
 

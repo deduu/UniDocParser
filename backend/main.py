@@ -8,6 +8,8 @@ from fastapi import Request
 from .routes import extraction_routes
 from .core.config import settings
 
+from backend.services.retrieval_handler import RetrievalHandler
+
 app = FastAPI(
     title="PDF Extraction Service",
     description="Advanced PDF extraction with image and text processing",
@@ -31,7 +33,22 @@ templates = Jinja2Templates(directory="frontend/templates")
 # Include routes
 app.include_router(extraction_routes.router, prefix="/api/v1")
 
+
+def create_app() -> FastAPI:
+    """Create and configure the FastAPI application"""
+
+    # Initialize handlers
+    retrieval_handler = RetrievalHandler()
+
+
+@app.get("/health")
+async def health_check():
+    """Health check endpoint."""
+    return {"status": "ok"}
+
 # Root route for serving the frontend
+
+
 @app.get("/")
 async def serve_frontend(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})

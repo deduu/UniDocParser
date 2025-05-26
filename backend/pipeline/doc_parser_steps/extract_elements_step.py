@@ -1,17 +1,17 @@
 # backend/pipeline/steps/extract_elements_step.py
 
-from backend.pipeline.steps.step import PipelineStep
-from backend.pipeline.context import PDFContext, Page, Figure
+from backend.pipeline.doc_parser_steps.doc_parser_step import DocParserStep
+from backend.pipeline.doc_parser_steps.context import DocParserContext, Page, Figure
 # your existing function
 
 from backend.services.element_extractor import extract_elements
 
 
-class ExtractElementsStep(PipelineStep):
+class ExtractElementsStep(DocParserStep):
     def __init__(self):
         super().__init__(name="Extract Elements")
 
-    def run(self, ctx: PDFContext) -> PDFContext:
+    def run(self, ctx: DocParserContext) -> DocParserContext:
         # 1. Convert our Page models into the raw dicts your extractor expects
         raw_pages = [p.dict() for p in ctx.pages]
         print(raw_pages[0]["image"])

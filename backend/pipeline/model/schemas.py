@@ -1,7 +1,7 @@
 # app/models/schemas.py
 from pydantic import BaseModel
 from typing import List
-from backend.pipeline.context import PDFContext
+from backend.pipeline.doc_parser_steps.context import DocParserContext
 
 
 class PageInfo(BaseModel):
@@ -17,7 +17,7 @@ class SplitPDFResponse(BaseModel):
     processing_time: float
 
     @classmethod
-    def from_context(cls, ctx: PDFContext) -> "SplitPDFResponse":
+    def from_context(cls, ctx: DocParserContext) -> "SplitPDFResponse":
         return cls(
             source=ctx.pdf_path,
             pages=[PageInfo(**p.dict()) for p in ctx.pages],
@@ -46,7 +46,7 @@ class FullPDFResponse(BaseModel):
     processing_time: float
 
     @classmethod
-    def from_context(cls, ctx: PDFContext) -> "FullPDFResponse":
+    def from_context(cls, ctx: DocParserContext) -> "FullPDFResponse":
         return cls(
             source=ctx.pdf_path,
             pages=[
