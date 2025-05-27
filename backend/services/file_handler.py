@@ -11,12 +11,12 @@ def handle_file(file_path: str):
     # Check if the file is a PDF
     if file_path.lower().endswith('.pdf'):
         try:
-            page_images = convert_from_path(file_path, 400)
+            page_images = convert_from_path(file_path, 600)
             pdf_name = os.path.basename(file_path).replace('.pdf', '')
             for i, page in enumerate(page_images):
-                page = resize_img(page, size=1440)
-                page_img_path = os.path.join(settings.IMG_PAGES_DIR, f"{pdf_name}_{i}.png")
-                page.save(page_img_path, "PNG")
+                page = resize_img(page, size=2560)
+                page_img_path = os.path.join(settings.IMG_PAGES_DIR, f"{pdf_name}_{i}.jpeg")
+                page.save(page_img_path, "JPEG")
                 metadata = {
                     "index": i,
                     "image": page_img_path,
@@ -31,16 +31,16 @@ def handle_file(file_path: str):
     elif file_path.lower().endswith(('.png', '.jpg', '.jpeg')):
         try:
             img = Image.open(file_path)
-            img = resize_img(img, size=1440)
+            img = resize_img(img, size=2560)
             img_path = os.path.join(settings.IMG_PAGES_DIR, os.path.basename(file_path))
             # change the file extension to png
-            if img_path.lower().endswith(('.jpg', '.jpeg')):
-                img_path = img_path.replace('.jpg', '.png').replace('.jpeg', '.png')
-            elif img_path.lower().endswith('.png'):
-                img_path = img_path.replace('.png', '.png')
+            if img_path.lower().endswith(('.jpg', '.png')):
+                img_path = img_path.replace('.jpg', '.jpeg').replace('.png', '.jpeg')
+            elif img_path.lower().endswith('.jpeg'):
+                img_path = img_path.replace('.jpeg', '.jpeg')
             else:
-                img_path = os.path.join(settings.IMG_PAGES_DIR, os.path.basename(file_path).replace('.jpg', '.png').replace('.jpeg', '.png'))
-            img.save(img_path, "PNG")
+                img_path = os.path.join(settings.IMG_PAGES_DIR, os.path.basename(file_path).replace('.jpg', '.jpeg').replace('.png', '.jpeg'))
+            img.save(img_path, "JPEG")
             metadata = {
                 "index": 0,
                 "image": img_path,

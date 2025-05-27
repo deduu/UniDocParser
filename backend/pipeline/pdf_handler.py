@@ -128,6 +128,7 @@ class PDFHandler:
 
         json_path = Path(self.output_dir) / f"{unique_filename}.jsonl"
         md_path = Path(self.output_dir) / f"{unique_filename}.md"
+        txt_path = Path(self.output_dir) / f"{unique_filename}.txt"
 
         source = unique_filename.split("_", 1)[1]
         payload = {
@@ -151,5 +152,14 @@ class PDFHandler:
                     md_file.write("\n\n---\n\n")
 
         await run_in_threadpool(_write_md)
+
+        # --- write Text ---
+        def _write_txt():
+            with open(txt_path, "w") as txt_file:
+                for page in payload["pages"]:
+                    txt_file.write(page["text"])
+                    txt_file.write("\n\n---\n\n")
+
+        await run_in_threadpool(_write_txt)
 
         return json_path.name, md_path.name

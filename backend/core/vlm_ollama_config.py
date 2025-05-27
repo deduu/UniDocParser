@@ -48,7 +48,9 @@ class VLM_Ollama:
                     'temperature': self.temperature,
                     'top_p': self.top_p,
                     'num_ctx': self.num_ctx,
-                    # 'max_new_tokens': self.max_new_tokens
+                    'repeat_penalty': 1.1,
+                    'stop': ['<|endoftext|>', '<EOS>'],
+                    'max_new_tokens': self.max_new_tokens
                 }
             )
         return response['message']['content']

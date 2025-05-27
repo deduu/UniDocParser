@@ -123,6 +123,10 @@ def clean_md(result_text):
             lines.insert(last_arrow_index + 1, '```')
         md_text = '\n'.join(lines)
 
+    if "<|endoftext|>" in md_text:
+        # split the text by
+        md_text = md_text.split("<|endoftext|>")[0].strip()
+
     return md_text
 
 
@@ -145,8 +149,10 @@ def format_markdown(pages: list[dict], pdf_name: str) -> list[dict]:
 
         # Create a VLM instance
         formatter_vlm = VLM_Ollama(
-            temperature=0.3,
-            top_p=0.5,
+            temperature=0.0001,
+            top_p=0.9,
+            num_ctx=8192,
+            max_new_tokens=4096
         )
 
         # Create a prompt instance

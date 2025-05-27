@@ -6,11 +6,11 @@ def fig_to_table(figure_list):
 
     # Create a VLM instance
     fig2tab_vlm = VLM_Ollama(
-        model_id="qwen2.5vl:7b-q8_0",
-        temperature=0.0001,
-        top_p=0.95,
+        model_id="qwen2.5vl:32b",
+        temperature=0.8,
+        top_p=0.1,
         num_ctx=4096,
-        max_new_tokens=1024,
+        max_new_tokens=2048
     )
 
     # Create a prompt instance
