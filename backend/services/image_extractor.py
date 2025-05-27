@@ -1,28 +1,21 @@
-from backend.core.vlm_ollama_config import VLM_Ollama
-from backend.core.prompt_config import Fig2Text_Prompt
+import cv2
+import os
+from PIL import Image
+import re
+from backend.core.vlm_fig2tab_config import fig2tab_vlm
 
 # Figure to Table VLM
 def fig_to_table(figure_list):
 
-    # Create a VLM instance
-    fig2tab_vlm = VLM_Ollama(
-        model_id="qwen2.5vl:32b",
-        temperature=0.8,
-        top_p=0.1,
-        num_ctx=4096,
-        max_new_tokens=2048
-    )
+    images = []
+    for i, image in enumerate(figure_list):
+        images.append(image["image_path"])
 
-    # Create a prompt instance
-    prompt = Fig2Text_Prompt()
+    output = fig2tab_vlm.generate(images)
 
-    # Generate the prompt for each figure
-    for fig in figure_list:
-        fig["generated_text"] = fig2tab_vlm.generate(
-            image_path=fig["image_path"],
-            system_prompt=prompt.get_system_prompt(),
-            prompt=prompt.get_prompt()
-        )
+    # Exception for reformatting the output
+    for i, out in enumerate(output):
+        figure_list[i]["generated_text"] = out
 
     return figure_list
 

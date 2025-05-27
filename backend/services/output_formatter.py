@@ -151,7 +151,7 @@ def format_markdown(pages: list[dict], pdf_name: str) -> list[dict]:
 
         # -------- 1. load & resize image ---------------------------------
         pil_image = Image.open(page["image"])
-        pil_image = resize_img(pil_image, size=1080)
+        pil_image = resize_img(pil_image, size=720)
 
         # -------- 2. overwrite /tmp image path ---------------------------
         tmp_path = TMP_DIR / f"resized_{pdf_name}_{idx}.png"
