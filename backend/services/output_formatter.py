@@ -6,7 +6,8 @@ import numpy as np
 from langchain.prompts import ChatPromptTemplate
 # from backend.services.model_manager import Formatter_PIPELINE, formatter_generate_kwargs, vlm_tokenizer
 from backend.utils.helpers import process_string, resize_img
-from backend.core.vlm_format_config import formatter_vlm
+# from backend.core.vlm_format_config import formatter_vlm
+from backend.core.ft_vlm_format_config import formatter_vlm
 
 # Combining Extracted element into text
 # Function to clean the OCR text
