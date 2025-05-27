@@ -10,15 +10,10 @@ class Fig2Tab_PIPELINE:
     def __init__(
         self, 
         model_id="Qwen/Qwen2.5-VL-7B-Instruct",
-        device="cuda:0" if torch.cuda.is_available() else "cpu",
+        device="cuda:1" if torch.cuda.is_available() else "cpu",
         max_new_tokens=1024,
         batch_size=1,   # Adjust batch size as needed
-        system_prompt=prompt.get_system_prompt(), 
-        prompt=prompt.get_prompt()
     ):
-        self.system_prompt = system_prompt
-        self.prompt = prompt
-        # self.tokenizer = AutoTokenizer.from_pretrained(model_id)
         self.model = pipeline(
             "image-text-to-text",
             model=model_id,
@@ -38,14 +33,14 @@ class Fig2Tab_PIPELINE:
                 {
                     "role": "system",
                     "content": [
-                        {"type": "text", "text": self.system_prompt}
+                        {"type": "text", "text": prompt.get_system_prompt()}
                     ]
                 },
                 {
                     "role": "user",
                     "content": [
                         {"type": "image", "image": image},
-                        {"type": "text", "text": prompt}
+                        {"type": "text", "text": prompt.get_prompt()}
                     ]
                 }
             ])

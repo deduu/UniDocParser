@@ -6,6 +6,7 @@ import aiofiles
 from PIL.Image import Image
 from pydantic import BaseModel
 from typing import List, Dict, Any
+from pathlib import Path
 import io
 import base64
 import json
@@ -79,7 +80,7 @@ async def extract_pdf(
         unique_filename = os.path.basename(dto.pdf_path)
         json_name, md_name = await handler.save_results(
             dto,
-            unique_filename,
+            Path(dto.pdf_path).name,
         )
 
         # 4) Return your typed response

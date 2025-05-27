@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Viewer Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/jsoneditor@9.10.2/dist/jsoneditor.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/jsoneditor@9.10.2/dist/jsoneditor.min.js"></script>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            background-color: #f3f4f6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #jsonEditorContainer {
+            min-height: 400px; /* Give it some space */
+            border: 1px solid #e5e7eb;
+            border-radius: 0.375rem;
+            margin-top: 15px;
+            overflow: hidden; /* Ensure border-radius works */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-2xl font-bold mb-4">JSON Viewer Test</h1>
+
+        <div class="flex justify-between mb-2">
+            <div>
+                <button id="loadSampleJson" class="text-sm bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded inline-flex items-center mr-2">
+                    Load Sample JSON
+                </button>
+                <button id="copyJson" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 py-1 px-3 rounded inline-flex items-center">
+                    <i class="far fa-copy mr-1"></i> Copy JSON
+                </button>
+            </div>
+            <div>
+                <button id="expandJson" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 py-1 px-3 rounded mr-2">Expand All</button>
+                <button id="collapseJson" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 py-1 px-3 rounded">Collapse All</button>
+            </div>
+        </div>
+
+        <div id="jsonEditorContainer">
+            <p class="text-gray-500 italic p-4">Click "Load Sample JSON" to display content.</p>
+        </div>
+    </div>
+
+    <script src="test_json_viewer.js"></script>
+</body>
+</html>

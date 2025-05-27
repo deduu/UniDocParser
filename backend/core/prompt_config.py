@@ -81,6 +81,57 @@ You must:
 FORMAT_PROMPT_TEMPLATE = """Transform the provided "Extracted Text" (which includes main text content AND directly embedded data from figures, such as Markdown tables) into a single, coherent Markdown document.
 The final Markdown output should accurately represent all content and closely emulate the layout and reading order of the original document page image.
 
+Key Tasks:
+
+1.  **Layout and Styling:**
+    * Identify headings (H1, H2, H3, etc.), lists (bulleted or numbered), bold/italic text, and other styling cues from the input text.
+    * Represent these elements using appropriate Markdown syntax.
+
+2.  **Paragraph and Text Flow:**
+    * Ensure correct paragraph order that reflects the natural reading sequence of the original page.
+    * Correct clearly broken words or obvious OCR errors (e.g., "My country economy at this season keeps escaping from Odoba" might need checking for "Odoba" if it's a clear OCR error, but be conservative if unsure).
+
+3.  **Embedded Table and Figure Data Integrity (CRITICAL):**
+    * The "Extracted Text" input contains directly embedded Markdown tables (like the one starting with "| Category | Percentage |") that represent data from figures. It may also contain other embedded figure representations (e.g., Mermaid code if it were present).
+    * **You MUST identify and preserve ALL such embedded tables and other figure representations.**
+    * **Ensure they are valid and cleanly formatted Markdown.** This includes correct pipe alignment, header rows, and cell content. Remove extraneous spaces within cells if they are clearly formatting artifacts (e.g., "7%      " to "7%").
+    * Example of ensuring correct table formatting (it might already be mostly correct):
+        Input table within text:
+        | Category | Percentage |
+        |----------|------------|
+        | bad      | 7%         |
+        | very good| 47%        |
+        | good     | 26%        |
+        | usually  | 26%        |
+
+        Ensure output is clean Markdown:
+        | Category  | Percentage |
+        |-----------|------------|
+        | bad       | 7%         |
+        | very good | 47%        |
+        | good      | 26%        |
+        | usually   | 26%        |
+
+    * **Handle Associated Text/Captions:** Pay close attention to text immediately preceding or following these embedded tables/figures, as this might function as a caption or title (e.g., "Satisfaction rating to new product" which appears near your example tables).
+        * Preserve this text.
+        * Position it logically with the table/figure it describes (typically immediately before or after).
+        * Format this caption-like text to be distinct and clear, for instance, as **bold text on its own line**, a sub-heading (e.g., #### Satisfaction rating to new product), or a plain paragraph closely associated with the table, depending on what seems most appropriate for the original document's implied structure. If the same caption text appears for multiple distinct tables, ensure it is associated with each.
+
+4.  **Preserve Original Structure:**
+    * Maintain original numbering for lists, sections, etc., unless reordering is explicitly needed for coherence.
+
+Requirements:
+- **Output Only Markdown:** Your entire response must be *only* the final Markdown content.
+- **No Explanations:** Do not include any comments, notes, or explanations outside of the Markdown itself.
+- **No Delimiters for the Whole Output:** Do not wrap the entire output in ```markdown ... ``` or any other global code fences. (However, if Mermaid code were present *within* the document, it would need its standard ```mermaid ... ``` fences.)
+
+Extracted Text:
+
+"""
+
+FT_FORMAT_PROMPT_TEMPLATE = """Transform the provided "Extracted Text" (which includes main text content AND directly embedded data from figures, such as Markdown tables) into a single, coherent Markdown document.
+The final Markdown output should accurately represent all content and closely emulate the layout and reading order of the original document page image.
+
 Requirements:
 - **Output Only Markdown:** Your entire response must be *only* the final Markdown content.
 - **No Explanations:** Do not include any comments, notes, or explanations outside of the Markdown itself.
@@ -110,14 +161,19 @@ class Formatter_Prompt:
         self,
         system_prompt=SYSTEM_FORMAT_PROMPT,
         prompt=FORMAT_PROMPT_TEMPLATE,
+        ft_prompt=FT_FORMAT_PROMPT_TEMPLATE,
     ):
         self.system_prompt = system_prompt
         self.prompt = prompt
+        self.ft_prompt = ft_prompt
 
     def get_system_prompt(self):
         return self.system_prompt
 
     def get_prompt(self, extracted_text):
         user_prompt = self.prompt + extracted_text
-
+        return user_prompt
+    
+    def get_ft_prompt(self, extracted_text):
+        user_prompt = self.ft_prompt + extracted_text
         return user_prompt

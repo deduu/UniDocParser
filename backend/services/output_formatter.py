@@ -3,6 +3,10 @@ from backend.utils.helpers import process_string
 from backend.core.vlm_ollama_config import VLM_Ollama
 from backend.core.prompt_config import Formatter_Prompt
 from pathlib import Path
+from PIL import Image
+from backend.utils.helpers import process_string, resize_img
+# from backend.core.vlm_format_config import formatter_vlm
+from backend.core.ft_vlm_format_config import formatter_vlm
 
 # Combining Extracted element into text
 # Function to clean the OCR text
@@ -142,31 +146,25 @@ def format_markdown(pages: list[dict], pdf_name: str) -> list[dict]:
     • Calls VLM to generate markdown and stores it back into the page
     """
     for page in pages:
-        print(f"Processing {pdf_name} page {page['index']}")
+        idx = page["index"]
+        print(f"Processing {pdf_name} page {idx}")
 
-        # load text
+        # -------- 1. load & resize image ---------------------------------
+        pil_image = Image.open(page["image"])
+        pil_image = resize_img(pil_image, size=1080)
+
+        # -------- 2. overwrite /tmp image path ---------------------------
+        tmp_path = TMP_DIR / f"resized_{pdf_name}_{idx}.png"
+        pil_image.save(tmp_path, format="PNG")
+        page["image"] = str(tmp_path)          # keep valid path for later
+
+        # -------- 3. run VLM formatter -----------------------------------
         extracted_text = page["text"]
-
-        # Create a VLM instance
-        formatter_vlm = VLM_Ollama(
-            temperature=0.0001,
-            top_p=0.9,
-            num_ctx=8192,
-            max_new_tokens=4096
-        )
-
-        # Create a prompt instance
-        prompt = Formatter_Prompt()
-
-        # Generate the prompt for each page
         output = formatter_vlm.generate(
-            image_path=page["image"],
-            system_prompt=prompt.get_system_prompt(),
-            prompt=prompt.get_prompt(extracted_text=extracted_text)
+            extracted_text=extracted_text, image=pil_image
         )
 
-        formatted_text = clean_md(output)
-
-        page["markdown"] = formatted_text
+        # -------- 4. post-process & store --------------------------------
+        page["markdown"] = clean_md(output)
 
     return pages

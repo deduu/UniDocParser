@@ -16,11 +16,7 @@ class Formatter_PIPELINE:
         temperature=0.3,
         top_p=0.5,
         max_new_tokens=4096,
-        system_prompt=prompt.get_system_prompt(), 
-        prompt=prompt.get_prompt()
     ):
-        self.system_prompt = system_prompt
-        self.prompt = prompt
         self.model = pipeline(
             "image-text-to-text",
             model=model_id,
@@ -40,20 +36,18 @@ class Formatter_PIPELINE:
         Process a list of images and return the results.
         """
         # create the prompt
-        prompt_template = ChatPromptTemplate.from_template(self.prompt)
-        prompt = prompt_template.format(extracted_text=extracted_text)
         messages = [
             {
                 "role": "system",
                 "content": [
-                    {"type": "text", "text": self.prompt}
+                    {"type": "text", "text": prompt.get_system_prompt()}
                 ]
             },
             {
                 "role": "user",
                 "content": [
                     {"type": "image", "image": image},
-                    {"type": "text", "text": prompt}
+                    {"type": "text", "text": prompt.get_prompt(extracted_text)}
                 ]
             }
         ]
