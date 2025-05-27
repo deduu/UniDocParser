@@ -34,7 +34,7 @@ data:
 | Value 1B | Value 2B | Value 3B | ... |
 (Ensure the Markdown table accurately represents all data series, categories, values, and axis labels from the chart.)
 enddata;
-- Brief Summary: (A concise summary of the key information or trends shown in the chart/graph.)
+- Concise Description: (A concise summary of the key information or trends shown in the chart/graph.)
 
 ---
 
@@ -51,14 +51,14 @@ graph TD; // or other appropriate Mermaid graph type (e.g., LR, TB)
 // (Represent all identified nodes and their connections accurately in Mermaid syntax.)
 ```
 enddata;
-- Brief Summary: (A concise summary explaining the process or system depicted by the flowchart/diagram.)
+- Concise Description: (A concise summary explaining the process or system depicted by the flowchart/diagram.)
 
 ---
 
 Output format if the image is a logo:
 - Figure Caption: (Transcribe the exact caption or title if present. If not detected, output "No caption detected.")
 - Type: Logo
-- Company Name: (The name of the company or product represented by the logo.)
+- Concise Description: (The name of the company or product represented by the logo.)
 
 ---
 
