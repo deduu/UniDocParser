@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  unidocparser:
+    image: unidocparser
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: unidocparser
+    ports:
+      - "8000:8000"
+    volumes:
+      # Code mounts (keep as bind mounts for development)
+      - ./backend:/app/backend
+      - ./frontend:/app/frontend
+      # Data mounts (use named volumes)
+      - uploads_vol:/app/backend/uploads
+      - outputs_vol:/app/backend/outputs
+      - img_vol:/app/backend/img
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      # Add any other environment variables your app needs
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama_service
+    ports:
+      - "11435:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+    # If you have a GPU and want Ollama to use it (requires NVIDIA Docker runtime):
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+volumes: # This top-level declaration defines the named volume
+  uploads_vol:
+  outputs_vol:
+  img_vol:
+  ollama_data:

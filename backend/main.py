@@ -1,12 +1,13 @@
-# main.py
+# backend/main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 
+# Import the settings object to ensure directories are created
+from .core.config import settings  # Add this line
 from .routes import extraction_routes
-from .core.config import settings
 
 app = FastAPI(
     title="PDF Extraction Service",
@@ -24,8 +25,9 @@ app.add_middleware(
 )
 
 # Mount static files and templates
+# The 'outputs' directory will now exist due to the settings import above
 app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
-app.mount("/outputs", StaticFiles(directory="outputs"), name="outputs")
+app.mount("/outputs", StaticFiles(directory=settings.OUTPUT_DIR), name="outputs")
 templates = Jinja2Templates(directory="frontend/templates")
 
 # Include routes

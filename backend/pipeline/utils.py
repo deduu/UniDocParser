@@ -9,6 +9,8 @@ import base64
 import io
 from PIL import Image
 
+from backend.utils.helpers import resize_img
+
 
 # def pil_to_base64(img: Image.Image) -> str:
 #     """PNG-encode a PIL image and return a base64 string (without newlines)."""
@@ -18,7 +20,8 @@ from PIL import Image
 
 def pil_to_base64(
     img: Image.Image,
-    fmt: str = "PNG",
+    fmt: str = "JPEG",
+    size: int = 1440,
     **save_kwargs
 ) -> str:
     """
@@ -32,10 +35,11 @@ def pil_to_base64(
     Returns:
     A base64 string (no newlines), suitable for embedding as data URIs.
     """
+    img = resize_img(img, size=size)
     buffer = io.BytesIO()
     img.save(buffer, format=fmt, **save_kwargs)
     b64 = base64.b64encode(buffer.getvalue()).decode("ascii")
-    return b64
+    return f"data:image/{fmt.lower()};base64,{b64}"
 
 
 async def _save_to_tmp(file: UploadFile, tmp_dir: str | None = None) -> str:

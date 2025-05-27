@@ -132,13 +132,13 @@ Extracted Text:
 FT_FORMAT_PROMPT_TEMPLATE = """Transform the provided "Extracted Text" (which includes main text content AND directly embedded data from figures, such as Markdown tables) into a single, coherent Markdown document.
 The final Markdown output should accurately represent all content and closely emulate the layout and reading order of the original document page image.
 
+
 Requirements:
 - **Output Only Markdown:** Your entire response must be *only* the final Markdown content.
 - **No Explanations:** Do not include any comments, notes, or explanations outside of the Markdown itself.
 - **No Delimiters for the Whole Output:** Do not wrap the entire output in ```markdown ... ``` or any other global code fences. (However, if Mermaid code were present *within* the document, it would need its standard ```mermaid ... ``` fences.)
 
 Extracted Text:
-
 
 """
 
@@ -173,10 +173,8 @@ class Formatter_Prompt:
 
     def get_prompt(self, extracted_text):
         user_prompt = self.prompt + extracted_text
-
         return user_prompt
     
     def get_ft_prompt(self, extracted_text):
         user_prompt = self.ft_prompt + extracted_text
-        
         return user_prompt

@@ -92,7 +92,7 @@ class PDFHandler:
             pages.append(
                 PageOut(
                     index=p.index,
-                    image=pil_to_base64(Image.open(p.image)),
+                    image=pil_to_base64(img=Image.open(p.image), fmt="JPEG", size=720, quality=95),
                     text=p.text,
                     markdown=p.markdown,
                     elements=elements_out,
@@ -103,7 +103,7 @@ class PDFHandler:
             FigureOut(
                 page_num=f.page_num,
                 idx=f.idx,
-                pil_image=pil_to_base64(f.pil_image),
+                image_path=f.image_path,
                 generated_text=f.generated_text,
             )
             for f in ctx.figure_list
@@ -132,19 +132,19 @@ class PDFHandler:
         print(f"self.output_dir: {self.output_dir}")
         json_path = Path(self.output_dir) / f"{unique_filename}.jsonl"
         md_path = Path(self.output_dir) / f"{unique_filename}.md"
-        print(f"json_path: {json_path}")
+        txt_path = Path(self.output_dir) / f"{unique_filename}.txt"
+
+        source = unique_filename.split("_", 1)[1]
         payload = {
-            "pdf_path":        dto.pdf_path,
-            "ocr_pdf_path":    dto.ocr_pdf_path,
-            "processing_time": dto.processing_time,
+            "source":        source,
             "pages":           [p.dict() for p in dto.pages],
+            # "processing_time": dto.processing_time,
         }
 
         # --- write JSONL ---
         def _write_json():
             with open(json_path, "w") as f:
                 json.dump(payload, f, indent=2)
-
         await run_in_threadpool(_write_json)
 
         # --- write Markdown ---
@@ -153,7 +153,14 @@ class PDFHandler:
                 for page in payload["pages"]:
                     md_file.write(page["markdown"])
                     md_file.write("\n\n---\n\n")
-
         await run_in_threadpool(_write_md)
-        print(f"json_path_name: {json_path.name}")
+
+        # --- write Text ---
+        def _write_txt():
+            with open(txt_path, "w") as txt_file:
+                for page in payload["pages"]:
+                    txt_file.write(page["text"])
+                    txt_file.write("\n\n---\n\n")
+        await run_in_threadpool(_write_txt)
+
         return json_path.name, md_path.name

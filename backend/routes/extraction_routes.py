@@ -55,7 +55,7 @@ async def ocr_pdf(
 
 
 @router.post("/splitpdf", response_model=SplitPDFResponse)
-async def split_pdf(file: UploadFile = File(...), handler: PDFHandler = Depends()):
+async def handle_file(file: UploadFile = File(...), handler: PDFHandler = Depends()):
     return await handler.split(file)
 
 
@@ -72,20 +72,18 @@ async def extract_pdf(
         raise HTTPException(
             status_code=400, detail="Only PDF files are supported")
 
-    # 2) Build a unique target name (for saving outputs later)
-    unique_filename = f"{uuid.uuid4()}_{file.filename}"
-
     try:
-        # 3) Run the full pipeline (upload → OCR, split, extract, etc.)
+        # 2) Run the full pipeline (upload → OCR, split, extract, etc.)
         dto: PDFContextOut = await handler.full_pipeline(file)
-        print(f"dto.pdf_path: {dto.pdf_path}")
-        # 4) Persist JSONL & Markdown on disk
+
+          # 3) Persist JSONL & Markdown on disk
+        unique_filename = os.path.basename(dto.pdf_path)
         json_name, md_name = await handler.save_results(
             dto,
             Path(dto.pdf_path).name,
         )
 
-        # 5) Return your typed response
+        # 4) Return your typed response
         return ResponseModel(
             message="PDF extracted successfully",
             extraction_result=dto,
@@ -94,7 +92,7 @@ async def extract_pdf(
         )
 
     except Exception as e:
-        # 6) Log, clean up, and return 500
+        # 5) Log, clean up, and return 500
         # (If you want to delete the uploaded PDF,
         # your handler._save_upload returned the path
         # and you could store it in locals() here.)
@@ -259,7 +257,7 @@ async def extract_pdf(
         pipeline = PDFExtractionPipeline(pdf_path)
         extraction_result = pipeline.process()
 
-        clean = convert_pil_to_data_uri(extraction_result)
+        clean = extraction_result
 
         extraction = ExtractOut(**clean)
         # Save extraction results (JSON and Markdown outputs)
@@ -387,33 +385,3 @@ async def extracted_pdf_md(filename: str):
         content = await f.read()
 
     return PlainTextResponse(content=content)
-
-
-def convert_pil_to_data_uri(obj: Any) -> Any:
-    """
-    Recursively walk through dicts/lists/tuples and:
-      • for any PIL.Image.Image, return a data-URI string
-      • for any dict, list or tuple, recurse into its elements
-      • otherwise return the object unchanged
-    """
-    # 1) If it’s a PIL image, encode to data URI
-    if isinstance(obj, Image):
-        buffer = io.BytesIO()
-        obj.save(buffer, format="PNG")
-        b64 = base64.b64encode(buffer.getvalue()).decode("ascii")
-        return f"data:image/png;base64,{b64}"
-
-    # 2) If it’s a dict, recurse on its values
-    if isinstance(obj, dict):
-        return {k: convert_pil_to_data_uri(v) for k, v in obj.items()}
-
-    # 3) If it’s a list, recurse on each element
-    if isinstance(obj, list):
-        return [convert_pil_to_data_uri(v) for v in obj]
-
-    # 4) If it’s a tuple, recurse and rebuild a tuple
-    if isinstance(obj, tuple):
-        return tuple(convert_pil_to_data_uri(v) for v in obj)
-
-    # 5) Otherwise, leave it as-is
-    return obj
