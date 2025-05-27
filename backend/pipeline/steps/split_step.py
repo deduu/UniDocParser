@@ -2,7 +2,7 @@
 
 from backend.pipeline.steps.step import PipelineStep
 from backend.pipeline.context import PDFContext, Page
-from backend.services.file_handler import split_pdf
+from backend.services.file_handler import handle_file
 
 
 class SplitStep(PipelineStep):
@@ -11,7 +11,7 @@ class SplitStep(PipelineStep):
 
     def run(self, ctx: PDFContext) -> PDFContext:
         # 1. Split the PDF into raw page metadata
-        raw_pages = split_pdf(ctx.pdf_path)
+        raw_pages = handle_file(ctx.pdf_path)
 
         # 2. Convert each dict into a Page model (elements defaults to [])
         pages = [Page(**page_data) for page_data in raw_pages]

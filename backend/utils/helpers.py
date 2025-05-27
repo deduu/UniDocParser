@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL import Image, ImageFilter
 import re
 import io
 import base64
@@ -20,7 +20,9 @@ def resize_img(image, size=1440):
     percent = (basesize / float(greater))
     hsize = int((float(height) * float(percent)))
     wsize = int((float(width) * float(percent)))
-    return image.resize((wsize, hsize))
+    image = image.resize((wsize, hsize), Image.LANCZOS)
+    image = image.filter(ImageFilter.SHARPEN)
+    return image
 
 # Fuction to resize the image to the specified width while maintaining the aspect ratio.
 def resize_img_from_path(image_path: str, size=720) -> Image:
@@ -46,5 +48,5 @@ def image_to_base64(image_path, quality=50):
     buffer = io.BytesIO()
     img.save(buffer, format="JPEG", quality=quality)
     buffer.seek(0)
-    compressed_base64 = base64.b64encode(buffer.read()).decode("utf-8")
+    compressed_base64 = base64.b64encode(buffer.read()).decode("ascii")
     return f"data:image/jpeg;base64,{compressed_base64}"

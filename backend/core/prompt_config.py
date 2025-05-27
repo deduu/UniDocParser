@@ -139,7 +139,6 @@ Requirements:
 
 Extracted Text:
 
-
 """
 
 class Fig2Text_Prompt:
@@ -173,10 +172,8 @@ class Formatter_Prompt:
 
     def get_prompt(self, extracted_text):
         user_prompt = self.prompt + extracted_text
-
         return user_prompt
     
     def get_ft_prompt(self, extracted_text):
         user_prompt = self.ft_prompt + extracted_text
-        
         return user_prompt
