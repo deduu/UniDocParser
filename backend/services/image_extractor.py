@@ -27,7 +27,7 @@ def take_data(result_text):
         if "enddata;" in data_text:
             data_text = data_text.split("enddata;")[0].strip()
         else:
-            data_text = data_text.split("Short Description:")[0].strip()
+            data_text = data_text.split("Concise Description:")[0].strip()
     else:
         return take_desc(result_text)
     
@@ -35,9 +35,9 @@ def take_data(result_text):
 
 def take_desc(result_text):
     desc_text = result_text
-    if "Short Description:" not in desc_text:
+    if "Concise Description:" not in desc_text:
         return ""
-    desc_text = desc_text.split("Short Description:")[1].strip()
+    desc_text = desc_text.split("Concise Description:")[1].strip()
     return desc_text
 
 def take_caption(result_text):
@@ -55,7 +55,7 @@ def take_caption(result_text):
 def take_type(result_text):
     type_text = result_text
     if "Type:" not in type_text:
-        return "image"
+        return "general image"
     type_text = type_text.split("Type:")[1].strip()
     type_text = type_text.split("\n")[0].strip()
     return type_text.lower()
