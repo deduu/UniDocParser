@@ -1,5 +1,5 @@
 import torch
-from transformers import Qwen2_5_VLForConditionalGeneration, Qwen2_5_VLProcessor, AutoProcessor
+from transformers import Qwen2_5_VLForConditionalGeneration, Qwen2_5_VLProcessor, BitsAndBytesConfig
 from qwen_vl_utils import process_vision_info
 from langchain.prompts import ChatPromptTemplate
 from backend.core.prompt_config import Formatter_Prompt
@@ -19,6 +19,12 @@ class FT_Formatter_PIPELINE:
             model_id,
             device_map=device,
             torch_dtype=torch.bfloat16,
+            quantization_config = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_use_double_quant=True,
+                bnb_4bit_quant_type="nf4",
+                bnb_4bit_compute_dtype=torch.bfloat16
+            )
         )
         if adapter_path:
             self.model.load_adapter(adapter_path)

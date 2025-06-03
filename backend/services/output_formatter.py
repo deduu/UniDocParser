@@ -6,7 +6,7 @@ from pathlib import Path
 from PIL import Image
 from backend.utils.helpers import process_string, resize_img
 # from backend.core.vlm_format_config import formatter_vlm
-from backend.core.ft_vlm_format_config import formatter_vlm
+from backend.core.vlm_format_config import formatter_vlm
 
 # Combining Extracted element into text
 # Function to clean the OCR text
@@ -151,7 +151,7 @@ def format_markdown(pages: list[dict], pdf_name: str) -> list[dict]:
 
         # -------- 1. load & resize image ---------------------------------
         pil_image = Image.open(page["image"])
-        pil_image = resize_img(pil_image, size=720)
+        pil_image = resize_img(pil_image, size=1080)
 
         # -------- 2. overwrite /tmp image path ---------------------------
         tmp_path = TMP_DIR / f"resized_{pdf_name}_{idx}.png"
@@ -161,7 +161,8 @@ def format_markdown(pages: list[dict], pdf_name: str) -> list[dict]:
         # -------- 3. run VLM formatter -----------------------------------
         extracted_text = page["text"]
         output = formatter_vlm.generate(
-            extracted_text=extracted_text, image=pil_image
+            extracted_text=extracted_text, 
+            image=page["image"]
         )
 
         # -------- 4. post-process & store --------------------------------

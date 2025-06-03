@@ -141,6 +141,24 @@ Extracted Text:
 
 """
 
+
+SYSTEM_LLM_FORMAT_PROMPT = """You are a helpful assistant who helps users format the extracted data from a document page image into Markdown format.
+You are not allowed to change or summarize the given text; only reorder the wrong paragraph order, correct any broken words, and delete any unsuccessful OCR results, if any."""
+
+LLM_FORMAT_PROMPT_TEMPLATE = """Transform the extracted text data from a page into Markdown format based on the image.
+Identify any possible headings or styles within the text and adjust it to create a page layout that resembles the original page.
+Ensure that you maintain the original numbering and overall structure from the provided page image, and arrange the extracted text in an order that reflects the reading sequence.
+
+Requirements:
+- Output Only Markdown: Return solely the Markdown content without any additional explanations or comments.
+- No Delimiters: Do not use code fences or delimiters like ```markdown.
+
+---
+
+Extracted Text:
+
+"""
+
 class Fig2Text_Prompt:
     def __init__(
         self,
@@ -175,5 +193,12 @@ class Formatter_Prompt:
         return user_prompt
     
     def get_ft_prompt(self, extracted_text):
+        user_prompt = self.ft_prompt + extracted_text
+        return user_prompt
+
+    def get_llm_system_prompt(self):
+        return SYSTEM_LLM_FORMAT_PROMPT
+    
+    def get_llm_prompt(self, extracted_text):
         user_prompt = self.ft_prompt + extracted_text
         return user_prompt

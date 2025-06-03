@@ -1,21 +1,14 @@
-import cv2
-import os
-from PIL import Image
-import re
-from backend.core.vlm_fig2tab_config import fig2tab_vlm
+from backend.core.ft_vlm_fig2tab_config import fig2tab_vlm
+import time
+import torch
+import gc
 
 # Figure to Table VLM
 def fig_to_table(figure_list):
 
-    images = []
     for i, image in enumerate(figure_list):
-        images.append(image["image_path"])
-
-    output = fig2tab_vlm.generate(images)
-
-    # Exception for reformatting the output
-    for i, out in enumerate(output):
-        figure_list[i]["generated_text"] = out
+        output = fig2tab_vlm.generate(image["image_path"])
+        figure_list[i]["generated_text"] = output
 
     return figure_list
 

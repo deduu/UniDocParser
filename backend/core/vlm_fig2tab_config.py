@@ -10,8 +10,8 @@ class Fig2Tab_PIPELINE:
     def __init__(
         self, 
         model_id="Qwen/Qwen2.5-VL-7B-Instruct",
-        device="cuda:1" if torch.cuda.is_available() else "cpu",
-        max_new_tokens=1024,
+        device="cuda:2" if torch.cuda.is_available() else "cpu",
+        max_new_tokens=2048,
         batch_size=1,   # Adjust batch size as needed
     ):
         self.model = pipeline(
@@ -22,6 +22,9 @@ class Fig2Tab_PIPELINE:
             max_new_tokens=max_new_tokens,
             batch_size=batch_size,
         )
+        self.generate_kwargs = {
+            "max_new_tokens": max_new_tokens,
+        }
 
     def generate(self, images: list):
         """
@@ -44,7 +47,7 @@ class Fig2Tab_PIPELINE:
                     ]
                 }
             ])
-        output = self.model(text=messages)
+        output = self.model(text=messages, generate_kwargs=self.generate_kwargs)
         generated_text = []
         for out in output:
             generated_text.append(out[0]["generated_text"][-1]["content"])
