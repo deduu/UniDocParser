@@ -30,16 +30,18 @@ Extracted Text:
 """
 
 # VLM Formatter class
+
+
 class Formatter_PIPELINE:
     def __init__(
         self,
         model_id=FORMATTER_MODEL_ID,
-        device="cuda:1" if torch.cuda.is_available() else "cpu",
+        device="cuda:2" if torch.cuda.is_available() else "cpu",
         do_sample=True,
         temperature=0.3,
         top_p=0.5,
         max_new_tokens=4096,
-        system_prompt=SYSTEM_FORMAT_PROMPT, 
+        system_prompt=SYSTEM_FORMAT_PROMPT,
         prompt=FORMAT_PROMPT_TEMPLATE
     ):
         self.system_prompt = system_prompt
@@ -63,7 +65,8 @@ class Formatter_PIPELINE:
         Process a list of images and return the results.
         """
         # create the prompt
-        prompt_template = ChatPromptTemplate.from_template(FORMAT_PROMPT_TEMPLATE)
+        prompt_template = ChatPromptTemplate.from_template(
+            FORMAT_PROMPT_TEMPLATE)
         prompt = prompt_template.format(extracted_text=extracted_text)
         messages = [
             {
@@ -80,8 +83,10 @@ class Formatter_PIPELINE:
                 ]
             }
         ]
-        output = self.model(text=messages, generate_kwargs=self.generate_kwargs)
+        output = self.model(
+            text=messages, generate_kwargs=self.generate_kwargs)
         generated_text = output[0]["generated_text"][-1]["content"]
         return generated_text
-    
+
+
 formatter_vlm = Formatter_PIPELINE()

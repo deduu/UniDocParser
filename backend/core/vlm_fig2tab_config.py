@@ -53,7 +53,7 @@ class Fig2Tab_PIPELINE:
     def __init__(
         self,
         model_id=Fig2Tab_MODEL_ID,
-        device="cuda:0" if torch.cuda.is_available() else "cpu",
+        device="cuda:3" if torch.cuda.is_available() else "cpu",
         max_new_tokens=1024,
         batch_size=1,   # Adjust batch size as needed
         system_prompt=SYSTEM_FIG_TEMPLATE,
