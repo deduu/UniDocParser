@@ -7,3 +7,4 @@ outputs/
 uploads/
 test*.py
 tmp/
+unsloth_compiled_cache

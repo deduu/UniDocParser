@@ -2,6 +2,7 @@ import os
 from pydantic_settings import BaseSettings
 from typing import ClassVar
 
+
 # Adjust BASE_DIR to point to the project root, not the backend directory
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # If config.py is at /home/dedya/UniDocParser/backend/core/config.py
@@ -11,8 +12,9 @@ UPLOAD_FOLDER: str = os.path.join(os.getcwd(), 'uploads')
 OUTPUT_FOLDER: str = os.path.join(os.getcwd(), 'outputs')
 IMG_DIR = os.path.join(BASE_DIR, 'img')  # Removed extra 'backend'
 
-# Correct the model path - remove the extra 'backend'
-YOLO_MODEL_PATH = os.path.join(BASE_DIR, 'weights', 'detect', 'yolo11_best.pt')
+# Define subdirectories that need to be created
+IMG_PAGES_SUBDIR: str = "pages"
+IMG_FIGURES_SUBDIR: str = "figures"
 
 class Settings(BaseSettings):
     # Annotate constants as ClassVar so they aren't treated as model fields
@@ -21,8 +23,9 @@ class Settings(BaseSettings):
     OUTPUT_DIR: ClassVar[str] = OUTPUT_FOLDER
     IMG_DIR: ClassVar[str] = IMG_DIR
     
-    # Model paths and parameters - fixed syntax
-    YOLO_MODEL_PATH: ClassVar[str] = YOLO_MODEL_PATH
+    # For convenience, provide full paths to subdirectories if other modules need them directly
+    IMG_PAGES_DIR: ClassVar[str] = os.path.join(IMG_DIR, IMG_PAGES_SUBDIR)
+    IMG_FIGURES_DIR: ClassVar[str] = os.path.join(IMG_DIR, IMG_FIGURES_SUBDIR)
     
     # Ensure upload and output directories exist
     def __init__(self, *args, **kwargs):
@@ -30,7 +33,8 @@ class Settings(BaseSettings):
         os.makedirs(self.UPLOAD_DIR, exist_ok=True)
         os.makedirs(self.OUTPUT_DIR, exist_ok=True)
         os.makedirs(self.IMG_DIR, exist_ok=True)
-        os.makedirs(os.path.dirname(self.YOLO_MODEL_PATH), exist_ok=True)
+        os.makedirs(self.IMG_PAGES_DIR, exist_ok=True)
+        os.makedirs(self.IMG_FIGURES_DIR, exist_ok=True)
 
     def __str__(self):
         """Print settings for debugging"""
@@ -39,7 +43,8 @@ class Settings(BaseSettings):
         UPLOAD_DIR: {self.UPLOAD_DIR}
         OUTPUT_DIR: {self.OUTPUT_DIR}
         IMG_DIR: {self.IMG_DIR}
-        YOLO_MODEL_PATH: {self.YOLO_MODEL_PATH}
+        IMG_PAGES_DIR: {self.IMG_PAGES_DIR}
+        IMG_FIGURES_DIR: {self.IMG_FIGURES_DIR}
         """
 
 settings = Settings()

@@ -55,7 +55,7 @@ async def ocr_pdf(
 
 
 @router.post("/splitpdf", response_model=SplitPDFResponse)
-async def split_pdf(file: UploadFile = File(...), handler: DocParserHandler = Depends()):
+async def handle_file(file: UploadFile = File(...), handler: DocParserHandler = Depends()):
     return await handler.split(file)
 
 
@@ -71,9 +71,6 @@ async def extract_pdf(
     if not file.filename or not file.filename.lower().endswith(".pdf"):
         raise HTTPException(
             status_code=400, detail="Only PDF files are supported")
-
-    # 2) Build a unique target name (for saving outputs later)
-    unique_filename = f"{uuid.uuid4()}_{file.filename}"
 
     try:
         # 3) Run the full pipeline (upload → OCR, split, extract, etc.)

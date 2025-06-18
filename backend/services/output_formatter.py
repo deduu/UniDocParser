@@ -1,17 +1,12 @@
 import re
-import cv2
+from backend.utils.helpers import process_string
 from pathlib import Path
 from PIL import Image
-import numpy as np
-from langchain.prompts import ChatPromptTemplate
-# from backend.services.model_manager import Formatter_PIPELINE, formatter_generate_kwargs, vlm_tokenizer
 from backend.utils.helpers import process_string, resize_img
-from backend.core.vlm_format_config import formatter_vlm
+from backend.core.ft_vlm_format_config import formatter_vlm
 
 # Combining Extracted element into text
 # Function to clean the OCR text
-
-
 def clean_text(ocr_text):
     # Clean broken words
     # Join hyphenated words split across lines
@@ -32,8 +27,8 @@ def clean_text(ocr_text):
     ocr_text = re.sub(r'([,=_])\s([a-z0-9"“‘])', r'\1 \2', ocr_text)
 
     # Remove spaces before and after all punctuation marks
-    ocr_text = re.sub(r'\s+([.,!?%\'\)\]])', r'\1',
-                      ocr_text)    # Remove spaces before punctuation
+    ocr_text = re.sub(r'\s+([.,!?%\'\)\]])', r'\1',ocr_text)    # Remove spaces before punctuation
+
     # Remove spaces after opening brackets
     ocr_text = re.sub(r'([\(\[])\s+', r'\1', ocr_text)
 
@@ -43,7 +38,7 @@ def clean_text(ocr_text):
 
     return ocr_text
 
-
+# Function to process the extracted text
 def format_extracted_text(pages):
     for i, page in enumerate(pages):
         text = ""
@@ -96,10 +91,12 @@ def format_extracted_text(pages):
 
 # Final formatting function to format the extracted text into Markdown
 # Function to clean the markdown text
-
-
 def clean_md(result_text):
     md_text = result_text
+
+    # remove all code blocks
+    if "```" in md_text and not ("```markdown" in md_text or "```mermaid" in md_text):
+        md_text  = re.sub(r'```', '', md_text)
 
     # markdown block handling
     if "```markdown" in md_text:
@@ -131,6 +128,14 @@ def clean_md(result_text):
             lines.insert(last_arrow_index + 1, '```')
         md_text = '\n'.join(lines)
 
+    # remove the "Extracted Text:" part
+    if "Extracted Text:" in md_text:
+        md_text = md_text.split("Extracted Text:")[1].strip()
+
+    if "<|im_end|>" in md_text:
+        # split the text by
+        md_text = md_text.split("<|im_end|>")[0].strip()
+
     return md_text
 
 
@@ -153,42 +158,14 @@ def format_markdown(pages: list[dict], pdf_name: str) -> list[dict]:
         pil_image = Image.open(page["image"])
         pil_image = resize_img(pil_image, size=1080)
 
-        # -------- 2. overwrite /tmp image path ---------------------------
-        tmp_path = TMP_DIR / f"resized_{pdf_name}_{idx}.png"
-        pil_image.save(tmp_path, format="PNG")
-        page["image"] = str(tmp_path)          # keep valid path for later
-
         # -------- 3. run VLM formatter -----------------------------------
         extracted_text = page["text"]
         output = formatter_vlm.generate(
-            extracted_text=extracted_text, image=pil_image
+            extracted_text=extracted_text, 
+            image=pil_image
         )
 
         # -------- 4. post-process & store --------------------------------
         page["markdown"] = clean_md(output)
 
     return pages
-
-# def format_markdown(pages, pdf_name):
-
-#     for k, page in enumerate(pages):
-#         print(f"Processing {pdf_name} page {page['index']}")
-
-#         # load text
-#         extracted_text = page["text"]
-
-#         # load the image
-#         pil_image = Image.open(page["image"])
-#         pil_image = resize_img(pil_image, size=1080)
-
-#         # delete image path from page
-#         page.pop("image")
-
-#         output = formatter_vlm.generate(
-#             extracted_text=extracted_text, image=pil_image)
-
-#         formatted_text = clean_md(output)
-
-#         page["markdown"] = formatted_text
-
-#     return pages

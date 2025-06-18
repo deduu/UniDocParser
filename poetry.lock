@@ -1965,18 +1965,6 @@ files = [
     {file = "tzdata-2025.2.tar.gz", hash = "sha256:b60a638fcc0daffadf82fe0f57e53d06bdec2f36c4df66280ae79bce6bd6f2b9"},
 ]
 
-[[package]]
-name = "ultralytics"
-version = "8.3.145"
-description = "Ultralytics YOLO 🚀 for SOTA object detection, multi-object tracking, instance segmentation, pose estimation and image classification."
-optional = false
-python-versions = ">=3.8"
-groups = ["main"]
-files = [
-    {file = "ultralytics-8.3.145-py3-none-any.whl", hash = "sha256:e58018b4db4c305a5e0260ead8d7ce791d2745c47d477952c8ae9ccc69e91203"},
-    {file = "ultralytics-8.3.145.tar.gz", hash = "sha256:55bcce373b39e3ab9a126f4636a837416fe5c628845e00b2fa210c288a65d5d9"},
-]
-
 [package.dependencies]
 matplotlib = ">=3.3.0"
 numpy = ">=1.23.0"

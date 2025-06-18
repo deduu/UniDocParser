@@ -1,22 +1,11 @@
-import cv2
-import os
-from PIL import Image
-import re
-# from backend.services.model_manager import Fig2Tab_PIPELINE, vlm_tokenizer
-from backend.core.vlm_fig2tab_config import fig2tab_vlm
+from backend.core.ft_vlm_fig2tab_config import fig2tab_vlm
 
 # Figure to Table VLM
 def fig_to_table(figure_list):
 
-    images = []
     for i, image in enumerate(figure_list):
-        images.append(image["pil_image"])
-
-    output = fig2tab_vlm.generate(images)
-
-    # Exception for reformatting the output
-    for i, out in enumerate(output):
-        figure_list[i]["generated_text"] = out
+        output = fig2tab_vlm.generate(image["pil_image"])
+        figure_list[i]["generated_text"] = output
 
     return figure_list
 

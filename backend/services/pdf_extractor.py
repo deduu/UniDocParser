@@ -15,7 +15,7 @@ class PDFExtractor:
         Returns:
             Dict: Extracted PDF content
         """
-        from .file_handler import split_pdf
+        from .file_handler import handle_file
         from .image_extractor import extract_figures, extract_images
         from .element_extractor import extract_elements
         from .output_formatter import format_extracted_text, format_markdown_batch, format_markdown
@@ -28,10 +28,7 @@ class PDFExtractor:
         
         pages = []
         # Split PDF into pages
-        pages = split_pdf(pdf_path, pages)
-        
-        # Extract figures with YOLO
-        # pages = extract_figures(pages)
+        pages = handle_file(pdf_path, pages)
         
         # Extract elements
         pages, figure_list = extract_elements(pages)
