@@ -81,11 +81,13 @@ def format_extracted_text(pages):
                         else:
                             # delete the text element from the page
                             del page['elements'][j]
+
         for element in page['elements']:
             text += f"{element['text']}\n\n"
 
         # clean the text
         page["text"] = clean_text(text)
+        page["markdown"] = clean_text(text)
 
     return pages
 

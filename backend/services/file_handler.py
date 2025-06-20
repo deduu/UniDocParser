@@ -1,8 +1,8 @@
 import os
 from pdf2image import convert_from_path
 from PIL import Image
-from backend.utils.helpers import resize_img
 import ocrmypdf
+from backend.utils.helpers import resize_img
 from backend.core.config import settings
 
 def handle_file(file_path: str):
@@ -51,6 +51,30 @@ def handle_file(file_path: str):
             pages.append(metadata)
         except Exception as e:
             print(f"Error processing image: {e}")
+            return None
+    # Check if the file is an excel file
+    elif file_path.lower().endswith(('.xls', '.xlsx')):
+        # import excel2img
+        import openpyxl
+
+        try:
+            wb = openpyxl.load_workbook(file_path)
+            for i, sheet in enumerate(wb.sheetnames):
+                # excel2img.export_img("D:\Test Read Excel\docs\Simple personal cash flow statement.xlsx", f"img/Sheet{i+1}-{sheet}.jpeg", page=sheet)
+                # img = Image.open(f"img/Sheet{i+1}-{sheet}.jpeg")
+                # img = resize_img(img, size=1440)
+                # img.save(f"img/Sheet{i+1}-{sheet}.jpeg")
+
+                metadata = {
+                    "index": i,
+                    "image": f"img/Sheet{i+1}-{sheet}_resized.jpeg",
+                    "text": "",
+                    "markdown": "",
+                    "elements": [],
+                }
+                pages.append(metadata)
+        except Exception as e:
+            print(f"Error processing Excel file: {e}")
             return None
     else:
         print("Unsupported file format.")
