@@ -22,7 +22,7 @@ class FT_Formatter_PIPELINE:
     def __init__(
         self,
         model_id="ZeArkh/Qwen2.5-VL-7B-Instruct-unsloth-Markdown-Formatter",
-        device="cuda:4" if torch.cuda.is_available() else "cpu",
+        device="cuda:3" if torch.cuda.is_available() else "cpu",
     ):
         self.device = device
         self.model, self.processor = FastVisionModel.from_pretrained(

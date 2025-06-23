@@ -111,7 +111,7 @@ class PDFExtractor:
         
         # Extract textual elements and replace figures with table data where applicable
         start_extract_elements_time = time.time()
-        pages, figure_list = extract_elements(pages, file_path=file_path)
+        pages, figure_list = extract_elements(pages, file_path)
         end_extract_elements_time = time.time()
         extract_elements_time = end_extract_elements_time - start_extract_elements_time  # time in seconds
         print(f"{excel_name} elements extracted, time:", datetime.timedelta(seconds=extract_elements_time))
@@ -191,16 +191,17 @@ class PDFExtractor:
         
         return json_output_path, md_output_path
     
+# # Example usage of the PDFExtractor class
 extarctor = PDFExtractor()
 
-# # Example usage of the PDFExtractor class
-
-# excel_results = extarctor.extract_excel(file_path="/home/dedya/mk.arif/UniDocParser/Simple personal cash flow statement.xlsx")
+# # Extracting from an Excel file
+# excel_results = extarctor.extract_excel(file_path="/home/dedya/mk.arif/UniDocParser/docs/Simple personal cash flow statement.xlsx")
 # json_output_path, md_output_path = extarctor.save_extraction_results(excel_results)
 # print(f"\nExcel extraction results: \n{excel_results['pages'][3]['text']}")
 # print(f"JSON output saved to: {json_output_path}")
 # print(f"Markdown output saved to: {md_output_path}")
 
-pdf_results = extarctor.extract_pdf_image(pdf_path="/home/dedya/mk.arif/UniDocParser/dummy-data.pdf")
+# Extracting from a PDF file
+pdf_results = extarctor.extract_pdf_image(pdf_path="/home/dedya/mk.arif/UniDocParser/docs/AR for improved learnability.pdf")
 json_output_path, md_output_path = extarctor.save_extraction_results(pdf_results)
 print(f"\nPDF extraction results saved to: {json_output_path} and {md_output_path}")
