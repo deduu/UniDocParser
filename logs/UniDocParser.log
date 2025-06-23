@@ -16,3 +16,23 @@
 2025-06-16 19:06:59,818 - backend.main - INFO - FastAPI application created and configured.
 2025-06-16 19:06:59,820 - backend.main - INFO - Application startup begins...
 2025-06-16 19:06:59,820 - backend.main - INFO - Application startup complete.
+2025-06-16 20:56:25,106 - backend.main - INFO - FastAPI application created and configured.
+2025-06-16 20:56:25,107 - backend.main - INFO - Application startup begins...
+2025-06-16 20:56:25,107 - backend.main - INFO - Application startup complete.
+2025-06-16 20:57:47,893 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.32s
+2025-06-16 20:57:49,082 - unstructured_inference - INFO - Reading image file: /home/dedya/UniDocParser/backend/img/pages/0154aa7a-c1b2-4188-b348-003a890ceee1_dummy_scanned1_0.png ...
+2025-06-16 20:57:52,649 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-16 20:57:52,650 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-16 20:57:54,166 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-16 20:57:54,424 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-16 20:57:54,433 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-16 20:57:55,185 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 7.29s
+2025-06-16 20:58:10,846 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 15.66s
+2025-06-16 20:58:10,852 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-06-16 20:58:39,396 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 28.54s
+2025-06-16 20:58:39,402 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 52.82s
+2025-06-16 21:01:36,394 - backend.main - INFO - Application shutdown begins...
+2025-06-16 21:01:36,394 - backend.main - INFO - Application shutdown complete.
+2025-06-16 22:07:34,885 - backend.main - INFO - FastAPI application created and configured.
+2025-06-16 22:07:34,886 - backend.main - INFO - Application startup begins...
+2025-06-16 22:07:34,887 - backend.main - INFO - Application startup complete.

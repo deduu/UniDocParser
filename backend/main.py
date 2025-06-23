@@ -82,11 +82,11 @@ def create_app() -> FastAPI:
 
     # --- Mount static files and templates ---
     # Ensure these paths are correct relative to where main.py is run
-    app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
+    app.mount("/static", StaticFiles(directory="frontend_b/static"), name="static")
     app.mount("/outputs", StaticFiles(directory="outputs"), name="outputs")
 
     # Store templates in app.state for easier access in routes
-    templates = Jinja2Templates(directory="frontend/templates")
+    templates = Jinja2Templates(directory="frontend_b/templates")
     app.state.templates = templates  # Important: attach to app.state
 
     # --- Include routes ---
