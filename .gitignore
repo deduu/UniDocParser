@@ -9,3 +9,4 @@ test*.py
 tmp/
 unsloth_compiled_cache
 docs
+frontend/node_modules
