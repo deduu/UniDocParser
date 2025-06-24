@@ -68,14 +68,24 @@ async def extract_pdf(
     handler: DocParserHandler = Depends(),
 ) -> ResponseModel:
     # 1) Validate file type
-    if not file.filename or not file.filename.lower().endswith(".pdf"):
+    if not file.filename or not (
+        file.filename.lower().endswith(".pdf")
+        or file.filename.lower().endswith(".xls")
+        or file.filename.lower().endswith(".xlsx")
+    ):
         raise HTTPException(
-            status_code=400, detail="Only PDF files are supported")
+            status_code=400, detail="Only PDF or Excel files (.xls/.xlsx) are supported"
+        )
 
     try:
         # 3) Run the full pipeline (upload → OCR, split, extract, etc.)
-        dto: DocParserContextOut = await handler.full_pipeline(file)
+        if file.filename.lower().endswith((".xls", ".xlsx")):
+            dto: DocParserContextOut = await handler.extract_only(file)
+        else:
+            dto: DocParserContextOut = await handler.full_pipeline(file)
+
         print(f"dto.pdf_path: {dto.pdf_path}")
+
         # 4) Persist JSONL & Markdown on disk
         json_name, md_name = await handler.save_results(
             dto,
@@ -91,10 +101,6 @@ async def extract_pdf(
         )
 
     except Exception as e:
-        # 6) Log, clean up, and return 500
-        # (If you want to delete the uploaded PDF,
-        # your handler._save_upload returned the path
-        # and you could store it in locals() here.)
         traceback_str = traceback.format_exc()
         return JSONResponse(
             status_code=500,
@@ -104,6 +110,7 @@ async def extract_pdf(
                 "traceback": traceback_str,
             },
         )
+
 
 # ------------------------------------------------------------------------------
 

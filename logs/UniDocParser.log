@@ -272,3 +272,220 @@
 2025-06-20 13:50:45,088 - backend.main - INFO - Application startup complete.
 2025-06-20 13:54:33,834 - backend.main - INFO - Application shutdown begins...
 2025-06-20 13:54:33,834 - backend.main - INFO - Application shutdown complete.
+2025-06-23 14:02:03,755 - backend.main - INFO - FastAPI application created and configured.
+2025-06-23 14:02:03,757 - backend.main - INFO - Application startup begins...
+2025-06-23 14:02:03,758 - backend.main - INFO - Application startup complete.
+2025-06-23 14:02:44,848 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.22s
+2025-06-23 14:02:49,052 - unstructured_inference - INFO - Reading image file: /home/dedya/UniDocParser/backend/img/pages/4fd37887-bda5-45d8-9b20-9926f552d944_dummy_scanned1_0.jpeg ...
+2025-06-23 14:02:53,417 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-23 14:02:53,417 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-23 14:02:53,970 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-23 14:02:54,242 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-23 14:02:54,252 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-23 14:02:55,377 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 10.53s
+2025-06-23 14:27:09,313 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.20s
+2025-06-23 14:27:09,315 - unstructured_inference - INFO - Reading image file: /home/dedya/UniDocParser/backend/img/pages/c5708418-dcda-4c1e-85c4-5f2fb48af00a_dummy_scanned1_0.jpeg ...
+2025-06-23 14:27:13,747 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 4.43s
+2025-06-23 14:27:33,609 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.31s
+2025-06-23 14:27:33,611 - unstructured_inference - INFO - Reading image file: /home/dedya/UniDocParser/backend/img/pages/f0af3ea7-004c-43b7-862a-ea07691e9f0e_dummy_scanned1_0.jpeg ...
+2025-06-23 14:27:37,951 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 4.34s
+2025-06-23 14:29:05,280 - backend.main - INFO - Application shutdown begins...
+2025-06-23 14:29:05,280 - backend.main - INFO - Application shutdown complete.
+2025-06-23 14:30:25,899 - backend.main - INFO - FastAPI application created and configured.
+2025-06-23 14:30:25,900 - backend.main - INFO - Application startup begins...
+2025-06-23 14:30:25,900 - backend.main - INFO - Application startup complete.
+2025-06-23 14:30:53,176 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.31s
+2025-06-23 14:30:57,044 - unstructured_inference - INFO - Reading image file: /home/dedya/UniDocParser/backend/img/pages/2a0de884-1816-4459-adfe-a42297b10517_dummy_scanned1_0.jpeg ...
+2025-06-23 14:31:01,510 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-23 14:31:01,510 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-23 14:31:02,073 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-23 14:31:02,339 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-23 14:31:02,349 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-23 14:31:03,285 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 10.11s
+2025-06-23 14:31:53,054 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 49.77s
+2025-06-23 14:31:53,060 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-23 14:32:45,350 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 52.29s
+2025-06-23 14:32:45,353 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 113.49s
+2025-06-23 14:49:25,201 - backend.main - INFO - Application shutdown begins...
+2025-06-23 14:49:25,201 - backend.main - INFO - Application shutdown complete.
+2025-06-23 14:50:33,508 - backend.main - INFO - FastAPI application created and configured.
+2025-06-23 14:50:33,509 - backend.main - INFO - Application startup begins...
+2025-06-23 14:50:33,509 - backend.main - INFO - Application startup complete.
+2025-06-23 15:00:48,044 - backend.main - INFO - Application shutdown begins...
+2025-06-23 15:00:48,044 - backend.main - INFO - Application shutdown complete.
+2025-06-23 15:01:58,778 - backend.main - INFO - FastAPI application created and configured.
+2025-06-23 15:01:58,779 - backend.main - INFO - Application startup begins...
+2025-06-23 15:01:58,779 - backend.main - INFO - Application startup complete.
+2025-06-23 15:04:13,392 - backend.main - INFO - Application shutdown begins...
+2025-06-23 15:04:13,393 - backend.main - INFO - Application shutdown complete.
+2025-06-23 15:05:18,272 - backend.main - INFO - FastAPI application created and configured.
+2025-06-23 15:05:18,272 - backend.main - INFO - Application startup begins...
+2025-06-23 15:05:18,272 - backend.main - INFO - Application startup complete.
+2025-06-23 15:07:35,262 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.02s
+2025-06-23 15:10:13,708 - backend.main - INFO - Application shutdown begins...
+2025-06-23 15:10:13,708 - backend.main - INFO - Application shutdown complete.
+2025-06-23 15:11:21,039 - backend.main - INFO - FastAPI application created and configured.
+2025-06-23 15:11:21,039 - backend.main - INFO - Application startup begins...
+2025-06-23 15:11:21,039 - backend.main - INFO - Application startup complete.
+2025-06-23 15:12:15,154 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.11s
+2025-06-23 15:17:19,203 - backend.main - INFO - Application shutdown begins...
+2025-06-23 15:17:19,203 - backend.main - INFO - Application shutdown complete.
+2025-06-23 15:35:16,268 - backend.main - INFO - FastAPI application created and configured.
+2025-06-23 15:35:16,269 - backend.main - INFO - Application startup begins...
+2025-06-23 15:35:16,269 - backend.main - INFO - Application startup complete.
+2025-06-23 15:35:49,401 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.11s
+2025-06-23 15:36:28,612 - backend.main - INFO - Application shutdown begins...
+2025-06-23 15:36:28,612 - backend.main - INFO - Application shutdown complete.
+2025-06-24 09:29:45,138 - backend.main - INFO - FastAPI application created and configured.
+2025-06-24 09:29:45,138 - backend.main - INFO - Application startup begins...
+2025-06-24 09:29:45,139 - backend.main - INFO - Application startup complete.
+2025-06-24 09:31:36,992 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.11s
+2025-06-24 09:32:20,989 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.02s
+2025-06-24 09:34:56,192 - backend.main - INFO - Application shutdown begins...
+2025-06-24 09:34:56,192 - backend.main - INFO - Application shutdown complete.
+2025-06-24 09:36:05,866 - backend.main - INFO - FastAPI application created and configured.
+2025-06-24 09:36:05,866 - backend.main - INFO - Application startup begins...
+2025-06-24 09:36:05,867 - backend.main - INFO - Application startup complete.
+2025-06-24 09:36:26,816 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.12s
+2025-06-24 09:44:50,289 - backend.main - INFO - Application shutdown begins...
+2025-06-24 09:44:50,289 - backend.main - INFO - Application shutdown complete.
+2025-06-24 09:45:57,141 - backend.main - INFO - FastAPI application created and configured.
+2025-06-24 09:45:57,141 - backend.main - INFO - Application startup begins...
+2025-06-24 09:45:57,142 - backend.main - INFO - Application startup complete.
+2025-06-24 09:46:14,578 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.11s
+2025-06-24 09:47:12,739 - backend.main - INFO - Application shutdown begins...
+2025-06-24 09:47:12,739 - backend.main - INFO - Application shutdown complete.
+2025-06-24 09:48:22,058 - backend.main - INFO - FastAPI application created and configured.
+2025-06-24 09:48:22,059 - backend.main - INFO - Application startup begins...
+2025-06-24 09:48:22,059 - backend.main - INFO - Application startup complete.
+2025-06-24 09:48:45,101 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.11s
+2025-06-24 09:48:47,841 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 2.74s
+2025-06-24 09:48:47,842 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-06-24 09:48:47,854 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-24 09:59:23,452 - backend.main - INFO - Application shutdown begins...
+2025-06-24 09:59:23,452 - backend.main - INFO - Application shutdown complete.
+2025-06-24 10:00:37,121 - backend.main - INFO - FastAPI application created and configured.
+2025-06-24 10:00:37,122 - backend.main - INFO - Application startup begins...
+2025-06-24 10:00:37,122 - backend.main - INFO - Application startup complete.
+2025-06-24 10:01:03,223 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.11s
+2025-06-24 10:01:06,135 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 2.91s
+2025-06-24 10:01:06,136 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-06-24 10:01:06,149 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-24 10:01:06,150 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 3.04s
+2025-06-24 10:11:11,942 - backend.main - INFO - Application shutdown begins...
+2025-06-24 10:11:11,943 - backend.main - INFO - Application shutdown complete.
+2025-06-24 10:12:17,938 - backend.main - INFO - FastAPI application created and configured.
+2025-06-24 10:12:17,939 - backend.main - INFO - Application startup begins...
+2025-06-24 10:12:17,939 - backend.main - INFO - Application startup complete.
+2025-06-24 10:12:32,412 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.11s
+2025-06-24 10:12:35,353 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 2.94s
+2025-06-24 10:12:35,354 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-06-24 10:12:35,368 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-24 10:12:35,369 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 3.06s
+2025-06-24 10:13:33,606 - backend.main - INFO - Application shutdown begins...
+2025-06-24 10:13:33,606 - backend.main - INFO - Application shutdown complete.
+2025-06-24 10:14:44,133 - backend.main - INFO - FastAPI application created and configured.
+2025-06-24 10:14:44,133 - backend.main - INFO - Application startup begins...
+2025-06-24 10:14:44,133 - backend.main - INFO - Application startup complete.
+2025-06-24 10:14:57,461 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.10s
+2025-06-24 10:15:00,086 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 2.62s
+2025-06-24 10:15:00,087 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-06-24 10:15:00,100 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-24 10:15:00,100 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 2.74s
+2025-06-24 10:16:03,872 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.20s
+2025-06-24 10:16:06,001 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/ed9902f1-db4b-480f-8cc7-3245cad09a2d_dummy_scanned1.pdf ...
+2025-06-24 10:16:11,560 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-24 10:16:11,560 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-24 10:16:12,119 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-24 10:16:12,431 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-24 10:16:12,442 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-24 10:16:13,070 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 9.20s
+2025-06-24 10:16:44,137 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 31.07s
+2025-06-24 10:16:44,140 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-06-24 10:17:26,228 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 42.09s
+2025-06-24 10:17:26,229 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 83.56s
+2025-06-24 10:19:25,308 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.02s
+2025-06-24 10:19:25,398 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 0.09s
+2025-06-24 10:19:25,398 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-06-24 10:19:25,411 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-24 10:19:25,411 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 0.12s
+2025-06-24 10:20:06,893 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.02s
+2025-06-24 10:20:06,979 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 0.08s
+2025-06-24 10:20:06,979 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-06-24 10:20:06,992 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-24 10:20:06,992 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 0.11s
+2025-06-24 10:23:50,096 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.02s
+2025-06-24 10:23:50,174 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 0.08s
+2025-06-24 10:23:50,175 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-06-24 10:23:50,186 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-24 10:23:50,186 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 0.11s
+2025-06-24 10:23:56,036 - backend.main - INFO - Application shutdown begins...
+2025-06-24 10:23:56,036 - backend.main - INFO - Application shutdown complete.
+2025-06-24 10:25:01,379 - backend.main - INFO - FastAPI application created and configured.
+2025-06-24 10:25:01,380 - backend.main - INFO - Application startup begins...
+2025-06-24 10:25:01,380 - backend.main - INFO - Application startup complete.
+2025-06-24 10:25:22,747 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.12s
+2025-06-24 10:25:25,939 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 3.19s
+2025-06-24 10:25:25,940 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-06-24 10:25:25,955 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-24 10:25:25,956 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 3.32s
+2025-06-24 10:26:22,430 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.02s
+2025-06-24 10:26:22,508 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 0.08s
+2025-06-24 10:26:22,509 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-06-24 10:26:22,521 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-24 10:26:22,521 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 0.11s
+2025-06-24 10:27:43,298 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.02s
+2025-06-24 10:27:43,388 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 0.09s
+2025-06-24 10:27:43,388 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-06-24 10:27:43,400 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-24 10:27:43,400 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 0.12s
+2025-06-24 10:29:09,323 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.02s
+2025-06-24 10:29:09,404 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 0.08s
+2025-06-24 10:29:09,404 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-06-24 10:29:09,415 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-24 10:29:09,416 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 0.11s
+2025-06-24 10:35:58,845 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.24s
+2025-06-24 10:36:01,081 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/7d38d8cd-ffa4-4df6-900c-de3763c382ed_dummy_scanned1.pdf ...
+2025-06-24 10:36:06,666 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-24 10:36:06,667 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-24 10:36:07,332 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-24 10:36:07,641 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-24 10:36:07,652 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-24 10:36:08,298 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 9.45s
+2025-06-24 10:36:41,934 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 33.64s
+2025-06-24 10:36:41,940 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-06-24 10:37:34,049 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 52.11s
+2025-06-24 10:37:34,051 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 96.45s
+2025-06-24 10:41:02,208 - backend.main - INFO - Application shutdown begins...
+2025-06-24 10:41:02,209 - backend.main - INFO - Application shutdown complete.
+2025-06-24 10:45:16,081 - backend.main - INFO - FastAPI application created and configured.
+2025-06-24 10:45:16,081 - backend.main - INFO - Application startup begins...
+2025-06-24 10:45:16,082 - backend.main - INFO - Application startup complete.
+2025-06-24 10:45:36,835 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.28s
+2025-06-24 10:45:41,385 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/1929969d-be91-4669-aede-a827ab9d9077_dummy_scanned1.pdf ...
+2025-06-24 10:45:47,096 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-24 10:45:47,096 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-24 10:45:47,629 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-24 10:45:47,888 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-24 10:45:47,901 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-24 10:45:49,194 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 12.36s
+2025-06-24 10:46:23,948 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 34.75s
+2025-06-24 10:46:23,954 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-24 10:47:13,669 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 49.71s
+2025-06-24 10:47:13,672 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 98.12s
+2025-06-24 10:50:24,888 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.36s
+2025-06-24 10:50:24,916 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/74743357-bfa0-47a3-a7a2-8cec46c78f80_dummy_scanned1.pdf ...
+2025-06-24 10:50:31,127 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 6.24s
+2025-06-24 10:50:53,422 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 22.29s
+2025-06-24 10:50:53,426 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-06-24 10:51:25,422 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 31.99s
+2025-06-24 10:51:25,423 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 61.89s
+2025-06-24 10:51:57,588 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.29s
+2025-06-24 10:51:57,625 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/9bee111b-05d8-424c-8a01-d576458fce28_dummy_scanned1.pdf ...
+2025-06-24 10:52:03,998 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 6.41s
+2025-06-24 10:52:25,253 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 21.25s
+2025-06-24 10:52:25,258 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-06-24 10:53:05,274 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 40.01s
+2025-06-24 10:53:05,275 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 68.97s
+2025-06-24 10:56:12,953 - backend.main - INFO - Application shutdown begins...
+2025-06-24 10:56:12,954 - backend.main - INFO - Application shutdown complete.

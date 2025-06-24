@@ -22,7 +22,7 @@ class ElementOut(BaseModel):
 
 class PageOut(BaseModel):
     index: int
-    image: str
+    image: Optional[str]
     text: str = ""
     markdown: str = ""
     elements: List[ElementOut] = Field(default_factory=list)

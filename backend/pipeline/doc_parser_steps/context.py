@@ -1,7 +1,7 @@
 # app/services/pipeline/context.py
 from typing import List, Optional, Literal
 from PIL import Image
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, field_validator
 from backend.pipeline.utils import pil_to_base64
 
 
@@ -16,10 +16,16 @@ class ImageMetadata(BaseModel):
 class Element(BaseModel):
     idx: int
     type: Literal["text", "table", "image"]
-    # [x0, y0, x1, y1]
-    bbox: List[float] = Field(..., serialization_alias="bbox")
+    bbox: Optional[List[float]] = Field(default=None, serialization_alias="bbox")  # Allow missing
     text: str = ""
-    image_metadata: Optional[ImageMetadata] = None
+    image_metadata: Optional["ImageMetadata"] = None
+
+    @field_validator("bbox", mode="before")
+    @classmethod
+    def validate_or_default_bbox(cls, v):
+        if isinstance(v, list) and len(v) == 4:
+            return v
+        return [0.0, 0.0, 0.0, 0.0]  # fallback if missing or invalid
 
 
 class Figure(BaseModel):

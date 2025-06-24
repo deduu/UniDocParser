@@ -19,6 +19,12 @@ class DocParserService:
         self.split_pipeline = DocParserPipeline([
             SplitStep()
         ])
+        self.extract_only_pipeline = DocParserPipeline([    
+            SplitStep(),
+            ExtractElementsStep(),
+            ExtractImagesStep(),
+            FormatExtractedTextStep(),])
+        
         self.full_pipeline = DocParserPipeline([
             SplitStep(),
             ExtractElementsStep(),
@@ -32,6 +38,9 @@ class DocParserService:
 
     async def split(self, pdf_path: str) -> DocParserContext:
         return await self.split_pipeline.process(pdf_path)
+    
+    async def extract_only (self, file_path: str) -> DocParserContext:
+        return await self.extract_only_pipeline.process(file_path)
 
     async def full(self, pdf_path: str) -> DocParserContext:
         return await self.full_pipeline.process(pdf_path)

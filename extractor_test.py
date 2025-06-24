@@ -104,6 +104,7 @@ class PDFExtractor:
         # Split the PDF into pages and save page images
         start_file_handling_time = time.time()
         pages = handle_file(file_path)
+        print(f"pages: {pages}")
         end_file_handling_time = time.time()
         print(f"{excel_name} num of pages: {len(pages)}")
         handling_time = end_file_handling_time - start_file_handling_time  # time in seconds
@@ -194,14 +195,14 @@ class PDFExtractor:
 # # Example usage of the PDFExtractor class
 extarctor = PDFExtractor()
 
-# # Extracting from an Excel file
-# excel_results = extarctor.extract_excel(file_path="/home/dedya/mk.arif/UniDocParser/docs/Simple personal cash flow statement.xlsx")
-# json_output_path, md_output_path = extarctor.save_extraction_results(excel_results)
-# print(f"\nExcel extraction results: \n{excel_results['pages'][3]['text']}")
-# print(f"JSON output saved to: {json_output_path}")
-# print(f"Markdown output saved to: {md_output_path}")
+# Extracting from an Excel file
+excel_results = extarctor.extract_excel(file_path="./Extended Dashboard with DataTables.xlsx")
+json_output_path, md_output_path = extarctor.save_extraction_results(excel_results)
+print(f"\nExcel extraction results: \n{excel_results['pages'][0]['text']}")
+print(f"JSON output saved to: {json_output_path}")
+print(f"Markdown output saved to: {md_output_path}")
 
 # Extracting from a PDF file
-pdf_results = extarctor.extract_pdf_image(pdf_path="/home/dedya/mk.arif/UniDocParser/docs/AR for improved learnability.pdf")
-json_output_path, md_output_path = extarctor.save_extraction_results(pdf_results)
-print(f"\nPDF extraction results saved to: {json_output_path} and {md_output_path}")
+# pdf_results = extarctor.extract_pdf_image(pdf_path="/home/dedya/mk.arif/UniDocParser/docs/AR for improved learnability.pdf")
+# json_output_path, md_output_path = extarctor.save_extraction_results(pdf_results)
+# print(f"\nPDF extraction results saved to: {json_output_path} and {md_output_path}")

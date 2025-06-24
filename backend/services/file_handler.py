@@ -54,7 +54,8 @@ def handle_file(file_path: str):
             return None
     # Check if the file is an excel file
     elif file_path.lower().endswith(('.xls', '.xlsx')):
-        # import excel2img
+        # import 
+        print(f"excel file is being processed...")
         import openpyxl
 
         try:

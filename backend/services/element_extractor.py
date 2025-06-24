@@ -13,6 +13,7 @@ def element_extractor(file_path: str):
     Returns:
         list: List of extracted elements from the image.
     """
+    print(f"file_path: {file_path}")
     if not file_path:
         raise ValueError("file_path must be provided")
     if not os.path.exists(file_path):
@@ -162,6 +163,8 @@ def extract_unstructured_elements(elements, page_num):
 def extract_elements(pages, file_path=None):
     figure_list = []
     elements = []
+
+    print(f"Extract elements path: {file_path}")
 
     if not file_path:
         for i, page in enumerate(pages):

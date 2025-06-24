@@ -177,9 +177,18 @@ export class UIController {
   }
 
   handleFileSelection(file) {
-    if (file.type !== "application/pdf") {
-      return showError("Please upload a PDF file");
+    const allowedTypes = [
+      "application/pdf",
+      "image/png",
+      "image/jpeg",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+      "application/vnd.ms-excel", // .xls
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+      return showError("Please upload a PDF, image (PNG/JPEG), or Excel file");
     }
+
     const fileNameSpan = this.fileNameDisplay.querySelector("span");
     if (fileNameSpan) {
       fileNameSpan.textContent = file.name;
@@ -352,27 +361,43 @@ export class UIController {
       this.updateFileInfoStatus("complete", "Extraction Complete");
 
       const file = this.fileInput.files[0];
-      if (file && typeof pdfjsLib !== "undefined") {
+      const filename = file.name.toLowerCase();
+      const fileType = file.type;
+
+      console.log("File selected:", filename);
+      console.log("Detected MIME type:", fileType);
+
+      if (!file) {
+        console.error("No file found in input");
+        showError("No file selected to load preview.");
+        this.pdfDoc = null;
+        this.updatePageNavigation();
+      } else if (filename.endsWith(".xlsx") || filename.endsWith(".xls")) {
+        console.log("Excel file detected");
+        showNotification(
+          "Excel file received – no preview, but extraction is complete."
+        );
+      } else if (filename.endsWith(".pdf") && typeof pdfjsLib !== "undefined") {
+        console.log("PDF file detected, initializing preview with PDF.js");
         const fileReader = new FileReader();
         fileReader.onload = async () => {
           const pdfData = new Uint8Array(fileReader.result);
           try {
             this.pdfDoc = await pdfjsLib.getDocument({ data: pdfData }).promise;
+            console.log("PDF successfully loaded in preview");
             this.showPage(1);
           } catch (err) {
+            console.error("PDF.js failed to render:", err);
             showError("Error loading PDF for preview: " + err.message);
             this.pdfDoc = null;
             this.updatePageNavigation();
           }
         };
         fileReader.readAsArrayBuffer(file);
-      } else if (!file) {
-        showError("No file selected to load PDF preview.");
-        this.pdfDoc = null;
-        this.updatePageNavigation();
       } else {
+        console.warn("Unsupported or unrecognized file type for preview");
         showError(
-          "PDF.js library not loaded or undefined. Cannot render PDF preview."
+          "Unsupported file type or missing PDF.js. Cannot render preview."
         );
         this.pdfDoc = null;
         this.updatePageNavigation();

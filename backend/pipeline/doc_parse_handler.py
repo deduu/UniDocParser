@@ -9,7 +9,7 @@ import uuid
 import aiofiles
 from starlette.concurrency import run_in_threadpool
 from fastapi import Depends, HTTPException, UploadFile
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 from backend.pipeline.model.schemas import SplitPDFResponse
 from backend.pipeline.utils import _save_to_tmp
 from backend.pipeline.doc_parse_service import DocParserService
@@ -54,6 +54,14 @@ class DocParserHandler:
         except Exception as e:
             raise HTTPException(500, f"Split failed: {e}")
         return SplitPDFResponse.from_context(ctx)
+    
+    async def extract_only(self, file:UploadFile) -> DocParserContextOut:
+        path = await self._save_upload(file)
+        try:
+            ctx = await self.svc.extract_only(path)
+        except Exception as e:
+            raise HTTPException(500, f"Extract only pipeline failed: {e}")
+        return self._dto_from_ctx(ctx)
 
     async def full_pipeline(self, file: UploadFile) -> DocParserContextOut:
         path = await self._save_upload(file)
@@ -89,10 +97,17 @@ class DocParserHandler:
                     )
                 )
 
+            # ✅ Try to open image and encode it
+            try:
+                image_b64 = pil_to_base64(Image.open(p.image))
+            except (FileNotFoundError, UnidentifiedImageError) as e:
+                print(f"[WARNING] Image not found for page {p.index}: {e}")
+                image_b64 = None  # Or you can use: pil_to_base64(Image.open("static/placeholder.jpg"))
+
             pages.append(
                 PageOut(
                     index=p.index,
-                    image=pil_to_base64(Image.open(p.image)),
+                    image=image_b64,
                     text=p.text,
                     markdown=p.markdown,
                     elements=elements_out,
