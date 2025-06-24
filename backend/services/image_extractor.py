@@ -17,7 +17,7 @@ def take_data(result_text):
         if "enddata;" in data_text:
             data_text = data_text.split("enddata;")[0].strip()
         else:
-            data_text = data_text.split("Short Description:")[0].strip()
+            data_text = data_text.split("Concise Description:")[0].strip()
     else:
         return take_desc(result_text)
     
@@ -32,9 +32,9 @@ def take_desc(result_text):
 
 def take_caption(result_text):
     caption_text = result_text
-    # check if the text contains Figure Caption:
-    if "Figure Caption:" in caption_text:
-        caption_text = caption_text.split("Figure Caption:")[1].strip()
+    # check if the text contains Concise Description:
+    if "Concise Description:" in caption_text:
+        caption_text = caption_text.split("Concise Description:")[1].strip()
     elif "addCriterion:" in caption_text:
         caption_text = caption_text.split("addCriterion:")[1].strip()
     else:
