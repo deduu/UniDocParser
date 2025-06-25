@@ -1,4 +1,4 @@
-from backend.core.ft_vlm_fig2tab_config import fig2tab_vlm
+from backend.core.vlm_fig2tab_config import fig2tab_vlm
 
 # Figure to Table VLM
 def fig_to_table(figure_list):

@@ -26,13 +26,11 @@ class Fig2Tab_PIPELINE:
             "max_new_tokens": max_new_tokens,
         }
 
-    def generate(self, images: list):
+    def generate(self, image):
         """
         Process a list of images and return the results.
         """
-        messages = []
-        for i, image in enumerate(images):
-            messages.append([
+        messages = [
                 {
                     "role": "system",
                     "content": [
@@ -46,11 +44,9 @@ class Fig2Tab_PIPELINE:
                         {"type": "text", "text": prompt.get_prompt()}
                     ]
                 }
-            ])
+            ]
         output = self.model(text=messages, generate_kwargs=self.generate_kwargs)
-        generated_text = []
-        for out in output:
-            generated_text.append(out[0]["generated_text"][-1]["content"])
+        generated_text = output[0]["generated_text"][-1]["content"]
         return generated_text
 
 fig2tab_vlm = Fig2Tab_PIPELINE()

@@ -11,7 +11,7 @@ class Formatter_PIPELINE:
     def __init__(
         self,
         model_id="Qwen/Qwen2.5-VL-7B-Instruct",
-        device="cuda:4" if torch.cuda.is_available() else "cpu",
+        device="cuda:3" if torch.cuda.is_available() else "cpu",
         do_sample=True,
         temperature=0.3,
         top_p=0.5,

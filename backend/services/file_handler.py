@@ -68,7 +68,7 @@ def handle_file(file_path: str):
 
                 metadata = {
                     "index": i,
-                    "image": f"img/Sheet{i+1}-{sheet}_resized.jpeg",
+                    "image": f"img/Sheet{i+1}-{sheet}.jpeg",
                     "text": "",
                     "markdown": "",
                     "elements": [],

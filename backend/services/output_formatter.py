@@ -3,7 +3,7 @@ from backend.utils.helpers import process_string
 from pathlib import Path
 from PIL import Image
 from backend.utils.helpers import process_string, resize_img
-from backend.core.ft_vlm_format_config import formatter_vlm
+from backend.core.vlm_format_config import formatter_vlm
 
 # Combining Extracted element into text
 # Function to clean the OCR text
