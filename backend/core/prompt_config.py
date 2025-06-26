@@ -27,6 +27,7 @@ FIG_PROMPT_TEMPLATE = """Analyze the provided figure image and extract structure
 Output format if the image is a chart/graph:
 - Figure Caption: (Transcribe the exact caption or title if present. If not detected, output "No caption detected.")
 - Type: (Specific chart type, e.g., Bar Chart, Line Graph, Pie Chart, Scatter Plot, Area Chart, Combo Chart, etc.)
+- Concise Description: (A concise summary of the key information or trends shown in the chart/graph.)
 data:
 | Header 1 | Header 2 | Header 3 | ... |
 |----------|----------|----------|-----|
@@ -34,13 +35,13 @@ data:
 | Value 1B | Value 2B | Value 3B | ... |
 (Ensure the Markdown table accurately represents all data series, categories, values, and axis labels from the chart.)
 enddata;
-- Concise Description: (A concise summary of the key information or trends shown in the chart/graph.)
 
 ---
 
 Output format if the image is a flowchart/diagram:
 - Figure Caption: (Transcribe the exact caption or title if present. If not detected, output "No caption detected.")
 - Type: Flowchart
+- Concise Description: (A concise summary explaining the process or system depicted by the flowchart/diagram.)
 data:
 ```mermaid
 graph TD; // or other appropriate Mermaid graph type (e.g., LR, TB)
@@ -51,7 +52,6 @@ graph TD; // or other appropriate Mermaid graph type (e.g., LR, TB)
 // (Represent all identified nodes and their connections accurately in Mermaid syntax.)
 ```
 enddata;
-- Concise Description: (A concise summary explaining the process or system depicted by the flowchart/diagram.)
 
 ---
 
