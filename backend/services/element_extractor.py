@@ -91,7 +91,6 @@ def extract_unstructured_elements(elements, page_num):
         else:
             element_bbox = None
 
-
         if "unstructured.documents.elements.Image" in str(type(element)):
             image_path = unstructured_element["image_path"]
 
@@ -99,6 +98,7 @@ def extract_unstructured_elements(elements, page_num):
 
             element_metadata.append({
                 "idx": i - min_counter,
+                "status": "Success",
                 "type": "image",
                 "bbox": element_bbox,
                 "text": "",
@@ -115,47 +115,55 @@ def extract_unstructured_elements(elements, page_num):
                 "page_num": page_num,
                 "idx": i - min_counter,
                 "pil_image": pil_image,
-                "generated_text": ""
+                "generated_text": "",
+                "status": "Success",
             })
-
-        elif "unstructured.documents.elements.Table" in str(type(element)):
-
-            md_table = markdownify.markdownify(unstructured_element["text_as_html"])
-            md_table = helpers.filter_table(md_table)
-
-            if helpers.get_len_columns(md_table) == helpers.get_len_columns(temp_table):
-                temp_table += "\n" + md_table
+        else:
+            if str(element).strip() == "":
                 min_counter += 1
+                continue
+
+            if "unstructured.documents.elements.Table" in str(type(element)):
+
+                md_table = markdownify.markdownify(unstructured_element["text_as_html"])
+                md_table = helpers.filter_table(md_table)
+
+                if helpers.get_len_columns(md_table) == helpers.get_len_columns(temp_table):
+                    temp_table += "\n" + md_table
+                    min_counter += 1
+                else:
+                    table = helpers.format_table(temp_table)
+                    temp_table = md_table
+
+                if i + 1 == len(elements) or "unstructured.documents.elements.Table" not in str(type(elements[i + 1])):
+                    table = helpers.format_table(temp_table)
+                    temp_table = ""
+                elif helpers.get_len_columns(temp_table) != helpers.get_len_columns(markdownify.markdownify(elements[i+1].metadata.text_as_html)):
+                    table = helpers.format_table(temp_table)
+                    temp_table = ""
+
+                if len(table) > 0:
+
+                    # Append table metadata
+                    element_metadata.append({
+                        "idx": i - min_counter,
+                        "status": "Success",
+                        "type": "table",
+                        "bbox": element_bbox,
+                        "text": table,
+                    })
+                table = ""
+
             else:
-                table = helpers.format_table(temp_table)
-                temp_table = md_table
+                element_type = "text"
 
-            if i + 1 == len(elements) or "unstructured.documents.elements.Table" not in str(type(elements[i + 1])):
-                table = helpers.format_table(temp_table)
-                temp_table = ""
-            elif helpers.get_len_columns(temp_table) != helpers.get_len_columns(markdownify.markdownify(elements[i+1].metadata.text_as_html)):
-                table = helpers.format_table(temp_table)
-                temp_table = ""
-
-            if len(table) > 0:
-
-                # Append table metadata
                 element_metadata.append({
                     "idx": i - min_counter,
-                    "type": "table",
-                    "text": table,
+                    "status": "Success",
+                    "type": element_type,
+                    "bbox": element_bbox,
+                    "text": str(element),
                 })
-            table = ""
-
-        else:
-            element_type = "text"
-
-            element_metadata.append({
-                "idx": i - min_counter,
-                "type": element_type,
-                "bbox": element_bbox,
-                "text": str(element),
-            })
 
     return element_metadata, figure_list
 

@@ -19,9 +19,11 @@ def handle_file(file_path: str):
                 page.save(page_img_path, "JPEG")
                 metadata = {
                     "index": i,
+                    "status": "Success",
                     "image": page_img_path,
                     "text": "",
                     "markdown": "",
+                    "elements": [],
                 }
                 pages.append(metadata)
         except Exception as e:
@@ -43,6 +45,7 @@ def handle_file(file_path: str):
             img.save(img_path, "JPEG")
             metadata = {
                 "index": 0,
+                "status": "Success",
                 "image": img_path,
                 "text": "",
                 "markdown": "",
@@ -68,6 +71,7 @@ def handle_file(file_path: str):
 
                 metadata = {
                     "index": i,
+                    "status": "Success",
                     "image": f"img/Sheet{i+1}-{sheet}.jpeg",
                     "text": "",
                     "markdown": "",

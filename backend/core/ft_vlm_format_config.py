@@ -22,7 +22,11 @@ class FT_Formatter_PIPELINE:
     def __init__(
         self,
         model_id="ZeArkh/Qwen2.5-VL-7B-Instruct-unsloth-Markdown-Formatter",
-        device="cuda:3" if torch.cuda.is_available() else "cpu",
+        device="cuda" if torch.cuda.is_available() else "cpu",
+        temperature=0.3,
+        top_p=0.5,
+        min_p=0.1,
+        max_new_tokens=4096,
     ):
         self.device = device
         self.model, self.processor = FastVisionModel.from_pretrained(
@@ -31,6 +35,10 @@ class FT_Formatter_PIPELINE:
             device_map=self.device,
         )
         FastVisionModel.for_inference(self.model) # Enable for inference!
+        self.temperature = temperature
+        self.top_p = top_p
+        self.min_p = min_p
+        self.max_new_tokens = max_new_tokens
 
     def generate(self, extracted_text: str, image):
         """
@@ -59,11 +67,11 @@ class FT_Formatter_PIPELINE:
 
         generated_ids = self.model.generate(
             **inputs, 
-            max_new_tokens = 8 * 1024,  # 8k tokens
-            
+            max_new_tokens = self.max_new_tokens,
             use_cache = True, 
-            temperature = 1.5, 
-            min_p = 0.1
+            temperature = self.temperature,
+            # top_p = self.top_p,
+            min_p = self.min_p
         )
 
         trimmed_generated_ids = [
@@ -76,6 +84,12 @@ class FT_Formatter_PIPELINE:
             clean_up_tokenization_spaces=False
         )
 
-        return output_text[0]
+        len_output = len(trimmed_generated_ids[0])
+        if len_output >= self.max_new_tokens - 1:
+            status = "Failed"
+        else:
+            status = "Success"
+
+        return output_text[0], status
     
 formatter_vlm = FT_Formatter_PIPELINE()

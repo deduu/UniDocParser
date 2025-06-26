@@ -4,8 +4,10 @@ from backend.core.vlm_fig2tab_config import fig2tab_vlm
 def fig_to_table(figure_list):
 
     for i, image in enumerate(figure_list):
-        output = fig2tab_vlm.generate(image["pil_image"])
+        output, status = fig2tab_vlm.generate(image["pil_image"])
         figure_list[i]["generated_text"] = output
+        figure_list[i]["status"] = status
+        print(f"Figure {image['idx']} from page {image['page_num']} processed with status: {status}")
 
     return figure_list
 
@@ -25,16 +27,16 @@ def take_data(result_text):
 
 def take_desc(result_text):
     desc_text = result_text
-    if "Short Description:" not in desc_text:
+    if "Concise Description:" not in desc_text:
         return ""
-    desc_text = desc_text.split("Short Description:")[1].strip()
+    desc_text = desc_text.split("Concise Description:")[1].strip()
     return desc_text
 
 def take_caption(result_text):
     caption_text = result_text
     # check if the text contains Concise Description:
-    if "Concise Description:" in caption_text:
-        caption_text = caption_text.split("Concise Description:")[1].strip()
+    if "Figure Caption:" in caption_text:
+        caption_text = caption_text.split("Figure Caption:")[1].strip()
     elif "addCriterion:" in caption_text:
         caption_text = caption_text.split("addCriterion:")[1].strip()
     else:
@@ -61,6 +63,7 @@ def extract_images(pages, figure_list):
         
         for el in pages[fig["page_num"]]["elements"]:
             if el["idx"] == fig["idx"]:
+                el["status"] = fig["status"]
                 el["text"] = take_data(fig["generated_text"])
                 el['image_metadata']["image_type"] = take_type(fig["generated_text"])
                 el['image_metadata']["caption"] = take_caption(fig["generated_text"])

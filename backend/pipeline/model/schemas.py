@@ -6,6 +6,7 @@ from backend.pipeline.doc_parser_steps.context import DocParserContext
 
 class PageInfo(BaseModel):
     index: int
+    status: str # "Success" or "Failed"
     image: str     # path or base64
     text: str
     markdown: str
@@ -30,10 +31,12 @@ class FigureOut(BaseModel):
     idx: int
     image_url: str            # or image_base64: str if you prefer
     generated_text: str
+    status: str   # "Success" or "Failed"
 
 
 class PageOut(BaseModel):
     index: int
+    status: str               # "Success" or "Failed"
     image: str
     text: str = ""
     markdown: str = ""

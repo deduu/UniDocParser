@@ -14,6 +14,7 @@ class ImageMetadataOut(BaseModel):
 
 class ElementOut(BaseModel):
     idx: int
+    status: Literal["Success", "Failed"]
     type: Literal["text", "table", "image"]
     bbox: List[float] = Field(..., alias="bbox")
     text: str = ""
@@ -22,6 +23,7 @@ class ElementOut(BaseModel):
 
 class PageOut(BaseModel):
     index: int
+    status: Literal["Success", "Failed"]
     image: Optional[str]
     text: str = ""
     markdown: str = ""
@@ -33,6 +35,7 @@ class FigureOut(BaseModel):
     idx: int
     pil_image: str          # base-64 string *or* URL
     generated_text: str
+    status: Literal["Success", "Failed"]
 
 
 class DocParserContextOut(BaseModel):

@@ -15,6 +15,7 @@ class ImageMetadata(BaseModel):
 
 class Element(BaseModel):
     idx: int
+    status: Literal["Success", "Failed"]
     type: Literal["text", "table", "image"]
     bbox: Optional[List[float]] = Field(default=None, serialization_alias="bbox")  # Allow missing
     text: str = ""
@@ -34,6 +35,7 @@ class Figure(BaseModel):
     # instead of PIL image, store a path or base64 string
     pil_image: Image.Image
     generated_text: str = ""
+    status: Literal["Success", "Failed"]
 
     # ➋ Pydantic v2
     model_config = ConfigDict(
@@ -44,6 +46,7 @@ class Figure(BaseModel):
 
 class Page(BaseModel):
     index: int
+    status: Literal["Success", "Failed"]
     image: str | None = None
     text: str = ""
     markdown: str = ""

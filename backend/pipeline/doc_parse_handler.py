@@ -90,6 +90,7 @@ class DocParserHandler:
                 elements_out.append(
                     ElementOut(
                         idx=el.idx,
+                        status=el.status,
                         type=el.type,
                         bbox=el.bbox,
                         text=el.text,
@@ -107,6 +108,7 @@ class DocParserHandler:
             pages.append(
                 PageOut(
                     index=p.index,
+                    status=p.status,
                     image=image_b64,
                     text=p.text,
                     markdown=p.markdown,
@@ -120,6 +122,7 @@ class DocParserHandler:
                 idx=f.idx,
                 pil_image=pil_to_base64(f.pil_image),
                 generated_text=f.generated_text,
+                status=f.status,
             )
             for f in ctx.figure_list
         ]

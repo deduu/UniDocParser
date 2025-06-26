@@ -1,5 +1,5 @@
 import torch
-from transformers import pipeline
+from transformers import pipeline, AutoProcessor
 from backend.core.prompt_config import Fig2Text_Prompt
 
 # Create a prompt instance
@@ -10,8 +10,12 @@ class Fig2Tab_PIPELINE:
     def __init__(
         self, 
         model_id="Qwen/Qwen2.5-VL-7B-Instruct",
-        device="cuda:2" if torch.cuda.is_available() else "cpu",
-        max_new_tokens=2048,
+        device="cuda" if torch.cuda.is_available() else "cpu",
+        do_sample=True,
+        temperature=1.5,
+        top_p=0.5,
+        min_p=0.1,
+        max_new_tokens=4096,
         batch_size=1,   # Adjust batch size as needed
     ):
         self.model = pipeline(
@@ -20,9 +24,14 @@ class Fig2Tab_PIPELINE:
             device=device,
             torch_dtype=torch.bfloat16,
             max_new_tokens=max_new_tokens,
-            batch_size=batch_size,
         )
+        self.processor = AutoProcessor.from_pretrained(model_id)
+        self.max_new_tokens = max_new_tokens
         self.generate_kwargs = {
+            "do_sample": do_sample,
+            "temperature": temperature,
+            # "top_p": top_p,
+            "min_p": min_p,
             "max_new_tokens": max_new_tokens,
         }
 
@@ -47,6 +56,14 @@ class Fig2Tab_PIPELINE:
             ]
         output = self.model(text=messages, generate_kwargs=self.generate_kwargs)
         generated_text = output[0]["generated_text"][-1]["content"]
-        return generated_text
+
+        output_token = self.processor(text=generated_text, return_tensors="pt").input_ids
+        len_output = output_token.shape[1]
+        if len_output >= self.max_new_tokens - 1:
+            status = "Failed"
+        else:
+            status = "Success"
+
+        return generated_text, status
 
 fig2tab_vlm = Fig2Tab_PIPELINE()
