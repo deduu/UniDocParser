@@ -16,7 +16,7 @@ class SplitStep(DocParserStep):
         # 2. Convert each dict into a Page model (elements defaults to [])
         pages = [Page(**page_data) for page_data in raw_pages]
 
-        print(f"pages split: {pages}")
+        # print(f"pages split: {pages}")
         # 3. Update the context
         ctx.pages = pages
 

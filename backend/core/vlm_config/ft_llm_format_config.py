@@ -1,13 +1,13 @@
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from backend.core.prompt_config import Formatter_Prompt
+from backend.core.vlm_config.prompt_config import Formatter_Prompt
 from peft import PeftModel, LoraConfig, TaskType
 
 # Create a prompt instance
 prompt = Formatter_Prompt()
 
 # VLM Formatter class
-class FT_Formatter_PIPELINE:
+class FT_LLM_Formatter_PIPELINE:
     def __init__(
         self,
         model_id="Qwen/Qwen2.5-3B-Instruct",
@@ -63,4 +63,4 @@ class FT_Formatter_PIPELINE:
 
         return response[0]
     
-formatter_llm = FT_Formatter_PIPELINE()
+# formatter_llm = FT_Formatter_PIPELINE()

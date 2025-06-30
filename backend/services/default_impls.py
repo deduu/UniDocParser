@@ -48,5 +48,5 @@ class DefaultFormatter(Formatter):
         # two‐step formatting: plain text then markdown
         loop = asyncio.get_event_loop()
         pages = await loop.run_in_executor(None, format_extracted_text, pages)
-        pages, md_token_lengths = await loop.run_in_executor(None, format_markdown, pages)
+        pages = await loop.run_in_executor(None, format_markdown, pages)
         return pages

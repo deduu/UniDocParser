@@ -1,29 +1,30 @@
 import torch
 from unsloth import FastVisionModel
-from backend.core.prompt_config import Formatter_Prompt
+from backend.core.vlm_config.prompt_config import Fig2Text_Prompt
+from PIL import Image
 
 fine_tuned_model_list = [
     # Gemma 3
-    "ZeArkh/gemma-3-4b-it-unsloth-Markdown-Formatter",
+    "ZeArkh/gemma-3-4b-it-Extract-Figure",
 
     # Llama 3.2
-    "ZeArkh/Llama-3.2-11B-Vision-Instruct-unsloth-Markdown-Formatter",
+    "ZeArkh/Llama-3.2-11B-Vision-Instruct-Extract-Figure",
 
     # Qwen 2.5 VL
-    "ZeArkh/Qwen2.5-VL-7B-Instruct-unsloth-Markdown-Formatter",
-    "ZeArkh/Qwen2.5-VL-7B-Instruct-bnb-4bit-unsloth-Markdown-Formatter",
+    "ZeArkh/Qwen2.5-VL-7B-Instruct-unsloth-Extract-Figure",
+    "ZeArkh/Qwen2.5-VL-7B-Instruct-bnb-4bit-unsloth-Extract-Figure",
 ]
 
 # Create a prompt instance
-prompt = Formatter_Prompt()
+prompt = Fig2Text_Prompt()
 
-# VLM Formatter class
-class FT_Formatter_PIPELINE:
+# VLM Fig2Tab class
+class FT_VLM_Fig2Tab_PIPELINE:
     def __init__(
         self,
-        model_id="ZeArkh/Qwen2.5-VL-7B-Instruct-unsloth-Markdown-Formatter",
+        model_id="ZeArkh/Qwen2.5-VL-7B-Instruct-unsloth-Extract-Figure",
         device="cuda" if torch.cuda.is_available() else "cpu",
-        temperature=0.3,
+        temperature=1.5,
         top_p=0.5,
         min_p=0.1,
         max_new_tokens=4096,
@@ -31,16 +32,16 @@ class FT_Formatter_PIPELINE:
         self.device = device
         self.model, self.processor = FastVisionModel.from_pretrained(
             model_name=model_id,
-            load_in_4bit=False,
+            load_in_4bit=True if "4bit" in model_id else False,
             device_map=self.device,
         )
-        FastVisionModel.for_inference(self.model) # Enable for inference!
+        FastVisionModel.for_inference(self.model)  # Enable for inference!
         self.temperature = temperature
         self.top_p = top_p
         self.min_p = min_p
         self.max_new_tokens = max_new_tokens
 
-    def generate(self, extracted_text: str, image):
+    def generate(self, image):
         """
         Process a list of images and return the results.
         """
@@ -49,7 +50,7 @@ class FT_Formatter_PIPELINE:
                 "role": "user",
                 "content": [
                     {"type": "image"},
-                    {"type": "text", "text": prompt.get_ft_prompt(extracted_text)},
+                    {"type": "text", "text": prompt.get_prompt()},
                 ]
             }
         ]
@@ -69,7 +70,7 @@ class FT_Formatter_PIPELINE:
             **inputs, 
             max_new_tokens = self.max_new_tokens,
             use_cache = True, 
-            temperature = self.temperature,
+            temperature = self.temperature, 
             # top_p = self.top_p,
             min_p = self.min_p
         )
@@ -92,4 +93,4 @@ class FT_Formatter_PIPELINE:
 
         return output_text[0], status
     
-formatter_vlm = FT_Formatter_PIPELINE()
+# fig2tab_vlm = FT_Fig2Tab_PIPELINE()

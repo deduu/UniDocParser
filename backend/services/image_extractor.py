@@ -1,25 +1,12 @@
-from backend.core.vlm_fig2tab_config import fig2tab_vlm
-
-# Figure to Table VLM
-def fig_to_table(figure_list):
-
-    for i, image in enumerate(figure_list):
-        output, status = fig2tab_vlm.generate(image["pil_image"])
-        figure_list[i]["generated_text"] = output
-        figure_list[i]["status"] = status
-        print(f"Figure {image['idx']} from page {image['page_num']} processed with status: {status}")
-
-    return figure_list
+from backend.core.model_maager import fig2tab_model
 
 def take_data(result_text):
     data_text = result_text
     if "data:" in data_text:
         # split the text by data:
         data_text = data_text.split("data:")[1].strip()
-        if "enddata;" in data_text:
-            data_text = data_text.split("enddata;")[0].strip()
-        else:
-            data_text = data_text.split("Concise Description:")[0].strip()
+        if "enddata" in data_text:
+            data_text = data_text.split("enddata")[0].strip()
     else:
         return take_desc(result_text)
     
@@ -30,6 +17,7 @@ def take_desc(result_text):
     if "Concise Description:" not in desc_text:
         return ""
     desc_text = desc_text.split("Concise Description:")[1].strip()
+    desc_text = desc_text.split("\n")[0].strip()
     return desc_text
 
 def take_caption(result_text):
@@ -53,21 +41,29 @@ def take_type(result_text):
     return type_text.lower()
 
 def extract_images(pages, figure_list):
+    """ 
+    Extracts images from the figure list and updates the pages with generated text and metadata.
+    Args:
+        pages (list): List of pages containing elements.
+        figure_list (list): List of figures with PIL images and metadata.
+    Returns:
+        list: Updated pages with generated text and metadata for each figure.
+    """
 
-    figure_list = fig_to_table(figure_list)
+    for i, image in enumerate(figure_list):
 
-    for i, fig in enumerate(figure_list):
-        # check if the result is empty
-        if fig["generated_text"] == "":
-            continue
+        output, status = fig2tab_model.generate(image["pil_image"])
+        figure_list[i]["generated_text"] = output
+        figure_list[i]["status"] = status
+        print(f"Figure {image['idx']} from page {image['page_num']} processed with status: {status}")
         
-        for el in pages[fig["page_num"]]["elements"]:
-            if el["idx"] == fig["idx"]:
-                el["status"] = fig["status"]
-                el["text"] = take_data(fig["generated_text"])
-                el['image_metadata']["image_type"] = take_type(fig["generated_text"])
-                el['image_metadata']["caption"] = take_caption(fig["generated_text"])
-                el['image_metadata']["description"] = take_desc(fig["generated_text"])
+        for el in pages[image["page_num"]]["elements"]:
+            if el["idx"] == image["idx"]:
+                el["status"] = image["status"]
+                el["text"] = take_data(image["generated_text"])
+                el['image_metadata']["image_type"] = take_type(image["generated_text"])
+                el['image_metadata']["caption"] = take_caption(image["generated_text"])
+                el['image_metadata']["description"] = take_desc(image["generated_text"])
                 break
 
-    return pages
+    return pages, figure_list

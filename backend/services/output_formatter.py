@@ -2,7 +2,7 @@ import re
 from pathlib import Path
 from PIL import Image
 from backend.utils.helpers import resize_img
-from backend.core.vlm_format_config import formatter_vlm
+from backend.core.model_maager import formatter_model
 
 # Combining Extracted element into text
 # Function to clean the OCR text
@@ -121,7 +121,7 @@ def format_markdown(pages: list[dict], pdf_name: str) -> list[dict]:
 
         # -------- 3. run VLM formatter -----------------------------------
         extracted_text = page["text"]
-        output, status = formatter_vlm.generate(
+        output, status = formatter_model.generate(
             extracted_text=extracted_text, 
             image=pil_image
         )
