@@ -19,7 +19,7 @@ class MarkdownStep(DocParserStep):
             raise RuntimeError(
                 "MarkdownStep: pages are missing - run previous steps first")
 
-        pdf_name = os.path.basename(ctx.pdf_path)
+        pdf_name = os.path.basename(ctx.file_path)
 
         raw_pages = [p.model_dump(mode="python") for p in ctx.pages]
         updated_pages_raw = format_markdown(raw_pages, pdf_name)

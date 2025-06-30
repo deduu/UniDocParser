@@ -39,8 +39,10 @@ class FigureOut(BaseModel):
 
 
 class DocParserContextOut(BaseModel):
-    pdf_path: str
-    ocr_pdf_path: Optional[str] = None
+    user_id: str
+    folder: str
+    file_path: str
+    ocr_file_path: Optional[str] = None
     pages: List[PageOut] = Field(default_factory=list)
     figure_list: List[FigureOut]
     processing_time: float

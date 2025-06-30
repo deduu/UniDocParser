@@ -33,14 +33,14 @@ class DocParserService:
             MarkdownStep()
         ])
 
-    async def ocr(self, pdf_path: str) -> DocParserContext:
-        return await self.ocr_pipeline.process(pdf_path)
+    async def ocr(self, user_id: str, folder: str, file_path: str) -> DocParserContext:
+        return await self.ocr_pipeline.process(user_id=user_id, folder=folder, file_path=file_path)
 
-    async def split(self, pdf_path: str) -> DocParserContext:
-        return await self.split_pipeline.process(pdf_path)
-    
-    async def extract_only (self, file_path: str) -> DocParserContext:
-        return await self.extract_only_pipeline.process(file_path)
+    async def split(self, user_id: str, folder: str, file_path: str) -> DocParserContext:
+        return await self.split_pipeline.process(user_id=user_id, folder=folder, file_path=file_path)
 
-    async def full(self, pdf_path: str) -> DocParserContext:
-        return await self.full_pipeline.process(pdf_path)
+    async def extract_only(self, user_id: str, folder: str, file_path: str) -> DocParserContext:
+        return await self.extract_only_pipeline.process(user_id=user_id, folder=folder, file_path=file_path)
+
+    async def full(self, user_id: str, folder: str, file_path: str) -> DocParserContext:
+        return await self.full_pipeline.process(user_id=user_id, folder=folder, file_path=file_path)

@@ -5,17 +5,19 @@ import ocrmypdf
 from backend.utils.helpers import resize_img
 from backend.core.config import settings
 
-def handle_file(file_path: str):
+def handle_file(user_id: str, folder:str, file_path: str):
     pages = []
+    file_name = os.path.basename(file_path).split('.')[0]
+    save_dir = os.path.join(settings.IMG_DIR, user_id, folder, file_name, "pages")
+    os.makedirs(save_dir, exist_ok=True)
 
     # Check if the file is a PDF
     if file_path.lower().endswith('.pdf'):
         try:
             page_images = convert_from_path(file_path, 400)
-            pdf_name = os.path.basename(file_path).replace('.pdf', '')
             for i, page in enumerate(page_images):
                 page = resize_img(page, size=1920)
-                page_img_path = os.path.join(settings.IMG_PAGES_DIR, f"{pdf_name}_{i}.jpeg")
+                page_img_path = os.path.join(save_dir, f"page_{i}.jpeg")
                 page.save(page_img_path, "JPEG")
                 metadata = {
                     "index": i,
@@ -34,14 +36,14 @@ def handle_file(file_path: str):
         try:
             img = Image.open(file_path)
             img = resize_img(img, size=1440)
-            img_path = os.path.join(settings.IMG_PAGES_DIR, os.path.basename(file_path))
+            img_path = os.path.join(save_dir, os.path.basename(file_path))
             # change the file extension to png
             if img_path.lower().endswith(('.jpg', '.png')):
                 img_path = img_path.replace('.jpg', '.jpeg').replace('.png', '.jpeg')
             elif img_path.lower().endswith('.jpeg'):
                 img_path = img_path.replace('.jpeg', '.jpeg')
             else:
-                img_path = os.path.join(settings.IMG_PAGES_DIR, os.path.basename(file_path).replace('.jpg', '.jpeg').replace('.png', '.jpeg'))
+                img_path = os.path.join(save_dir, os.path.basename(file_path).replace('.jpg', '.jpeg').replace('.png', '.jpeg'))
             img.save(img_path, "JPEG")
             metadata = {
                 "index": 0,
@@ -64,15 +66,16 @@ def handle_file(file_path: str):
         try:
             wb = openpyxl.load_workbook(file_path)
             for i, sheet in enumerate(wb.sheetnames):
-                # excel2img.export_img("D:\Test Read Excel\docs\Simple personal cash flow statement.xlsx", f"img/Sheet{i+1}-{sheet}.jpeg", page=sheet)
-                # img = Image.open(f"img/Sheet{i+1}-{sheet}.jpeg")
+                page_img_path = os.path.join(save_dir, f"Sheet{i+1}-{sheet}.jpeg")
+                # excel2img.export_img(file_path, page_img_path, page=sheet)
+                # img = Image.open(page_img_path)
                 # img = resize_img(img, size=1440)
-                # img.save(f"img/Sheet{i+1}-{sheet}.jpeg")
+                # img.save(page_img_path)
 
                 metadata = {
                     "index": i,
                     "status": "Success",
-                    "image": f"img/Sheet{i+1}-{sheet}.jpeg",
+                    "image": page_img_path,
                     "text": "",
                     "markdown": "",
                     "elements": [],
@@ -86,8 +89,8 @@ def handle_file(file_path: str):
         return None
     return pages
 
-def ocr_pdf_to_pdf(pdf_path, output_dir):
-    new_filename = os.path.basename(pdf_path).replace('.pdf', '_ocr.pdf')
-    new_pdf_path = os.path.join(output_dir, os.path.basename(new_filename))
-    ocrmypdf.ocr(pdf_path, new_pdf_path, use_threads=True, force_ocr=True, output_type="pdf")
-    return new_pdf_path
+def ocr_pdf_to_pdf(file_path, output_dir):
+    new_filename = os.path.basename(file_path).replace('.pdf', '_ocr.pdf')
+    new_file_path = os.path.join(output_dir, os.path.basename(new_filename))
+    ocrmypdf.ocr(file_path, new_file_path, use_threads=True, force_ocr=True, output_type="pdf")
+    return new_file_path

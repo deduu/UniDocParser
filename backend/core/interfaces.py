@@ -7,7 +7,7 @@ from backend.core.types import PageResult
 
 class Splitter(abc.ABC):
     @abc.abstractmethod
-    async def split(self, pdf_path: Path) -> List[bytes]:
+    async def split(self, file_path: Path) -> List[bytes]:
         """Return one raw page (e.g. image or bytes) per entry."""
 
 

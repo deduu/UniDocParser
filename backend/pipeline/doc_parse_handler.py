@@ -24,49 +24,55 @@ from backend.core.config import settings
 class DocParserHandler:
     def __init__(self, svc: DocParserService = Depends(DocParserService)):
         self.svc = svc
-        # now your handler “knows” where to put files:
-        self.upload_dir = settings.UPLOAD_DIR
-        self.output_dir = settings.OUTPUT_DIR
+        # # # now your handler “knows” where to put files:
+        # self.upload_dir = settings.UPLOAD_DIR
+        # self.output_dir = settings.OUTPUT_DIR
 
-    async def _save_upload(self, file: UploadFile) -> str:
+    async def _save_upload(
+            self, 
+            file: UploadFile, 
+            user_id: str = "test_user",
+            folder: str = "test_folder",
+        ) -> str:
         """Save UploadFile to disk under self.upload_dir."""
-        await run_in_threadpool(os.makedirs, self.upload_dir, exist_ok=True)
+        upload_dir = os.path.join(settings.UPLOAD_DIR, user_id, folder)
+        await run_in_threadpool(os.makedirs, upload_dir, exist_ok=True)
         unique_name = f"{uuid.uuid4()}_{file.filename}"
-        dest = os.path.join(self.upload_dir, unique_name)
+        dest = os.path.join(upload_dir, unique_name)
 
         print(f"dest: {dest}")
         async with aiofiles.open(dest, "wb") as buf:
             await buf.write(await file.read())
         return dest
 
-    async def ocr(self, file: UploadFile) -> DocParserContextOut:
-        path = await self._save_upload(file)
+    async def ocr(self, user_id: str, folder: str, file: UploadFile) -> DocParserContextOut:
+        path = await self._save_upload(file, user_id=user_id, folder=folder)
         try:
-            ctx = await self.svc.ocr(path)
+            ctx = await self.svc.ocr(user_id=user_id, folder=folder, file_path=path)
         except Exception as e:
             raise HTTPException(500, f"OCR failed: {e}")
         return self._dto_from_ctx(ctx)
 
-    async def split(self, file: UploadFile) -> SplitPDFResponse:
-        path = await self._save_upload(file)
+    async def split(self, user_id: str, folder: str, file: UploadFile) -> SplitPDFResponse:
+        path = await self._save_upload(file, user_id=user_id, folder=folder)
         try:
-            ctx = await self.svc.split(path)
+            ctx = await self.svc.split(user_id=user_id, folder=folder, file_path=path)
         except Exception as e:
             raise HTTPException(500, f"Split failed: {e}")
         return SplitPDFResponse.from_context(ctx)
-    
-    async def extract_only(self, file:UploadFile) -> DocParserContextOut:
-        path = await self._save_upload(file)
+
+    async def extract_only(self, user_id: str, folder: str, file: UploadFile) -> DocParserContextOut:
+        path = await self._save_upload(file, user_id=user_id, folder=folder)
         try:
-            ctx = await self.svc.extract_only(path)
+            ctx = await self.svc.extract_only(user_id=user_id, folder=folder, file_path=path)
         except Exception as e:
             raise HTTPException(500, f"Extract only pipeline failed: {e}")
         return self._dto_from_ctx(ctx)
 
-    async def full_pipeline(self, file: UploadFile) -> DocParserContextOut:
-        path = await self._save_upload(file)
+    async def full_pipeline(self, user_id: str, folder: str, file: UploadFile) -> DocParserContextOut:
+        path = await self._save_upload(file, user_id=user_id, folder=folder)
         try:
-            ctx = await self.svc.full(path)
+            ctx = await self.svc.full(user_id=user_id, folder=folder, file_path=path)
         except Exception as e:
             raise HTTPException(500, f"Full pipeline failed: {e}")
         return self._dto_from_ctx(ctx)
@@ -128,8 +134,10 @@ class DocParserHandler:
         ]
 
         return DocParserContextOut(
-            pdf_path=ctx.pdf_path,
-            ocr_pdf_path=ctx.ocr_pdf_path,
+            user_id=ctx.user_id,
+            folder=ctx.folder,
+            file_path=ctx.file_path,
+            ocr_file_path=ctx.ocr_file_path,
             pages=pages,
             figure_list=figures,
             processing_time=ctx.processing_time or 0.0,
@@ -139,23 +147,29 @@ class DocParserHandler:
         self,
         dto: DocParserContextOut,
         unique_filename: str,
+        user_id: str = "test_user",
+        folder: str = "test_folder",
     ) -> Tuple[str, str]:
         """
-        Persist JSONL + Markdown exports under self.output_dir.
+        Persist JSONL + Markdown exports under settings.OUTPUT_DIR/user_id/folder.
         Returns (json_filename, markdown_filename).
         """
-        await run_in_threadpool(os.makedirs, self.output_dir, exist_ok=True)
+        output_dir = os.path.join(settings.OUTPUT_DIR, user_id, folder)
+        await run_in_threadpool(os.makedirs, output_dir, exist_ok=True)
 
         print(f"unique_filename: {unique_filename}")
-        print(f"self.output_dir: {self.output_dir}")
-        json_path = Path(self.output_dir) / f"{unique_filename}.jsonl"
-        md_path = Path(self.output_dir) / f"{unique_filename}.md"
+        print(f"output_dir: {output_dir}")
+        json_path = Path(output_dir) / f"{unique_filename}.jsonl"
+        md_path = Path(output_dir) / f"{unique_filename}.md"
         print(f"json_path: {json_path}")
         payload = {
-            "pdf_path":        dto.pdf_path,
-            "ocr_pdf_path":    dto.ocr_pdf_path,
-            "processing_time": dto.processing_time,
-            "pages":           [p.dict() for p in dto.pages],
+            "user_id":          dto.user_id,
+            "folder":           dto.folder,
+            "file_name":        unique_filename,
+            "file_path":        dto.file_path,
+            "ocr_file_path":    dto.ocr_file_path,
+            "processing_time":  dto.processing_time,
+            "pages":            [p.dict() for p in dto.pages],
         }
 
         # --- write JSONL ---

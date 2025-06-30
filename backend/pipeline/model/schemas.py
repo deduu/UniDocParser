@@ -20,7 +20,7 @@ class SplitPDFResponse(BaseModel):
     @classmethod
     def from_context(cls, ctx: DocParserContext) -> "SplitPDFResponse":
         return cls(
-            source=ctx.pdf_path,
+            source=ctx.file_path,
             pages=[PageInfo(**p.dict()) for p in ctx.pages],
             processing_time=ctx.processing_time or 0.0
         )
@@ -51,7 +51,7 @@ class FullPDFResponse(BaseModel):
     @classmethod
     def from_context(cls, ctx: DocParserContext) -> "FullPDFResponse":
         return cls(
-            source=ctx.pdf_path,
+            source=ctx.file_path,
             pages=[
                 PageOut(**p.model_dump(exclude={"image"})) for p in ctx.pages],
             figures=[

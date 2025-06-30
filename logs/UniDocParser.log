@@ -686,3 +686,791 @@
 2025-06-25 10:23:22,035 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 11.20s
 2025-06-25 10:30:47,640 - backend.main - INFO - Application shutdown begins...
 2025-06-25 10:30:47,641 - backend.main - INFO - Application shutdown complete.
+2025-06-25 04:19:34,728 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 04:19:34,736 - backend.main - INFO - Application startup begins...
+2025-06-25 04:19:34,736 - backend.main - INFO - Application startup complete.
+2025-06-25 04:22:07,657 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.30s
+2025-06-25 04:22:16,145 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 8.49s
+2025-06-25 04:22:16,147 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-06-25 04:22:16,237 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.09s
+2025-06-25 04:22:16,238 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 9.88s
+2025-06-25 04:24:02,118 - backend.pipeline.doc_parser_pipeline - INFO - Split took 4.55s
+2025-06-25 04:24:07,340 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/8fec6865-46f4-486a-aa86-6c6c6f7cac66_dummy-data.pdf ...
+2025-06-25 04:24:18,952 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-25 04:24:19,076 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-25 04:24:19,329 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-25 04:24:19,454 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-25 04:24:19,491 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-25 04:24:45,390 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 43.27s
+2025-06-25 04:25:18,247 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 32.86s
+2025-06-25 04:25:18,254 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-25 04:28:44,246 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 205.99s
+2025-06-25 04:28:44,246 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 286.68s
+2025-06-25 04:40:52,879 - backend.main - INFO - Application shutdown begins...
+2025-06-25 04:40:52,879 - backend.main - INFO - Application shutdown complete.
+2025-06-25 04:41:34,772 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 04:41:34,773 - backend.main - INFO - Application startup begins...
+2025-06-25 04:41:34,773 - backend.main - INFO - Application startup complete.
+2025-06-25 04:42:06,018 - backend.pipeline.doc_parser_pipeline - INFO - Split took 14.87s
+2025-06-25 04:42:19,195 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/a7c9e760-7704-4284-9cdb-b0f5231bfccc_attention_paper.pdf ...
+2025-06-25 04:42:45,443 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-25 04:42:45,570 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-25 04:42:45,844 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-25 04:42:45,942 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-25 04:42:45,949 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-25 04:43:41,271 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 95.25s
+2025-06-25 04:46:51,748 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 190.48s
+2025-06-25 04:46:51,776 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.03s
+2025-06-25 04:56:52,341 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 600.56s
+2025-06-25 04:56:52,342 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 901.20s
+2025-06-25 06:12:13,265 - backend.pipeline.doc_parser_pipeline - INFO - Split took 49.86s
+2025-06-25 06:12:21,354 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/9729654d-93d2-4e54-9e43-191b67d5bea3_20250507101938-2025-05-07ptba_presentasi_perusahaan101747.pdf ...
+2025-06-25 06:14:25,923 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 132.66s
+2025-06-25 06:22:55,480 - backend.pipeline.doc_parser_pipeline - INFO - Split took 49.18s
+2025-06-25 06:23:02,316 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/872dcddc-788f-4b42-a88e-5b5405903d22_20250507101938-2025-05-07ptba_presentasi_perusahaan101747.pdf ...
+2025-06-25 06:23:23,685 - backend.pipeline.doc_parser_pipeline - INFO - Split took 50.73s
+2025-06-25 06:23:31,045 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/e698744e-8007-4f5f-b6c7-9b4d0d32f640_20250507101938-2025-05-07ptba_presentasi_perusahaan101747.pdf ...
+2025-06-25 06:25:26,921 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 151.44s
+2025-06-25 06:25:45,891 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 142.21s
+2025-06-25 06:35:18,840 - backend.main - INFO - Application shutdown begins...
+2025-06-25 06:35:18,840 - backend.main - INFO - Application shutdown complete.
+2025-06-25 06:35:48,312 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 06:35:48,313 - backend.main - INFO - Application startup begins...
+2025-06-25 06:35:48,313 - backend.main - INFO - Application startup complete.
+2025-06-25 06:38:10,288 - backend.pipeline.doc_parser_pipeline - INFO - Split took 48.07s
+2025-06-25 06:38:20,575 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/4db90e69-ab26-47b8-80ba-31b7654c898a_20250507101938-2025-05-07ptba_presentasi_perusahaan101747.pdf ...
+2025-06-25 06:39:07,134 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-25 06:39:07,235 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-25 06:39:07,418 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-25 06:39:07,499 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-25 06:39:07,507 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-25 06:40:25,575 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 135.29s
+2025-06-25 06:47:37,964 - backend.main - INFO - Application shutdown begins...
+2025-06-25 06:47:37,964 - backend.main - INFO - Application shutdown complete.
+2025-06-25 06:56:54,194 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 06:56:54,204 - backend.main - INFO - Application startup begins...
+2025-06-25 06:56:54,204 - backend.main - INFO - Application startup complete.
+2025-06-25 06:57:42,351 - backend.pipeline.doc_parser_pipeline - INFO - Split took 15.35s
+2025-06-25 06:57:54,381 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/82490863-7256-4d01-9657-649059840427_attention_paper.pdf ...
+2025-06-25 06:58:22,189 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-25 06:58:22,274 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-25 06:58:22,473 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-25 06:58:22,554 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-25 06:58:22,562 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-25 06:59:24,469 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 102.12s
+2025-06-25 07:01:39,523 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 135.05s
+2025-06-25 07:01:39,547 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.02s
+2025-06-25 07:09:39,411 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 479.86s
+2025-06-25 07:09:39,412 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 732.41s
+2025-06-25 07:11:25,292 - backend.main - INFO - Application shutdown begins...
+2025-06-25 07:11:25,292 - backend.main - INFO - Application shutdown complete.
+2025-06-25 07:19:38,074 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 07:19:38,074 - backend.main - INFO - Application startup begins...
+2025-06-25 07:19:38,074 - backend.main - INFO - Application startup complete.
+2025-06-25 07:21:01,752 - backend.pipeline.doc_parser_pipeline - INFO - Split took 14.93s
+2025-06-25 07:21:14,352 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/32c57ca2-e295-4a32-ab24-658b4551667a_attention_paper.pdf ...
+2025-06-25 07:21:42,210 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-25 07:21:42,299 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-25 07:21:42,597 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-25 07:21:42,706 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-25 07:21:42,713 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-25 07:22:41,004 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 99.25s
+2025-06-25 07:25:02,476 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 141.47s
+2025-06-25 07:25:02,502 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.02s
+2025-06-25 07:37:43,265 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 760.76s
+2025-06-25 07:37:43,266 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 1016.44s
+2025-06-25 07:39:21,850 - backend.main - INFO - Application shutdown begins...
+2025-06-25 07:39:21,850 - backend.main - INFO - Application shutdown complete.
+2025-06-25 07:40:13,438 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 07:40:13,439 - backend.main - INFO - Application startup begins...
+2025-06-25 07:40:13,439 - backend.main - INFO - Application startup complete.
+2025-06-25 07:52:46,324 - backend.pipeline.doc_parser_pipeline - INFO - Split took 14.63s
+2025-06-25 07:52:58,633 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/7a16b25f-224f-4684-9bc3-0d3e449b6a84_attention_paper.pdf ...
+2025-06-25 07:53:24,980 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-25 07:53:25,146 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-25 07:53:25,349 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-25 07:53:25,453 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-25 07:53:25,461 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-25 07:54:23,098 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 96.77s
+2025-06-25 07:56:06,869 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 103.77s
+2025-06-25 07:56:06,893 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.02s
+2025-06-25 08:09:47,119 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 820.23s
+2025-06-25 08:09:47,120 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 1035.43s
+2025-06-25 08:24:43,490 - backend.main - INFO - Application shutdown begins...
+2025-06-25 08:24:43,490 - backend.main - INFO - Application shutdown complete.
+2025-06-25 08:27:43,563 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 08:27:43,564 - backend.main - INFO - Application startup begins...
+2025-06-25 08:27:43,564 - backend.main - INFO - Application startup complete.
+2025-06-25 08:33:29,518 - backend.pipeline.doc_parser_pipeline - INFO - Split took 4.08s
+2025-06-25 08:33:34,635 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/55745dc4-bd0f-4274-8028-289ef113dcc8_dummy-data.pdf ...
+2025-06-25 08:33:45,944 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-25 08:33:46,050 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-25 08:33:46,298 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-25 08:33:46,405 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-25 08:33:46,412 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-25 08:34:14,300 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 44.78s
+2025-06-25 08:35:26,578 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 72.28s
+2025-06-25 08:35:26,586 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-25 08:39:17,521 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 230.93s
+2025-06-25 08:39:17,522 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 352.08s
+2025-06-25 09:12:08,590 - backend.main - INFO - Application shutdown begins...
+2025-06-25 09:12:08,590 - backend.main - INFO - Application shutdown complete.
+2025-06-25 09:15:01,410 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 09:15:01,411 - backend.main - INFO - Application startup begins...
+2025-06-25 09:15:01,411 - backend.main - INFO - Application startup complete.
+2025-06-25 09:29:32,492 - backend.pipeline.doc_parser_pipeline - INFO - Split took 4.08s
+2025-06-25 09:29:37,690 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/66f91be6-fc3d-4f12-92f5-b791648e8e18_dummy-data.pdf ...
+2025-06-25 09:29:50,560 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-25 09:29:50,645 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-25 09:29:50,884 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-25 09:29:50,987 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-25 09:29:50,994 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-25 09:30:18,973 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 46.48s
+2025-06-25 09:31:06,300 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 47.33s
+2025-06-25 09:31:06,309 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-25 09:34:24,027 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 197.72s
+2025-06-25 09:34:24,028 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 295.61s
+2025-06-25 09:36:44,187 - backend.pipeline.doc_parser_pipeline - INFO - Split took 7.43s
+2025-06-25 09:36:47,096 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/f1c3a0e4-8356-4bb3-9f03-99a8e474d6c5_AR for improved learnability.pdf ...
+2025-06-25 09:38:05,637 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 81.45s
+2025-06-25 09:38:36,802 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 31.16s
+2025-06-25 09:38:36,832 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.03s
+2025-06-25 09:45:56,595 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 439.76s
+2025-06-25 09:45:56,595 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 559.83s
+2025-06-25 09:49:43,197 - backend.pipeline.doc_parser_pipeline - INFO - Split took 14.87s
+2025-06-25 09:49:50,139 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/b46a7f87-1df6-49a2-9de8-628bf968c6a1_attention_paper.pdf ...
+2025-06-25 09:51:11,681 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 88.48s
+2025-06-25 09:51:49,095 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 37.41s
+2025-06-25 09:51:49,118 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.02s
+2025-06-25 09:58:24,155 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 395.04s
+2025-06-25 09:58:24,155 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 535.83s
+2025-06-25 10:10:55,987 - backend.main - INFO - Application shutdown begins...
+2025-06-25 10:10:55,987 - backend.main - INFO - Application shutdown complete.
+2025-06-25 10:23:24,458 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 10:23:24,458 - backend.main - INFO - Application startup begins...
+2025-06-25 10:23:24,459 - backend.main - INFO - Application startup complete.
+2025-06-25 10:24:03,832 - backend.main - INFO - Application shutdown begins...
+2025-06-25 10:24:03,832 - backend.main - INFO - Application shutdown complete.
+2025-06-25 10:24:59,416 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 10:24:59,417 - backend.main - INFO - Application startup begins...
+2025-06-25 10:24:59,417 - backend.main - INFO - Application startup complete.
+2025-06-25 10:34:32,137 - backend.main - INFO - Application shutdown begins...
+2025-06-25 10:34:32,137 - backend.main - INFO - Application shutdown complete.
+2025-06-25 10:38:54,976 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 10:38:54,977 - backend.main - INFO - Application startup begins...
+2025-06-25 10:38:54,977 - backend.main - INFO - Application startup complete.
+2025-06-25 10:39:34,500 - backend.pipeline.doc_parser_pipeline - INFO - Split took 4.07s
+2025-06-25 10:39:39,643 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/57233bbc-d240-43b7-9e59-b753c8694517_dummy-data.pdf ...
+2025-06-25 10:39:52,056 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-25 10:39:52,138 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-25 10:39:52,327 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-25 10:39:52,420 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-25 10:39:52,427 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-25 10:40:20,317 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 45.82s
+2025-06-25 10:40:58,614 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 38.30s
+2025-06-25 10:40:58,623 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-25 10:44:08,895 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 190.27s
+2025-06-25 10:44:08,896 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 278.46s
+2025-06-25 10:45:38,192 - backend.pipeline.doc_parser_pipeline - INFO - Split took 7.34s
+2025-06-25 10:45:41,115 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/936682c3-4253-48b4-9c58-8ca14b694b79_AR for improved learnability.pdf ...
+2025-06-25 10:47:00,431 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 82.24s
+2025-06-25 10:49:58,210 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 177.78s
+2025-06-25 10:49:58,280 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.07s
+2025-06-25 10:57:04,385 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 426.10s
+2025-06-25 10:57:04,385 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 693.53s
+2025-06-25 11:04:28,669 - backend.pipeline.doc_parser_pipeline - INFO - Split took 15.65s
+2025-06-25 11:04:35,545 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/8626da9a-a319-4f5c-8d60-e33fe4c80237_attention_paper.pdf ...
+2025-06-25 11:05:55,893 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 87.22s
+2025-06-25 11:06:39,604 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 43.71s
+2025-06-25 11:06:39,627 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.02s
+2025-06-25 11:13:28,135 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 408.51s
+2025-06-25 11:13:28,135 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 555.12s
+2025-06-25 11:36:19,540 - backend.main - INFO - Application shutdown begins...
+2025-06-25 11:36:19,540 - backend.main - INFO - Application shutdown complete.
+2025-06-25 11:39:11,562 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 11:39:11,563 - backend.main - INFO - Application startup begins...
+2025-06-25 11:39:11,563 - backend.main - INFO - Application startup complete.
+2025-06-25 11:40:30,868 - backend.pipeline.doc_parser_pipeline - INFO - Split took 4.05s
+2025-06-25 11:40:36,192 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/e497ce89-a768-41df-b380-f197b716accb_dummy-data.pdf ...
+2025-06-25 11:40:47,186 - backend.pipeline.doc_parser_pipeline - INFO - Split took 15.32s
+2025-06-25 11:40:50,186 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/ad168288-9d89-4181-9577-319c4e64733a_AR for improved learnability.pdf ...
+2025-06-25 11:40:50,335 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-25 11:40:50,445 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-25 11:40:50,939 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-25 11:40:51,043 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-25 11:40:51,050 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-25 11:40:57,773 - backend.pipeline.doc_parser_pipeline - INFO - Split took 27.73s
+2025-06-25 11:41:12,382 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/74761370-fae3-4f94-9630-c1d1d5931972_attention_paper.pdf ...
+2025-06-25 11:41:28,958 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 58.09s
+2025-06-25 11:42:21,775 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 52.81s
+2025-06-25 11:42:21,783 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-25 11:42:26,000 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 98.81s
+2025-06-25 11:42:52,110 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 114.33s
+2025-06-25 11:43:15,285 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 49.28s
+2025-06-25 11:43:15,317 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.03s
+2025-06-25 11:43:48,074 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 55.96s
+2025-06-25 11:43:48,097 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.02s
+2025-06-25 11:52:41,527 - backend.main - INFO - Application shutdown begins...
+2025-06-25 11:52:41,527 - backend.main - INFO - Application shutdown complete.
+2025-06-25 11:54:21,750 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 11:54:21,751 - backend.main - INFO - Application startup begins...
+2025-06-25 11:54:21,751 - backend.main - INFO - Application startup complete.
+2025-06-25 11:55:56,359 - backend.pipeline.doc_parser_pipeline - INFO - Split took 4.09s
+2025-06-25 11:56:01,541 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/9ddb9419-238b-4dab-97df-78c5e9335451_dummy-data.pdf ...
+2025-06-25 11:56:05,590 - backend.pipeline.doc_parser_pipeline - INFO - Split took 6.16s
+2025-06-25 11:56:08,488 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/2451c10c-fd4c-4072-a7aa-b07515f840be_dummy-data.pdf ...
+2025-06-25 11:56:18,289 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-25 11:56:18,421 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-25 11:56:18,681 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-25 11:56:18,835 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-25 11:56:18,842 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-25 11:56:47,189 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 50.83s
+2025-06-25 11:56:49,778 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 44.19s
+2025-06-25 11:57:27,873 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 38.08s
+2025-06-25 11:57:27,881 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-25 12:03:49,081 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 381.20s
+2025-06-25 12:03:49,082 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 469.65s
+2025-06-25 12:03:50,691 - backend.main - INFO - Application shutdown begins...
+2025-06-25 12:03:50,691 - backend.main - INFO - Application shutdown complete.
+2025-06-25 12:11:06,265 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 12:11:06,265 - backend.main - INFO - Application startup begins...
+2025-06-25 12:11:06,266 - backend.main - INFO - Application startup complete.
+2025-06-25 12:13:53,342 - backend.pipeline.doc_parser_pipeline - INFO - Split took 4.09s
+2025-06-25 12:13:58,489 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/6682777c-8627-4ff1-be58-a712d1807514_dummy-data.pdf ...
+2025-06-25 12:14:10,331 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-25 12:14:10,444 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-25 12:14:10,745 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-25 12:14:10,854 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-25 12:14:10,861 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-25 12:14:38,754 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 45.41s
+2025-06-25 12:15:17,769 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 39.01s
+2025-06-25 12:15:17,777 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-25 12:20:52,976 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 335.20s
+2025-06-25 12:20:52,977 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 423.72s
+2025-06-25 12:46:05,322 - backend.pipeline.doc_parser_pipeline - INFO - Split took 7.60s
+2025-06-25 12:46:08,125 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/5d0725d3-3f46-45f1-b732-6924efb07a28_AR for improved learnability.pdf ...
+2025-06-25 12:47:28,235 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 82.91s
+2025-06-25 12:48:00,573 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 32.34s
+2025-06-25 12:48:00,604 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.03s
+2025-06-25 13:06:21,832 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 1101.23s
+2025-06-25 13:06:21,833 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 1224.11s
+2025-06-25 13:47:04,736 - backend.main - INFO - Application shutdown begins...
+2025-06-25 13:47:04,736 - backend.main - INFO - Application shutdown complete.
+2025-06-25 13:54:34,795 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 13:54:34,796 - backend.main - INFO - Application startup begins...
+2025-06-25 13:54:34,796 - backend.main - INFO - Application startup complete.
+2025-06-25 13:56:37,418 - backend.pipeline.doc_parser_pipeline - INFO - Split took 14.35s
+2025-06-25 13:56:48,936 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/7261421e-8c64-4e07-9bf1-375c2ec8b329_attention_paper.pdf ...
+2025-06-25 13:57:14,270 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-25 13:57:14,446 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-25 13:57:14,768 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-25 13:57:14,875 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-25 13:57:14,882 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-25 13:58:12,705 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 95.29s
+2025-06-25 13:59:29,065 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 76.36s
+2025-06-25 13:59:29,090 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.03s
+2025-06-25 14:13:39,541 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 850.45s
+2025-06-25 14:13:39,542 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 1036.47s
+2025-06-25 14:15:50,046 - backend.main - INFO - Application shutdown begins...
+2025-06-25 14:15:50,046 - backend.main - INFO - Application shutdown complete.
+2025-06-25 14:23:34,683 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 14:23:34,684 - backend.main - INFO - Application startup begins...
+2025-06-25 14:23:34,684 - backend.main - INFO - Application startup complete.
+2025-06-25 15:02:49,466 - backend.pipeline.doc_parser_pipeline - INFO - Split took 4.08s
+2025-06-25 15:02:54,741 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/d7330e0e-1cc0-4e54-8cdc-838a50fd0a9a_dummy-data.pdf ...
+2025-06-25 15:03:06,106 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-25 15:03:06,220 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-25 15:03:06,454 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-25 15:03:06,553 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-25 15:03:06,560 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-25 15:03:34,510 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 45.04s
+2025-06-25 15:04:48,181 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 73.67s
+2025-06-25 15:04:48,191 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-25 15:07:58,278 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 190.09s
+2025-06-25 15:07:58,279 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 312.89s
+2025-06-25 15:19:03,254 - backend.pipeline.doc_parser_pipeline - INFO - Split took 7.54s
+2025-06-25 15:19:06,192 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/4f236232-f40b-4bdc-adbe-d3bb24216264_AR for improved learnability.pdf ...
+2025-06-25 15:20:25,382 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 82.13s
+2025-06-25 15:21:24,623 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 59.24s
+2025-06-25 15:21:24,655 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.03s
+2025-06-25 15:29:38,181 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 493.53s
+2025-06-25 15:29:38,182 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 642.47s
+2025-06-25 15:36:21,675 - backend.main - INFO - Application shutdown begins...
+2025-06-25 15:36:21,675 - backend.main - INFO - Application shutdown complete.
+2025-06-25 15:38:11,614 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 15:38:11,614 - backend.main - INFO - Application startup begins...
+2025-06-25 15:38:11,615 - backend.main - INFO - Application startup complete.
+2025-06-25 15:47:36,340 - backend.main - INFO - Application shutdown begins...
+2025-06-25 15:47:36,340 - backend.main - INFO - Application shutdown complete.
+2025-06-25 15:49:41,501 - backend.main - INFO - FastAPI application created and configured.
+2025-06-25 15:49:41,502 - backend.main - INFO - Application startup begins...
+2025-06-25 15:49:41,502 - backend.main - INFO - Application startup complete.
+2025-06-25 15:50:49,868 - backend.pipeline.doc_parser_pipeline - INFO - Split took 14.34s
+2025-06-25 15:51:02,872 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/7cce715e-9357-4940-bfba-5aeb10429602_attention_paper.pdf ...
+2025-06-25 15:51:27,926 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-25 15:51:28,054 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-25 15:51:28,268 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-25 15:51:28,363 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-25 15:51:28,370 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-25 15:52:26,010 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 96.14s
+2025-06-25 15:59:04,943 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 398.93s
+2025-06-25 15:59:04,968 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.02s
+2025-06-25 16:09:21,607 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 616.64s
+2025-06-25 16:09:21,608 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 1126.07s
+2025-06-25 16:10:03,469 - backend.main - INFO - Application shutdown begins...
+2025-06-25 16:10:03,470 - backend.main - INFO - Application shutdown complete.
+2025-06-26 06:35:26,117 - backend.main - INFO - FastAPI application created and configured.
+2025-06-26 06:35:26,117 - backend.main - INFO - Application startup begins...
+2025-06-26 06:35:26,118 - backend.main - INFO - Application startup complete.
+2025-06-26 06:36:57,300 - backend.pipeline.doc_parser_pipeline - INFO - Split took 4.04s
+2025-06-26 06:37:02,382 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/656b18b1-79f6-43fa-b24f-158d2476b785_dummy-data.pdf ...
+2025-06-26 06:37:15,360 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-26 06:37:15,639 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-26 06:37:16,232 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-26 06:37:16,351 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-26 06:37:16,360 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-26 06:37:44,374 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 47.07s
+2025-06-26 06:38:23,804 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 39.43s
+2025-06-26 06:38:23,812 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-26 06:41:26,306 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 182.49s
+2025-06-26 06:41:26,307 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 273.05s
+2025-06-26 06:41:37,467 - backend.main - INFO - Application shutdown begins...
+2025-06-26 06:41:37,467 - backend.main - INFO - Application shutdown complete.
+2025-06-26 06:42:21,408 - backend.main - INFO - FastAPI application created and configured.
+2025-06-26 06:42:21,409 - backend.main - INFO - Application startup begins...
+2025-06-26 06:42:21,409 - backend.main - INFO - Application startup complete.
+2025-06-26 06:43:57,041 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.07s
+2025-06-26 06:43:59,475 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/0f33e294-7b94-419c-8540-ad24a05fdd07_28fa9da4b36b012eba83b4d0808e3e8e3e44d9dd-2550x3300.pdf ...
+2025-06-26 06:44:06,416 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-26 06:44:06,541 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-26 06:44:06,778 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-26 06:44:06,869 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-26 06:44:06,876 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-26 06:44:19,456 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 22.42s
+2025-06-26 06:46:00,303 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 100.85s
+2025-06-26 06:46:00,309 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-26 06:49:03,803 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 183.49s
+2025-06-26 06:49:03,803 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 308.84s
+2025-06-26 06:57:43,221 - backend.main - INFO - Application shutdown begins...
+2025-06-26 06:57:43,221 - backend.main - INFO - Application shutdown complete.
+2025-06-26 07:08:23,165 - backend.main - INFO - FastAPI application created and configured.
+2025-06-26 07:08:23,165 - backend.main - INFO - Application startup begins...
+2025-06-26 07:08:23,166 - backend.main - INFO - Application startup complete.
+2025-06-26 07:09:45,590 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.08s
+2025-06-26 07:09:48,005 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/e631d85f-3773-42b9-8549-127f04a042e8_28fa9da4b36b012eba83b4d0808e3e8e3e44d9dd-2550x3300.pdf ...
+2025-06-26 07:09:54,622 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-26 07:09:54,827 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-26 07:09:55,162 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-26 07:09:55,272 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-26 07:09:55,279 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-26 07:10:07,806 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 22.22s
+2025-06-26 07:11:46,300 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 98.49s
+2025-06-26 07:11:46,305 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-26 07:16:11,099 - backend.main - INFO - Application shutdown begins...
+2025-06-26 07:16:11,099 - backend.main - INFO - Application shutdown complete.
+2025-06-26 07:16:51,748 - backend.main - INFO - FastAPI application created and configured.
+2025-06-26 07:16:51,749 - backend.main - INFO - Application startup begins...
+2025-06-26 07:16:51,749 - backend.main - INFO - Application startup complete.
+2025-06-26 07:17:57,903 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.08s
+2025-06-26 07:18:01,250 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/ca9a0df5-f313-4f27-a8e7-da79104045c2_28fa9da4b36b012eba83b4d0808e3e8e3e44d9dd-2550x3300.pdf ...
+2025-06-26 07:18:08,678 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-26 07:18:08,780 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-26 07:18:08,998 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-26 07:18:09,086 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-26 07:18:09,093 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-26 07:18:18,640 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 20.74s
+2025-06-26 07:19:41,416 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 82.78s
+2025-06-26 07:19:41,423 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-26 07:26:42,700 - backend.main - INFO - Application shutdown begins...
+2025-06-26 07:26:42,700 - backend.main - INFO - Application shutdown complete.
+2025-06-26 07:35:33,352 - backend.main - INFO - FastAPI application created and configured.
+2025-06-26 07:35:33,353 - backend.main - INFO - Application startup begins...
+2025-06-26 07:35:33,353 - backend.main - INFO - Application startup complete.
+2025-06-26 07:36:03,079 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.09s
+2025-06-26 07:36:06,455 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/56c15f24-52d3-44c7-a22f-81ecd1043ab6_28fa9da4b36b012eba83b4d0808e3e8e3e44d9dd-2550x3300.pdf ...
+2025-06-26 07:36:13,119 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-26 07:36:13,265 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-26 07:36:13,484 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-26 07:36:13,570 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-26 07:36:13,577 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-26 07:36:23,079 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 20.00s
+2025-06-26 07:36:26,370 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 3.29s
+2025-06-26 07:36:26,374 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-06-26 07:39:52,222 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 205.85s
+2025-06-26 07:39:52,223 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 231.23s
+2025-06-26 07:40:59,009 - backend.main - INFO - Application shutdown begins...
+2025-06-26 07:40:59,010 - backend.main - INFO - Application shutdown complete.
+2025-06-26 07:41:28,943 - backend.main - INFO - FastAPI application created and configured.
+2025-06-26 07:41:28,944 - backend.main - INFO - Application startup begins...
+2025-06-26 07:41:28,944 - backend.main - INFO - Application startup complete.
+2025-06-26 07:42:46,715 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.09s
+2025-06-26 07:42:50,080 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/0596bd5e-4155-4230-b178-f90f43cbd3ae_28fa9da4b36b012eba83b4d0808e3e8e3e44d9dd-2550x3300.pdf ...
+2025-06-26 07:42:57,007 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-26 07:42:57,105 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-26 07:42:57,331 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-26 07:42:57,431 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-26 07:42:57,438 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-26 07:43:06,943 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 20.23s
+2025-06-26 07:43:09,280 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 2.34s
+2025-06-26 07:43:09,284 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-06-26 07:46:34,056 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 204.77s
+2025-06-26 07:46:34,058 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 229.43s
+2025-06-26 07:52:36,197 - backend.main - INFO - Application shutdown begins...
+2025-06-26 07:52:36,197 - backend.main - INFO - Application shutdown complete.
+2025-06-26 07:53:05,373 - backend.main - INFO - FastAPI application created and configured.
+2025-06-26 07:53:05,374 - backend.main - INFO - Application startup begins...
+2025-06-26 07:53:05,374 - backend.main - INFO - Application startup complete.
+2025-06-26 07:57:54,828 - backend.main - INFO - Application shutdown begins...
+2025-06-26 07:57:54,829 - backend.main - INFO - Application shutdown complete.
+2025-06-26 07:59:01,723 - backend.main - INFO - FastAPI application created and configured.
+2025-06-26 07:59:01,724 - backend.main - INFO - Application startup begins...
+2025-06-26 07:59:01,724 - backend.main - INFO - Application startup complete.
+2025-06-26 07:59:27,074 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.08s
+2025-06-26 07:59:30,491 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/4427e09d-179c-492b-b46d-93b9761417c9_28fa9da4b36b012eba83b4d0808e3e8e3e44d9dd-2550x3300.pdf ...
+2025-06-26 07:59:37,191 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-26 07:59:37,304 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-26 07:59:37,618 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-26 07:59:37,707 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-26 07:59:37,715 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-26 07:59:47,266 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 20.19s
+2025-06-26 08:00:08,561 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 21.30s
+2025-06-26 08:00:08,565 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-06-26 08:03:40,711 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 212.15s
+2025-06-26 08:03:40,712 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 255.72s
+2025-06-26 08:16:58,268 - backend.main - INFO - Application shutdown begins...
+2025-06-26 08:16:58,268 - backend.main - INFO - Application shutdown complete.
+2025-06-26 08:20:13,712 - backend.main - INFO - FastAPI application created and configured.
+2025-06-26 08:20:13,713 - backend.main - INFO - Application startup begins...
+2025-06-26 08:20:13,713 - backend.main - INFO - Application startup complete.
+2025-06-26 08:20:28,866 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.07s
+2025-06-26 08:20:32,392 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/d9329cdc-b6e0-47b0-8c6c-77af0536aa5f_28fa9da4b36b012eba83b4d0808e3e8e3e44d9dd-2550x3300.pdf ...
+2025-06-26 08:20:39,038 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-26 08:20:39,136 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-26 08:20:39,356 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-26 08:20:39,471 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-26 08:20:39,477 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-26 08:20:48,983 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 20.12s
+2025-06-26 08:21:06,467 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 17.48s
+2025-06-26 08:21:06,471 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-06-26 08:24:30,282 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 203.81s
+2025-06-26 08:24:30,283 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 243.49s
+2025-06-26 08:31:02,457 - backend.main - INFO - Application shutdown begins...
+2025-06-26 08:31:02,457 - backend.main - INFO - Application shutdown complete.
+2025-06-26 08:31:29,533 - backend.main - INFO - FastAPI application created and configured.
+2025-06-26 08:31:29,534 - backend.main - INFO - Application startup begins...
+2025-06-26 08:31:29,534 - backend.main - INFO - Application startup complete.
+2025-06-26 08:32:31,096 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.10s
+2025-06-26 08:32:34,792 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/98b1cf6c-376e-4d30-ac15-4fdbe0b4f524_28fa9da4b36b012eba83b4d0808e3e8e3e44d9dd-2550x3300.pdf ...
+2025-06-26 08:32:42,358 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-26 08:32:42,455 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-26 08:32:42,825 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-26 08:32:42,917 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-26 08:32:42,924 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-26 08:32:52,468 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 21.37s
+2025-06-26 08:33:00,717 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 8.25s
+2025-06-26 08:33:00,720 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-06-26 08:36:34,730 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 214.01s
+2025-06-26 08:36:34,731 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 245.73s
+2025-06-26 09:09:39,382 - backend.main - INFO - Application shutdown begins...
+2025-06-26 09:09:39,382 - backend.main - INFO - Application shutdown complete.
+2025-06-26 09:10:36,722 - backend.main - INFO - FastAPI application created and configured.
+2025-06-26 09:10:36,723 - backend.main - INFO - Application startup begins...
+2025-06-26 09:10:36,723 - backend.main - INFO - Application startup complete.
+2025-06-26 09:11:10,222 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.10s
+2025-06-26 09:11:13,698 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/06549ede-23c5-491d-86b8-8577c8f66308_28fa9da4b36b012eba83b4d0808e3e8e3e44d9dd-2550x3300.pdf ...
+2025-06-26 09:11:20,367 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-26 09:11:20,496 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-26 09:11:20,775 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-26 09:11:20,869 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-26 09:11:20,876 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-26 09:11:30,456 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 20.23s
+2025-06-26 09:11:54,391 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 23.93s
+2025-06-26 09:11:54,395 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-06-26 09:15:17,478 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 203.08s
+2025-06-26 09:15:17,479 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 249.36s
+2025-06-26 09:18:30,226 - backend.pipeline.doc_parser_pipeline - INFO - Split took 14.66s
+2025-06-26 09:18:40,030 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/f0255837-51ba-4854-b377-52f2011210e7_attention_paper.pdf ...
+2025-06-26 09:20:00,071 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 89.84s
+2025-06-26 09:21:16,675 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 76.60s
+2025-06-26 09:21:16,699 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.02s
+2025-06-26 09:29:48,625 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 511.93s
+2025-06-26 09:29:48,625 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 693.06s
+2025-06-26 09:34:16,491 - backend.main - INFO - Application shutdown begins...
+2025-06-26 09:34:16,491 - backend.main - INFO - Application shutdown complete.
+2025-06-26 09:35:01,275 - backend.main - INFO - FastAPI application created and configured.
+2025-06-26 09:35:01,276 - backend.main - INFO - Application startup begins...
+2025-06-26 09:35:01,276 - backend.main - INFO - Application startup complete.
+2025-06-26 09:38:35,877 - backend.pipeline.doc_parser_pipeline - INFO - Split took 14.41s
+2025-06-26 09:38:49,207 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/22d31e64-b84f-4d66-8ef5-992cadae041b_attention_paper.pdf ...
+2025-06-26 09:39:14,723 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-26 09:39:14,838 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-26 09:39:15,055 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-26 09:39:15,148 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-26 09:39:15,156 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-26 09:40:10,507 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 94.63s
+2025-06-26 09:41:04,014 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 53.51s
+2025-06-26 09:41:04,038 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.02s
+2025-06-26 09:50:44,020 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 579.98s
+2025-06-26 09:50:44,021 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 742.56s
+2025-06-26 10:11:26,674 - backend.main - INFO - FastAPI application created and configured.
+2025-06-26 10:11:26,675 - backend.main - INFO - Application startup begins...
+2025-06-26 10:11:26,675 - backend.main - INFO - Application startup complete.
+2025-06-26 10:13:21,271 - backend.pipeline.doc_parser_pipeline - INFO - Split took 14.34s
+2025-06-26 10:13:33,872 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/d3b41593-1af4-45a4-a491-be32d6bb8043_attention_paper.pdf ...
+2025-06-26 10:14:00,296 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-26 10:14:00,516 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-26 10:14:01,259 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-26 10:14:01,451 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-26 10:14:01,459 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-26 10:14:56,531 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 95.26s
+2025-06-26 10:15:35,081 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 38.55s
+2025-06-26 10:15:35,104 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.02s
+2025-06-26 10:23:17,871 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 462.77s
+2025-06-26 10:23:17,872 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 610.94s
+2025-06-26 10:33:33,198 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.10s
+2025-06-26 10:33:33,220 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/d3244697-6c52-468f-8e1d-4234ed87bb03_28fa9da4b36b012eba83b4d0808e3e8e3e44d9dd-2550x3300.pdf ...
+2025-06-26 10:33:48,870 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 15.67s
+2025-06-26 10:34:46,941 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 58.07s
+2025-06-26 10:34:46,944 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-06-26 10:38:11,335 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 204.39s
+2025-06-26 10:38:11,335 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 280.24s
+2025-06-26 12:17:29,909 - backend.main - INFO - Application shutdown begins...
+2025-06-26 12:17:29,909 - backend.main - INFO - Application shutdown complete.
+2025-06-29 11:35:18,184 - backend.main - INFO - FastAPI application created and configured.
+2025-06-29 11:35:18,185 - backend.main - INFO - Application startup begins...
+2025-06-29 11:35:18,185 - backend.main - INFO - Application startup complete.
+2025-06-29 11:37:42,504 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.10s
+2025-06-29 11:37:45,331 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/dbff4767-ee78-4e3e-8719-e04785c34296_28fa9da4b36b012eba83b4d0808e3e8e3e44d9dd-2550x3300.pdf ...
+2025-06-29 11:37:52,487 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-29 11:37:52,590 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-29 11:37:52,820 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-29 11:37:52,929 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-29 11:37:52,937 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-29 11:38:02,519 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 20.01s
+2025-06-29 11:40:53,536 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 171.02s
+2025-06-29 11:40:53,543 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-29 11:49:21,220 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 507.68s
+2025-06-29 11:49:21,221 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 700.81s
+2025-06-29 12:28:30,788 - backend.main - INFO - Application shutdown begins...
+2025-06-29 12:28:30,789 - backend.main - INFO - Application shutdown complete.
+2025-06-29 14:00:26,885 - backend.main - INFO - FastAPI application created and configured.
+2025-06-29 14:00:26,886 - backend.main - INFO - Application startup begins...
+2025-06-29 14:00:26,886 - backend.main - INFO - Application startup complete.
+2025-06-29 14:00:57,463 - backend.pipeline.doc_parser_pipeline - INFO - Split took 4.05s
+2025-06-29 14:01:02,898 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/9faa9704-c713-4e6c-a93e-e20e8ffb96ac_dummy-data.pdf ...
+2025-06-29 14:01:14,886 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-29 14:01:15,090 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-29 14:01:15,458 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-29 14:01:15,587 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-29 14:01:15,594 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-29 14:01:40,899 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 43.44s
+2025-06-29 14:02:15,829 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 34.93s
+2025-06-29 14:02:15,838 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-29 14:05:35,975 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 200.14s
+2025-06-29 14:05:35,976 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 282.56s
+2025-06-29 14:52:29,182 - backend.main - INFO - Application shutdown begins...
+2025-06-29 14:52:29,183 - backend.main - INFO - Application shutdown complete.
+2025-06-29 14:53:07,864 - backend.main - INFO - FastAPI application created and configured.
+2025-06-29 14:53:07,865 - backend.main - INFO - Application startup begins...
+2025-06-29 14:53:07,865 - backend.main - INFO - Application startup complete.
+2025-06-29 14:53:34,726 - backend.main - INFO - Application shutdown begins...
+2025-06-29 14:53:34,726 - backend.main - INFO - Application shutdown complete.
+2025-06-29 14:54:08,070 - backend.main - INFO - FastAPI application created and configured.
+2025-06-29 14:54:08,071 - backend.main - INFO - Application startup begins...
+2025-06-29 14:54:08,071 - backend.main - INFO - Application startup complete.
+2025-06-29 14:54:38,961 - backend.pipeline.doc_parser_pipeline - INFO - Split took 4.04s
+2025-06-29 14:54:44,361 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/a4856232-0a8d-48bc-88b5-f9e340d0aaa3_dummy-data.pdf ...
+2025-06-29 14:54:55,834 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-29 14:54:55,961 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-29 14:54:56,194 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-29 14:54:56,330 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-29 14:54:56,338 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-29 14:55:21,684 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 42.72s
+2025-06-29 14:55:55,591 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 33.91s
+2025-06-29 14:55:55,600 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-29 14:59:29,496 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 213.90s
+2025-06-29 14:59:29,497 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 294.58s
+2025-06-29 15:12:32,815 - backend.main - INFO - Application shutdown begins...
+2025-06-29 15:12:32,815 - backend.main - INFO - Application shutdown complete.
+2025-06-30 03:11:42,828 - backend.main - INFO - FastAPI application created and configured.
+2025-06-30 03:11:42,829 - backend.main - INFO - Application startup begins...
+2025-06-30 03:11:42,829 - backend.main - INFO - Application startup complete.
+2025-06-30 03:12:45,472 - backend.pipeline.doc_parser_pipeline - INFO - Split took 14.45s
+2025-06-30 03:12:57,789 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/1b83a9bf-9f42-4f26-a2f3-182c3b74fa03_attention_paper.pdf ...
+2025-06-30 03:13:26,250 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-30 03:13:26,381 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-30 03:13:26,665 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-30 03:13:26,753 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-30 03:13:26,760 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-30 03:14:21,955 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 96.48s
+2025-06-30 03:15:05,303 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 43.35s
+2025-06-30 03:15:05,326 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.02s
+2025-06-30 03:22:49,815 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 464.49s
+2025-06-30 03:22:49,816 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 618.79s
+2025-06-30 03:23:59,391 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.07s
+2025-06-30 03:23:59,412 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/9d442ac2-a869-4439-98a2-ea7e94513a82_28fa9da4b36b012eba83b4d0808e3e8e3e44d9dd-2550x3300.pdf ...
+2025-06-30 03:24:15,633 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 16.24s
+2025-06-30 03:24:42,346 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 26.71s
+2025-06-30 03:24:42,348 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-06-30 03:30:46,671 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 364.32s
+2025-06-30 03:30:46,672 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 409.35s
+2025-06-30 03:47:52,085 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.05s
+2025-06-30 03:47:52,105 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/24137af9-1954-42f5-a4b2-5198a1d4d879_28fa9da4b36b012eba83b4d0808e3e8e3e44d9dd-2550x3300.pdf ...
+2025-06-30 03:48:02,471 - backend.pipeline.doc_parser_pipeline - INFO - Split took 4.06s
+2025-06-30 03:48:06,070 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/394230b3-411c-42ab-9bf3-2f192ff53ce1_dummy-data.pdf ...
+2025-06-30 03:48:12,802 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 20.72s
+2025-06-30 03:48:34,399 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 21.58s
+2025-06-30 03:48:34,401 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-06-30 03:48:42,812 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 40.34s
+2025-06-30 03:49:46,213 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 63.40s
+2025-06-30 03:49:46,220 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-30 03:55:38,951 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 352.73s
+2025-06-30 03:55:38,952 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 460.54s
+2025-06-30 03:56:17,017 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 462.62s
+2025-06-30 03:56:17,017 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 506.98s
+2025-06-30 04:52:52,364 - backend.main - INFO - Application shutdown begins...
+2025-06-30 04:52:52,364 - backend.main - INFO - Application shutdown complete.
+2025-06-30 07:14:50,784 - backend.main - INFO - FastAPI application created and configured.
+2025-06-30 07:14:50,785 - backend.main - INFO - Application startup begins...
+2025-06-30 07:14:50,785 - backend.main - INFO - Application startup complete.
+2025-06-30 07:15:50,679 - backend.pipeline.doc_parser_pipeline - INFO - Split took 4.07s
+2025-06-30 07:15:56,045 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/123/A/4fb2cea3-f78a-4d5f-a6fe-911ca366836e_dummy-data.pdf ...
+2025-06-30 07:16:07,001 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-30 07:16:07,101 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-30 07:16:07,335 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-30 07:16:07,423 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-30 07:16:07,430 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-30 07:16:32,688 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 42.01s
+2025-06-30 07:17:07,465 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 34.78s
+2025-06-30 07:17:07,473 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-30 07:28:01,662 - backend.main - INFO - Application shutdown begins...
+2025-06-30 07:28:01,663 - backend.main - INFO - Application shutdown complete.
+2025-06-30 07:36:19,636 - backend.main - INFO - FastAPI application created and configured.
+2025-06-30 07:36:19,637 - backend.main - INFO - Application startup begins...
+2025-06-30 07:36:19,637 - backend.main - INFO - Application startup complete.
+2025-06-30 07:37:16,043 - backend.main - INFO - Application shutdown begins...
+2025-06-30 07:37:16,044 - backend.main - INFO - Application shutdown complete.
+2025-06-30 07:38:07,249 - backend.main - INFO - FastAPI application created and configured.
+2025-06-30 07:38:07,249 - backend.main - INFO - Application startup begins...
+2025-06-30 07:38:07,249 - backend.main - INFO - Application startup complete.
+2025-06-30 07:43:06,711 - backend.pipeline.doc_parser_pipeline - INFO - Split took 4.03s
+2025-06-30 07:43:12,193 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/123/A/f680ef62-c14f-4ccc-8ab5-f456c45854a8_dummy-data.pdf ...
+2025-06-30 07:43:23,115 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-30 07:43:23,261 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-30 07:43:23,475 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-30 07:43:23,558 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-30 07:43:23,566 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-30 07:43:48,902 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 42.19s
+2025-06-30 07:44:23,342 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 34.44s
+2025-06-30 07:44:23,351 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-30 07:47:46,449 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 203.10s
+2025-06-30 07:47:46,450 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 283.77s
+2025-06-30 07:51:43,078 - backend.main - INFO - Application shutdown begins...
+2025-06-30 07:51:43,078 - backend.main - INFO - Application shutdown complete.
+2025-06-30 07:54:31,801 - backend.main - INFO - FastAPI application created and configured.
+2025-06-30 07:54:31,802 - backend.main - INFO - Application startup begins...
+2025-06-30 07:54:31,802 - backend.main - INFO - Application startup complete.
+2025-06-30 07:54:48,518 - backend.pipeline.doc_parser_pipeline - INFO - Split took 4.03s
+2025-06-30 07:54:53,923 - unstructured_inference - INFO - Reading PDF for file: /home/mk.maarif/UniDocParser/uploads/123/A/f25ec5da-0b83-4f0a-83ea-36e255ce57b1_dummy-data.pdf ...
+2025-06-30 07:55:05,887 - unstructured_inference - INFO - Loading the Table agent ...
+2025-06-30 07:55:05,983 - unstructured_inference - INFO - Loading the table structure model ...
+2025-06-30 07:55:06,245 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-06-30 07:55:06,336 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-06-30 07:55:06,342 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-06-30 07:55:31,635 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 43.12s
+2025-06-30 07:56:14,105 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 42.47s
+2025-06-30 07:56:14,113 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-06-30 07:59:39,486 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 205.37s
+2025-06-30 07:59:39,487 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 295.00s
+2025-06-30 08:39:38,637 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.70s
+2025-06-30 08:39:39,552 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 0.91s
+2025-06-30 08:39:39,553 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-06-30 08:39:39,558 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-06-30 08:39:39,558 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 1.62s
+2025-06-30 08:40:42,332 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.19s
+2025-06-30 08:40:42,733 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 0.40s
+2025-06-30 08:40:42,734 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-06-30 08:40:42,738 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-06-30 08:40:42,738 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 0.60s
+2025-06-30 08:44:03,862 - backend.main - INFO - Application shutdown begins...
+2025-06-30 08:44:03,862 - backend.main - INFO - Application shutdown complete.
+2025-06-30 08:44:53,231 - backend.main - INFO - FastAPI application created and configured.
+2025-06-30 08:44:53,232 - backend.main - INFO - Application startup begins...
+2025-06-30 08:44:53,232 - backend.main - INFO - Application startup complete.
+2025-06-30 08:45:30,321 - ocrmypdf.subprocess - ERROR - 
+The program 'gs' could not be executed or was not found on your
+system PATH.
+
+2025-06-30 08:45:30,321 - ocrmypdf.subprocess - INFO - 
+On systems with the aptitude package manager (Debian, Ubuntu), try these
+commands:
+    sudo apt update
+    sudo apt install ghostscript
+
+On RPM-based systems (Red Hat, Fedora), try this command:
+    sudo dnf install ghostscript
+
+2025-06-30 08:46:35,919 - backend.main - INFO - Application shutdown begins...
+2025-06-30 08:46:35,919 - backend.main - INFO - Application shutdown complete.
+2025-06-30 08:48:16,294 - backend.main - INFO - FastAPI application created and configured.
+2025-06-30 08:48:16,295 - backend.main - INFO - Application startup begins...
+2025-06-30 08:48:16,295 - backend.main - INFO - Application startup complete.
+2025-06-30 08:49:28,272 - ocrmypdf.subprocess - ERROR - 
+OCRmyPDF requires 'gs' 9.54 or higher.  Your system appears
+to have 9.53.3.  Please update this program.
+
+2025-06-30 08:49:28,273 - ocrmypdf.subprocess - INFO - 
+On systems with the aptitude package manager (Debian, Ubuntu), try these
+commands:
+    sudo apt update
+    sudo apt install ghostscript
+
+On RPM-based systems (Red Hat, Fedora), try this command:
+    sudo dnf install ghostscript
+
+2025-06-30 08:49:41,752 - backend.main - INFO - Application shutdown begins...
+2025-06-30 08:49:41,753 - backend.main - INFO - Application shutdown complete.
+2025-06-30 08:50:35,765 - backend.main - INFO - FastAPI application created and configured.
+2025-06-30 08:50:35,766 - backend.main - INFO - Application startup begins...
+2025-06-30 08:50:35,766 - backend.main - INFO - Application startup complete.
+2025-06-30 08:51:20,341 - ocrmypdf.subprocess - ERROR - 
+OCRmyPDF requires 'gs' 9.54 or higher.  Your system appears
+to have 9.53.3.  Please update this program.
+
+2025-06-30 08:51:20,341 - ocrmypdf.subprocess - INFO - 
+On systems with the aptitude package manager (Debian, Ubuntu), try these
+commands:
+    sudo apt update
+    sudo apt install ghostscript
+
+On RPM-based systems (Red Hat, Fedora), try this command:
+    sudo dnf install ghostscript
+
+2025-06-30 08:51:33,566 - backend.main - INFO - Application shutdown begins...
+2025-06-30 08:51:33,566 - backend.main - INFO - Application shutdown complete.
+2025-06-30 08:57:52,169 - backend.main - INFO - FastAPI application created and configured.
+2025-06-30 08:57:52,170 - backend.main - INFO - Application startup begins...
+2025-06-30 08:57:52,170 - backend.main - INFO - Application startup complete.
+2025-06-30 08:58:49,737 - ocrmypdf.subprocess - ERROR - 
+OCRmyPDF requires 'gs' 9.54 or higher.  Your system appears
+to have 9.53.3.  Please update this program.
+
+2025-06-30 08:58:49,737 - ocrmypdf.subprocess - INFO - 
+On systems with the aptitude package manager (Debian, Ubuntu), try these
+commands:
+    sudo apt update
+    sudo apt install ghostscript
+
+On RPM-based systems (Red Hat, Fedora), try this command:
+    sudo dnf install ghostscript
+
+2025-06-30 08:58:57,786 - backend.main - INFO - Application shutdown begins...
+2025-06-30 08:58:57,786 - backend.main - INFO - Application shutdown complete.
+2025-06-30 09:05:03,473 - backend.main - INFO - FastAPI application created and configured.
+2025-06-30 09:05:03,474 - backend.main - INFO - Application startup begins...
+2025-06-30 09:05:03,474 - backend.main - INFO - Application startup complete.
+2025-06-30 09:05:39,542 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.27s
+2025-06-30 09:05:46,326 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 6.78s
+2025-06-30 09:05:46,327 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-06-30 09:05:46,416 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.09s
+2025-06-30 09:05:46,416 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 8.14s

@@ -15,8 +15,8 @@ class DocParserPipeline:
     def __init__(self, steps: List[DocParserStep]):
         self.steps = steps
 
-    async def process(self, pdf_path: str) -> DocParserContext:
-        ctx = DocParserContext(pdf_path=pdf_path)
+    async def process(self, user_id: str, folder: str, file_path: str) -> DocParserContext:
+        ctx = DocParserContext(user_id=user_id, folder=folder, file_path=file_path)
 
         start = time.time()
 

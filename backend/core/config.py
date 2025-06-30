@@ -24,8 +24,8 @@ class Settings(BaseSettings):
     IMG_DIR: ClassVar[str] = IMG_DIR
     
     # For convenience, provide full paths to subdirectories if other modules need them directly
-    IMG_PAGES_DIR: ClassVar[str] = os.path.join(IMG_DIR, IMG_PAGES_SUBDIR)
-    IMG_FIGURES_DIR: ClassVar[str] = os.path.join(IMG_DIR, IMG_FIGURES_SUBDIR)
+    # IMG_PAGES_DIR: ClassVar[str] = os.path.join(IMG_DIR, IMG_PAGES_SUBDIR)
+    # IMG_FIGURES_DIR: ClassVar[str] = os.path.join(IMG_DIR, IMG_FIGURES_SUBDIR)
     
     # Ensure upload and output directories exist
     def __init__(self, *args, **kwargs):
@@ -33,8 +33,8 @@ class Settings(BaseSettings):
         os.makedirs(self.UPLOAD_DIR, exist_ok=True)
         os.makedirs(self.OUTPUT_DIR, exist_ok=True)
         os.makedirs(self.IMG_DIR, exist_ok=True)
-        os.makedirs(self.IMG_PAGES_DIR, exist_ok=True)
-        os.makedirs(self.IMG_FIGURES_DIR, exist_ok=True)
+        # os.makedirs(self.IMG_PAGES_DIR, exist_ok=True)
+        # os.makedirs(self.IMG_FIGURES_DIR, exist_ok=True)
 
     def __str__(self):
         """Print settings for debugging"""
@@ -43,9 +43,9 @@ class Settings(BaseSettings):
         UPLOAD_DIR: {self.UPLOAD_DIR}
         OUTPUT_DIR: {self.OUTPUT_DIR}
         IMG_DIR: {self.IMG_DIR}
-        IMG_PAGES_DIR: {self.IMG_PAGES_DIR}
-        IMG_FIGURES_DIR: {self.IMG_FIGURES_DIR}
         """
+        # IMG_PAGES_DIR: {self.IMG_PAGES_DIR}
+        # IMG_FIGURES_DIR: {self.IMG_FIGURES_DIR}
 
 settings = Settings()
 print(f"Loaded settings: {settings}")  # Add this for debugging

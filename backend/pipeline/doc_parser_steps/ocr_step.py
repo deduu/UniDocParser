@@ -15,20 +15,20 @@ class OCRStep(DocParserStep):
 
     def run(self, ctx: DocParserContext) -> DocParserContext:
         # 1. Skip if OCR already done (idempotent pipeline)
-        if ctx.ocr_pdf_path:
+        if ctx.ocr_file_path:
             return ctx
 
         # 2. Make sure tmp dir exists
         self.output_dir.mkdir(exist_ok=True, parents=True)
 
         # 3. Perform blocking OCR
-        ocr_path = ocr_pdf_to_pdf(ctx.pdf_path, self.output_dir)
+        ocr_path = ocr_pdf_to_pdf(ctx.file_path, self.output_dir)
 
         # 4. Update context (Pydantic v2 -> model_copy)
         return ctx.model_copy(
             update={
-                "ocr_pdf_path": str(ocr_path),
+                "ocr_file_path": str(ocr_path),
                 # ← downstream steps now use OCR’d file
-                "pdf_path":     str(ocr_path)
+                "file_path":     str(ocr_path)
             }
         )

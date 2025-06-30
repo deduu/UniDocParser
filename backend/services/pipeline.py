@@ -10,8 +10,8 @@ from backend.services.element_extractor import extract_elements
 from backend.services.output_formatter import format_extracted_text, format_markdown
 
 class PDFExtractionPipeline:
-    def __init__(self, pdf_path: str):
-        self.pdf_path = pdf_path
+    def __init__(self, file_path: str):
+        self.file_path = file_path
         self.pages = []
         self.figure_list = []
     
@@ -23,20 +23,20 @@ class PDFExtractionPipeline:
         os.makedirs(output_dir, exist_ok=True)
         
         # Perform OCR on the PDF
-        ocr_pdf_path = ocr_pdf_to_pdf(self.pdf_path, output_dir)
+        ocr_file_path = ocr_pdf_to_pdf(self.file_path, output_dir)
         
-        print(f"OCR PDF saved at: {ocr_pdf_path}")
+        print(f"OCR PDF saved at: {ocr_file_path}")
         
-        return ocr_pdf_path
+        return ocr_file_path
         
     def process(self):
 
-        pdf_name = os.path.basename(self.pdf_path)
+        pdf_name = os.path.basename(self.file_path)
         start_total_time = time.time()
 
         # Split the PDF into pages and save page images
         start_file_handling_time = time.time()
-        self.pages = handle_file(self.pdf_path)
+        self.pages = handle_file(self.file_path)
         end_file_handling_time = time.time()
         print(f"{pdf_name} num of pages: {len(self.pages)}")
         handling_time = end_file_handling_time - start_file_handling_time  # time in seconds
@@ -74,7 +74,7 @@ class PDFExtractionPipeline:
         processing_time = end_total_time - start_total_time  # time in seconds
         print(f"{pdf_name} Total Processing Time:", datetime.timedelta(seconds=processing_time))
         
-        clean_source = os.path.basename(self.pdf_path).split("_", 1)[1]
+        clean_source = os.path.basename(self.file_path).split("_", 1)[1]
         print(f"Source: {clean_source}")
         
         return {
@@ -90,7 +90,7 @@ class PDFExtractionPipeline:
         
         # Prepare the extraction result
         extraction_result = {
-            "source": os.path.basename(self.pdf_path),
+            "source": os.path.basename(self.file_path),
             "pages": self.pages,
             "processing_time": None  # you could include this if needed
         }

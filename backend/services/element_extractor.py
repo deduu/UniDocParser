@@ -5,7 +5,7 @@ import backend.utils.unstructured_extractor_helpers as helpers
 from backend.core.config import settings
 
 # Function to extract elements from image pages
-def element_extractor(file_path: str):
+def element_extractor(user_id: str, folder:str, file_path: str):
     """
     Extract elements from an image using Unstructured's partition_image function.
     Args:
@@ -21,14 +21,15 @@ def element_extractor(file_path: str):
 
     type = file_path.split('.')[-1].lower()  # Get the file type from the extension
     
+    # Construct the save directory based on user_id, folder, and file_name
+    file_name = os.path.basename(file_path).split('.')[0]
+    image_filepath = os.path.join(settings.IMG_DIR, user_id, folder, file_name, "figures")
+    os.makedirs(image_filepath, exist_ok=True)
+    
     if type == "jpeg" or type == "jpg" or type == "png":
         from unstructured.partition.image import partition_image
 
-        image_name = os.path.basename(file_path).replace('.jpeg', '')
-        image_filepath = os.path.join(
-            settings.IMG_FIGURES_DIR, "figures", f"{image_name}_figures"
-        )
-
+        image_filepath = os.path.join(image_filepath, f"{file_name}")
         elements = partition_image(
             filename=file_path,
             extract_images_in_pdf=True,
@@ -37,13 +38,9 @@ def element_extractor(file_path: str):
             infer_table_structure=True,
             languages=["eng", "ind"]
         )
+    
     elif type == "pdf":
         from unstructured.partition.pdf import partition_pdf
-
-        file_name = os.path.basename(file_path).replace('.pdf', '')
-        image_filepath = os.path.join(
-            settings.IMG_FIGURES_DIR, "figures", f"{file_name}_figures"
-        )
 
         raw_pdf_elements = partition_pdf(
             filename=file_path,
@@ -58,11 +55,6 @@ def element_extractor(file_path: str):
     elif type == "xlsx" or type == "xls":
         from unstructured.partition.xlsx import partition_xlsx
 
-        file_name = os.path.basename(file_path).replace('.xlsx', '')
-        image_filepath = os.path.join(
-            settings.IMG_FIGURES_DIR, "figures", f"{file_name}_figures"
-        )
-
         raw_xlsx_elements = partition_xlsx(
             filename=file_path,
             extract_images_in_pdf=True,
@@ -71,8 +63,8 @@ def element_extractor(file_path: str):
             infer_table_structure=True,
             languages=["eng", "ind"]
         )
-
         elements = helpers.split_elements(raw_xlsx_elements)
+
     return elements
 
 # Fuction to extract metadata from Unstructured elements
@@ -168,7 +160,7 @@ def extract_unstructured_elements(elements, page_num):
     return element_metadata, figure_list
 
 # Extract elements from PDF
-def extract_elements(pages, file_path=None):
+def extract_elements(pages, user_id: str, folder: str, file_path=None):
     figure_list = []
     elements = []
 
@@ -176,9 +168,9 @@ def extract_elements(pages, file_path=None):
 
     if not file_path:
         for i, page in enumerate(pages):
-            elements.append(element_extractor(file_path=page["image"]))
+            elements.append(element_extractor(user_id=user_id, folder=folder, file_path=page["image"]))
     else:
-        elements = element_extractor(file_path=file_path)
+        elements = element_extractor(user_id=user_id, folder=folder, file_path=file_path)
 
     for i, page in enumerate(pages):
         if i < len(elements):

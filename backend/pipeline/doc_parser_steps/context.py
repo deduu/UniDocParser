@@ -54,8 +54,10 @@ class Page(BaseModel):
 
 
 class DocParserContext(BaseModel):
-    pdf_path: str
-    ocr_pdf_path: Optional[str] = None
+    user_id: str = "test_user"
+    folder: str = "test_folder"
+    file_path: str
+    ocr_file_path: Optional[str] = None
     pages: List[Page] = Field(default_factory=list)
     figure_list: List[Figure] = Field(default_factory=list)
     processing_time: Optional[float] = None

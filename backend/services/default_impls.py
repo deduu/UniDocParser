@@ -11,10 +11,10 @@ from backend.services.output_formatter import format_extracted_text, format_mark
 
 class DefaultSplitter(Splitter):
     @timeit("handle_file")
-    async def split(self, pdf_path: Path):
+    async def split(self, file_path: Path):
         # wrap sync call in thread
         loop = asyncio.get_event_loop()
-        pages = await loop.run_in_executor(None, handle_file, str(pdf_path))
+        pages = await loop.run_in_executor(None, handle_file, str(file_path))
         return pages
 
 

@@ -11,7 +11,7 @@ class SplitStep(DocParserStep):
 
     def run(self, ctx: DocParserContext) -> DocParserContext:
         # 1. Split the PDF into raw page metadata
-        raw_pages = handle_file(ctx.pdf_path)
+        raw_pages = handle_file(ctx.user_id, ctx.folder, ctx.file_path)
 
         # 2. Convert each dict into a Page model (elements defaults to [])
         pages = [Page(**page_data) for page_data in raw_pages]

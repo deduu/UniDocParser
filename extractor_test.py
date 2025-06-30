@@ -7,12 +7,12 @@ import datetime
 
 class PDFExtractor:
     @staticmethod
-    def extract_pdf_image(pdf_path: str) -> Dict:
+    def extract_pdf_image(file_path: str) -> Dict:
         """
         Orchestrate PDF extraction process
         
         Args:
-            pdf_path (str): Path to the PDF file
+            file_path (str): Path to the PDF file
         
         Returns:
             Dict: Extracted PDF content
@@ -26,12 +26,12 @@ class PDFExtractor:
         pages = []
         figure_list = []
         
-        pdf_name = os.path.basename(pdf_path)
+        pdf_name = os.path.basename(file_path)
         start_total_time = time.time()
 
         # Split the PDF into pages and save page images
         start_file_handling_time = time.time()
-        pages = handle_file(pdf_path)
+        pages = handle_file(file_path)
         end_file_handling_time = time.time()
         print(f"{pdf_name} num of pages: {len(pages)}")
         handling_time = end_file_handling_time - start_file_handling_time  # time in seconds
@@ -39,7 +39,7 @@ class PDFExtractor:
 
         # Extract textual elements and replace figures with table data where applicable
         start_extract_elements_time = time.time()
-        pages, figure_list = extract_elements(pages, pdf_path)
+        pages, figure_list = extract_elements(pages, file_path)
         end_extract_elements_time = time.time()
         extract_elements_time = end_extract_elements_time - start_extract_elements_time  # time in seconds
         print(f"{pdf_name} elements extracted, time:", datetime.timedelta(seconds=extract_elements_time))
@@ -69,11 +69,11 @@ class PDFExtractor:
         processing_time = end_total_time - start_total_time  # time in seconds
         print(f"{pdf_name} Total Processing Time:", datetime.timedelta(seconds=processing_time))
         
-        # clean_source = os.path.basename(pdf_path).split("_", 1)[1]
+        # clean_source = os.path.basename(file_path).split("_", 1)[1]
         # print(f"Source: {clean_source}")
         
         return {
-            "source": pdf_path,
+            "source": file_path,
             "pages": pages,
             "processing_time": processing_time
         }
@@ -142,12 +142,12 @@ class PDFExtractor:
         }
         
     @staticmethod
-    def ocr_pdf_to_pdf(pdf_path: str, output_dir: str) -> str:
+    def ocr_pdf_to_pdf(file_path: str, output_dir: str) -> str:
         """
         Perform OCR on the PDF and save the output
         
         Args:
-            pdf_path (str): Path to the input PDF file
+            file_path (str): Path to the input PDF file
             output_dir (str): Directory to save the OCR processed PDF
         
         Returns:
@@ -155,9 +155,9 @@ class PDFExtractor:
         """
         from backend.services.file_handler import ocr_pdf_to_pdf
         
-        ocr_pdf_path = ocr_pdf_to_pdf(pdf_path, output_dir)
+        ocr_file_path = ocr_pdf_to_pdf(file_path, output_dir)
         
-        return ocr_pdf_path
+        return ocr_file_path
     
     @staticmethod
     def save_extraction_results(extraction_result: Dict):
@@ -203,6 +203,6 @@ print(f"JSON output saved to: {json_output_path}")
 print(f"Markdown output saved to: {md_output_path}")
 
 # Extracting from a PDF file
-# pdf_results = extarctor.extract_pdf_image(pdf_path="/home/dedya/mk.arif/UniDocParser/docs/AR for improved learnability.pdf")
+# pdf_results = extarctor.extract_pdf_image(file_path="/home/dedya/mk.arif/UniDocParser/docs/AR for improved learnability.pdf")
 # json_output_path, md_output_path = extarctor.save_extraction_results(pdf_results)
 # print(f"\nPDF extraction results saved to: {json_output_path} and {md_output_path}")
