@@ -26,14 +26,14 @@ class ModelManager:
         # Use dictionaries to map model types to their respective classes.
         # This makes the code cleaner, more scalable, and easier to maintain.
         self._fig2tab_map = {
-            "base": VLM_Fig2Tab_PIPELINE,
-            "ft": FT_VLM_Fig2Tab_PIPELINE,
-            "unsloth": Unsloth_VLM_Fig2Tab_PIPELINE,
+            "base":    (VLM_Fig2Tab_PIPELINE,       {"device": "cuda"}),
+            "ft":      (FT_VLM_Fig2Tab_PIPELINE,    {"device": "cuda"}),
+            "unsloth": (Unsloth_VLM_Fig2Tab_PIPELINE, {"device": "cuda"}),
         }
         self._formatter_map = {
-            "base": VLM_Formatter_PIPELINE,
-            "ft": FT_VLM_Formatter_PIPELINE,
-            "unsloth": Unsloth_VLM_Formatter_PIPELINE,
+            "base":    (VLM_Formatter_PIPELINE,       {"device": "cuda"}),
+            "ft":      (FT_VLM_Formatter_PIPELINE,    {"device": "cuda"}),
+            "unsloth": (Unsloth_VLM_Formatter_PIPELINE, {"device": "cuda"}),
         }
 
     def _clear_gpu_memory(self):
@@ -56,9 +56,11 @@ class ModelManager:
     def _get_gpu_stats(self):
         """Prints current GPU statistics."""
         if torch.cuda.is_available():
-            gpu_stats = torch.cuda.get_device_properties(0)
-            max_memory = round(gpu_stats.total_memory / 1024 / 1024 / 1024, 3)
-            print(f"GPU = {gpu_stats.name}. Max memory = {max_memory} GB.")
+            # This can be simplified if you just want general stats
+            for i in range(torch.cuda.device_count()):
+                gpu_stats = torch.cuda.get_device_properties(i)
+                max_memory = round(gpu_stats.total_memory / 1024**3, 3)
+                print(f"GPU {i} = {gpu_stats.name}. Max memory = {max_memory} GB.")
         else:
             print("CUDA is not available.")
 
@@ -85,9 +87,12 @@ class ModelManager:
         else:
             raise ValueError(f"Unknown model family: {model_family}")
 
-        target_class = model_map.get(model_type)
-        if not target_class:
+        target_config = model_map.get(model_type)
+        if not target_config:
             raise ValueError(f"Unknown model type '{model_type}' for family '{model_family}'")
+        
+        # Unpack the class and its arguments from the config tuple
+        target_class, model_args = target_config
 
         current_model = getattr(self, current_model_attr)
         current_type = getattr(self, current_type_attr)
@@ -107,9 +112,10 @@ class ModelManager:
             self._clear_gpu_memory()
 
         # Load the new model
-        print(f"Loading '{model_type}' {model_family} model...")
+        print(f"Loading '{model_type}' {model_family} model with args: {model_args}")
         self._get_gpu_stats()
-        new_model = target_class()
+
+        new_model = target_class(**model_args)
         setattr(self, current_model_attr, new_model)
         setattr(self, current_type_attr, model_type)
         print(f"Successfully loaded '{model_type}' {model_family} model.")
@@ -117,37 +123,5 @@ class ModelManager:
         return new_model
 
 model_manager = ModelManager()
-fig2tab_model = model_manager.get_model(model_family='fig2tab', model_type='base')
-formatter_model = model_manager.get_model(model_family='formatter', model_type='base')
-
-
-
-# --- USAGE EXAMPLE ---
-# This part of the code would be in your main application/server file,
-# NOT in the `model_config.py` file, to avoid the circular import.
-
-# if __name__ == '__main__':
-#     # 1. Create a single instance of the manager.
-#     # This object will hold the state of your models throughout the application's life.
-#     model_manager = ModelManager()
-
-#     # 2. Initial load of the 'base' models.
-#     print("--- Initializing Base Models ---")
-#     fig2tab_model = model_manager.get_model(model_family='fig2tab', model_type='base')
-#     formatter_model = model_manager.get_model(model_family='formatter', model_type='base')
-#     print("\n")
-
-#     # 3. Requesting the same models again will use the cached versions.
-#     print("--- Requesting Same Models ---")
-#     fig2tab_model = model_manager.get_model(model_family='fig2tab', model_type='base')
-#     print("\n")
-
-#     # 4. Switching to a different model type.
-#     # The manager will handle clearing the old 'base' model and loading the 'unsloth' one.
-#     print("--- Switching Fig2Tab Model to Unsloth ---")
-#     fig2tab_model = model_manager.get_model(model_family='fig2tab', model_type='unsloth')
-#     print("\n")
-
-#     # The formatter model is unaffected and remains in memory.
-#     print("--- Requesting Formatter Model Again ---")
-#     formatter_model = model_manager.get_model(model_family='formatter', model_type='base')
+# fig2tab_model = model_manager.get_model(model_family='fig2tab', model_type='base')
+# formatter_model = model_manager.get_model(model_family='formatter', model_type='base')

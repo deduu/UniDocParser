@@ -2,7 +2,6 @@ import re
 from pathlib import Path
 from PIL import Image
 from backend.utils.helpers import resize_img
-from backend.core.model_maager import formatter_model
 
 # Combining Extracted element into text
 # Function to clean the OCR text
@@ -106,7 +105,7 @@ TMP_DIR = Path("./tmp")            # ←  centralise tmp folder
 TMP_DIR.mkdir(exist_ok=True)       # ←  create once
 
 
-def format_markdown(pages: list[dict], pdf_name: str) -> list[dict]:
+def format_markdown(formatter_model, pages: list[dict], pdf_name: str) -> list[dict]:
     """
     • Resizes page snapshot to 1080 px width (keeps aspect ratio)
     • Saves the resized image under ./tmp/

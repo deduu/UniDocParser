@@ -11,8 +11,9 @@ logger = logging.getLogger(__name__)
 class MarkdownStep(DocParserStep):
     """Turn each page's cleaned text into conversational Markdown."""
 
-    def __init__(self):
+    def __init__(self, formatter_model):
         super().__init__(name="Format Markdown")
+        self.formatter_model = formatter_model
 
     def run(self, ctx: DocParserContext) -> DocParserContext:
         if not ctx.pages:
@@ -22,7 +23,7 @@ class MarkdownStep(DocParserStep):
         pdf_name = os.path.basename(ctx.file_path)
 
         raw_pages = [p.model_dump(mode="python") for p in ctx.pages]
-        updated_pages_raw = format_markdown(raw_pages, pdf_name)
+        updated_pages_raw = format_markdown(self.formatter_model, raw_pages, pdf_name)
 
         ctx.pages = [Page(**p) for p in updated_pages_raw]
 

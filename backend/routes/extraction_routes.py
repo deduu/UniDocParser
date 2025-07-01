@@ -14,6 +14,7 @@ from fastapi import APIRouter, File, UploadFile, HTTPException, BackgroundTasks,
 from fastapi.responses import JSONResponse, FileResponse, PlainTextResponse
 
 from backend.services.pipeline import PDFExtractionPipeline
+from backend.core.model_maager import model_manager
 from backend.core.config import settings
 
 from backend.pipeline.model.schemas_dto import DocParserContextOut
@@ -71,10 +72,12 @@ async def handle_file(
     response_model=ResponseModel,
 )
 async def extract_pdf(
-    user_id: str = Form(...),
-    folder: str = Form(...),
+    user_id: str = Form("test_user"),  # default user
+    folder: str = Form("test_folder"),  # default folder
     file: UploadFile = File(...),
     handler: DocParserHandler = Depends(),
+    fig2tab_type: str = Form("base"),  # default model
+    formatter_type: str = Form("base"),  # default model
 ) -> ResponseModel:
     # check if the user token is available
     if not user_id:
@@ -87,12 +90,6 @@ async def extract_pdf(
             status_code=400, detail="Folder is required for extraction"
         )
     
-    # create the upload and output directory if it doesn't exist
-    upload_dir = os.path.join(settings.UPLOAD_DIR, user_id, folder)
-    output_dir = os.path.join(settings.OUTPUT_DIR, user_id, folder)
-    os.makedirs(upload_dir, exist_ok=True)
-    os.makedirs(output_dir, exist_ok=True)
-
     # 1) Validate file type
     if not file.filename or not (
         file.filename.lower().endswith(".pdf")
@@ -104,6 +101,25 @@ async def extract_pdf(
         )
 
     try:
+        # 2) Set the models for the handler
+        # Note: You can switch models here based on user input or other logic
+        if fig2tab_type not in model_manager._fig2tab_map:
+            raise HTTPException(
+                status_code=400, detail=f"Unknown fig2tab model type: {fig2tab_type}"
+            )
+        if formatter_type not in model_manager._formatter_map:
+            raise HTTPException(
+                status_code=400, detail=f"Unknown formatter model type: {formatter_type}"
+            )
+        # Get the models from the model manager
+        fig2tab_model = model_manager.get_model(model_family='fig2tab', model_type=fig2tab_type)
+        formatter_model = model_manager.get_model(model_family='formatter', model_type=formatter_type)
+        # Initialize the handler with the service
+        handler.svc = DocParserService(
+            fig2tab_model=fig2tab_model,
+            formatter_model=formatter_model,
+        )
+
         # 3) Run the full pipeline (upload → OCR, split, extract, etc.)
         if file.filename.lower().endswith((".xls", ".xlsx")):
             dto: DocParserContextOut = await handler.extract_only(user_id=user_id, folder=folder, file=file)

@@ -12,7 +12,7 @@ from backend.pipeline.doc_parser_steps.markdown_step import MarkdownStep
 
 # app/services/pdf_service.py
 class DocParserService:
-    def __init__(self):
+    def __init__(self, fig2tab_model=None, formatter_model=None):
         self.ocr_pipeline = DocParserPipeline([
             OCRStep(output_dir="./tmp/ocr")
         ])
@@ -22,15 +22,15 @@ class DocParserService:
         self.extract_only_pipeline = DocParserPipeline([    
             SplitStep(),
             ExtractElementsStep(),
-            ExtractImagesStep(),
+            ExtractImagesStep(fig2tab_model=fig2tab_model),
             FormatExtractedTextStep(),])
         
         self.full_pipeline = DocParserPipeline([
             SplitStep(),
             ExtractElementsStep(),
-            ExtractImagesStep(),
+            ExtractImagesStep(fig2tab_model=fig2tab_model),
             FormatExtractedTextStep(),
-            MarkdownStep()
+            MarkdownStep(formatter_model=formatter_model)
         ])
 
     async def ocr(self, user_id: str, folder: str, file_path: str) -> DocParserContext:

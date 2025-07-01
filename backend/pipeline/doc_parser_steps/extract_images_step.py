@@ -7,8 +7,9 @@ from backend.services.image_extractor import extract_images
 class ExtractImagesStep(DocParserStep):
     """Replace figure placeholders with real images + DL metadata."""
 
-    def __init__(self):
+    def __init__(self, fig2tab_model):
         super().__init__(name="Extract Images")
+        self.fig2tab_model = fig2tab_model
 
     def run(self, ctx: DocParserContext) -> DocParserContext:
         if not ctx.pages:
@@ -25,7 +26,7 @@ class ExtractImagesStep(DocParserStep):
         figure_list_raw = [f.dict() for f in ctx.figure_list]
 
         # Run the (blocking) extraction
-        updated_pages_raw, figure_list_raw = extract_images(raw_pages, figure_list_raw)
+        updated_pages_raw, figure_list_raw = extract_images(self.fig2tab_model, raw_pages, figure_list_raw)
 
         # Wrap back into Page models and store
         ctx.pages = [Page(**page_data) for page_data in updated_pages_raw]

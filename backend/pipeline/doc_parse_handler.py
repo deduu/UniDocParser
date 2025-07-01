@@ -31,8 +31,8 @@ class DocParserHandler:
     async def _save_upload(
             self, 
             file: UploadFile, 
-            user_id: str = "test_user",
-            folder: str = "test_folder",
+            user_id: str,
+            folder: str,
         ) -> str:
         """Save UploadFile to disk under self.upload_dir."""
         upload_dir = os.path.join(settings.UPLOAD_DIR, user_id, folder)
@@ -147,8 +147,8 @@ class DocParserHandler:
         self,
         dto: DocParserContextOut,
         unique_filename: str,
-        user_id: str = "test_user",
-        folder: str = "test_folder",
+        user_id: str,
+        folder: str,
     ) -> Tuple[str, str]:
         """
         Persist JSONL + Markdown exports under settings.OUTPUT_DIR/user_id/folder.

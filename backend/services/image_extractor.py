@@ -1,5 +1,3 @@
-from backend.core.model_maager import fig2tab_model
-
 def take_data(result_text):
     data_text = result_text
     if "data:" in data_text:
@@ -40,7 +38,7 @@ def take_type(result_text):
     type_text = type_text.split("\n")[0].strip()
     return type_text.lower()
 
-def extract_images(pages, figure_list):
+def extract_images(fig2tab_model, pages, figure_list):
     """ 
     Extracts images from the figure list and updates the pages with generated text and metadata.
     Args:
