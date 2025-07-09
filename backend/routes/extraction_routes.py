@@ -1,5 +1,5 @@
 import os
-import uuid
+# import uuid
 import traceback
 import logging
 import aiofiles
@@ -14,7 +14,7 @@ from fastapi import APIRouter, File, UploadFile, HTTPException, BackgroundTasks,
 from fastapi.responses import JSONResponse, FileResponse, PlainTextResponse
 
 from backend.services.pipeline import PDFExtractionPipeline
-from backend.core.model_maager import model_manager
+from backend.core.model_manager import model_manager
 from backend.core.config import settings
 
 from backend.pipeline.model.schemas_dto import DocParserContextOut
@@ -177,7 +177,8 @@ async def upload_pdf(
 
     # Create a unique filename and ensure upload directory exists
     try:
-        unique_filename = f"{uuid.uuid4()}_{file.filename}"
+        # unique_filename = f"{uuid.uuid4()}_{file.filename}"
+        unique_filename = file.filename
         os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
         file_path = os.path.join(settings.UPLOAD_DIR, unique_filename)
         # Asynchronously save the uploaded PDF
@@ -293,7 +294,8 @@ async def extract_pdf(
             status_code=400, detail="Only PDF files are supported")
 
     # Create a unique filename and ensure upload directory exists
-    unique_filename = f"{uuid.uuid4()}_{file.filename}"
+    # unique_filename = f"{uuid.uuid4()}_{file.filename}"
+    unique_filename = file.filename
     os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
     file_path = os.path.join(settings.UPLOAD_DIR, unique_filename)
 

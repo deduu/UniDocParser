@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 from fastapi import UploadFile
 from typing import Tuple
 from pathlib import Path
-import uuid
+# import uuid
 import aiofiles
 from starlette.concurrency import run_in_threadpool
 from fastapi import Depends, HTTPException, UploadFile
@@ -37,7 +37,8 @@ class DocParserHandler:
         """Save UploadFile to disk under self.upload_dir."""
         upload_dir = os.path.join(settings.UPLOAD_DIR, user_id, folder)
         await run_in_threadpool(os.makedirs, upload_dir, exist_ok=True)
-        unique_name = f"{uuid.uuid4()}_{file.filename}"
+        # unique_name = f"{uuid.uuid4()}_{file.filename}"
+        unique_name = file.filename
         dest = os.path.join(upload_dir, unique_name)
 
         print(f"dest: {dest}")

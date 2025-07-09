@@ -26,14 +26,14 @@ class ModelManager:
         # Use dictionaries to map model types to their respective classes.
         # This makes the code cleaner, more scalable, and easier to maintain.
         self._fig2tab_map = {
-            "base":    (VLM_Fig2Tab_PIPELINE,       {"device": "cuda"}),
-            "ft":      (FT_VLM_Fig2Tab_PIPELINE,    {"device": "cuda"}),
-            "unsloth": (Unsloth_VLM_Fig2Tab_PIPELINE, {"device": "cuda"}),
+            "base":    (VLM_Fig2Tab_PIPELINE,       {"device": "cuda:2"}),
+            "ft":      (FT_VLM_Fig2Tab_PIPELINE,    {"device": "cuda:2"}),
+            "unsloth": (Unsloth_VLM_Fig2Tab_PIPELINE, {"device": "cuda:2"}),
         }
         self._formatter_map = {
-            "base":    (VLM_Formatter_PIPELINE,       {"device": "cuda"}),
-            "ft":      (FT_VLM_Formatter_PIPELINE,    {"device": "cuda"}),
-            "unsloth": (Unsloth_VLM_Formatter_PIPELINE, {"device": "cuda"}),
+            "base":    (VLM_Formatter_PIPELINE,       {"device": "cuda:1"}),
+            "ft":      (FT_VLM_Formatter_PIPELINE,    {"device": "cuda:3"}),
+            "unsloth": (Unsloth_VLM_Formatter_PIPELINE, {"device": "cuda:3"}),
         }
 
     def _clear_gpu_memory(self):
