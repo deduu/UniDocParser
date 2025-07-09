@@ -1,7 +1,7 @@
 import re
 from pathlib import Path
 from PIL import Image
-from backend.utils.helpers import resize_img
+from backend.utils.helpers import resize_img_from_path
 
 # Combining Extracted element into text
 # Function to clean the OCR text
@@ -115,8 +115,7 @@ def format_markdown(formatter_model, pages: list[dict], pdf_name: str) -> list[d
         idx = page["index"]
 
         # -------- 1. load & resize image ---------------------------------
-        pil_image = Image.open(page["image"])
-        pil_image = resize_img(pil_image, size=1080)
+        pil_image = resize_img_from_path(page["image"], size=720)
 
         # -------- 3. run VLM formatter -----------------------------------
         extracted_text = page["text"]

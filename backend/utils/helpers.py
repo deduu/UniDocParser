@@ -15,31 +15,30 @@ def process_string(string):
 def resize_img(image, size=1440):
     image = image.convert('RGB')
     width, height = image.size
-    greater = max(width, height)
-    basesize = size
-    percent = (basesize / float(greater))
-    hsize = int((float(height) * float(percent)))
-    wsize = int((float(width) * float(percent)))
-    image = image.resize((wsize, hsize), Image.LANCZOS)
-    image = image.filter(ImageFilter.SHARPEN)
-    return image
-
-# Fuction to resize the image to the specified width while maintaining the aspect ratio.
-def resize_img_from_path(image_path: str, size=720) -> Image:
-    image = Image.open(image_path)
-    image = image.convert("RGB")
-    width, height = image.size
     greatest = max(width, height)
     smallest = min(width, height)
-    if greatest > size:
-        image = resize_img(image, size=size)
-    elif smallest < 28:
+    basesize = size
+    if greatest > basesize:
+        percent = (basesize / float(greatest))
+        hsize = int((float(height) * float(percent)))
+        wsize = int((float(width) * float(percent)))
+    if smallest < 28:
         percent = (28 / float(smallest))
         hsize = int((float(height) * float(percent)))
         wsize = int((float(width) * float(percent)))
-        image = image.resize((wsize, hsize))
-    pil_image = image.copy()
-    return pil_image
+    else:
+        hsize = height
+        wsize = width
+    image = image.resize((wsize, hsize), Image.Resampling.LANCZOS)
+    image = image.filter(ImageFilter.SHARPEN)
+    return image
+
+# Function to resize the image to the specified width while maintaining the aspect ratio.
+def resize_img_from_path(image_path: str, size=720) -> Image:
+    image = Image.open(image_path)
+    image = image.convert("RGB")
+    image = resize_img(image, size=size)
+    return image
 
 # Function to convert an image to base64 string.
 def image_to_base64(image_path, quality=50):
