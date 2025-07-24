@@ -135,8 +135,6 @@ class DocParserHandler:
         ]
 
         return DocParserContextOut(
-            user_id=ctx.user_id,
-            folder=ctx.folder,
             file_path=ctx.file_path,
             ocr_file_path=ctx.ocr_file_path,
             pages=pages,
@@ -158,14 +156,9 @@ class DocParserHandler:
         output_dir = os.path.join(settings.OUTPUT_DIR, user_id, folder)
         await run_in_threadpool(os.makedirs, output_dir, exist_ok=True)
 
-        print(f"unique_filename: {unique_filename}")
-        print(f"output_dir: {output_dir}")
         json_path = Path(output_dir) / f"{unique_filename}.jsonl"
         md_path = Path(output_dir) / f"{unique_filename}.md"
-        print(f"json_path: {json_path}")
         payload = {
-            "user_id":          dto.user_id,
-            "folder":           dto.folder,
             "file_name":        unique_filename,
             "file_path":        dto.file_path,
             "ocr_file_path":    dto.ocr_file_path,

@@ -37,10 +37,7 @@ class FigureOut(BaseModel):
     generated_text: str
     status: Literal["Success", "Failed"]
 
-
 class DocParserContextOut(BaseModel):
-    user_id: str
-    folder: str
     file_path: str
     ocr_file_path: Optional[str] = None
     pages: List[PageOut] = Field(default_factory=list)
