@@ -18,12 +18,12 @@ def resize_img(image, size=1440):
     greatest = max(width, height)
     smallest = min(width, height)
     basesize = size
-    if greatest > basesize:
-        percent = (basesize / float(greatest))
-        hsize = int((float(height) * float(percent)))
-        wsize = int((float(width) * float(percent)))
     if smallest < 28:
         percent = (28 / float(smallest))
+        hsize = int((float(height) * float(percent)))
+        wsize = int((float(width) * float(percent)))
+    elif greatest > basesize:
+        percent = (basesize / float(greatest))
         hsize = int((float(height) * float(percent)))
         wsize = int((float(width) * float(percent)))
     else:
