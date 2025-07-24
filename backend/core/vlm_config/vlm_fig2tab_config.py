@@ -1,6 +1,7 @@
 import torch
 from transformers import pipeline, AutoProcessor
 from backend.core.vlm_config.prompt_config import Fig2Text_Prompt
+import gc
 
 # Create a prompt instance
 prompt = Fig2Text_Prompt()
@@ -30,7 +31,6 @@ class VLM_Fig2Tab_PIPELINE:
         self.generate_kwargs = {
             "do_sample": do_sample,
             "temperature": temperature,
-            # "top_p": top_p,
             "min_p": min_p,
             "max_new_tokens": max_new_tokens,
         }
@@ -56,6 +56,12 @@ class VLM_Fig2Tab_PIPELINE:
             ]
         output = self.model(text=messages, generate_kwargs=self.generate_kwargs)
         generated_text = output[0]["generated_text"][-1]["content"]
+
+        del output
+        if 'output' in globals(): del globals()['output']
+        gc.collect()
+        torch.cuda.empty_cache()
+        torch.cuda.synchronize()
 
         output_token = self.processor(text=generated_text, return_tensors="pt").input_ids
         len_output = output_token.shape[1]

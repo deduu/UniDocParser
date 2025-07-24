@@ -26,14 +26,14 @@ class ModelManager:
         # Use dictionaries to map model types to their respective classes.
         # This makes the code cleaner, more scalable, and easier to maintain.
         self._fig2tab_map = {
-            "base":    (VLM_Fig2Tab_PIPELINE,       {"device": "cuda:2"}),
-            "ft":      (FT_VLM_Fig2Tab_PIPELINE,    {"device": "cuda:2"}),
-            "unsloth": (Unsloth_VLM_Fig2Tab_PIPELINE, {"device": "cuda:2"}),
+            "base":    (VLM_Fig2Tab_PIPELINE,       {"device": "cuda"}),
+            "ft":      (FT_VLM_Fig2Tab_PIPELINE,    {"device": "cuda"}),
+            "unsloth": (Unsloth_VLM_Fig2Tab_PIPELINE, {"device": "cuda"}),
         }
         self._formatter_map = {
-            "base":    (VLM_Formatter_PIPELINE,       {"device": "cuda:1"}),
-            "ft":      (FT_VLM_Formatter_PIPELINE,    {"device": "cuda:3"}),
-            "unsloth": (Unsloth_VLM_Formatter_PIPELINE, {"device": "cuda:3"}),
+            "base":    (VLM_Formatter_PIPELINE,       {"device": "cuda"}),
+            "ft":      (FT_VLM_Formatter_PIPELINE,    {"device": "cuda"}),
+            "unsloth": (Unsloth_VLM_Formatter_PIPELINE, {"device": "cuda"}),
         }
 
     def _clear_gpu_memory(self):
@@ -43,13 +43,13 @@ class ModelManager:
         to finish, but excessive time.sleep() calls are often unnecessary.
         """
         print("Clearing GPU memory...")
-        time.sleep(1)
+        time.sleep(0.33)
         gc.collect()
-        time.sleep(1)
+        time.sleep(0.33)
         torch.cuda.empty_cache()
         # A single synchronize call is sufficient to wait for CUDA kernels to finish.
         torch.cuda.synchronize()
-        time.sleep(1)
+        time.sleep(0.33)
         print(f"GPU Allocated Memory: {torch.cuda.memory_allocated() / 1024**3:.2f} GB")
         print(f"GPU Reserved Memory: {torch.cuda.memory_reserved() / 1024**3:.2f} GB")
 

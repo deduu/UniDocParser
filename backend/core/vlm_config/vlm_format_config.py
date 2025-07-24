@@ -1,6 +1,8 @@
 import torch
 from transformers import pipeline, AutoProcessor
 from backend.core.vlm_config.prompt_config import Formatter_Prompt
+import gc
+import time
 
 # Create a prompt instance
 prompt = Formatter_Prompt()
@@ -12,9 +14,8 @@ class VLM_Formatter_PIPELINE:
         model_id="Qwen/Qwen2.5-VL-7B-Instruct",
         device="cuda" if torch.cuda.is_available() else "cpu",
         do_sample=True,
-        temperature=0.3,
-        top_p=0.5,
-        min_p=0.1,
+        temperature=0.1,
+        top_p=0.1,
         max_new_tokens=8192,  # Adjust as needed
     ):
         self.model = pipeline(
@@ -28,7 +29,6 @@ class VLM_Formatter_PIPELINE:
             "do_sample": do_sample,
             "temperature": temperature,
             "top_p": top_p,
-            # "min_p": min_p,
             "max_new_tokens": max_new_tokens,
         }
         self.processor = AutoProcessor.from_pretrained(model_id)
@@ -56,6 +56,12 @@ class VLM_Formatter_PIPELINE:
         ]
         output = self.model(text=messages, generate_kwargs=self.generate_kwargs)
         generated_text = output[0]["generated_text"][-1]["content"]
+
+        del output
+        if 'output' in globals(): del globals()['output']
+        gc.collect()
+        torch.cuda.empty_cache()
+        torch.cuda.synchronize()
 
         output_token = self.processor(text=generated_text, return_tensors="pt").input_ids
         len_output = output_token.shape[1]

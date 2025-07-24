@@ -2,6 +2,8 @@ import torch
 from unsloth import FastVisionModel
 from backend.core.vlm_config.prompt_config import Fig2Text_Prompt
 from PIL import Image
+import gc
+import time
 
 fine_tuned_model_list = [
     # Gemma 3
@@ -90,6 +92,18 @@ class FT_VLM_Fig2Tab_PIPELINE:
             status = "Failed"
         else:
             status = "Success"
+
+        del input_text
+        del inputs
+        del generated_ids
+        del trimmed_generated_ids
+        if 'input_text' in globals(): del globals()['input_text']
+        if 'inputs' in globals(): del globals()['inputs']
+        if 'generated_ids' in globals(): del globals()['generated_ids']
+        if 'trimmed_generated_ids' in globals(): del globals()['trimmed_generated_ids']
+        gc.collect()
+        torch.cuda.empty_cache()
+        torch.cuda.synchronize()
 
         return output_text[0], status
     
