@@ -41,6 +41,8 @@ class ExtractOut(BaseModel):
 
 class ResponseModel(BaseModel):
     message: str
+    user_id: str
+    folder: str
     extraction_result: DocParserContextOut
     json_output: str
     markdown_output: str
@@ -76,7 +78,7 @@ async def extract_pdf(
     folder: str = Form("test_folder"),  # default folder
     file: UploadFile = File(...),
     handler: DocParserHandler = Depends(),
-    fig2tab_type: str = Form("base"),  # default model
+    fig2tab_type: str = Form("ft"),  # default model
     formatter_type: str = Form("base"),  # default model
 ) -> ResponseModel:
     # check if the user token is available
@@ -129,7 +131,8 @@ async def extract_pdf(
         print(f"dto.file_path: {dto.file_path}")
 
         # 4) Persist JSONL & Markdown on disk
-        json_name, md_name = await handler.save_results(
+        print(f"Saving results for user {user_id} in folder {folder}")
+        json_output, md_output = await handler.save_results(
             dto=dto,
             unique_filename=Path(dto.file_path).name,
             user_id=user_id, 
@@ -139,9 +142,11 @@ async def extract_pdf(
         # 5) Return your typed response
         return ResponseModel(
             message="PDF extracted successfully",
+            user_id=user_id, 
+            folder=folder,
             extraction_result=dto,
-            json_output=json_name,
-            markdown_output=md_name,
+            json_output=json_output,
+            markdown_output=md_output,
         )
 
     except Exception as e:
@@ -337,9 +342,10 @@ async def extract_pdf(
         )
 
 
-@router.get("/download/{filename}", name="download_file")
-async def download_file(filename: str):
-    file_path = os.path.join("outputs", filename)
+@router.get("/download/{user_id}/{folder}/{filename}", name="download_file")
+async def download_file(user_id: str, folder: str, filename: str):
+    file_path = os.path.join("outputs", user_id, folder, filename)
+    print(f"file_path: {file_path}")
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="File not found")
     return FileResponse(file_path, media_type="application/octet-stream", filename=filename)

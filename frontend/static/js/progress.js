@@ -86,9 +86,9 @@ export function initProgress() {
       document.getElementById('extraction-time').textContent =
         `Extraction completed in ${data.extraction_result.processing_time.toFixed(1)} seconds`;
   
-      document.getElementById('download-json').href = data.json_output;
-      document.getElementById('download-markdown').href = data.markdown_output;
-  
+      document.getElementById('download-json').href = data.user_id + "/" + data.folder + "/" + data.json_output;
+      document.getElementById('download-markdown').href = data.user_id + "/" + data.folder + "/" + data.markdown_output;
+
       // Sample JSON and markdown for demo
       const sampleJson = {
         metadata: {

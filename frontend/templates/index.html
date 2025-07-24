@@ -1084,10 +1084,17 @@
     <script>
       // Generate a URL with a dummy filename, then remove that part
       const DOWNLOAD_URL_BASE =
-        "{{ url_for('download_file', filename='placeholder') }}".replace(
-          "placeholder",
-          ""
+        "{{ url_for('download_file', user_id='user_id', folder='folder', filename='filename') }}".replace(
+          'user_id',
+          'user_placeholder' // Placeholder for user ID
+        ).replace(
+          'folder',
+          'folder_placeholder'
+        ).replace(
+          'filename',
+          'filename_placeholder'
         );
+        console.log('Download URL Base:', DOWNLOAD_URL_BASE);
     </script>
     <script
       type="module"

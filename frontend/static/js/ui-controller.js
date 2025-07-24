@@ -488,10 +488,33 @@ export class UIController {
       res.processing_time ? res.processing_time.toFixed(1) : "N/A"
     }s`;
 
+    // remove two / from DOWNLOAD_URL_BASE
+    // DOWNLOAD_URL_BASE = DOWNLOAD_URL_BASE.replace(/\/\/\//g, "/");
+
     document.getElementById("download-json").href =
-      DOWNLOAD_URL_BASE + data.json_output || "#";
+      DOWNLOAD_URL_BASE.replace(
+        'user_placeholder',
+        data.user_id || "user_placeholder"
+      ).replace(
+        'folder_placeholder',
+        data.folder || "folder_placeholder"
+      ).replace(
+        'filename_placeholder',
+        data.json_output || "filename_placeholder"
+      )
+      || "#";
     document.getElementById("download-markdown").href =
-      DOWNLOAD_URL_BASE + data.markdown_output || "#";
+      DOWNLOAD_URL_BASE.replace(
+        'user_placeholder',
+        data.user_id || "user_placeholder"
+      ).replace(
+        'folder_placeholder',
+        data.folder || "folder_placeholder"
+      ).replace(
+        'filename_placeholder',
+        data.markdown_output || "filename_placeholder"
+      )
+      || "#";
 
     // Update JSON editor if it exists
     if (this.jsonEditor && typeof this.jsonEditor.set === "function") {
