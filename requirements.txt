@@ -31,3 +31,4 @@ markdownify>=0.11.0,<1.2.0
 
 # General Utilities
 requests>=2.31.0,<2.33.0 # If needed as a direct dependency or by a sub-dependency not specifying it.
+pynvml

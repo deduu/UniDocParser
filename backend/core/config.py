@@ -1,7 +1,7 @@
 import os
 from pydantic_settings import BaseSettings
 from typing import ClassVar
-
+import torch
 
 # Adjust BASE_DIR to point to the project root, not the backend directory
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,7 +26,11 @@ class Settings(BaseSettings):
     # For convenience, provide full paths to subdirectories if other modules need them directly
     # IMG_PAGES_DIR: ClassVar[str] = os.path.join(IMG_DIR, IMG_PAGES_SUBDIR)
     # IMG_FIGURES_DIR: ClassVar[str] = os.path.join(IMG_DIR, IMG_FIGURES_SUBDIR)
-    
+
+    # Cuda Settings for Each Models
+    FIG2TAB_MODEL_DEVICE: str = "cuda:1"
+    FORMATTER_MODEL_DEVICE: str = "cuda:2"
+
     # Ensure upload and output directories exist
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -36,6 +40,10 @@ class Settings(BaseSettings):
         # os.makedirs(self.IMG_PAGES_DIR, exist_ok=True)
         # os.makedirs(self.IMG_FIGURES_DIR, exist_ok=True)
 
+        # Check GPU availability
+        if not torch.cuda.is_available():
+            raise RuntimeError("CUDA is not available. Please check your setup.")
+
     def __str__(self):
         """Print settings for debugging"""
         return f"""
@@ -43,6 +51,8 @@ class Settings(BaseSettings):
         UPLOAD_DIR: {self.UPLOAD_DIR}
         OUTPUT_DIR: {self.OUTPUT_DIR}
         IMG_DIR: {self.IMG_DIR}
+        FIG2TAB_MODEL_DEVICE: {self.FIG2TAB_MODEL_DEVICE}
+        FORMATTER_MODEL_DEVICE: {self.FORMATTER_MODEL_DEVICE}
         """
         # IMG_PAGES_DIR: {self.IMG_PAGES_DIR}
         # IMG_FIGURES_DIR: {self.IMG_FIGURES_DIR}
