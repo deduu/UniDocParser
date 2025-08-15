@@ -54,33 +54,31 @@ class ModelManager:
         print(f"GPU Allocated Memory: {torch.cuda.memory_allocated() / 1024**3:.2f} GB")
         print(f"GPU Reserved Memory: {torch.cuda.memory_reserved() / 1024**3:.2f} GB")
 
-    def _get_gpu_stats(self):
+    def _get_gpu_stats(self, model_family):
         """Prints current GPU statistics."""
-        fig2tab_idx = int(settings.FIG2TAB_MODEL_DEVICE.split(':')[1])
-        formatter_idx = int(settings.FORMATTER_MODEL_DEVICE.split(':')[1])
-        min_memory_req = 18.5 # GB (Loading model + cache)
+        if model_family == 'fig2tab':
+            idx = int(settings.FIG2TAB_MODEL_DEVICE.split(':')[1])
+        elif model_family == 'formatter':
+            idx = int(settings.FORMATTER_MODEL_DEVICE.split(':')[1])
+        else:
+            raise ValueError(f"Unknown model family: {model_family}")
+
+        min_memory_req = 20.0 # GB (Loading model + cache)
 
         if torch.cuda.is_available():
-            print(f"Warning: FIG2TAB and FORMATTER models are using different GPU devices.")
-            fig2tab_gpu_stats = torch.cuda.get_device_properties(fig2tab_idx)
-            h_fig = nvmlDeviceGetHandleByIndex(fig2tab_idx)
-            info_fig = nvmlDeviceGetMemoryInfo(h_fig)
-            print(f"FIG2TAB GPU {fig2tab_idx} = {fig2tab_gpu_stats.name}. Max memory = {info_fig.total} GB. Used memory = {info_fig.used} GB.")
-            if info_fig.used > info_fig.free - min_memory_req:
-                raise RuntimeError(f"Insufficient GPU memory on device {fig2tab_idx}. "
-                                   f"Free: {info_fig.free} GB, Required: {min_memory_req} GB.")
-            else:
-                print(f"GPU {fig2tab_idx} is sufficiently provisioned.")
+            gpu_stats = torch.cuda.get_device_properties(idx)
+            h_gpu = nvmlDeviceGetHandleByIndex(idx)
+            info_gpu = nvmlDeviceGetMemoryInfo(h_gpu)
+            total = info_gpu.total / 1024**3
+            used = info_gpu.used / 1024**3
+            free = info_gpu.free / 1024**3
 
-            formatter_gpu_stats = torch.cuda.get_device_properties(formatter_idx)
-            h_formatter = nvmlDeviceGetHandleByIndex(formatter_idx)
-            info_formatter = nvmlDeviceGetMemoryInfo(h_formatter)
-            print(f"FORMATTER GPU {formatter_idx} = {formatter_gpu_stats.name}. Max memory = {info_formatter.total} GB. Used memory = {info_formatter.used} GB.")
-            if info_formatter.used > info_formatter.free - min_memory_req:
-                raise RuntimeError(f"Insufficient GPU memory on device {formatter_idx}. "
-                                   f"Free: {info_formatter.free} GB, Required: {min_memory_req} GB.")
+            print(f"{model_family.upper()} GPU {idx} = {gpu_stats.name}. Max memory = {total:.2f} GB. Used memory = {used:.2f} GB.")
+            if free < min_memory_req:
+                raise RuntimeError(f"Insufficient GPU memory on device {idx}. "
+                                   f"Free: {free:.2f} GB, Required: {min_memory_req} GB.")
             else:
-                print(f"GPU {formatter_idx} is sufficiently provisioned.")
+                print(f"GPU {idx} is sufficiently provisioned.")
         else:
             print("CUDA is not available.")
 
@@ -133,7 +131,7 @@ class ModelManager:
 
         # Load the new model
         print(f"Loading '{model_type}' {model_family} model with args: {model_args}")
-        self._get_gpu_stats()
+        self._get_gpu_stats(model_family)
 
         new_model = target_class(**model_args)
         setattr(self, current_model_attr, new_model)
@@ -143,5 +141,3 @@ class ModelManager:
         return new_model
 
 model_manager = ModelManager()
-# fig2tab_model = model_manager.get_model(model_family='fig2tab', model_type='base')
-# formatter_model = model_manager.get_model(model_family='formatter', model_type='base')
