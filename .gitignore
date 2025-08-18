@@ -10,3 +10,5 @@ tmp/
 unsloth_compiled_cache
 docs
 frontend/node_modules
+test/
+test_output/

@@ -10,7 +10,7 @@ class Fig2Tab_PIPELINE:
     def __init__(
         self, 
         model_id="Qwen/Qwen2.5-VL-7B-Instruct",
-        device="cuda:2" if torch.cuda.is_available() else "cpu",
+        device="cuda:0" if torch.cuda.is_available() else "cpu",
         max_new_tokens=2048,
         batch_size=1,   # Adjust batch size as needed
     ):

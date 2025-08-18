@@ -2,6 +2,10 @@ from PIL import Image, ImageFilter
 import re
 import io
 import base64
+from pathlib import Path
+
+def ensure_dir(p: Path) -> None:
+    p.mkdir(parents=True, exist_ok=True)
 
 # Function to convert a string to lowercase and remove leading/trailing whitespace.
 def process_string(string):
@@ -50,3 +54,10 @@ def image_to_base64(image_path, quality=50):
     buffer.seek(0)
     compressed_base64 = base64.b64encode(buffer.read()).decode("ascii")
     return f"data:image/jpeg;base64,{compressed_base64}"
+
+def save_jpeg(img: Image.Image, out_path: Path, quality: int = 85) -> None:
+    ensure_dir(out_path.parent)
+    rgb = img.convert("RGB")
+    tmp = out_path.with_suffix(out_path.suffix + ".tmp")
+    rgb.save(tmp, format="JPEG", quality=quality, optimize=True, progressive=True, subsampling=1)
+    tmp.replace(out_path)

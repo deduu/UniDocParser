@@ -4,7 +4,9 @@ from PIL import Image
 import ocrmypdf
 from backend.utils.helpers import resize_img
 from backend.core.config import settings
+from backend.utils.trackers import log_processing_time
 
+@log_processing_time
 def handle_file(file_path: str):
     pages = []
 
@@ -16,7 +18,7 @@ def handle_file(file_path: str):
             for i, page in enumerate(page_images):
                 page = resize_img(page, size=1920)
                 page_img_path = os.path.join(settings.IMG_PAGES_DIR, f"{pdf_name}_{i}.jpeg")
-                page.save(page_img_path, "JPEG")
+                page.save(page_img_path, "JPEG", quality=80)
                 metadata = {
                     "index": i,
                     "image": page_img_path,
@@ -40,7 +42,7 @@ def handle_file(file_path: str):
                 img_path = img_path.replace('.jpeg', '.jpeg')
             else:
                 img_path = os.path.join(settings.IMG_PAGES_DIR, os.path.basename(file_path).replace('.jpg', '.jpeg').replace('.png', '.jpeg'))
-            img.save(img_path, "JPEG")
+            img.save(img_path, "JPEG", quality=80)
             metadata = {
                 "index": 0,
                 "image": img_path,

@@ -489,3 +489,33 @@
 2025-06-24 10:53:05,275 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 68.97s
 2025-06-24 10:56:12,953 - backend.main - INFO - Application shutdown begins...
 2025-06-24 10:56:12,954 - backend.main - INFO - Application shutdown complete.
+2025-08-15 14:38:29,848 - backend.main - INFO - FastAPI application created and configured.
+2025-08-15 14:38:29,849 - backend.main - INFO - Application startup begins...
+2025-08-15 14:38:29,849 - backend.main - INFO - Application startup complete.
+2025-08-15 14:49:53,111 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.26s
+2025-08-15 14:49:58,820 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/2f77d2d7-fa09-45e7-a65d-85882e54fb6d_dummy_scanned1.pdf ...
+2025-08-15 14:50:04,280 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-15 14:50:04,281 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-15 14:50:04,898 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-15 14:50:05,188 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-15 14:50:05,198 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-15 14:50:05,965 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 12.85s
+2025-08-15 14:50:52,413 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 46.45s
+2025-08-15 14:50:52,417 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-15 14:54:45,258 - backend.main - INFO - Application shutdown begins...
+2025-08-15 14:54:45,259 - backend.main - INFO - Application shutdown complete.
+2025-08-15 14:56:55,891 - backend.main - INFO - FastAPI application created and configured.
+2025-08-15 14:56:55,892 - backend.main - INFO - Application startup begins...
+2025-08-15 14:56:55,892 - backend.main - INFO - Application startup complete.
+2025-08-15 14:57:10,950 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.18s
+2025-08-15 14:57:14,703 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/bd9a1dc7-8deb-49ea-a59e-2c9f0f68e3ff_dummy_scanned1.pdf ...
+2025-08-15 14:57:19,567 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-15 14:57:19,567 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-15 14:57:20,143 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-15 14:57:20,392 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-15 14:57:20,402 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-15 14:57:21,163 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 10.21s
+2025-08-15 14:58:07,928 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 46.76s
+2025-08-15 14:58:07,933 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-15 14:58:57,844 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 49.91s
+2025-08-15 14:58:57,849 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 108.07s

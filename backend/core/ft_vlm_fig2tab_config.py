@@ -23,7 +23,7 @@ class FT_Fig2Tab_PIPELINE:
     def __init__(
         self,
         model_id="ZeArkh/Qwen2.5-VL-7B-Instruct-unsloth-Extract-Figure",
-        device="cuda:2" if torch.cuda.is_available() else "cpu",
+        device="cuda:0" if torch.cuda.is_available() else "cpu",
     ):
         self.device = device
         self.model, self.processor = FastVisionModel.from_pretrained(

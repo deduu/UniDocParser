@@ -5,11 +5,13 @@ from typing import ClassVar
 
 # Adjust BASE_DIR to point to the project root, not the backend directory
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(BASE_DIR)
 # If config.py is at /home/dedya/UniDocParser/backend/core/config.py
 # BASE_DIR should be /home/dedya/UniDocParser
 
 UPLOAD_FOLDER: str = os.path.join(os.getcwd(), 'uploads')
 OUTPUT_FOLDER: str = os.path.join(os.getcwd(), 'outputs')
+STORAGE_FOLDER: str = os.path.join(os.getcwd(), 'storage')
 IMG_DIR = os.path.join(BASE_DIR, 'img')  # Removed extra 'backend'
 
 # Define subdirectories that need to be created
@@ -22,6 +24,7 @@ class Settings(BaseSettings):
     UPLOAD_DIR: ClassVar[str] = UPLOAD_FOLDER
     OUTPUT_DIR: ClassVar[str] = OUTPUT_FOLDER
     IMG_DIR: ClassVar[str] = IMG_DIR
+    STORAGE_DIR: ClassVar[str] = STORAGE_FOLDER
     
     # For convenience, provide full paths to subdirectories if other modules need them directly
     IMG_PAGES_DIR: ClassVar[str] = os.path.join(IMG_DIR, IMG_PAGES_SUBDIR)
@@ -35,17 +38,27 @@ class Settings(BaseSettings):
         os.makedirs(self.IMG_DIR, exist_ok=True)
         os.makedirs(self.IMG_PAGES_DIR, exist_ok=True)
         os.makedirs(self.IMG_FIGURES_DIR, exist_ok=True)
+        os.makedirs(self.STORAGE_DIR, exist_ok=True)
 
     def __str__(self):
         """Print settings for debugging"""
         return f"""
         BASE_DIR: {self.BASE_DIR}
         UPLOAD_DIR: {self.UPLOAD_DIR}
+        STORAGE_DIR: {self.STORAGE_DIR}
         OUTPUT_DIR: {self.OUTPUT_DIR}
         IMG_DIR: {self.IMG_DIR}
         IMG_PAGES_DIR: {self.IMG_PAGES_DIR}
         IMG_FIGURES_DIR: {self.IMG_FIGURES_DIR}
         """
+     # Ingest tuning
+    PDF_DPI: int = 300
+    PDF_MAX_SIDE: int = 1920
+    IMG_MAX_SIDE: int = 1440
+    JPEG_QUALITY: int = 85
+
+    # Windows (Poppler path for pdf2image)
+    POPPLER_PATH: str | None = None
 
 settings = Settings()
 print(f"Loaded settings: {settings}")  # Add this for debugging

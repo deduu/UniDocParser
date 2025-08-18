@@ -20,7 +20,8 @@ dependencies = [
     "python-multipart (>=0.0.20,<0.0.21)",
     "unsloth @ git+https://github.com/unslothai/unsloth.git",
     "bitsandbytes (>=0.46.0,<0.47.0)",
-    "unsloth-zoo (>=2025.6.4,<2026.0.0)"
+    "unsloth-zoo (>=2025.6.4,<2026.0.0)",
+    "pytest (>=8.4.1,<9.0.0)"
 ]
 
 
