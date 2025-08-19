@@ -56,3 +56,5 @@ class FileIngestor:
         except Exception as e:
             logger.exception("Error while handling %s: %s", p, e)
             return []
+
+ingest = FileIngestor()
