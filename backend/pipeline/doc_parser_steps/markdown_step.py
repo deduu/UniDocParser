@@ -22,9 +22,9 @@ class MarkdownStep(DocParserStep):
         pdf_name = os.path.basename(ctx.pdf_path)
 
         raw_pages = [p.model_dump(mode="python") for p in ctx.pages]
-        updated_pages_raw = format_markdown(raw_pages, pdf_name)
+        # updated_pages_raw = format_markdown(raw_pages, pdf_name)
 
-        ctx.pages = [Page(**p) for p in updated_pages_raw]
+        # ctx.pages = [Page(**p) for p in updated_pages_raw]
 
         # logger.info("%s completed", self.name)
         return ctx

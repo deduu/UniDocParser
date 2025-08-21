@@ -13,7 +13,7 @@ import json
 from fastapi import APIRouter, File, UploadFile, HTTPException, BackgroundTasks, Form, Depends
 from fastapi.responses import JSONResponse, FileResponse, PlainTextResponse
 
-from backend.services.pipeline import PDFExtractionPipeline
+# from backend.services.pipeline import PDFExtractionPipeline
 from backend.core.config import settings
 
 from backend.pipeline.model.schemas_dto import DocParserContextOut

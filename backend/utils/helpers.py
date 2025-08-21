@@ -4,9 +4,11 @@ import io
 import base64
 from pathlib import Path
 
-def ensure_dir(p: Path) -> None:
+def ensure_dir(p) -> None:
+    """Ensure a directory exists. Accepts both str and Path."""
+    p = Path(p)  # Convert str to Path if needed
     p.mkdir(parents=True, exist_ok=True)
-
+    
 # Function to convert a string to lowercase and remove leading/trailing whitespace.
 def process_string(string):
     string = string.lower()

@@ -162,12 +162,12 @@ def format_markdown(pages: list[dict], pdf_name: str) -> list[dict]:
 
         # -------- 3. run VLM formatter -----------------------------------
         extracted_text = page["text"]
-        output = formatter_vlm.generate(
-            extracted_text=extracted_text, 
-            image=pil_image
-        )
+        # output = formatter_vlm.generate(
+        #     extracted_text=extracted_text, 
+        #     image=pil_image
+        # )
 
         # -------- 4. post-process & store --------------------------------
-        page["markdown"] = clean_md(output)
+        # page["markdown"] = clean_md(output)
 
     return pages

@@ -1916,14 +1916,14 @@ pillow = "*"
 
 [[package]]
 name = "peft"
-version = "0.15.2"
+version = "0.17.0"
 description = "Parameter-Efficient Fine-Tuning (PEFT)"
 optional = false
 python-versions = ">=3.9.0"
 groups = ["main"]
 files = [
-    {file = "peft-0.15.2-py3-none-any.whl", hash = "sha256:0dfc942b03b7af4b7267cd4e30b15e3a4a1d277adc581ce6245fc13f1f93d0a0"},
-    {file = "peft-0.15.2.tar.gz", hash = "sha256:7059029f4d42a092ded1aa117dd366a46084aef638bdd593f6ab0195d5427fcd"},
+    {file = "peft-0.17.0-py3-none-any.whl", hash = "sha256:0190c28bdbdc24c3de549f2b42cd182cbb89d3e82aa3069c6db690c4ef6fccbb"},
+    {file = "peft-0.17.0.tar.gz", hash = "sha256:cb647a931c8da434446d6a196c402b1c2d087b12e050e098215f906f12771f1e"},
 ]
 
 [package.dependencies]
@@ -3970,4 +3970,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<3.13"
-content-hash = "545a13290892e8d65383962dd774b38ea150dd89c0d9cf203e63eb4045b16ea0"
+content-hash = "fe1c1b2f2dbdbbf2338ac3fa44d3d68e8cddfe2c11f03744d5454b3831172e27"

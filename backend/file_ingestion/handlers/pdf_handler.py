@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 class PDFHandler:
     def __init__(self, img_pages_dir: Path, dpi: int, max_side: int, jpeg_quality: int, threads: int | None, poppler_path: str | None):
-        self.img_pages_dir = img_pages_dir
+        self.img_pages_dir = Path(img_pages_dir)
         self.dpi = dpi
         self.max_side = max_side
         self.jpeg_quality = jpeg_quality
@@ -53,5 +53,7 @@ class PDFHandler:
                 pages.append(f.result())
 
         pages.sort(key=lambda m: m.index)
+        for page in pages:
+            print(f"page: {page}")
         logger.info("PDF pages processed: %d", len(pages))
         return pages

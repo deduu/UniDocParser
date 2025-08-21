@@ -1,13 +1,80 @@
-from backend.core.ft_vlm_fig2tab_config import fig2tab_vlm
+# from backend.core.ft_vlm_fig2tab_config import fig2tab_vlm
+from backend.core.hf_vlm_fig2tab_config import get_fig2tab_vlm
 
+fig2tab_vlm = get_fig2tab_vlm()
+
+import asyncio
+import base64
+import io
+import logging
+from typing import Any, Dict, List, Optional
+
+from PIL import Image
+from backend.core.hf_vlm_fig2tab_config import get_fig2tab_vlm  # <-- use the LAZY getter
+
+logger = logging.getLogger(__name__)
+
+def _data_url_to_pil(url: str) -> Image.Image:
+    header, b64data = url.split(",", 1)
+    return Image.open(io.BytesIO(base64.b64decode(b64data))).convert("RGB")
+
+def _coerce_to_pil(v: Any) -> Image.Image:
+    if isinstance(v, Image.Image):
+        return v.convert("RGB")
+    if isinstance(v, (bytes, bytearray)):
+        return Image.open(io.BytesIO(v)).convert("RGB")
+    if isinstance(v, str):
+        if v.startswith("data:"):
+            return _data_url_to_pil(v)
+        # assume filesystem path
+        return Image.open(v).convert("RGB")
+    raise KeyError("No usable image payload")
+
+async def _fig_to_table_async(figure_list: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    vlm = get_fig2tab_vlm()  # lazy init; won’t explode at import time
+    out: List[Dict[str, Any]] = []
+    for rec in figure_list:
+        img_val: Optional[Any] = (
+            rec.get("pil_image")
+            or rec.get("image")
+            or rec.get("image_path")
+            or rec.get("path")
+        )
+        if img_val is None:
+            logger.warning("[fig2tab] skipping figure without image keys: %s", rec.keys())
+            out.append(rec)
+            continue
+
+        try:
+            pil = _coerce_to_pil(img_val)
+        except Exception as e:
+            logger.exception("[fig2tab] failed to open image: %r", e)
+            out.append(rec)
+            continue
+
+        try:
+            text = await vlm.generate(pil)  # Fig2TabLLM.generate is async
+            rec["generated_text"] = text
+        except Exception as e:
+            logger.exception("[fig2tab] VLM generate failed: %r", e)
+        out.append(rec)
+    return out
+
+def fig_to_table(figure_list: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Synchronous facade used by the thread-executed step.
+    Safe to call asyncio.run() here because ExtractImagesStep.run() is executed
+    inside asyncio.to_thread (i.e., not on the main event loop thread).
+    """
+    return asyncio.run(_fig_to_table_async(figure_list))
 # Figure to Table VLM
-def fig_to_table(figure_list):
+# def fig_to_table(figure_list):
 
-    for i, image in enumerate(figure_list):
-        output = fig2tab_vlm.generate(image["pil_image"])
-        figure_list[i]["generated_text"] = output
+#     for i, image in enumerate(figure_list):
+#         output = fig2tab_vlm.generate(image["pil_image"])
+#         figure_list[i]["generated_text"] = output
 
-    return figure_list
+#     return figure_list
 
 def take_data(result_text):
     data_text = result_text

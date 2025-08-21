@@ -519,3 +519,487 @@
 2025-08-15 14:58:07,933 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
 2025-08-15 14:58:57,844 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 49.91s
 2025-08-15 14:58:57,849 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 108.07s
+2025-08-19 09:32:23,087 - backend.main - INFO - FastAPI application created and configured.
+2025-08-19 09:32:23,088 - backend.main - INFO - Application startup begins...
+2025-08-19 09:32:23,088 - backend.main - INFO - Application startup complete.
+2025-08-19 09:35:34,736 - backend.file_ingestion.file_ingest - ERROR - Error while handling /home/dedya/UniDocParser/uploads/5f4de7e4-4dc8-4c70-babe-87c28efbd042_dummy_scanned1.pdf: unsupported operand type(s) for /: 'str' and 'str'
+Traceback (most recent call last):
+  File "/home/dedya/UniDocParser/backend/file_ingestion/file_ingest.py", line 55, in handle_file
+    return handler(p)
+           ^^^^^^^^^^
+  File "/home/dedya/UniDocParser/backend/utils/trackers.py", line 27, in sync_wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/backend/file_ingestion/handlers/pdf_handler.py", line 53, in handle
+    pages.append(f.result())
+                 ^^^^^^^^^^
+  File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/local/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/backend/file_ingestion/handlers/pdf_handler.py", line 44, in _process_one
+    out_path = self.img_pages_dir / f"{base}_{idx}.jpeg"
+               ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for /: 'str' and 'str'
+2025-08-19 09:35:34,739 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.87s
+2025-08-19 09:35:41,542 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/5f4de7e4-4dc8-4c70-babe-87c28efbd042_dummy_scanned1.pdf ...
+2025-08-19 09:35:46,795 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-19 09:35:46,796 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-19 09:35:47,347 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-19 09:35:47,611 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-19 09:35:47,652 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-19 09:35:49,413 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 14.67s
+2025-08-19 09:40:06,677 - backend.main - INFO - Application shutdown begins...
+2025-08-19 09:40:06,677 - backend.main - INFO - Application shutdown complete.
+2025-08-19 09:41:07,960 - backend.main - INFO - FastAPI application created and configured.
+2025-08-19 09:41:07,960 - backend.main - INFO - Application startup begins...
+2025-08-19 09:41:07,960 - backend.main - INFO - Application startup complete.
+2025-08-19 09:41:29,596 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-19 09:41:29,596 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8577 seconds.
+2025-08-19 09:42:40,676 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-19 09:42:40,676 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.7608 seconds.
+2025-08-19 09:44:48,008 - backend.main - INFO - Application shutdown begins...
+2025-08-19 09:44:48,009 - backend.main - INFO - Application shutdown complete.
+2025-08-19 09:45:51,110 - backend.main - INFO - FastAPI application created and configured.
+2025-08-19 09:45:51,111 - backend.main - INFO - Application startup begins...
+2025-08-19 09:45:51,111 - backend.main - INFO - Application startup complete.
+2025-08-19 09:45:58,052 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-19 09:45:58,053 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8319 seconds.
+2025-08-19 09:49:09,289 - backend.main - INFO - Application shutdown begins...
+2025-08-19 09:49:09,289 - backend.main - INFO - Application shutdown complete.
+2025-08-19 09:50:13,221 - backend.main - INFO - FastAPI application created and configured.
+2025-08-19 09:50:13,222 - backend.main - INFO - Application startup begins...
+2025-08-19 09:50:13,222 - backend.main - INFO - Application startup complete.
+2025-08-19 09:50:20,185 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-19 09:50:20,185 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8326 seconds.
+2025-08-19 09:52:04,432 - backend.main - INFO - Application shutdown begins...
+2025-08-19 09:52:04,432 - backend.main - INFO - Application shutdown complete.
+2025-08-19 09:53:17,028 - backend.main - INFO - FastAPI application created and configured.
+2025-08-19 09:53:17,028 - backend.main - INFO - Application startup begins...
+2025-08-19 09:53:17,029 - backend.main - INFO - Application startup complete.
+2025-08-19 09:53:22,765 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-19 09:53:22,765 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8226 seconds.
+2025-08-19 09:53:22,766 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.83s
+2025-08-19 09:53:26,729 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/8d83876f-8bd1-4cb5-9aad-bbe57c8838bd_dummy_scanned1.pdf ...
+2025-08-19 09:53:32,229 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-19 09:53:32,230 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-19 09:53:32,764 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-19 09:53:33,015 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-19 09:53:33,023 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-19 09:53:34,218 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 11.45s
+2025-08-19 09:54:25,087 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 50.87s
+2025-08-19 09:54:25,093 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-08-19 10:00:15,436 - backend.main - INFO - Application shutdown begins...
+2025-08-19 10:00:15,437 - backend.main - INFO - Application shutdown complete.
+2025-08-19 10:46:09,974 - backend.main - INFO - FastAPI application created and configured.
+2025-08-19 10:46:09,974 - backend.main - INFO - Application startup begins...
+2025-08-19 10:46:09,975 - backend.main - INFO - Application startup complete.
+2025-08-19 10:46:24,398 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-19 10:46:24,398 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8730 seconds.
+2025-08-19 10:46:24,399 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.88s
+2025-08-19 10:46:24,400 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/4442f5ac-0bf8-4c07-b6e4-7b118ed1294e_dummy_scanned1.pdf
+2025-08-19 10:46:27,574 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/4442f5ac-0bf8-4c07-b6e4-7b118ed1294e_dummy_scanned1.pdf
+2025-08-19 10:46:28,550 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/4442f5ac-0bf8-4c07-b6e4-7b118ed1294e_dummy_scanned1.pdf ...
+2025-08-19 10:46:33,112 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-19 10:46:33,113 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-19 10:46:33,654 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-19 10:46:33,909 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-19 10:46:33,918 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-19 10:46:35,090 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/4442f5ac-0bf8-4c07-b6e4-7b118ed1294e_dummy_scanned1.pdf
+2025-08-19 10:51:02,155 - backend.main - INFO - Application shutdown begins...
+2025-08-19 10:51:02,156 - backend.main - INFO - Application shutdown complete.
+2025-08-19 10:52:03,296 - backend.main - INFO - FastAPI application created and configured.
+2025-08-19 10:52:03,297 - backend.main - INFO - Application startup begins...
+2025-08-19 10:52:03,297 - backend.main - INFO - Application startup complete.
+2025-08-19 10:52:16,492 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-19 10:52:16,492 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8296 seconds.
+2025-08-19 10:52:16,493 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.83s
+2025-08-19 10:52:16,493 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/9dba0ef6-b19c-46f1-b71e-8ee0a2a42eb9_dummy_scanned1.pdf
+2025-08-19 10:52:19,129 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/9dba0ef6-b19c-46f1-b71e-8ee0a2a42eb9_dummy_scanned1.pdf
+2025-08-19 10:52:20,110 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/9dba0ef6-b19c-46f1-b71e-8ee0a2a42eb9_dummy_scanned1.pdf ...
+2025-08-19 10:52:25,187 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-19 10:52:25,187 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-19 10:52:25,734 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-19 10:52:25,981 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-19 10:52:25,989 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-19 10:52:27,328 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/9dba0ef6-b19c-46f1-b71e-8ee0a2a42eb9_dummy_scanned1.pdf
+2025-08-19 10:58:18,131 - backend.main - INFO - Application shutdown begins...
+2025-08-19 10:58:18,132 - backend.main - INFO - Application shutdown complete.
+2025-08-19 10:59:30,602 - backend.main - INFO - FastAPI application created and configured.
+2025-08-19 10:59:30,603 - backend.main - INFO - Application startup begins...
+2025-08-19 10:59:30,603 - backend.main - INFO - Application startup complete.
+2025-08-19 10:59:41,474 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-19 10:59:41,474 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8430 seconds.
+2025-08-19 10:59:41,475 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.85s
+2025-08-19 10:59:41,476 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/7410f652-91ae-49b2-af12-af9f76223544_dummy_scanned1.pdf
+2025-08-19 10:59:44,376 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/7410f652-91ae-49b2-af12-af9f76223544_dummy_scanned1.pdf
+2025-08-19 10:59:45,357 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/7410f652-91ae-49b2-af12-af9f76223544_dummy_scanned1.pdf ...
+2025-08-19 10:59:50,579 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-19 10:59:50,579 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-19 10:59:51,123 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-19 10:59:51,379 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-19 10:59:51,387 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-19 10:59:52,783 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/7410f652-91ae-49b2-af12-af9f76223544_dummy_scanned1.pdf
+2025-08-19 11:01:27,542 - backend.main - INFO - Application shutdown begins...
+2025-08-19 11:01:27,543 - backend.main - INFO - Application shutdown complete.
+2025-08-19 11:02:28,503 - backend.main - INFO - FastAPI application created and configured.
+2025-08-19 11:02:28,504 - backend.main - INFO - Application startup begins...
+2025-08-19 11:02:28,504 - backend.main - INFO - Application startup complete.
+2025-08-19 11:02:39,713 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-19 11:02:39,714 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8533 seconds.
+2025-08-19 11:02:39,714 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.86s
+2025-08-19 11:02:39,715 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/8909588f-3bd7-4185-9441-5c7110023515_dummy_scanned1.pdf
+2025-08-19 11:02:42,363 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/8909588f-3bd7-4185-9441-5c7110023515_dummy_scanned1.pdf
+2025-08-19 11:02:43,309 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/8909588f-3bd7-4185-9441-5c7110023515_dummy_scanned1.pdf ...
+2025-08-19 11:02:48,126 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-19 11:02:48,127 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-19 11:02:48,680 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-19 11:02:48,976 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-19 11:02:48,987 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-19 11:02:50,190 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/8909588f-3bd7-4185-9441-5c7110023515_dummy_scanned1.pdf
+2025-08-19 11:08:31,752 - backend.main - INFO - FastAPI application created and configured.
+2025-08-19 11:08:31,753 - backend.main - INFO - Application startup begins...
+2025-08-19 11:08:31,753 - backend.main - INFO - Application startup complete.
+2025-08-19 11:08:38,562 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-19 11:08:38,562 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8529 seconds.
+2025-08-19 11:08:38,563 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.85s
+2025-08-19 11:08:38,564 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/4b3ff98c-25f4-42bc-ba71-7888ccf419e5_dummy_scanned1.pdf
+2025-08-19 11:08:41,329 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/4b3ff98c-25f4-42bc-ba71-7888ccf419e5_dummy_scanned1.pdf
+2025-08-19 11:08:42,253 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/4b3ff98c-25f4-42bc-ba71-7888ccf419e5_dummy_scanned1.pdf ...
+2025-08-19 11:08:47,051 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-19 11:08:47,051 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-19 11:08:47,777 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-19 11:08:48,028 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-19 11:08:48,036 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-19 11:08:49,198 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/4b3ff98c-25f4-42bc-ba71-7888ccf419e5_dummy_scanned1.pdf
+2025-08-19 22:02:13,005 - backend.main - INFO - FastAPI application created and configured.
+2025-08-19 22:02:13,006 - backend.main - INFO - Application startup begins...
+2025-08-19 22:02:13,006 - backend.main - INFO - Application startup complete.
+2025-08-19 22:02:35,267 - backend.main - INFO - Application shutdown begins...
+2025-08-19 22:02:35,267 - backend.main - INFO - Application shutdown complete.
+2025-08-19 22:03:36,622 - backend.main - INFO - FastAPI application created and configured.
+2025-08-19 22:03:36,623 - backend.main - INFO - Application startup begins...
+2025-08-19 22:03:36,623 - backend.main - INFO - Application startup complete.
+2025-08-19 22:03:36,624 - backend.main - INFO - Application shutdown begins...
+2025-08-19 22:03:36,624 - backend.main - INFO - Application shutdown complete.
+2025-08-19 22:07:18,251 - backend.main - INFO - FastAPI application created and configured.
+2025-08-19 22:07:18,252 - backend.main - INFO - Application startup begins...
+2025-08-19 22:07:18,253 - backend.main - INFO - Application startup complete.
+2025-08-19 22:07:44,616 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-19 22:07:44,630 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8783 seconds.
+2025-08-19 22:07:44,631 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.89s
+2025-08-19 22:07:44,631 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/c02c3cde-3f69-4478-b5ad-cbc5fefe97d4_dummy_scanned1.pdf
+2025-08-19 22:07:49,790 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/c02c3cde-3f69-4478-b5ad-cbc5fefe97d4_dummy_scanned1.pdf
+2025-08-19 22:07:51,924 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/c02c3cde-3f69-4478-b5ad-cbc5fefe97d4_dummy_scanned1.pdf ...
+2025-08-19 22:07:56,695 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-19 22:07:56,695 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-19 22:07:57,262 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-19 22:07:57,518 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-19 22:07:57,564 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-19 22:07:58,772 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/c02c3cde-3f69-4478-b5ad-cbc5fefe97d4_dummy_scanned1.pdf
+2025-08-20 09:59:18,757 - backend.main - INFO - FastAPI application created and configured.
+2025-08-20 09:59:18,758 - backend.main - INFO - Application startup begins...
+2025-08-20 09:59:18,758 - backend.main - INFO - Application startup complete.
+2025-08-20 10:10:52,884 - backend.main - INFO - FastAPI application created and configured.
+2025-08-20 10:10:52,885 - backend.main - INFO - Application startup begins...
+2025-08-20 10:10:52,885 - backend.main - INFO - Application startup complete.
+2025-08-20 10:11:12,041 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-20 10:11:12,052 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8734 seconds.
+2025-08-20 10:11:12,053 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.88s
+2025-08-20 10:11:12,053 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/bb681096-dba8-4a91-8986-8e6a0bfae0e5_dummy_scanned1.pdf
+2025-08-20 10:11:15,644 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/bb681096-dba8-4a91-8986-8e6a0bfae0e5_dummy_scanned1.pdf
+2025-08-20 10:11:16,938 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/bb681096-dba8-4a91-8986-8e6a0bfae0e5_dummy_scanned1.pdf ...
+2025-08-20 10:11:21,812 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-20 10:11:21,812 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-20 10:11:22,419 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-20 10:11:22,673 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-20 10:11:22,683 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-20 10:11:23,441 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/bb681096-dba8-4a91-8986-8e6a0bfae0e5_dummy_scanned1.pdf
+2025-08-20 10:15:00,451 - backend.main - INFO - Application shutdown begins...
+2025-08-20 10:15:00,451 - backend.main - INFO - Application shutdown complete.
+2025-08-20 10:15:15,957 - backend.main - INFO - FastAPI application created and configured.
+2025-08-20 10:15:15,958 - backend.main - INFO - Application startup begins...
+2025-08-20 10:15:15,958 - backend.main - INFO - Application startup complete.
+2025-08-20 10:15:49,183 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-20 10:15:49,196 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8373 seconds.
+2025-08-20 10:15:49,197 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.84s
+2025-08-20 10:15:49,197 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/f02c303b-045d-4656-b43a-a98333af2725_dummy_scanned1.pdf
+2025-08-20 10:15:52,589 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/f02c303b-045d-4656-b43a-a98333af2725_dummy_scanned1.pdf
+2025-08-20 10:15:53,731 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/f02c303b-045d-4656-b43a-a98333af2725_dummy_scanned1.pdf ...
+2025-08-20 10:15:58,257 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-20 10:15:58,257 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-20 10:15:59,292 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-20 10:15:59,574 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-20 10:15:59,583 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-20 10:16:00,333 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/f02c303b-045d-4656-b43a-a98333af2725_dummy_scanned1.pdf
+2025-08-20 10:16:00,360 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 11.16s
+2025-08-20 10:16:00,361 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-08-20 10:16:00,364 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-20 10:16:00,364 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-20 10:16:00,366 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 12.01s
+2025-08-20 10:17:19,481 - backend.main - INFO - Application shutdown begins...
+2025-08-20 10:17:19,481 - backend.main - INFO - Application shutdown complete.
+2025-08-20 10:17:38,024 - backend.main - INFO - FastAPI application created and configured.
+2025-08-20 10:17:38,025 - backend.main - INFO - Application startup begins...
+2025-08-20 10:17:38,025 - backend.main - INFO - Application startup complete.
+2025-08-20 10:17:56,799 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-20 10:17:56,808 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8300 seconds.
+2025-08-20 10:17:56,809 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.83s
+2025-08-20 10:17:56,810 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/a27b0c3f-535e-4c55-bda5-7bea14f503c9_dummy_scanned1.pdf
+2025-08-20 10:18:00,273 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/a27b0c3f-535e-4c55-bda5-7bea14f503c9_dummy_scanned1.pdf
+2025-08-20 10:18:01,298 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/a27b0c3f-535e-4c55-bda5-7bea14f503c9_dummy_scanned1.pdf ...
+2025-08-20 10:18:06,738 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-20 10:18:06,739 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-20 10:18:07,742 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-20 10:18:08,005 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-20 10:18:08,015 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-20 10:18:08,770 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/a27b0c3f-535e-4c55-bda5-7bea14f503c9_dummy_scanned1.pdf
+2025-08-20 10:18:08,797 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 11.99s
+2025-08-20 10:18:08,798 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-08-20 10:18:08,803 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-20 10:18:08,804 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-20 10:18:08,804 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 12.83s
+2025-08-20 10:36:52,679 - backend.main - INFO - FastAPI application created and configured.
+2025-08-20 10:36:52,680 - backend.main - INFO - Application startup begins...
+2025-08-20 10:36:52,680 - backend.main - INFO - Application startup complete.
+2025-08-20 10:36:52,681 - backend.main - INFO - Application shutdown begins...
+2025-08-20 10:36:52,681 - backend.main - INFO - Application shutdown complete.
+2025-08-20 10:37:02,098 - backend.main - INFO - Application shutdown begins...
+2025-08-20 10:37:02,098 - backend.main - INFO - Application shutdown complete.
+2025-08-20 10:37:17,874 - backend.main - INFO - FastAPI application created and configured.
+2025-08-20 10:37:17,875 - backend.main - INFO - Application startup begins...
+2025-08-20 10:37:17,875 - backend.main - INFO - Application startup complete.
+2025-08-20 10:37:26,653 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-20 10:37:26,665 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8659 seconds.
+2025-08-20 10:37:26,666 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.87s
+2025-08-20 10:37:26,666 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/79b73663-ae01-4510-bd7c-fe2fcaefb1f0_dummy_scanned1.pdf
+2025-08-20 10:37:30,194 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/79b73663-ae01-4510-bd7c-fe2fcaefb1f0_dummy_scanned1.pdf
+2025-08-20 10:37:31,176 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/79b73663-ae01-4510-bd7c-fe2fcaefb1f0_dummy_scanned1.pdf ...
+2025-08-20 10:37:35,675 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-20 10:37:35,675 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-20 10:37:36,680 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-20 10:37:36,929 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-20 10:37:36,942 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-20 10:37:37,684 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/79b73663-ae01-4510-bd7c-fe2fcaefb1f0_dummy_scanned1.pdf
+2025-08-20 10:44:53,940 - backend.main - INFO - Application shutdown begins...
+2025-08-20 10:44:53,940 - backend.main - INFO - Application shutdown complete.
+2025-08-20 10:45:10,708 - backend.main - INFO - FastAPI application created and configured.
+2025-08-20 10:45:10,709 - backend.main - INFO - Application startup begins...
+2025-08-20 10:45:10,709 - backend.main - INFO - Application startup complete.
+2025-08-20 10:45:16,615 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-20 10:45:16,629 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.9328 seconds.
+2025-08-20 10:45:16,629 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.94s
+2025-08-20 10:45:16,630 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/81e82e7a-1444-424f-88ac-86f74ae9e699_dummy_scanned1.pdf
+2025-08-20 10:45:20,118 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/81e82e7a-1444-424f-88ac-86f74ae9e699_dummy_scanned1.pdf
+2025-08-20 10:45:21,707 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/81e82e7a-1444-424f-88ac-86f74ae9e699_dummy_scanned1.pdf ...
+2025-08-20 10:45:26,124 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-20 10:45:26,124 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-20 10:45:26,663 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-20 10:45:26,922 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-20 10:45:26,931 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-20 10:45:27,790 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/81e82e7a-1444-424f-88ac-86f74ae9e699_dummy_scanned1.pdf
+2025-08-20 10:45:27,826 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 11.20s
+2025-08-20 10:45:27,828 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-08-20 10:45:27,833 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-20 10:45:27,834 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-20 10:45:27,835 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 12.14s
+2025-08-20 11:28:11,344 - backend.main - INFO - Application shutdown begins...
+2025-08-20 11:28:11,345 - backend.main - INFO - Application shutdown complete.
+2025-08-20 11:28:28,280 - backend.main - INFO - FastAPI application created and configured.
+2025-08-20 11:28:28,281 - backend.main - INFO - Application startup begins...
+2025-08-20 11:28:28,281 - backend.main - INFO - Application startup complete.
+2025-08-20 11:28:40,844 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-20 11:28:40,856 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8772 seconds.
+2025-08-20 11:28:40,857 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.88s
+2025-08-20 11:28:40,858 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/de8bd8b1-3654-4656-b7e2-79859fb0d1b2_dummy_scanned1.pdf
+2025-08-20 11:28:40,858 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-20 11:28:44,374 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/de8bd8b1-3654-4656-b7e2-79859fb0d1b2_dummy_scanned1.pdf
+2025-08-20 11:28:45,291 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/de8bd8b1-3654-4656-b7e2-79859fb0d1b2_dummy_scanned1.pdf ...
+2025-08-20 11:28:50,105 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-20 11:28:50,105 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-20 11:28:50,648 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-20 11:28:50,905 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-20 11:28:50,915 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-20 11:28:51,769 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/de8bd8b1-3654-4656-b7e2-79859fb0d1b2_dummy_scanned1.pdf
+2025-08-20 11:28:51,793 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 10.94s
+2025-08-20 11:28:51,794 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 0.00s
+2025-08-20 11:28:51,799 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-20 11:28:51,800 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-20 11:28:51,801 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 11.82s
+2025-08-20 12:36:21,898 - backend.main - INFO - Application shutdown begins...
+2025-08-20 12:36:21,899 - backend.main - INFO - Application shutdown complete.
+2025-08-20 12:36:38,495 - backend.main - INFO - FastAPI application created and configured.
+2025-08-20 12:36:38,496 - backend.main - INFO - Application startup begins...
+2025-08-20 12:36:38,496 - backend.main - INFO - Application startup complete.
+2025-08-20 12:37:13,110 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-20 12:37:13,124 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8496 seconds.
+2025-08-20 12:37:13,125 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.85s
+2025-08-20 12:37:13,126 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/96ff758c-89aa-4d34-a36b-5b669d26460e_dummy_scanned1.pdf
+2025-08-20 12:37:13,126 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-20 12:37:16,492 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/96ff758c-89aa-4d34-a36b-5b669d26460e_dummy_scanned1.pdf
+2025-08-20 12:37:17,552 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/96ff758c-89aa-4d34-a36b-5b669d26460e_dummy_scanned1.pdf ...
+2025-08-20 12:37:22,339 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-20 12:37:22,339 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-20 12:37:23,336 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-20 12:37:23,603 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-20 12:37:23,612 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-20 12:37:24,380 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/96ff758c-89aa-4d34-a36b-5b669d26460e_dummy_scanned1.pdf
+2025-08-20 12:37:24,404 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 11.28s
+2025-08-20 12:40:38,655 - backend.main - INFO - Application shutdown begins...
+2025-08-20 12:40:38,656 - backend.main - INFO - Application shutdown complete.
+2025-08-20 13:49:11,386 - backend.main - INFO - FastAPI application created and configured.
+2025-08-20 13:49:11,387 - backend.main - INFO - Application startup begins...
+2025-08-20 13:49:11,387 - backend.main - INFO - Application startup complete.
+2025-08-20 13:49:59,380 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-20 13:49:59,393 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8371 seconds.
+2025-08-20 13:49:59,393 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.84s
+2025-08-20 13:49:59,394 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/c337e284-ee34-44bb-bcf6-01871f2a38b6_dummy_scanned1.pdf
+2025-08-20 13:49:59,394 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-20 13:50:02,920 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/c337e284-ee34-44bb-bcf6-01871f2a38b6_dummy_scanned1.pdf
+2025-08-20 13:50:03,939 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/c337e284-ee34-44bb-bcf6-01871f2a38b6_dummy_scanned1.pdf ...
+2025-08-20 13:50:08,572 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-20 13:50:08,573 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-20 13:50:09,139 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-20 13:50:09,407 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-20 13:50:09,417 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-20 13:50:10,181 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/c337e284-ee34-44bb-bcf6-01871f2a38b6_dummy_scanned1.pdf
+2025-08-20 13:50:10,205 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 10.81s
+2025-08-20 13:51:26,903 - backend.main - INFO - Application shutdown begins...
+2025-08-20 13:51:26,903 - backend.main - INFO - Application shutdown complete.
+2025-08-20 13:52:23,446 - backend.main - INFO - FastAPI application created and configured.
+2025-08-20 13:52:23,447 - backend.main - INFO - Application startup begins...
+2025-08-20 13:52:23,447 - backend.main - INFO - Application startup complete.
+2025-08-20 13:54:38,414 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-20 13:54:38,414 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8468 seconds.
+2025-08-20 13:54:38,415 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.85s
+2025-08-20 13:54:38,416 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/a936cc2d-b641-414f-b892-53f5bac5a027_dummy_scanned1.pdf
+2025-08-20 13:54:38,417 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-20 13:54:41,808 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/a936cc2d-b641-414f-b892-53f5bac5a027_dummy_scanned1.pdf
+2025-08-20 13:54:42,775 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/a936cc2d-b641-414f-b892-53f5bac5a027_dummy_scanned1.pdf ...
+2025-08-20 13:54:47,603 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-20 13:54:47,603 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-20 13:54:48,138 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-20 13:54:48,391 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-20 13:54:48,399 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-20 13:54:49,310 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/a936cc2d-b641-414f-b892-53f5bac5a027_dummy_scanned1.pdf
+2025-08-20 13:54:49,335 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 10.92s
+2025-08-20 14:04:24,058 - backend.main - INFO - Application shutdown begins...
+2025-08-20 14:04:24,058 - backend.main - INFO - Application shutdown complete.
+2025-08-20 14:04:58,024 - backend.main - INFO - FastAPI application created and configured.
+2025-08-20 14:04:58,025 - backend.main - INFO - Application startup begins...
+2025-08-20 14:04:58,025 - backend.main - INFO - Application startup complete.
+2025-08-20 14:05:25,768 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-20 14:05:25,768 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8273 seconds.
+2025-08-20 14:05:25,769 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.83s
+2025-08-20 14:05:25,770 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/0879f36f-c8ef-4c74-9548-c00533b45a7c_dummy_scanned1.pdf
+2025-08-20 14:05:25,770 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-20 14:05:29,269 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/0879f36f-c8ef-4c74-9548-c00533b45a7c_dummy_scanned1.pdf
+2025-08-20 14:05:30,215 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/0879f36f-c8ef-4c74-9548-c00533b45a7c_dummy_scanned1.pdf ...
+2025-08-20 14:05:34,826 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-20 14:05:34,827 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-20 14:05:35,395 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-20 14:05:35,653 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-20 14:05:35,662 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-20 14:05:36,385 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/0879f36f-c8ef-4c74-9548-c00533b45a7c_dummy_scanned1.pdf
+2025-08-20 14:05:36,409 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 10.64s
+2025-08-20 14:09:54,912 - backend.main - INFO - Application shutdown begins...
+2025-08-20 14:09:54,912 - backend.main - INFO - Application shutdown complete.
+2025-08-20 14:10:28,550 - backend.main - INFO - FastAPI application created and configured.
+2025-08-20 14:10:28,551 - backend.main - INFO - Application startup begins...
+2025-08-20 14:10:28,551 - backend.main - INFO - Application startup complete.
+2025-08-20 14:11:45,559 - backend.main - INFO - Application shutdown begins...
+2025-08-20 14:11:45,559 - backend.main - INFO - Application shutdown complete.
+2025-08-20 14:12:17,030 - backend.main - INFO - FastAPI application created and configured.
+2025-08-20 14:12:17,031 - backend.main - INFO - Application startup begins...
+2025-08-20 14:12:17,031 - backend.main - INFO - Application startup complete.
+2025-08-20 14:39:55,011 - backend.main - INFO - Application shutdown begins...
+2025-08-20 14:39:55,011 - backend.main - INFO - Application shutdown complete.
+2025-08-20 14:42:55,806 - backend.main - INFO - FastAPI application created and configured.
+2025-08-20 14:42:55,807 - backend.main - INFO - Application startup begins...
+2025-08-20 14:42:55,808 - backend.main - INFO - Application startup complete.
+2025-08-20 14:43:02,327 - backend.main - INFO - Application shutdown begins...
+2025-08-20 14:43:02,327 - backend.main - INFO - Application shutdown complete.
+2025-08-20 14:47:44,718 - backend.main - INFO - FastAPI application created and configured.
+2025-08-20 14:47:44,720 - backend.main - INFO - Application startup begins...
+2025-08-20 14:47:44,720 - backend.main - INFO - Application startup complete.
+2025-08-20 14:50:45,808 - backend.main - INFO - Application shutdown begins...
+2025-08-20 14:50:45,808 - backend.main - INFO - Application shutdown complete.
+2025-08-20 14:51:20,304 - backend.main - INFO - FastAPI application created and configured.
+2025-08-20 14:51:20,305 - backend.main - INFO - Application startup begins...
+2025-08-20 14:51:20,305 - backend.main - INFO - Application startup complete.
+2025-08-20 14:52:00,151 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-20 14:52:00,151 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8381 seconds.
+2025-08-20 14:52:00,152 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.84s
+2025-08-20 14:52:00,153 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/8a24f4d8-3bfe-4049-9fcf-dec24fe21632_dummy_scanned1.pdf
+2025-08-20 14:52:00,153 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-20 14:52:03,876 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/8a24f4d8-3bfe-4049-9fcf-dec24fe21632_dummy_scanned1.pdf
+2025-08-20 14:52:04,971 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/8a24f4d8-3bfe-4049-9fcf-dec24fe21632_dummy_scanned1.pdf ...
+2025-08-20 14:52:09,758 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-20 14:52:09,758 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-20 14:52:10,320 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-20 14:52:10,571 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-20 14:52:10,579 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-20 14:52:11,315 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/8a24f4d8-3bfe-4049-9fcf-dec24fe21632_dummy_scanned1.pdf
+2025-08-20 14:52:11,338 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 11.19s
+2025-08-20 14:53:08,603 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-20 14:53:08,603 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8023 seconds.
+2025-08-20 14:53:08,604 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.80s
+2025-08-20 14:53:08,605 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/bd70874a-7fc7-4a2d-a424-bc017b536c31_dummy_scanned1.pdf
+2025-08-20 14:53:08,605 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-20 14:53:08,605 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/bd70874a-7fc7-4a2d-a424-bc017b536c31_dummy_scanned1.pdf
+2025-08-20 14:53:08,632 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/bd70874a-7fc7-4a2d-a424-bc017b536c31_dummy_scanned1.pdf ...
+2025-08-20 14:53:13,508 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/bd70874a-7fc7-4a2d-a424-bc017b536c31_dummy_scanned1.pdf
+2025-08-20 14:53:13,529 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 4.92s
+2025-08-21 16:33:49,577 - backend.main - INFO - FastAPI application created and configured.
+2025-08-21 16:33:49,578 - backend.main - INFO - Application startup begins...
+2025-08-21 16:33:49,578 - backend.main - INFO - Application startup complete.
+2025-08-21 16:34:32,613 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-21 16:34:32,613 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8532 seconds.
+2025-08-21 16:34:32,614 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.86s
+2025-08-21 16:34:32,615 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/f815f7ad-5f43-46c1-bb52-28a45dfc42a7_dummy_scanned1.pdf
+2025-08-21 16:34:32,616 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-21 16:34:36,487 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/f815f7ad-5f43-46c1-bb52-28a45dfc42a7_dummy_scanned1.pdf
+2025-08-21 16:34:37,411 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/f815f7ad-5f43-46c1-bb52-28a45dfc42a7_dummy_scanned1.pdf ...
+2025-08-21 16:34:42,203 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-21 16:34:42,203 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-21 16:34:42,776 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-21 16:34:43,022 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-21 16:34:43,031 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-21 16:34:43,748 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/f815f7ad-5f43-46c1-bb52-28a45dfc42a7_dummy_scanned1.pdf
+2025-08-21 16:34:43,771 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 11.16s
+2025-08-21 16:34:43,811 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-21 16:34:43,812 - backend.utils.vram - INFO - [vram:before-build] alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-08-21 16:34:43,813 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-08-21 16:34:43,818 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-21 16:34:44,492 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-08-21 16:34:44,492 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-21 16:34:44,494 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-21 16:34:44,494 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-21 16:34:50,463 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-21 16:34:50,463 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-21 16:34:50,466 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "b35c94d3-51d1-4ae3-8419-9a941d67704a", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:1", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.52.4", "prompt_tokens": 732, "generated_tokens": 110, "total_tokens": 842, "time_total_s": 5.970494024979416, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 141.02685581414727, "first_token_latency_s": null}
+2025-08-21 16:34:50,751 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-21 16:34:50,751 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-21 16:34:50,802 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-21 16:34:50,803 - backend.utils.vram - INFO - [vram:before-build] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-21 16:34:50,804 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-21 16:34:50,811 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-21 16:34:51,125 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-21 16:34:51,125 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-21 16:34:51,126 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-21 16:34:51,127 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-21 16:34:58,936 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-21 16:34:58,936 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-21 16:34:58,939 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "569ba042-9c09-4086-8049-a1715ced2946", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:1", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.52.4", "prompt_tokens": 772, "generated_tokens": 178, "total_tokens": 950, "time_total_s": 7.810342340992065, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 121.63359280860044, "first_token_latency_s": null}
+2025-08-21 16:34:59,222 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-21 16:34:59,222 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-21 16:34:59,226 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 15.45s
+2025-08-21 16:34:59,231 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-08-21 16:34:59,232 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-21 16:34:59,233 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 27.47s
+2025-08-21 16:37:26,318 - backend.main - INFO - Application shutdown begins...
+2025-08-21 16:37:26,318 - backend.main - INFO - Application shutdown complete.

@@ -21,7 +21,8 @@ dependencies = [
     "unsloth @ git+https://github.com/unslothai/unsloth.git",
     "bitsandbytes (>=0.46.0,<0.47.0)",
     "unsloth-zoo (>=2025.6.4,<2026.0.0)",
-    "pytest (>=8.4.1,<9.0.0)"
+    "pytest (>=8.4.1,<9.0.0)",
+    "peft (>=0.17.0,<0.18.0)"
 ]
 
 
