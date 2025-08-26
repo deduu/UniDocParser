@@ -11,6 +11,9 @@ from typing import AsyncGenerator, Dict, Any, Iterable, Optional
 
 import torch
 import asyncio
+import unsloth
+from peft import PeftModel
+
 from transformers import (
     AutoTokenizer,
     AutoModelForCausalLM,
@@ -87,16 +90,16 @@ def sdpa_context():
             return nullcontext()
         
 from typing import Optional
-try:
-    from peft import PeftModel
-    # backend/main.py (very top, before any transformers imports happen)
-    try:
-        import unsloth  # must be before importing transformers
-    except Exception:
-        pass
+# try:
+#     from peft import PeftModel
+#     # backend/main.py (very top, before any transformers imports happen)
+#     try:
+#         import unsloth  # must be before importing transformers
+#     except Exception:
+#         pass
 
-except Exception:
-    PeftModel = None
+# except Exception:
+#     PeftModel = None
 
 class LocalHuggingFaceClient(BaseLLM):
     def __init__(
@@ -126,7 +129,7 @@ class LocalHuggingFaceClient(BaseLLM):
             int(os.getenv("LOCAL_LLM_MAX_CONCURRENCY", "16")))  # high cap; VRAM gate will be the real limiter
         # ---- Tokenizer ----
         self.tokenizer = AutoTokenizer.from_pretrained(
-            model_path, use_fast=True, trust_remote_code=True)
+            model_path, use_fast=False, trust_remote_code=True)
 
         # LLaMA typically has no pad token → map pad to eos to silence warnings
         if self.tokenizer.pad_token_id is None and self.tokenizer.eos_token_id is not None:

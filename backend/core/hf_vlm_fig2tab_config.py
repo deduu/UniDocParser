@@ -126,7 +126,7 @@ def get_fig2tab_vlm() -> Fig2TabLLM:
     return Fig2TabLLM(
         base_repo="unsloth/Qwen2.5-VL-7B-Instruct",
         adapter_repo="ZeArkh/Qwen2.5-VL-7B-Instruct-unsloth-Extract-Figure",
-        device="cuda:1",
+        device="cuda:0",
         quantization=None,   # or "bitsandbytes" if you use a 4-bit adapter
         temperature=1.5,
         min_p=0.1,
