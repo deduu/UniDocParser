@@ -10,7 +10,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
 # Assuming your backend structure
-from backend.routes import extraction_routes
+from backend.routes import extraction_routes, jobs
+
 from backend.core.config import settings
 from backend.utils.logger import configure_logging
 
@@ -91,6 +92,7 @@ def create_app() -> FastAPI:
 
     # --- Include routes ---
     app.include_router(extraction_routes.router, prefix="/api/v1")
+    app.include_router(jobs.router)
 
     # --- Define basic endpoints within create_app or as separate handlers ---
     # For now, we'll keep them here for simplicity, but for more complex apps,

@@ -54,8 +54,8 @@ class DocParserHandler:
         except Exception as e:
             raise HTTPException(500, f"Split failed: {e}")
         return SplitPDFResponse.from_context(ctx)
-    
-    async def extract_only(self, file:UploadFile) -> DocParserContextOut:
+
+    async def extract_only(self, file: UploadFile) -> DocParserContextOut:
         path = await self._save_upload(file)
         try:
             ctx = await self.svc.extract_only(path)
@@ -71,38 +71,48 @@ class DocParserHandler:
             raise HTTPException(500, f"Full pipeline failed: {e}")
         return self._dto_from_ctx(ctx)
 
-    def _dto_from_ctx(self, ctx: DocParserContext) -> DocParserContextOut:
+    def _dto_from_ctx(
+        self,
+        ctx: DocParserContext,
+        save_page_images: bool = True,
+        save_figure_images: bool = False,
+        include_image_metadata: bool = False,
+
+        include_image_base64: bool = False,
+    ) -> DocParserContextOut:
         """Convert internal DocParserContext → API DTO."""
         pages = []
         for p in ctx.pages:
             elements_out = []
             for el in p.elements:
                 metadata = None
-                if el.image_metadata:
+                if include_image_metadata and el.image_metadata:   # ✅ conditionally include
                     md = el.image_metadata
                     metadata = ImageMetadataOut(
                         image_type=md.image_type,
                         caption=md.caption,
                         description=md.description,
                         ocr_string=md.ocr_string,
-                        image_base64=md.image_base64,
+                        image_base64=md.image_base64 if include_image_base64 else None,  # ✅ conditional
                     )
+
                 elements_out.append(
                     ElementOut(
                         idx=el.idx,
                         type=el.type,
                         bbox=el.bbox,
                         text=el.text,
-                        image_metadata=metadata,
+                        image_metadata=metadata,   # Will be omitted if None
                     )
                 )
 
-            # ✅ Try to open image and encode it
-            try:
-                image_b64 = pil_to_base64(Image.open(p.image))
-            except (FileNotFoundError, UnidentifiedImageError) as e:
-                print(f"[WARNING] Image not found for page {p.index}: {e}")
-                image_b64 = None  # Or you can use: pil_to_base64(Image.open("static/placeholder.jpg"))
+            image_b64 = None
+            if save_page_images:
+                try:
+                    image_b64 = pil_to_base64(Image.open(p.image))
+                except (FileNotFoundError, UnidentifiedImageError) as e:
+                    print(f"[WARNING] Image not found for page {p.index}: {e}")
+                    image_b64 = None
 
             pages.append(
                 PageOut(
@@ -118,7 +128,8 @@ class DocParserHandler:
             FigureOut(
                 page_num=f.page_num,
                 idx=f.idx,
-                pil_image=pil_to_base64(f.pil_image),
+                pil_image=pil_to_base64(
+                    f.pil_image) if save_figure_images else None,
                 generated_text=f.generated_text,
             )
             for f in ctx.figure_list
