@@ -1,5 +1,5 @@
 import os
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import ClassVar
 
 
@@ -19,6 +19,14 @@ IMG_PAGES_SUBDIR: str = "pages"
 IMG_FIGURES_SUBDIR: str = "figures"
 
 class Settings(BaseSettings):
+
+    """Application settings loaded from environment variables or .env file."""
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+    DATABASE_URL: str = "postgresql+asyncpg://postgres:admin@localhost:5432/doc_parser"
+    DEBUG_MODE: bool = False
+    TIMEZONE: str = "Asia/Bangkok"
+
     # Annotate constants as ClassVar so they aren't treated as model fields
     BASE_DIR: ClassVar[str] = BASE_DIR
     UPLOAD_DIR: ClassVar[str] = UPLOAD_FOLDER
