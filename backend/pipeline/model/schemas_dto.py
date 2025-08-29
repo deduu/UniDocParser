@@ -38,7 +38,7 @@ class FigureOut(BaseModel):
 class DocParserContextOut(BaseModel):
     # ✅ auto-omit None fields
     model_config = ConfigDict(ser_json_exclude_none=True)
-    pdf_path: str
+    pdf_path: Optional[str] = None
     ocr_pdf_path: Optional[str] = None
     pages: List[PageOut] = Field(default_factory=list)
     figure_list: List[FigureOut]

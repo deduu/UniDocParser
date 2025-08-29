@@ -22,6 +22,8 @@ from backend.pipeline.doc_parse_service import DocParserService
 from backend.pipeline.doc_parse_handler import DocParserHandler
 from backend.pipeline.model.schemas import SplitPDFResponse
 
+from backend.deps.verify import verify_internal_call
+
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
@@ -66,7 +68,10 @@ async def handle_file(file: UploadFile = File(...), handler: DocParserHandler = 
 async def extract_pdf(
     file: UploadFile = File(...),
     handler: DocParserHandler = Depends(),
+    user: dict = Depends(verify_internal_call),
 ) -> ResponseModel:
+    
+    print(f"Document extracted by user {user['user_id']}")
     # 1) Validate file type
     if not file.filename or not (
         file.filename.lower().endswith(".pdf")
@@ -94,7 +99,7 @@ async def extract_pdf(
 
         # 5) Return your typed response
         return ResponseModel(
-            message="PDF extracted successfully",
+            message="Document extracted successfully",
             extraction_result=dto,
             json_output=json_name,
             markdown_output=md_name,

@@ -5807,3 +5807,1436 @@ Syntax Error: Document stream is empty
 2025-08-27 07:45:23,150 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 18.20s
 2025-08-27 08:57:09,542 - backend.main - INFO - Application shutdown begins...
 2025-08-27 08:57:09,543 - backend.main - INFO - Application shutdown complete.
+2025-08-27 16:40:01,173 - backend.main - INFO - FastAPI application created and configured.
+2025-08-27 16:40:01,174 - backend.main - INFO - Application startup begins...
+2025-08-27 16:40:01,174 - backend.main - INFO - Application startup complete.
+2025-08-27 16:46:07,958 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-27 16:46:07,958 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 1.3408 seconds.
+2025-08-27 16:46:07,959 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.34s
+2025-08-27 16:46:07,960 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/fdab3dec-27f7-4eec-9da6-2b8a9478e9cf_dummy_scanned1.pdf
+2025-08-27 16:46:07,960 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-27 16:46:12,549 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/fdab3dec-27f7-4eec-9da6-2b8a9478e9cf_dummy_scanned1.pdf
+2025-08-27 16:46:14,443 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/fdab3dec-27f7-4eec-9da6-2b8a9478e9cf_dummy_scanned1.pdf ...
+2025-08-27 16:46:25,271 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-27 16:46:25,608 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-27 16:46:26,210 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-27 16:46:26,466 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-27 16:46:26,474 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-27 16:46:27,370 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-27 16:46:28,641 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-27 16:46:28,643 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-27 16:46:28,643 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-27 16:46:28,647 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-27 16:46:28,657 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-27 16:46:28,657 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-27 16:46:28,748 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/fdab3dec-27f7-4eec-9da6-2b8a9478e9cf_dummy_scanned1.pdf
+2025-08-27 16:46:28,777 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 20.82s
+2025-08-27 16:46:28,817 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-27 16:46:28,818 - backend.utils.vram - INFO - [vram:before-build] alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-08-27 16:46:28,818 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-08-27 16:46:28,824 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-27 16:46:29,755 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-08-27 16:46:29,755 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:46:29,757 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:46:29,757 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:46:39,261 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:46:39,261 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:46:39,342 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "4d90195d-056e-4a9c-927d-66321449cd85", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 114, "total_tokens": 846, "time_total_s": 9.505484319059178, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 89.00125144635811, "first_token_latency_s": null}
+2025-08-27 16:46:40,041 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:46:40,041 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:46:40,164 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-27 16:46:40,165 - backend.utils.vram - INFO - [vram:before-build] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:46:40,165 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:46:40,173 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-27 16:46:40,820 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:46:40,820 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:46:40,821 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:46:40,822 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:46:59,449 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:46:59,449 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:46:59,460 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "90aefb65-7eb8-4dca-807e-ce9faef23874", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 258, "total_tokens": 1030, "time_total_s": 18.628847680985928, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 55.29059111108087, "first_token_latency_s": null}
+2025-08-27 16:47:00,264 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:47:00,264 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:47:00,375 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 31.60s
+2025-08-27 16:47:00,380 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-27 16:47:00,380 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-27 16:47:00,381 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 53.76s
+2025-08-27 16:47:29,429 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 2
+2025-08-27 16:47:29,430 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 2.1847 seconds.
+2025-08-27 16:47:29,431 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.19s
+2025-08-27 16:47:29,431 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/af5cf13e-de6c-4ec8-89b9-79587985bc44_dummy_scanned2.pdf
+2025-08-27 16:47:29,431 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-27 16:47:29,431 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/af5cf13e-de6c-4ec8-89b9-79587985bc44_dummy_scanned2.pdf
+2025-08-27 16:47:29,473 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/af5cf13e-de6c-4ec8-89b9-79587985bc44_dummy_scanned2.pdf ...
+2025-08-27 16:47:56,113 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-27 16:47:56,121 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-27 16:47:56,124 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-27 16:47:56,124 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-27 16:47:56,127 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-27 16:47:56,137 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-27 16:47:56,137 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-27 16:47:56,154 - unstructured - WARNING - short text: "foes ELSEVIE)". Defaulting to English.
+2025-08-27 16:47:56,161 - unstructured - WARNING - short text: "journal homepage: www.elsevier.com/locate/cirpj". Defaulting to English.
+2025-08-27 16:47:56,166 - unstructured - WARNING - short text: "Check for tie". Defaulting to English.
+2025-08-27 16:47:56,179 - unstructured - WARNING - short text: ">". Defaulting to English.
+2025-08-27 16:47:56,186 - unstructured - WARNING - short text: "ARTICLE INFO". Defaulting to English.
+2025-08-27 16:47:56,186 - unstructured - WARNING - short text: "ABSTRACT". Defaulting to English.
+2025-08-27 16:47:56,199 - unstructured - WARNING - short text: "1. Introduction". Defaulting to English.
+2025-08-27 16:47:56,207 - unstructured - WARNING - short text: "* Corresponding author.". Defaulting to English.
+2025-08-27 16:47:56,288 - unstructured - WARNING - short text: "https://doi.org/10.1016/j.cirpj.2023.11.003". Defaulting to English.
+2025-08-27 16:47:56,294 - backend.extraction.services.element_extractor - INFO - Extracted 2 elements from /home/dedya/UniDocParser/uploads/af5cf13e-de6c-4ec8-89b9-79587985bc44_dummy_scanned2.pdf
+2025-08-27 16:47:56,319 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 26.89s
+2025-08-27 16:47:56,359 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-27 16:47:56,359 - backend.utils.vram - INFO - [vram:before-build] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:47:56,360 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:47:56,365 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-27 16:47:57,113 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:47:57,113 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:47:57,114 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:47:57,115 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:05,784 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:05,784 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:05,790 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "9d34a1aa-dbd6-4048-9104-22883220be05", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 121, "total_tokens": 853, "time_total_s": 8.67082873894833, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 98.37583300064797, "first_token_latency_s": null}
+2025-08-27 16:48:06,389 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:06,389 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:06,510 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-27 16:48:06,511 - backend.utils.vram - INFO - [vram:before-build] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:06,512 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:06,518 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-27 16:48:07,090 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:07,090 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:07,091 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:07,091 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:20,131 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:20,131 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:20,139 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "5e415007-62ec-473e-ac07-38a9556dc805", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 154, "total_tokens": 926, "time_total_s": 13.040956205921248, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 71.00706308480275, "first_token_latency_s": null}
+2025-08-27 16:48:21,283 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:21,283 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:21,292 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-27 16:48:21,293 - backend.utils.vram - INFO - [vram:before-build] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:21,293 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:21,295 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-27 16:48:22,253 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:22,253 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:22,254 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:22,255 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:25,606 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:25,607 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:25,609 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "7b9825be-a56c-4571-8eeb-b2a971057961", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 534, "generated_tokens": 21, "total_tokens": 555, "time_total_s": 3.353555187000893, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 165.49600917596356, "first_token_latency_s": null}
+2025-08-27 16:48:26,398 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:26,398 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:26,399 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-27 16:48:26,400 - backend.utils.vram - INFO - [vram:before-build] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:26,400 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:26,401 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-27 16:48:27,212 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:27,212 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:27,213 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:27,213 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:30,325 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:30,325 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:30,327 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "ebc0c81d-d25f-4da1-aa4e-adffc293c257", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 501, "generated_tokens": 22, "total_tokens": 523, "time_total_s": 3.113372646039352, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 167.98503085241967, "first_token_latency_s": null}
+2025-08-27 16:48:31,270 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:31,270 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-27 16:48:31,275 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 34.96s
+2025-08-27 16:48:31,282 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-08-27 16:48:31,283 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-27 16:48:31,283 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 64.04s
+2025-08-28 09:30:39,260 - backend.main - INFO - FastAPI application created and configured.
+2025-08-28 09:30:39,261 - backend.main - INFO - Application startup begins...
+2025-08-28 09:30:39,261 - backend.main - INFO - Application startup complete.
+2025-08-28 09:51:27,453 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-28 09:51:27,453 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 1.3246 seconds.
+2025-08-28 09:51:27,454 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.33s
+2025-08-28 09:51:27,455 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/bbc34d7d-2470-4d14-bcfe-194d5466c552_dummy_scanned1.pdf
+2025-08-28 09:51:27,455 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 09:51:31,579 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/bbc34d7d-2470-4d14-bcfe-194d5466c552_dummy_scanned1.pdf
+2025-08-28 09:51:33,317 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/bbc34d7d-2470-4d14-bcfe-194d5466c552_dummy_scanned1.pdf ...
+2025-08-28 09:51:44,524 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-28 09:51:44,855 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-28 09:51:45,922 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-28 09:51:46,230 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-28 09:51:46,240 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-28 09:51:47,112 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-28 09:51:48,293 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-28 09:51:48,296 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-28 09:51:48,297 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-28 09:51:48,302 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-28 09:51:48,436 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-28 09:51:48,436 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-28 09:51:48,459 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/bbc34d7d-2470-4d14-bcfe-194d5466c552_dummy_scanned1.pdf
+2025-08-28 09:51:48,488 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 21.03s
+2025-08-28 09:51:48,596 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 09:51:48,600 - backend.utils.vram - INFO - [vram:before-build] alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-08-28 09:51:48,601 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-08-28 09:51:48,607 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 09:51:49,468 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-08-28 09:51:49,468 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 09:51:49,469 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 09:51:49,470 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 09:52:00,800 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 09:52:00,801 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 09:52:00,809 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "29a9f41f-3f88-4584-812a-e7004041b4df", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 144, "total_tokens": 876, "time_total_s": 11.332229995983653, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 77.30164321677819, "first_token_latency_s": null}
+2025-08-28 09:52:01,350 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 09:52:01,350 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 09:52:01,406 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 09:52:01,407 - backend.utils.vram - INFO - [vram:before-build] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 09:52:01,407 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 09:52:01,414 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 09:52:02,186 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 09:52:02,186 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 09:52:02,187 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 09:52:02,188 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 09:52:13,996 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 09:52:13,996 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 09:52:14,004 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "b4ab2baf-8b75-41cf-b104-bed4ed912cd7", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 170, "total_tokens": 942, "time_total_s": 11.809982747072354, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 79.76302930954898, "first_token_latency_s": null}
+2025-08-28 09:52:14,547 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 09:52:14,548 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 09:52:14,552 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 26.06s
+2025-08-28 09:52:14,557 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-28 09:52:14,557 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-28 09:52:14,558 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 48.43s
+2025-08-28 09:52:57,371 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 3
+2025-08-28 09:52:57,371 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 2.8157 seconds.
+2025-08-28 09:52:57,372 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.82s
+2025-08-28 09:52:57,373 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/1b7df876-ca4a-4212-9cf5-78004a08c12e_dummy_scanned.pdf
+2025-08-28 09:52:57,373 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 09:52:57,373 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/1b7df876-ca4a-4212-9cf5-78004a08c12e_dummy_scanned.pdf
+2025-08-28 09:52:57,501 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/1b7df876-ca4a-4212-9cf5-78004a08c12e_dummy_scanned.pdf ...
+2025-08-28 09:53:37,058 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-28 09:53:37,141 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-28 09:53:37,144 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-28 09:53:37,144 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-28 09:53:37,149 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-28 09:53:37,162 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-28 09:53:37,162 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-28 09:53:37,182 - unstructured - WARNING - short text: "foes ELSEVIE)". Defaulting to English.
+2025-08-28 09:53:37,191 - unstructured - WARNING - short text: "journal homepage: www.elsevier.com/locate/cirpj". Defaulting to English.
+2025-08-28 09:53:37,197 - unstructured - WARNING - short text: "Check for tie". Defaulting to English.
+2025-08-28 09:53:37,218 - unstructured - WARNING - short text: ">". Defaulting to English.
+2025-08-28 09:53:37,228 - unstructured - WARNING - short text: "ARTICLE INFO". Defaulting to English.
+2025-08-28 09:53:37,228 - unstructured - WARNING - short text: "ABSTRACT". Defaulting to English.
+2025-08-28 09:53:37,238 - unstructured - WARNING - short text: "1. Introduction". Defaulting to English.
+2025-08-28 09:53:37,247 - unstructured - WARNING - short text: "* Corresponding author.". Defaulting to English.
+2025-08-28 09:53:37,334 - unstructured - WARNING - short text: "https://doi.org/10.1016/j.cirpj.2023.11.003". Defaulting to English.
+2025-08-28 09:53:37,341 - unstructured - WARNING - short text: "D. Ariansyah et al.". Defaulting to English.
+2025-08-28 09:53:37,383 - unstructured - WARNING - short text: "Table 6". Defaulting to English.
+2025-08-28 09:53:37,397 - unstructured - WARNING - short text: "25". Defaulting to English.
+2025-08-28 09:53:37,404 - unstructured - WARNING - short text: "5. Discussion". Defaulting to English.
+2025-08-28 09:53:37,416 - unstructured - WARNING - No features in text.
+2025-08-28 09:53:37,416 - unstructured - WARNING - short text: "Success rate". Defaulting to English.
+2025-08-28 09:53:37,424 - backend.extraction.services.element_extractor - INFO - Extracted 3 elements from /home/dedya/UniDocParser/uploads/1b7df876-ca4a-4212-9cf5-78004a08c12e_dummy_scanned.pdf
+2025-08-28 09:53:37,630 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 40.26s
+2025-08-28 09:53:37,794 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 09:53:37,795 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.25GB peak=0.21GB total=23.59GB
+2025-08-28 09:53:37,795 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.25GB peak=0.21GB total=23.59GB
+2025-08-28 09:53:37,801 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 09:53:38,824 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.25GB peak=0.21GB total=23.59GB
+2025-08-28 09:53:38,824 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:53:38,825 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:53:38,825 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:53:47,600 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:53:47,600 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:53:47,606 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "5e11b946-0407-4525-b971-5b01beaded03", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 119, "total_tokens": 851, "time_total_s": 8.775936132995412, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 96.96971207441271, "first_token_latency_s": null}
+2025-08-28 09:53:48,172 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:53:48,173 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:53:48,235 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 09:53:48,236 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:53:48,236 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:53:48,243 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 09:53:49,166 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:53:49,166 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:53:49,168 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:53:49,169 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:02,255 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:02,256 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:02,263 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "d6b65629-8e6a-4665-ad03-1a819ef78b26", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 184, "total_tokens": 956, "time_total_s": 13.08881864999421, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 73.03944118749196, "first_token_latency_s": null}
+2025-08-28 09:54:03,043 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:03,043 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:03,053 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 09:54:03,053 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:03,054 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:03,057 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 09:54:03,681 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:03,681 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:03,682 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:03,682 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:05,675 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:05,675 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:05,677 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "a4b84641-a4da-4276-b7f0-fc48882c5626", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 534, "generated_tokens": 19, "total_tokens": 553, "time_total_s": 1.9938265850069001, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 277.35611720619437, "first_token_latency_s": null}
+2025-08-28 09:54:06,261 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:06,261 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:06,263 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 09:54:06,263 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:06,264 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:06,264 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 09:54:06,831 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:06,832 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:06,833 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:06,833 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:08,948 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:08,948 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:08,950 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "22fec226-8c33-4cf9-afa9-167ba48a1b87", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 501, "generated_tokens": 22, "total_tokens": 523, "time_total_s": 2.1164091980317608, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 247.11667313031182, "first_token_latency_s": null}
+2025-08-28 09:54:09,425 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:09,425 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:09,442 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 09:54:09,443 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:09,443 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:09,449 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 09:54:10,019 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:10,019 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:10,020 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:10,021 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:23,656 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:23,656 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:23,665 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "dc8bf5a8-3c30-461d-8afc-ad1c68c0b511", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 832, "generated_tokens": 199, "total_tokens": 1031, "time_total_s": 13.6362714440329, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 75.60717782947593, "first_token_latency_s": null}
+2025-08-28 09:54:24,151 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:24,152 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:24,166 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 09:54:24,167 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:24,167 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:24,244 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 09:54:24,900 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:24,901 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:24,902 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:24,903 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:44,548 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:44,549 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:44,559 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "8d983113-55b1-45b6-8b9e-3d90ee2275ec", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 792, "generated_tokens": 273, "total_tokens": 1065, "time_total_s": 19.647478831000626, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 54.205428042991336, "first_token_latency_s": null}
+2025-08-28 09:54:45,097 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:45,097 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:45,111 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 09:54:45,112 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:45,112 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:45,117 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 09:54:45,679 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:45,679 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:45,680 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:45,680 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:52,396 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:52,396 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:52,400 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "72f2dc28-b584-424b-9704-589a6098c240", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 812, "generated_tokens": 90, "total_tokens": 902, "time_total_s": 6.716974995099008, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 134.2866395450538, "first_token_latency_s": null}
+2025-08-28 09:54:52,975 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:52,975 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 09:54:53,025 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 75.39s
+2025-08-28 09:54:53,148 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.12s
+2025-08-28 09:54:53,149 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-28 09:54:53,149 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 118.59s
+2025-08-28 10:02:27,394 - backend.file_ingestion.file_ingest - ERROR - Error while handling /home/dedya/UniDocParser/uploads/dec6e446-6288-499b-8dad-2b6facbc8cfd_dummy_scanned1.pdf: Unable to get page count.
+Syntax Error: Document stream is empty
+Traceback (most recent call last):
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 602, in pdfinfo_from_path
+    raise ValueError
+ValueError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dedya/UniDocParser/backend/file_ingestion/file_ingest.py", line 55, in handle_file
+    return handler(p)
+           ^^^^^^^^^^
+  File "/home/dedya/UniDocParser/backend/utils/trackers.py", line 27, in sync_wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/backend/file_ingestion/handlers/pdf_handler.py", line 29, in handle
+    pil_pages = convert_from_path(
+                ^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 127, in convert_from_path
+    page_count = pdfinfo_from_path(
+                 ^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 611, in pdfinfo_from_path
+    raise PDFPageCountError(
+pdf2image.exceptions.PDFPageCountError: Unable to get page count.
+Syntax Error: Document stream is empty
+
+2025-08-28 10:02:27,397 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.02s
+2025-08-28 10:02:27,397 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/dec6e446-6288-499b-8dad-2b6facbc8cfd_dummy_scanned1.pdf
+2025-08-28 10:02:27,398 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 10:02:27,398 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/dec6e446-6288-499b-8dad-2b6facbc8cfd_dummy_scanned1.pdf
+2025-08-28 10:02:27,399 - unstructured - INFO - PDF text extraction failed, skip text extraction...
+2025-08-28 10:02:27,399 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/dec6e446-6288-499b-8dad-2b6facbc8cfd_dummy_scanned1.pdf ...
+2025-08-28 10:02:41,864 - backend.file_ingestion.file_ingest - ERROR - Error while handling /home/dedya/UniDocParser/uploads/378ad3be-d140-4188-8cb8-3b88e674e5b6_dummy_scanned2.pdf: Unable to get page count.
+Syntax Error: Document stream is empty
+Traceback (most recent call last):
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 602, in pdfinfo_from_path
+    raise ValueError
+ValueError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dedya/UniDocParser/backend/file_ingestion/file_ingest.py", line 55, in handle_file
+    return handler(p)
+           ^^^^^^^^^^
+  File "/home/dedya/UniDocParser/backend/utils/trackers.py", line 27, in sync_wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/backend/file_ingestion/handlers/pdf_handler.py", line 29, in handle
+    pil_pages = convert_from_path(
+                ^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 127, in convert_from_path
+    page_count = pdfinfo_from_path(
+                 ^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 611, in pdfinfo_from_path
+    raise PDFPageCountError(
+pdf2image.exceptions.PDFPageCountError: Unable to get page count.
+Syntax Error: Document stream is empty
+
+2025-08-28 10:02:41,867 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.02s
+2025-08-28 10:02:41,867 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/378ad3be-d140-4188-8cb8-3b88e674e5b6_dummy_scanned2.pdf
+2025-08-28 10:02:41,868 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 10:02:41,868 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/378ad3be-d140-4188-8cb8-3b88e674e5b6_dummy_scanned2.pdf
+2025-08-28 10:02:41,869 - unstructured - INFO - PDF text extraction failed, skip text extraction...
+2025-08-28 10:02:41,869 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/378ad3be-d140-4188-8cb8-3b88e674e5b6_dummy_scanned2.pdf ...
+2025-08-28 10:03:14,710 - backend.file_ingestion.file_ingest - ERROR - Error while handling /home/dedya/UniDocParser/uploads/fe380403-eec6-404a-833b-2a19b52ce50f_dummy_scanned2.pdf: Unable to get page count.
+Syntax Error: Document stream is empty
+Traceback (most recent call last):
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 602, in pdfinfo_from_path
+    raise ValueError
+ValueError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dedya/UniDocParser/backend/file_ingestion/file_ingest.py", line 55, in handle_file
+    return handler(p)
+           ^^^^^^^^^^
+  File "/home/dedya/UniDocParser/backend/utils/trackers.py", line 27, in sync_wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/backend/file_ingestion/handlers/pdf_handler.py", line 29, in handle
+    pil_pages = convert_from_path(
+                ^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 127, in convert_from_path
+    page_count = pdfinfo_from_path(
+                 ^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 611, in pdfinfo_from_path
+    raise PDFPageCountError(
+pdf2image.exceptions.PDFPageCountError: Unable to get page count.
+Syntax Error: Document stream is empty
+
+2025-08-28 10:03:14,712 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.02s
+2025-08-28 10:03:14,712 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/fe380403-eec6-404a-833b-2a19b52ce50f_dummy_scanned2.pdf
+2025-08-28 10:03:14,713 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 10:03:14,713 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/fe380403-eec6-404a-833b-2a19b52ce50f_dummy_scanned2.pdf
+2025-08-28 10:03:14,714 - unstructured - INFO - PDF text extraction failed, skip text extraction...
+2025-08-28 10:03:14,715 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/fe380403-eec6-404a-833b-2a19b52ce50f_dummy_scanned2.pdf ...
+2025-08-28 10:04:51,003 - backend.file_ingestion.file_ingest - ERROR - Error while handling /home/dedya/UniDocParser/uploads/98add96e-4b2a-4a55-9f8b-d23ce940c12c_dummy_scanned2.pdf: Unable to get page count.
+Syntax Error: Document stream is empty
+Traceback (most recent call last):
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 602, in pdfinfo_from_path
+    raise ValueError
+ValueError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dedya/UniDocParser/backend/file_ingestion/file_ingest.py", line 55, in handle_file
+    return handler(p)
+           ^^^^^^^^^^
+  File "/home/dedya/UniDocParser/backend/utils/trackers.py", line 27, in sync_wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/backend/file_ingestion/handlers/pdf_handler.py", line 29, in handle
+    pil_pages = convert_from_path(
+                ^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 127, in convert_from_path
+    page_count = pdfinfo_from_path(
+                 ^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 611, in pdfinfo_from_path
+    raise PDFPageCountError(
+pdf2image.exceptions.PDFPageCountError: Unable to get page count.
+Syntax Error: Document stream is empty
+
+2025-08-28 10:04:51,005 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.09s
+2025-08-28 10:04:51,006 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/98add96e-4b2a-4a55-9f8b-d23ce940c12c_dummy_scanned2.pdf
+2025-08-28 10:04:51,006 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 10:04:51,006 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/98add96e-4b2a-4a55-9f8b-d23ce940c12c_dummy_scanned2.pdf
+2025-08-28 10:04:51,007 - unstructured - INFO - PDF text extraction failed, skip text extraction...
+2025-08-28 10:04:51,008 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/98add96e-4b2a-4a55-9f8b-d23ce940c12c_dummy_scanned2.pdf ...
+2025-08-28 10:07:27,095 - backend.file_ingestion.file_ingest - ERROR - Error while handling /home/dedya/UniDocParser/uploads/858470a2-8ba5-45c0-bad3-662f5a1e8065_dummy_scanned1.pdf: Unable to get page count.
+Syntax Error: Document stream is empty
+Traceback (most recent call last):
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 602, in pdfinfo_from_path
+    raise ValueError
+ValueError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dedya/UniDocParser/backend/file_ingestion/file_ingest.py", line 55, in handle_file
+    return handler(p)
+           ^^^^^^^^^^
+  File "/home/dedya/UniDocParser/backend/utils/trackers.py", line 27, in sync_wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/backend/file_ingestion/handlers/pdf_handler.py", line 29, in handle
+    pil_pages = convert_from_path(
+                ^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 127, in convert_from_path
+    page_count = pdfinfo_from_path(
+                 ^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 611, in pdfinfo_from_path
+    raise PDFPageCountError(
+pdf2image.exceptions.PDFPageCountError: Unable to get page count.
+Syntax Error: Document stream is empty
+
+2025-08-28 10:07:27,097 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.02s
+2025-08-28 10:07:27,097 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/858470a2-8ba5-45c0-bad3-662f5a1e8065_dummy_scanned1.pdf
+2025-08-28 10:07:27,097 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 10:07:27,097 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/858470a2-8ba5-45c0-bad3-662f5a1e8065_dummy_scanned1.pdf
+2025-08-28 10:07:27,098 - unstructured - INFO - PDF text extraction failed, skip text extraction...
+2025-08-28 10:07:27,099 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/858470a2-8ba5-45c0-bad3-662f5a1e8065_dummy_scanned1.pdf ...
+2025-08-28 10:11:55,257 - backend.file_ingestion.file_ingest - ERROR - Error while handling /home/dedya/UniDocParser/uploads/35fe99f3-39ca-40e6-91f9-992ac0c38796_dummy_scanned1.pdf: Unable to get page count.
+Syntax Error: Document stream is empty
+Traceback (most recent call last):
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 602, in pdfinfo_from_path
+    raise ValueError
+ValueError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dedya/UniDocParser/backend/file_ingestion/file_ingest.py", line 55, in handle_file
+    return handler(p)
+           ^^^^^^^^^^
+  File "/home/dedya/UniDocParser/backend/utils/trackers.py", line 27, in sync_wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/backend/file_ingestion/handlers/pdf_handler.py", line 29, in handle
+    pil_pages = convert_from_path(
+                ^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 127, in convert_from_path
+    page_count = pdfinfo_from_path(
+                 ^^^^^^^^^^^^^^^^^^
+  File "/home/dedya/UniDocParser/.venv/lib/python3.11/site-packages/pdf2image/pdf2image.py", line 611, in pdfinfo_from_path
+    raise PDFPageCountError(
+pdf2image.exceptions.PDFPageCountError: Unable to get page count.
+Syntax Error: Document stream is empty
+
+2025-08-28 10:11:55,259 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.02s
+2025-08-28 10:11:55,260 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/35fe99f3-39ca-40e6-91f9-992ac0c38796_dummy_scanned1.pdf
+2025-08-28 10:11:55,260 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 10:11:55,260 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/35fe99f3-39ca-40e6-91f9-992ac0c38796_dummy_scanned1.pdf
+2025-08-28 10:11:55,262 - unstructured - INFO - PDF text extraction failed, skip text extraction...
+2025-08-28 10:11:55,262 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/35fe99f3-39ca-40e6-91f9-992ac0c38796_dummy_scanned1.pdf ...
+2025-08-28 10:15:44,341 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-28 10:15:44,341 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 1.2650 seconds.
+2025-08-28 10:15:44,342 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.27s
+2025-08-28 10:15:44,342 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/8a2bb9a2-c3a5-4704-8320-ac2b6dca91ef_dummy_scanned1.pdf
+2025-08-28 10:15:44,343 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 10:15:44,343 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/8a2bb9a2-c3a5-4704-8320-ac2b6dca91ef_dummy_scanned1.pdf
+2025-08-28 10:15:44,483 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/8a2bb9a2-c3a5-4704-8320-ac2b6dca91ef_dummy_scanned1.pdf ...
+2025-08-28 10:15:56,488 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-28 10:15:56,496 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-28 10:15:56,499 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-28 10:15:56,499 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-28 10:15:56,503 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-28 10:15:56,514 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-28 10:15:56,515 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-28 10:15:56,532 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/8a2bb9a2-c3a5-4704-8320-ac2b6dca91ef_dummy_scanned1.pdf
+2025-08-28 10:15:56,623 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 12.28s
+2025-08-28 10:15:56,663 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 10:15:56,664 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:15:56,664 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:15:56,670 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 10:15:57,300 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:15:57,301 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:15:57,302 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:15:57,303 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:16:05,948 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:16:05,949 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:16:05,954 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "07bb6484-ac66-47e1-9c3d-e80ea165e183", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 128, "total_tokens": 860, "time_total_s": 8.647586815990508, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 99.44970987856966, "first_token_latency_s": null}
+2025-08-28 10:16:06,628 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:16:06,628 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:16:06,691 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 10:16:06,692 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:16:06,693 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:16:06,701 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 10:16:07,250 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:16:07,250 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:16:07,251 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:16:07,252 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:16:17,925 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:16:17,926 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:16:17,932 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "f1909c4d-ac5f-427e-908d-6f305097e88e", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 159, "total_tokens": 931, "time_total_s": 10.675103005953133, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 87.21227321936038, "first_token_latency_s": null}
+2025-08-28 10:16:18,620 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:16:18,621 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:16:18,624 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 22.00s
+2025-08-28 10:16:18,628 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-28 10:16:18,628 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-28 10:16:18,628 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 35.55s
+2025-08-28 10:20:58,612 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 2
+2025-08-28 10:20:58,613 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 2.2158 seconds.
+2025-08-28 10:20:58,613 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.22s
+2025-08-28 10:20:58,614 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/2108c66b-6ee3-4813-b246-9d0625f677ff_dummy_scanned2.pdf
+2025-08-28 10:20:58,614 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 10:20:58,614 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/2108c66b-6ee3-4813-b246-9d0625f677ff_dummy_scanned2.pdf
+2025-08-28 10:20:58,734 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/2108c66b-6ee3-4813-b246-9d0625f677ff_dummy_scanned2.pdf ...
+2025-08-28 10:21:20,777 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-28 10:21:20,785 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-28 10:21:20,787 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-28 10:21:20,787 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-28 10:21:20,792 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-28 10:21:20,803 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-28 10:21:20,803 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-28 10:21:20,891 - unstructured - WARNING - short text: "foes ELSEVIE)". Defaulting to English.
+2025-08-28 10:21:20,899 - unstructured - WARNING - short text: "journal homepage: www.elsevier.com/locate/cirpj". Defaulting to English.
+2025-08-28 10:21:20,904 - unstructured - WARNING - short text: "Check for tie". Defaulting to English.
+2025-08-28 10:21:20,917 - unstructured - WARNING - short text: ">". Defaulting to English.
+2025-08-28 10:21:20,924 - unstructured - WARNING - short text: "ARTICLE INFO". Defaulting to English.
+2025-08-28 10:21:20,924 - unstructured - WARNING - short text: "ABSTRACT". Defaulting to English.
+2025-08-28 10:21:20,933 - unstructured - WARNING - short text: "1. Introduction". Defaulting to English.
+2025-08-28 10:21:20,940 - unstructured - WARNING - short text: "* Corresponding author.". Defaulting to English.
+2025-08-28 10:21:20,953 - unstructured - WARNING - short text: "https://doi.org/10.1016/j.cirpj.2023.11.003". Defaulting to English.
+2025-08-28 10:21:20,961 - backend.extraction.services.element_extractor - INFO - Extracted 2 elements from /home/dedya/UniDocParser/uploads/2108c66b-6ee3-4813-b246-9d0625f677ff_dummy_scanned2.pdf
+2025-08-28 10:21:20,987 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 22.37s
+2025-08-28 10:21:21,136 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 10:21:21,137 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:21,138 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:21,145 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 10:21:21,870 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:21,870 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:21,872 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:21,872 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:30,511 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:30,511 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:30,517 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "92dc0ca8-52ab-4fb9-9140-a963cc2bbd3c", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 125, "total_tokens": 857, "time_total_s": 8.640454643056728, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 99.18459564956639, "first_token_latency_s": null}
+2025-08-28 10:21:31,001 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:31,001 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:31,120 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 10:21:31,121 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:31,121 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:31,128 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 10:21:31,605 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:31,606 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:31,674 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:31,675 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:44,145 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:44,145 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:44,152 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "59983551-a0fc-4acb-bbfd-372c7a2e984b", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 184, "total_tokens": 956, "time_total_s": 12.471523349988274, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 76.65462936417457, "first_token_latency_s": null}
+2025-08-28 10:21:44,736 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:44,736 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:44,745 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 10:21:44,745 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:44,746 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:44,747 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 10:21:45,484 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:45,484 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:45,485 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:45,486 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:47,660 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:47,661 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:47,662 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "0f7da15f-7eb7-4506-b72a-299c46661ba3", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 534, "generated_tokens": 19, "total_tokens": 553, "time_total_s": 2.176327881985344, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 254.09774169484453, "first_token_latency_s": null}
+2025-08-28 10:21:48,225 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:48,225 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:48,227 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 10:21:48,228 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:48,228 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:48,229 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 10:21:48,810 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:48,811 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:48,811 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:48,812 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:52,129 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:52,129 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:52,133 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "3a551c10-b903-4a8e-8386-c093d5cbfaab", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 501, "generated_tokens": 41, "total_tokens": 542, "time_total_s": 3.318369011976756, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 163.33325137855297, "first_token_latency_s": null}
+2025-08-28 10:21:52,604 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:52,604 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:21:52,690 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 31.70s
+2025-08-28 10:21:52,699 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-08-28 10:21:52,699 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-28 10:21:52,700 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 56.30s
+2025-08-28 10:44:38,137 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-28 10:44:38,137 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 1.2173 seconds.
+2025-08-28 10:44:38,138 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.22s
+2025-08-28 10:44:38,138 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/510db7f2-03ce-4d8c-a828-63ced1e26661_dummy_scanned1.pdf
+2025-08-28 10:44:38,139 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 10:44:38,139 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/510db7f2-03ce-4d8c-a828-63ced1e26661_dummy_scanned1.pdf
+2025-08-28 10:44:38,166 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/510db7f2-03ce-4d8c-a828-63ced1e26661_dummy_scanned1.pdf ...
+2025-08-28 10:44:50,088 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-28 10:44:50,095 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-28 10:44:50,097 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-28 10:44:50,097 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-28 10:44:50,101 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-28 10:44:50,111 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-28 10:44:50,111 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-28 10:44:50,126 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/510db7f2-03ce-4d8c-a828-63ced1e26661_dummy_scanned1.pdf
+2025-08-28 10:44:50,148 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 12.01s
+2025-08-28 10:44:50,257 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 10:44:50,258 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:44:50,258 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:44:50,263 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 10:44:51,051 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:44:51,051 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:44:51,052 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:44:51,052 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:44:59,196 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:44:59,196 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:44:59,201 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "f2ecb823-4770-451b-a624-235e210ad2ff", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 117, "total_tokens": 849, "time_total_s": 8.145037458045408, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 104.23524807260216, "first_token_latency_s": null}
+2025-08-28 10:44:59,879 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:44:59,879 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:44:59,930 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 10:44:59,930 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:44:59,931 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:44:59,937 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 10:45:00,570 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:45:00,570 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:45:00,571 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:45:00,572 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:45:13,137 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:45:13,137 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:45:13,212 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "f91ad0dd-fd4a-4967-9f9b-5fcb2c0099fb", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 191, "total_tokens": 963, "time_total_s": 12.566800613887608, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 76.63048293579082, "first_token_latency_s": null}
+2025-08-28 10:45:13,706 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:45:13,706 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:45:13,710 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 23.56s
+2025-08-28 10:45:13,714 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-28 10:45:13,714 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-28 10:45:13,715 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 36.80s
+2025-08-28 10:45:39,041 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-28 10:45:39,042 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 1.8194 seconds.
+2025-08-28 10:45:39,043 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.82s
+2025-08-28 10:45:39,043 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/29a2bf96-6818-4098-a132-63bf95443c1d_dummy_scanned1.pdf
+2025-08-28 10:45:39,044 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 10:45:39,044 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/29a2bf96-6818-4098-a132-63bf95443c1d_dummy_scanned1.pdf
+2025-08-28 10:45:39,183 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/29a2bf96-6818-4098-a132-63bf95443c1d_dummy_scanned1.pdf ...
+2025-08-28 10:45:50,941 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-28 10:45:50,948 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-28 10:45:50,950 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-28 10:45:50,950 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-28 10:45:50,954 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-28 10:45:50,964 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-28 10:45:50,964 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-28 10:45:50,979 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/29a2bf96-6818-4098-a132-63bf95443c1d_dummy_scanned1.pdf
+2025-08-28 10:45:51,001 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 11.96s
+2025-08-28 10:45:51,107 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 10:45:51,108 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:45:51,109 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:45:51,114 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 10:45:52,168 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:45:52,168 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:45:52,169 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:45:52,169 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:46:01,031 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:46:01,031 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:46:01,149 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "e4cf2c56-04cd-46ad-b0d7-2a34ad33c6f9", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 120, "total_tokens": 852, "time_total_s": 8.863048502942547, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 96.12945249223611, "first_token_latency_s": null}
+2025-08-28 10:46:01,953 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:46:01,954 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:46:02,008 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 10:46:02,008 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:46:02,009 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:46:02,018 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 10:46:03,111 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:46:03,111 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:46:03,113 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:46:03,113 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:46:16,061 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:46:16,061 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:46:16,068 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "c634c1c6-3bb7-42db-b506-fd8ec982328a", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 190, "total_tokens": 962, "time_total_s": 12.949387126951478, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 74.28923010555421, "first_token_latency_s": null}
+2025-08-28 10:46:16,665 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:46:16,665 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 10:46:16,668 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 25.67s
+2025-08-28 10:46:16,672 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-28 10:46:16,672 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-28 10:46:16,673 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 39.45s
+2025-08-28 12:14:06,330 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-28 12:14:06,331 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 1.1960 seconds.
+2025-08-28 12:14:06,331 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.20s
+2025-08-28 12:14:06,332 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/3276375e-13ca-4dc6-91f6-f98b33240b04_dummy_scanned1.pdf
+2025-08-28 12:14:06,332 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 12:14:06,332 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/3276375e-13ca-4dc6-91f6-f98b33240b04_dummy_scanned1.pdf
+2025-08-28 12:14:06,363 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/3276375e-13ca-4dc6-91f6-f98b33240b04_dummy_scanned1.pdf ...
+2025-08-28 12:14:17,280 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-28 12:14:17,288 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-28 12:14:17,290 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-28 12:14:17,291 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-28 12:14:17,294 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-28 12:14:17,304 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-28 12:14:17,304 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-28 12:14:17,319 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/3276375e-13ca-4dc6-91f6-f98b33240b04_dummy_scanned1.pdf
+2025-08-28 12:14:17,342 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 11.01s
+2025-08-28 12:14:17,490 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:14:17,491 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:17,492 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:17,497 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:14:18,503 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:18,503 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:18,504 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:18,505 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:27,317 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:27,318 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:27,324 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "291616dd-8cd4-4d10-b848-2b2b38f70647", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 120, "total_tokens": 852, "time_total_s": 8.81419319298584, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 96.66227882070984, "first_token_latency_s": null}
+2025-08-28 12:14:28,080 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:28,080 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:28,132 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:14:28,133 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:28,133 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:28,139 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:14:28,901 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:28,902 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:28,902 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:28,903 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:43,152 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:43,152 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:43,160 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "0e811773-0b05-4c03-8cba-e6fb8c92cbe6", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 197, "total_tokens": 969, "time_total_s": 14.250255480990745, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 67.99878088449755, "first_token_latency_s": null}
+2025-08-28 12:14:43,806 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:43,807 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:14:43,810 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 26.47s
+2025-08-28 12:14:43,813 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-28 12:14:43,814 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-28 12:14:43,815 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 38.68s
+2025-08-28 12:15:18,791 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 3
+2025-08-28 12:15:18,791 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 2.9473 seconds.
+2025-08-28 12:15:18,792 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.95s
+2025-08-28 12:15:18,793 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/f8bfd3b8-d58f-48d5-8fa6-5f004835bbb0_dummy_scanned.pdf
+2025-08-28 12:15:18,793 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 12:15:18,793 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/f8bfd3b8-d58f-48d5-8fa6-5f004835bbb0_dummy_scanned.pdf
+2025-08-28 12:15:18,916 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/f8bfd3b8-d58f-48d5-8fa6-5f004835bbb0_dummy_scanned.pdf ...
+2025-08-28 12:15:53,446 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-28 12:15:53,453 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-28 12:15:53,455 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-28 12:15:53,455 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-28 12:15:53,458 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-28 12:15:53,468 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-28 12:15:53,468 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-28 12:15:53,484 - unstructured - WARNING - short text: "foes ELSEVIE)". Defaulting to English.
+2025-08-28 12:15:53,492 - unstructured - WARNING - short text: "journal homepage: www.elsevier.com/locate/cirpj". Defaulting to English.
+2025-08-28 12:15:53,496 - unstructured - WARNING - short text: "Check for tie". Defaulting to English.
+2025-08-28 12:15:53,509 - unstructured - WARNING - short text: ">". Defaulting to English.
+2025-08-28 12:15:53,515 - unstructured - WARNING - short text: "ARTICLE INFO". Defaulting to English.
+2025-08-28 12:15:53,515 - unstructured - WARNING - short text: "ABSTRACT". Defaulting to English.
+2025-08-28 12:15:53,524 - unstructured - WARNING - short text: "1. Introduction". Defaulting to English.
+2025-08-28 12:15:53,532 - unstructured - WARNING - short text: "* Corresponding author.". Defaulting to English.
+2025-08-28 12:15:53,619 - unstructured - WARNING - short text: "https://doi.org/10.1016/j.cirpj.2023.11.003". Defaulting to English.
+2025-08-28 12:15:53,624 - unstructured - WARNING - short text: "D. Ariansyah et al.". Defaulting to English.
+2025-08-28 12:15:53,661 - unstructured - WARNING - short text: "Table 6". Defaulting to English.
+2025-08-28 12:15:53,673 - unstructured - WARNING - short text: "25". Defaulting to English.
+2025-08-28 12:15:53,679 - unstructured - WARNING - short text: "5. Discussion". Defaulting to English.
+2025-08-28 12:15:53,687 - unstructured - WARNING - No features in text.
+2025-08-28 12:15:53,687 - unstructured - WARNING - short text: "Success rate". Defaulting to English.
+2025-08-28 12:15:53,694 - backend.extraction.services.element_extractor - INFO - Extracted 3 elements from /home/dedya/UniDocParser/uploads/f8bfd3b8-d58f-48d5-8fa6-5f004835bbb0_dummy_scanned.pdf
+2025-08-28 12:15:53,846 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 35.05s
+2025-08-28 12:15:54,017 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:15:54,017 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.27GB peak=0.22GB total=23.59GB
+2025-08-28 12:15:54,018 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.27GB peak=0.22GB total=23.59GB
+2025-08-28 12:15:54,023 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:15:54,874 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.27GB peak=0.22GB total=23.59GB
+2025-08-28 12:15:54,874 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:15:54,875 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:15:54,876 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:02,299 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:02,299 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:02,304 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "68bf2f37-ddcb-4e16-9931-5b17e8b46dea", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 108, "total_tokens": 840, "time_total_s": 7.425136581994593, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 113.12923213250217, "first_token_latency_s": null}
+2025-08-28 12:16:02,922 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:02,922 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:03,126 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:16:03,127 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:03,127 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:03,137 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:16:03,871 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:03,872 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:03,873 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:03,873 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:18,643 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:18,643 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:18,650 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "6a0321f9-6f87-49f7-acd7-281c825679a7", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 178, "total_tokens": 950, "time_total_s": 14.77142563695088, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 64.31335900466945, "first_token_latency_s": null}
+2025-08-28 12:16:19,425 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:19,426 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:19,434 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:16:19,435 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:19,436 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:19,437 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:16:20,330 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:20,330 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:20,332 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:20,334 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:22,669 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:22,670 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:22,672 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "69bdba97-b2a3-42cb-98f6-744bb5538e92", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 534, "generated_tokens": 21, "total_tokens": 555, "time_total_s": 2.339081368991174, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 237.27263504277616, "first_token_latency_s": null}
+2025-08-28 12:16:23,310 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:23,310 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:23,312 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:16:23,313 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:23,313 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:23,314 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:16:24,110 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:24,110 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:24,111 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:24,112 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:27,863 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:27,864 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:27,867 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "2031f144-7d7d-42e1-911f-70a5954dfd7c", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 501, "generated_tokens": 48, "total_tokens": 549, "time_total_s": 3.7532366738887504, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 146.27374922007726, "first_token_latency_s": null}
+2025-08-28 12:16:28,588 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:28,588 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:28,610 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:16:28,611 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:28,611 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:28,617 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:16:29,453 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:29,454 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:29,456 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:29,458 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:39,156 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:39,157 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:39,162 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "a3f6f5aa-7324-4aea-b27d-712b07f943ad", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 832, "generated_tokens": 133, "total_tokens": 965, "time_total_s": 9.702609781990759, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 99.45777699842769, "first_token_latency_s": null}
+2025-08-28 12:16:39,956 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:39,957 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:39,972 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:16:39,973 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:39,973 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:39,978 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:16:40,776 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:40,776 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:40,778 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:16:40,779 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:17:06,528 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:17:06,529 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:17:06,542 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "3a167931-69c7-4591-bdfb-ac2a8062fac6", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 792, "generated_tokens": 372, "total_tokens": 1164, "time_total_s": 25.752149156993255, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 45.200110985063326, "first_token_latency_s": null}
+2025-08-28 12:17:07,266 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:17:07,266 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:17:07,288 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:17:07,289 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:17:07,290 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:17:07,296 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:17:08,122 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:17:08,123 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:17:08,124 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:17:08,124 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:17:15,088 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:17:15,088 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:17:15,092 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "b4e93f19-281d-4695-952d-2525f37cac1e", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 812, "generated_tokens": 96, "total_tokens": 908, "time_total_s": 6.9650603759801015, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 130.36498622917236, "first_token_latency_s": null}
+2025-08-28 12:17:15,923 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:17:15,923 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:17:15,979 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 82.13s
+2025-08-28 12:17:16,102 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.12s
+2025-08-28 12:17:16,103 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-28 12:17:16,103 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 120.26s
+2025-08-28 12:32:09,887 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-28 12:32:09,887 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 1.2828 seconds.
+2025-08-28 12:32:09,888 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.28s
+2025-08-28 12:32:09,888 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/eecfff36-6d1c-41b4-92c1-da7363ba2075_dummy_scanned1.pdf
+2025-08-28 12:32:09,889 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 12:32:09,889 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/eecfff36-6d1c-41b4-92c1-da7363ba2075_dummy_scanned1.pdf
+2025-08-28 12:32:09,985 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/eecfff36-6d1c-41b4-92c1-da7363ba2075_dummy_scanned1.pdf ...
+2025-08-28 12:32:23,598 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-28 12:32:23,607 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-28 12:32:23,610 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-28 12:32:23,610 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-28 12:32:23,614 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-28 12:32:23,625 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-28 12:32:23,625 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-28 12:32:23,754 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/eecfff36-6d1c-41b4-92c1-da7363ba2075_dummy_scanned1.pdf
+2025-08-28 12:32:23,780 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 13.89s
+2025-08-28 12:32:23,817 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:32:23,818 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:23,819 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:23,824 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:32:25,130 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:25,130 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:25,131 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:25,131 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:35,544 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:35,544 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:35,550 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "dacf60da-aafe-4920-a4fb-0c0de1ae9b40", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 117, "total_tokens": 849, "time_total_s": 10.414017188013531, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 81.52473581253483, "first_token_latency_s": null}
+2025-08-28 12:32:36,189 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:36,189 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:36,378 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:32:36,379 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:36,380 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:36,387 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:32:37,307 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:37,307 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:37,308 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:37,309 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:52,057 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:52,057 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:52,064 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "5206320a-32bd-4b3f-8d1d-3547a97e5e7b", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 182, "total_tokens": 954, "time_total_s": 14.749665739946067, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 64.67943184748323, "first_token_latency_s": null}
+2025-08-28 12:32:53,002 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:53,003 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:32:53,007 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 29.23s
+2025-08-28 12:32:53,011 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-28 12:32:53,011 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-28 12:32:53,012 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 44.41s
+2025-08-28 12:40:08,385 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 3
+2025-08-28 12:40:08,385 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 2.5287 seconds.
+2025-08-28 12:40:08,386 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.53s
+2025-08-28 12:40:08,387 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/a8af4f47-9b50-456a-a085-78ca865cd4a5_dummy_scanned.pdf
+2025-08-28 12:40:08,388 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 12:40:08,388 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/a8af4f47-9b50-456a-a085-78ca865cd4a5_dummy_scanned.pdf
+2025-08-28 12:40:08,438 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/a8af4f47-9b50-456a-a085-78ca865cd4a5_dummy_scanned.pdf ...
+2025-08-28 12:40:45,284 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-28 12:40:45,291 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-28 12:40:45,294 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-28 12:40:45,294 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-28 12:40:45,298 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-28 12:40:45,308 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-28 12:40:45,309 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-28 12:40:45,327 - unstructured - WARNING - short text: "foes ELSEVIE)". Defaulting to English.
+2025-08-28 12:40:45,336 - unstructured - WARNING - short text: "journal homepage: www.elsevier.com/locate/cirpj". Defaulting to English.
+2025-08-28 12:40:45,340 - unstructured - WARNING - short text: "Check for tie". Defaulting to English.
+2025-08-28 12:40:45,422 - unstructured - WARNING - short text: ">". Defaulting to English.
+2025-08-28 12:40:45,429 - unstructured - WARNING - short text: "ARTICLE INFO". Defaulting to English.
+2025-08-28 12:40:45,429 - unstructured - WARNING - short text: "ABSTRACT". Defaulting to English.
+2025-08-28 12:40:45,439 - unstructured - WARNING - short text: "1. Introduction". Defaulting to English.
+2025-08-28 12:40:45,446 - unstructured - WARNING - short text: "* Corresponding author.". Defaulting to English.
+2025-08-28 12:40:45,462 - unstructured - WARNING - short text: "https://doi.org/10.1016/j.cirpj.2023.11.003". Defaulting to English.
+2025-08-28 12:40:45,468 - unstructured - WARNING - short text: "D. Ariansyah et al.". Defaulting to English.
+2025-08-28 12:40:45,508 - unstructured - WARNING - short text: "Table 6". Defaulting to English.
+2025-08-28 12:40:45,521 - unstructured - WARNING - short text: "25". Defaulting to English.
+2025-08-28 12:40:45,527 - unstructured - WARNING - short text: "5. Discussion". Defaulting to English.
+2025-08-28 12:40:45,536 - unstructured - WARNING - No features in text.
+2025-08-28 12:40:45,537 - unstructured - WARNING - short text: "Success rate". Defaulting to English.
+2025-08-28 12:40:45,613 - backend.extraction.services.element_extractor - INFO - Extracted 3 elements from /home/dedya/UniDocParser/uploads/a8af4f47-9b50-456a-a085-78ca865cd4a5_dummy_scanned.pdf
+2025-08-28 12:40:45,705 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 37.32s
+2025-08-28 12:40:45,909 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:40:45,910 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.27GB peak=0.22GB total=23.59GB
+2025-08-28 12:40:45,911 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.27GB peak=0.22GB total=23.59GB
+2025-08-28 12:40:45,917 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:40:46,895 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.27GB peak=0.22GB total=23.59GB
+2025-08-28 12:40:46,896 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:40:46,897 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:40:46,897 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:40:56,532 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:40:56,532 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:40:56,608 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "b4c90bd5-6d4e-477b-af77-f5f78319d80b", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 128, "total_tokens": 860, "time_total_s": 9.636186660034582, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 89.24692208036926, "first_token_latency_s": null}
+2025-08-28 12:40:57,224 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:40:57,224 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:40:57,277 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:40:57,277 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:40:57,278 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:40:57,284 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:40:58,180 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:40:58,180 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:40:58,182 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:40:58,184 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:12,543 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:12,544 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:12,552 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "00bdd47d-43de-497d-bd04-7be27eed3995", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 207, "total_tokens": 979, "time_total_s": 14.363281863043085, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 68.15991006338044, "first_token_latency_s": null}
+2025-08-28 12:41:13,216 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:13,216 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:13,293 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:41:13,294 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:13,295 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:13,296 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:41:14,162 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:14,162 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:14,163 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:14,164 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:16,732 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:16,733 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:16,735 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "fcdeb17a-03b3-4821-9b14-f5aebf664df8", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 534, "generated_tokens": 20, "total_tokens": 554, "time_total_s": 2.57058424805291, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 215.51520842766678, "first_token_latency_s": null}
+2025-08-28 12:41:17,449 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:17,450 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:17,451 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:41:17,451 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:17,452 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:17,452 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:41:18,104 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:18,104 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:18,105 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:18,105 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:20,763 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:20,763 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:20,766 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "55cad527-0706-43b4-a192-c039608ef991", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 501, "generated_tokens": 29, "total_tokens": 530, "time_total_s": 2.659252305980772, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 199.304142298949, "first_token_latency_s": null}
+2025-08-28 12:41:21,433 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:21,433 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:21,449 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:41:21,456 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:21,457 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:21,538 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:41:22,338 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:22,338 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:22,339 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:22,340 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:50,826 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:50,826 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:50,838 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "d2d86755-f905-47d2-ab6e-43c87dc7fd2d", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 832, "generated_tokens": 331, "total_tokens": 1163, "time_total_s": 28.488015741924755, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 40.82418412485135, "first_token_latency_s": null}
+2025-08-28 12:41:51,864 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:51,864 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:51,878 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:41:51,879 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:51,880 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:51,885 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:41:53,061 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:53,061 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:53,062 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:41:53,063 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:42:02,618 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:42:02,618 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:42:02,623 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "60a3e14e-4681-48a2-9079-1ff83d9439b6", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 792, "generated_tokens": 130, "total_tokens": 922, "time_total_s": 9.556812766939402, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 96.47567891981139, "first_token_latency_s": null}
+2025-08-28 12:42:03,248 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:42:03,248 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:42:03,261 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 12:42:03,261 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:42:03,262 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:42:03,266 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 12:42:04,169 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:42:04,169 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:42:04,170 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:42:04,170 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:42:11,122 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:42:11,122 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:42:11,194 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "8d949b06-7e94-4356-a7e9-f557dcc4064f", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 812, "generated_tokens": 95, "total_tokens": 907, "time_total_s": 6.952934168977663, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 130.44852402699541, "first_token_latency_s": null}
+2025-08-28 12:42:11,797 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:42:11,797 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 12:42:11,857 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 86.15s
+2025-08-28 12:42:11,869 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.01s
+2025-08-28 12:42:11,869 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-28 12:42:11,870 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 126.01s
+2025-08-28 13:23:14,694 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-28 13:23:14,706 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 1.4193 seconds.
+2025-08-28 13:23:14,706 - backend.pipeline.doc_parser_pipeline - INFO - Split took 1.42s
+2025-08-28 13:23:14,707 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/21926635-83ad-435f-abee-bd0afb0781e0_dummy_scanned1.pdf
+2025-08-28 13:23:14,707 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 13:23:14,707 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/21926635-83ad-435f-abee-bd0afb0781e0_dummy_scanned1.pdf
+2025-08-28 13:23:14,742 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/21926635-83ad-435f-abee-bd0afb0781e0_dummy_scanned1.pdf ...
+2025-08-28 13:23:26,238 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-28 13:23:26,246 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-28 13:23:26,249 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-28 13:23:26,249 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-28 13:23:26,253 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-28 13:23:26,265 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-28 13:23:26,265 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-28 13:23:26,283 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/21926635-83ad-435f-abee-bd0afb0781e0_dummy_scanned1.pdf
+2025-08-28 13:23:26,304 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 11.60s
+2025-08-28 13:23:26,405 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 13:23:26,406 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:26,407 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:26,412 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 13:23:27,192 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:27,192 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:27,194 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:27,194 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:35,493 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:35,494 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:35,499 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "9b61255c-41db-43a5-bf6a-d67cc5f7f3d5", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 119, "total_tokens": 851, "time_total_s": 8.301002780091949, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 102.5177346092364, "first_token_latency_s": null}
+2025-08-28 13:23:36,115 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:36,115 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:36,236 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 13:23:36,237 - backend.utils.vram - INFO - [vram:before-build] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:36,238 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:36,244 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 13:23:36,887 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:36,887 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:36,888 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:36,888 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:48,677 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:48,677 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:48,684 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "235545b5-0b43-4cbf-8f32-f76b1f4bbf3d", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 177, "total_tokens": 949, "time_total_s": 11.790049811010249, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 80.49160225886132, "first_token_latency_s": null}
+2025-08-28 13:23:49,293 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:49,293 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.12GB reserved=0.16GB peak=0.12GB total=23.59GB
+2025-08-28 13:23:49,296 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 22.99s
+2025-08-28 13:23:49,366 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.07s
+2025-08-28 13:23:49,367 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-28 13:23:49,367 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 36.08s
+2025-08-28 21:56:52,511 - backend.main - INFO - FastAPI application created and configured.
+2025-08-28 21:56:52,512 - backend.main - INFO - Application startup begins...
+2025-08-28 21:56:52,512 - backend.main - INFO - Application startup complete.
+2025-08-28 21:57:30,974 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-28 21:57:30,974 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 2.3617 seconds.
+2025-08-28 21:57:30,975 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.50s
+2025-08-28 21:57:30,976 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/fd353382-2d3d-4c12-9130-3e1d33315988_dummy_scanned1.pdf
+2025-08-28 21:57:30,976 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 21:57:38,656 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/fd353382-2d3d-4c12-9130-3e1d33315988_dummy_scanned1.pdf
+2025-08-28 21:57:41,997 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/fd353382-2d3d-4c12-9130-3e1d33315988_dummy_scanned1.pdf ...
+2025-08-28 21:57:58,669 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-28 21:57:59,043 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-28 21:58:00,029 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-28 21:58:00,413 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-28 21:58:00,424 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-28 21:58:02,621 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-28 21:58:06,297 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-28 21:58:06,299 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-28 21:58:06,299 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-28 21:58:06,303 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-28 21:58:06,312 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-28 21:58:06,312 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-28 21:58:06,327 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/fd353382-2d3d-4c12-9130-3e1d33315988_dummy_scanned1.pdf
+2025-08-28 21:58:06,352 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 35.38s
+2025-08-28 21:58:06,533 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 21:58:06,537 - backend.utils.vram - INFO - [vram:before-build] alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-08-28 21:58:06,538 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-08-28 21:58:06,544 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 21:58:08,094 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-08-28 21:58:08,094 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 21:58:08,096 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 21:58:08,096 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 21:58:30,279 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 21:58:30,279 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 21:58:30,287 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "67cfbe26-f679-4024-afc8-d9aaa32be82f", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 117, "total_tokens": 849, "time_total_s": 22.184604212990962, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 38.26978348808399, "first_token_latency_s": null}
+2025-08-28 21:58:31,455 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 21:58:31,455 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 21:58:31,646 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 21:58:31,647 - backend.utils.vram - INFO - [vram:before-build] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 21:58:31,647 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 21:58:31,654 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 21:58:33,201 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 21:58:33,201 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 21:58:33,202 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 21:58:33,203 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 21:59:02,434 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 21:59:02,435 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 21:59:02,444 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "ab75085c-27a1-49f8-81ca-0177028654f8", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 188, "total_tokens": 960, "time_total_s": 29.233107974985614, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 32.83947778735875, "first_token_latency_s": null}
+2025-08-28 21:59:03,941 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 21:59:03,941 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 21:59:03,944 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 57.59s
+2025-08-28 21:59:03,948 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-28 21:59:03,948 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-28 21:59:03,951 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 95.48s
+2025-08-28 22:13:33,960 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-28 22:13:33,960 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 2.7272 seconds.
+2025-08-28 22:13:33,961 - backend.pipeline.doc_parser_pipeline - INFO - Split took 2.73s
+2025-08-28 22:13:33,962 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/e4af37e0-e2ea-4f17-bc37-dcf37958a577_dummy_scanned1.pdf
+2025-08-28 22:13:33,962 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-28 22:13:33,962 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/e4af37e0-e2ea-4f17-bc37-dcf37958a577_dummy_scanned1.pdf
+2025-08-28 22:13:33,991 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/e4af37e0-e2ea-4f17-bc37-dcf37958a577_dummy_scanned1.pdf ...
+2025-08-28 22:13:50,870 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-28 22:13:50,879 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-28 22:13:50,882 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-28 22:13:50,882 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-28 22:13:50,896 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-28 22:13:51,051 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-28 22:13:51,051 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-28 22:13:51,071 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/e4af37e0-e2ea-4f17-bc37-dcf37958a577_dummy_scanned1.pdf
+2025-08-28 22:13:51,094 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 17.13s
+2025-08-28 22:13:51,270 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 22:13:51,271 - backend.utils.vram - INFO - [vram:before-build] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:13:51,272 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:13:51,277 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 22:13:52,770 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:13:52,770 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:13:52,771 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:13:52,772 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:14:09,308 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:14:09,309 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:14:09,316 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "30b671af-8271-4417-9c62-2fb9116c3efe", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 128, "total_tokens": 860, "time_total_s": 16.538254316081293, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 52.00065155388028, "first_token_latency_s": null}
+2025-08-28 22:14:10,335 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:14:10,336 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:14:10,528 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-28 22:14:10,529 - backend.utils.vram - INFO - [vram:before-build] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:14:10,530 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:14:10,672 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-28 22:14:11,875 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:14:11,876 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:14:11,877 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:14:11,877 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:14:38,383 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:14:38,383 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:14:38,391 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "d43de4fc-0c30-4c83-b1d8-2621b518720a", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 182, "total_tokens": 954, "time_total_s": 26.50756110996008, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 35.98973123338531, "first_token_latency_s": null}
+2025-08-28 22:14:39,738 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:14:39,739 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-28 22:14:39,742 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 48.65s
+2025-08-28 22:14:39,746 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-28 22:14:39,746 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-28 22:14:39,747 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 68.51s
+2025-08-28 22:24:56,678 - backend.main - INFO - Application shutdown begins...
+2025-08-28 22:24:56,679 - backend.main - INFO - Application shutdown complete.
+2025-08-29 10:08:36,699 - backend.main - INFO - FastAPI application created and configured.
+2025-08-29 10:08:36,700 - backend.main - INFO - Application startup begins...
+2025-08-29 10:08:36,700 - backend.main - INFO - Application startup complete.
+2025-08-29 10:09:11,630 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-29 10:09:11,631 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8743 seconds.
+2025-08-29 10:09:11,632 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.90s
+2025-08-29 10:09:11,633 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/288d8a88-c3c4-46d8-89c6-075214d87054_dummy_scanned1.pdf
+2025-08-29 10:09:11,633 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-29 10:09:15,849 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/288d8a88-c3c4-46d8-89c6-075214d87054_dummy_scanned1.pdf
+2025-08-29 10:09:17,541 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/288d8a88-c3c4-46d8-89c6-075214d87054_dummy_scanned1.pdf ...
+2025-08-29 10:09:22,736 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-29 10:09:23,007 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-29 10:09:23,565 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-29 10:09:24,292 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-29 10:09:24,331 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-29 10:09:25,169 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-29 10:09:25,990 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-29 10:09:25,992 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-29 10:09:25,992 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-29 10:09:25,996 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-29 10:09:26,007 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-29 10:09:26,007 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-29 10:09:26,023 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/288d8a88-c3c4-46d8-89c6-075214d87054_dummy_scanned1.pdf
+2025-08-29 10:09:26,048 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 14.42s
+2025-08-29 10:09:26,087 - backend.generation.hf_adapter - INFO - chat mode
+2025-08-29 10:09:26,088 - backend.utils.vram - INFO - [vram:before-build] alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-08-29 10:09:26,089 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-08-29 10:09:26,094 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-29 10:09:26,682 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-08-29 10:09:26,682 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 10:09:26,687 - backend.utils.vram - INFO - [vram:before-generate] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 10:09:26,689 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 10:12:10,084 - backend.main - INFO - Application shutdown begins...
+2025-08-29 10:12:10,084 - backend.main - INFO - Application shutdown complete.
+2025-08-29 10:13:27,328 - backend.main - INFO - FastAPI application created and configured.
+2025-08-29 10:13:27,329 - backend.main - INFO - Application startup begins...
+2025-08-29 10:13:27,329 - backend.main - INFO - Application startup complete.
+2025-08-29 10:13:36,857 - backend.main - INFO - Application shutdown begins...
+2025-08-29 10:13:36,858 - backend.main - INFO - Application shutdown complete.
+2025-08-29 10:15:52,276 - backend.main - INFO - FastAPI application created and configured.
+2025-08-29 10:15:52,277 - backend.main - INFO - Application startup begins...
+2025-08-29 10:15:52,277 - backend.main - INFO - Application startup complete.
+2025-08-29 10:18:29,926 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-29 10:18:29,927 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8528 seconds.
+2025-08-29 10:18:29,928 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.86s
+2025-08-29 10:18:29,928 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/e95b1393-cd0e-4c5f-baa2-616312ae7be8_dummy_scanned1.pdf
+2025-08-29 10:18:29,929 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-29 10:18:32,631 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/e95b1393-cd0e-4c5f-baa2-616312ae7be8_dummy_scanned1.pdf
+2025-08-29 10:18:33,624 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/e95b1393-cd0e-4c5f-baa2-616312ae7be8_dummy_scanned1.pdf ...
+2025-08-29 10:18:38,317 - unstructured_inference - INFO - Loading the Table agent ...
+2025-08-29 10:18:38,590 - unstructured_inference - INFO - Loading the table structure model ...
+2025-08-29 10:18:39,150 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-08-29 10:18:39,401 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-08-29 10:18:39,411 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-08-29 10:18:39,992 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-29 10:18:40,776 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-29 10:18:40,778 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-29 10:18:40,778 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-29 10:18:40,782 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-29 10:18:40,792 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-29 10:18:40,792 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-29 10:18:40,808 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/e95b1393-cd0e-4c5f-baa2-616312ae7be8_dummy_scanned1.pdf
+2025-08-29 10:18:40,832 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 10.90s
+2025-08-29 10:18:40,867 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-08-29 10:18:40,872 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-29 10:18:41,340 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-08-29 10:18:41,340 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 10:18:41,341 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 10:18:47,550 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 10:18:47,550 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 10:18:47,563 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "aa2d99e8-f21b-48df-a332-ac21b54c76b4", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:1", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 122, "total_tokens": 854, "time_total_s": 6.21007862700003, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 137.51838765567305, "first_token_latency_s": null}
+2025-08-29 10:18:47,911 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 10:18:47,911 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 10:18:47,963 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 10:18:47,970 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-29 10:18:48,338 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 10:18:48,338 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 10:18:48,340 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 10:18:56,852 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 10:18:56,852 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 10:18:56,860 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "1b590787-3b59-4811-a917-72697e565ac2", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:1", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 199, "total_tokens": 971, "time_total_s": 8.513042524000184, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 114.06027836258686, "first_token_latency_s": null}
+2025-08-29 10:18:57,201 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 10:18:57,201 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 10:18:57,205 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 16.37s
+2025-08-29 10:18:57,208 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-29 10:18:57,208 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-29 10:18:57,212 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 28.14s
+2025-08-29 12:38:01,274 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-29 12:38:01,274 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.9223 seconds.
+2025-08-29 12:38:01,276 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.92s
+2025-08-29 12:38:01,276 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/7c8d1541-a32e-4b93-9a47-1f48716e993b_dummy_scanned1.pdf
+2025-08-29 12:38:01,277 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-29 12:38:01,277 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/7c8d1541-a32e-4b93-9a47-1f48716e993b_dummy_scanned1.pdf
+2025-08-29 12:38:01,314 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/7c8d1541-a32e-4b93-9a47-1f48716e993b_dummy_scanned1.pdf ...
+2025-08-29 12:38:07,205 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-29 12:38:07,214 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-29 12:38:07,216 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-29 12:38:07,216 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-29 12:38:07,220 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-29 12:38:07,231 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-29 12:38:07,231 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-29 12:38:07,247 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/7c8d1541-a32e-4b93-9a47-1f48716e993b_dummy_scanned1.pdf
+2025-08-29 12:38:07,272 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 6.00s
+2025-08-29 12:38:07,313 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:38:07,320 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-29 12:38:07,800 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:38:07,800 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:38:07,802 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:38:13,323 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:38:13,324 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:38:13,330 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "de8474b6-8cf9-473e-837b-5a9fec9302f0", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:1", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 125, "total_tokens": 857, "time_total_s": 5.523014627999146, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 155.168881077266, "first_token_latency_s": null}
+2025-08-29 12:38:13,725 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:38:13,725 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:38:13,778 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:38:13,784 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-29 12:38:14,153 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:38:14,153 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:38:14,154 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:38:22,077 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:38:22,077 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:38:22,085 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "05f83fa9-8faf-4cdc-a905-3542eca976c2", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:1", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 180, "total_tokens": 952, "time_total_s": 7.923977926000589, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 120.14167743656196, "first_token_latency_s": null}
+2025-08-29 12:38:22,487 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:38:22,487 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:38:22,489 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 15.22s
+2025-08-29 12:38:22,492 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-29 12:38:22,492 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-29 12:38:22,492 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 22.14s
+2025-08-29 12:45:55,772 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-29 12:45:55,773 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.9760 seconds.
+2025-08-29 12:45:55,773 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.98s
+2025-08-29 12:45:55,774 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/4c8c1e4c-88c3-45e0-8fbe-e3f9bc35e228_dummy_scanned1.pdf
+2025-08-29 12:45:55,774 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-29 12:45:55,775 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/4c8c1e4c-88c3-45e0-8fbe-e3f9bc35e228_dummy_scanned1.pdf
+2025-08-29 12:45:55,812 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/4c8c1e4c-88c3-45e0-8fbe-e3f9bc35e228_dummy_scanned1.pdf ...
+2025-08-29 12:46:01,379 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-29 12:46:01,390 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-29 12:46:01,394 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-29 12:46:01,394 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-29 12:46:01,399 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-29 12:46:01,410 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-29 12:46:01,410 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-29 12:46:01,426 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/4c8c1e4c-88c3-45e0-8fbe-e3f9bc35e228_dummy_scanned1.pdf
+2025-08-29 12:46:01,450 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 5.68s
+2025-08-29 12:46:01,483 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:46:01,489 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-29 12:46:01,938 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:46:01,938 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:46:01,940 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:46:08,224 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:46:08,224 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:46:08,231 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "11bca027-36ae-4260-b392-6d08c17f7abd", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:1", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 144, "total_tokens": 876, "time_total_s": 6.285661226000229, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 139.36481278635935, "first_token_latency_s": null}
+2025-08-29 12:46:08,574 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:46:08,574 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:46:08,625 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:46:08,632 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-29 12:46:09,016 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:46:09,016 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:46:09,018 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:46:18,850 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:46:18,850 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:46:18,859 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "538d0239-2b11-409a-bdaf-0e53da21fde3", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:1", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 241, "total_tokens": 1013, "time_total_s": 9.833478014999855, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 103.01543344631304, "first_token_latency_s": null}
+2025-08-29 12:46:19,205 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:46:19,206 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:46:19,208 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 17.76s
+2025-08-29 12:46:19,210 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-29 12:46:19,211 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-29 12:46:19,211 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 24.42s
+2025-08-29 12:50:16,335 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-08-29 12:50:16,336 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8220 seconds.
+2025-08-29 12:50:16,337 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.82s
+2025-08-29 12:50:16,337 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser/uploads/a9a78aed-10ef-407d-8a76-a5a4a4c27904_dummy_scanned1.pdf
+2025-08-29 12:50:16,338 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-08-29 12:50:16,338 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser/uploads/a9a78aed-10ef-407d-8a76-a5a4a4c27904_dummy_scanned1.pdf
+2025-08-29 12:50:16,369 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser/uploads/a9a78aed-10ef-407d-8a76-a5a4a4c27904_dummy_scanned1.pdf ...
+2025-08-29 12:50:21,357 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-08-29 12:50:21,365 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-08-29 12:50:21,367 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-08-29 12:50:21,367 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-08-29 12:50:21,370 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-08-29 12:50:21,381 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-08-29 12:50:21,381 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-08-29 12:50:21,396 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser/uploads/a9a78aed-10ef-407d-8a76-a5a4a4c27904_dummy_scanned1.pdf
+2025-08-29 12:50:21,417 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 5.08s
+2025-08-29 12:50:21,456 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:50:21,462 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-29 12:50:21,924 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:50:21,924 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:50:21,927 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:50:27,312 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:50:27,312 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:50:27,317 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "9ef953bb-be7e-4635-bf41-ceae5086d596", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:1", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 120, "total_tokens": 852, "time_total_s": 5.387142941001002, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 158.15433325808266, "first_token_latency_s": null}
+2025-08-29 12:50:27,660 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:50:27,661 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:50:27,714 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:50:27,720 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-08-29 12:50:28,104 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:50:28,104 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:50:28,106 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:50:36,248 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:50:36,249 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:50:36,256 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "9e092121-8406-41b2-93e9-6c103da93939", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:1", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 188, "total_tokens": 960, "time_total_s": 8.143863385001168, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 117.88016996553071, "first_token_latency_s": null}
+2025-08-29 12:50:36,599 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:50:36,600 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-08-29 12:50:36,602 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 15.18s
+2025-08-29 12:50:36,604 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-08-29 12:50:36,605 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-08-29 12:50:36,605 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 21.09s
+2025-08-29 16:49:16,146 - backend.main - INFO - Application shutdown begins...
+2025-08-29 16:49:16,146 - backend.main - INFO - Application shutdown complete.

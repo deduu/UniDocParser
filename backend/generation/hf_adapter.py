@@ -318,14 +318,13 @@ class LocalHuggingFaceClient(BaseLLM):
 
    # ---------- Non-streaming chat (coarse total TPS only) ----------
     async def chat(self, messages: Iterable[Dict[str, Any]], **kwargs: Any) -> str:
-        logger.info("chat mode")
         run_id = str(uuid.uuid4())
         # prompt = self._format_messages(messages)
         # enc = self.tokenizer(prompt, return_tensors="pt")
         # inputs = {k: v.to(self.device) for k, v in enc.items()}
         # prompt_tokens = enc.input_ids.size(1)
 
-        log_vram("before-build")
+        # log_vram("before-build")
         with vram_scope("build_inputs"):
             inputs, prompt_tokens, decode_fn = self.mm.build_inputs(
                 messages, device=self.device, default_system=self.system_prompt
@@ -357,7 +356,7 @@ class LocalHuggingFaceClient(BaseLLM):
                     torch.cuda.synchronize()
                 t0 = time.perf_counter()
                 with sdpa_context(), torch.inference_mode():
-                    log_vram("before-generate")
+                    # log_vram("before-generate")
                     with vram_scope("generate"):
                         output_ids = self.model.generate(
                             **inputs, **gen_kwargs)
@@ -398,7 +397,7 @@ class LocalHuggingFaceClient(BaseLLM):
     # ---------- Streaming chat with detailed timing ----------
 
     async def stream(self, messages: Iterable[Dict[str, Any]], **kwargs: Any) -> AsyncGenerator[str, None]:
-        logger.info("stream mode")
+        # logger.info("stream mode")
         run_id = str(uuid.uuid4())
         if self.is_vlm:
             logger.warning(

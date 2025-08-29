@@ -136,8 +136,8 @@ class DocParserHandler:
         ]
 
         return DocParserContextOut(
-            pdf_path=ctx.pdf_path,
-            ocr_pdf_path=ctx.ocr_pdf_path,
+            # pdf_path=ctx.pdf_path,
+            # ocr_pdf_path=ctx.ocr_pdf_path,
             pages=pages,
             figure_list=figures,
             processing_time=ctx.processing_time or 0.0,

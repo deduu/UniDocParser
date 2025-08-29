@@ -14,7 +14,7 @@ class SplitStep(DocParserStep):
         # 1. Split the PDF into raw page metadata
         # raw_pages = handle_file(ctx.pdf_path)
         raw_pages = ingest.handle_file(ctx.pdf_path)
-        print(f"raw_pages: {raw_pages}")
+        # print(f"raw_pages: {raw_pages}")
 
         # 2. Convert each dict into a Page model (elements defaults to [])
         # pages = [Page(**asdict(page_data)) for page_data in raw_pages]
@@ -24,7 +24,7 @@ class SplitStep(DocParserStep):
         ]
 
 
-        print(f"pages split: {pages}")
+        # print(f"pages split: {pages}")
         # 3. Update the context
         ctx.pages = pages
 

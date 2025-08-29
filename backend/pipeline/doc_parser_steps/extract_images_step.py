@@ -24,13 +24,13 @@ class ExtractImagesStep(DocParserStep):
         raw_pages = [p.dict() for p in ctx.pages]
         figure_list_raw = [f.dict() for f in ctx.figure_list]
 
-        print(f"raw_pages: {raw_pages}")
-        print(f"figure_list_raw: {figure_list_raw}")
+        # print(f"raw_pages: {raw_pages}")
+        # print(f"figure_list_raw: {figure_list_raw}")
 
         # Run the (blocking) extraction
         updated_pages_raw = extract_images(raw_pages, figure_list_raw)
 
-        print(f"updated_pages_raw: {updated_pages_raw}")
+        # print(f"updated_pages_raw: {updated_pages_raw}")
 
         # Wrap back into Page models and store
         ctx.pages = [Page(**page_data) for page_data in updated_pages_raw]
