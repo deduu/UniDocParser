@@ -7305,3 +7305,64 @@ Syntax Error: Document stream is empty
 2025-08-29 22:39:40,200 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 21.40s
 2025-08-30 00:27:29,455 - backend.main - INFO - Application shutdown begins...
 2025-08-30 00:27:29,456 - backend.main - INFO - Application shutdown complete.
+2025-09-01 13:39:12,391 - backend.main - INFO - FastAPI application created and configured.
+2025-09-01 13:39:12,392 - backend.main - INFO - Application startup begins...
+2025-09-01 13:39:12,392 - backend.main - INFO - Application startup complete.
+2025-09-01 13:48:24,617 - backend.main - INFO - Application shutdown begins...
+2025-09-01 13:48:24,618 - backend.main - INFO - Application shutdown complete.
+2025-09-01 13:49:54,420 - backend.main - INFO - FastAPI application created and configured.
+2025-09-01 13:49:54,421 - backend.main - INFO - Application startup begins...
+2025-09-01 13:49:54,422 - backend.main - INFO - Application startup complete.
+2025-09-01 14:06:10,823 - backend.main - INFO - Application shutdown begins...
+2025-09-01 14:06:10,824 - backend.main - INFO - Application shutdown complete.
+2025-09-01 14:07:01,673 - backend.main - INFO - FastAPI application created and configured.
+2025-09-01 14:07:01,674 - backend.main - INFO - Application startup begins...
+2025-09-01 14:07:01,674 - backend.main - INFO - Application startup complete.
+2025-09-01 14:07:32,019 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-01 14:07:33,003 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-09-01 14:07:33,003 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8604 seconds.
+2025-09-01 14:07:33,004 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.86s
+2025-09-01 14:07:33,005 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser_prod/UniDocParser/uploads/3d259dba-2de0-43d5-a899-d15dd45f6bd9_dummy_scanned1.pdf
+2025-09-01 14:07:33,005 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-09-01 14:07:40,337 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser_prod/UniDocParser/uploads/3d259dba-2de0-43d5-a899-d15dd45f6bd9_dummy_scanned1.pdf
+2025-09-01 14:07:41,796 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser_prod/UniDocParser/uploads/3d259dba-2de0-43d5-a899-d15dd45f6bd9_dummy_scanned1.pdf ...
+2025-09-01 14:07:47,541 - unstructured_inference - INFO - Loading the Table agent ...
+2025-09-01 14:07:47,801 - unstructured_inference - INFO - Loading the table structure model ...
+2025-09-01 14:07:48,388 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-09-01 14:07:48,639 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-09-01 14:07:48,651 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-09-01 14:07:49,287 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-09-01 14:07:50,213 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-09-01 14:07:50,215 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-09-01 14:07:50,215 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-09-01 14:07:50,219 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-09-01 14:07:50,229 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-09-01 14:07:50,229 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-09-01 14:07:50,244 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser_prod/UniDocParser/uploads/3d259dba-2de0-43d5-a899-d15dd45f6bd9_dummy_scanned1.pdf
+2025-09-01 14:07:50,274 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 17.27s
+2025-09-01 14:07:50,308 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-09-01 14:07:50,313 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-09-01 14:07:50,858 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-09-01 14:07:50,858 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-01 14:07:50,859 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-01 14:07:58,070 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-01 14:07:58,071 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-01 14:07:58,079 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "c98c829d-7975-49dd-834b-7b1c60352578", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 134, "total_tokens": 866, "time_total_s": 7.212502488982864, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 120.069282655059, "first_token_latency_s": null}
+2025-09-01 14:07:58,587 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-01 14:07:58,587 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-01 14:07:58,642 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-01 14:07:58,649 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-09-01 14:07:59,101 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-01 14:07:59,101 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-01 14:07:59,102 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-01 14:08:06,418 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-01 14:08:06,418 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-01 14:08:06,425 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "34352651-ca09-4aae-8d26-7fad9be3a274", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 170, "total_tokens": 942, "time_total_s": 7.316765052033588, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 128.7454214124567, "first_token_latency_s": null}
+2025-09-01 14:08:06,814 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-01 14:08:06,815 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-01 14:08:06,817 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 16.54s
+2025-09-01 14:08:06,822 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-09-01 14:08:06,822 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-09-01 14:08:06,828 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 34.68s
+2025-09-01 14:46:47,431 - backend.main - INFO - Application shutdown begins...
+2025-09-01 14:46:47,431 - backend.main - INFO - Application shutdown complete.

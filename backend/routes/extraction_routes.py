@@ -29,6 +29,7 @@ from backend.services.extractor_services import ExtractJobService, ExtractPageSe
 from backend.schemas.extractor import ExtractJobCreate, ExtractPageCreate, ExtractResultUpsert
 from backend.deps.verify import verify_internal_call
 from backend.deps import Principal, get_principal_from_headers
+from backend.deps.security import Principal, get_verified_principal
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -53,20 +54,26 @@ class ResponseModel(BaseModel):
     json_output: str
     markdown_output: str
 
+
 async def get_db_session():
     async with session_manager.create_session() as session:
         yield session
 
+
 async def get_extract_job(db: AsyncSession = Depends(get_db_session)):
     return ExtractJobService(db)
 
+
 async def get_extract_page(db: AsyncSession = Depends(get_db_session)):
     return ExtractPageService(db)
+
 
 async def get_extract_result(db: AsyncSession = Depends(get_db_session)):
     return ExtractResultService(db)
 
 # ------------------------------------------------------------------------------
+
+
 @router.post("/ocrpdf", response_model=DocParserContextOut)
 async def ocr_pdf(
     file: UploadFile = File(...),
@@ -79,33 +86,36 @@ async def ocr_pdf(
 async def handle_file(file: UploadFile = File(...), handler: DocParserHandler = Depends()):
     return await handler.split(file)
 
+
 @router.post("/extractpdf_db", response_model=ResponseModel)
 async def extract_pdf_db(
     file: UploadFile = File(...),
     handler: DocParserHandler = Depends(),
-    principal: Principal = Depends(get_principal_from_headers),
-    user: dict = Depends(verify_internal_call),
+    principal: Principal = Depends(get_verified_principal),
+    # user: dict = Depends(verify_internal_call),
     extract_job: ExtractJobService = Depends(get_extract_job),
     extract_page: ExtractPageService = Depends(get_extract_page),
     extract_result: ExtractResultService = Depends(get_extract_result),
 ) -> ResponseModel:
-    
+
     job = None
-    
-    print(f"Document extracted by user {user['user_id']}")
+
+    print(f"Document extracted by user {principal.user_id}")
     # 1) Validate file type
     fname = (file.filename or "").lower()
     if not fname.endswith((".pdf", ".xls", ".xlsx")):
-        raise HTTPException(400, "Only PDF or Excel files (.xls/.xlsx) are supported")
-    
+        raise HTTPException(
+            400, "Only PDF or Excel files (.xls/.xlsx) are supported")
+
     try:
         # 1) Create Job: queued
         job = await extract_job.create_job(ExtractJobCreate(
-            tenant_id = principal.tenant_id or principal.user_id,  # fallback if you don't have orgs yet
-            created_by_user_id = principal.user_id,
-            source_file_name = file.filename,
-            options_json = {},
-            status = "queued",
+            # fallback if you don't have orgs yet
+            tenant_id=principal.tenant_id or principal.user_id,
+            created_by_user_id=principal.user_id,
+            source_file_name=file.filename,
+            options_json={},
+            status="queued",
         ))
 
         await extract_job.set_status(job.id, "running")
@@ -131,7 +141,8 @@ async def extract_pdf_db(
                 image_url=p.image,
                 text=p.text,
                 markdown=p.markdown,
-                elements=[e.model_dump(by_alias=True) for e in (p.elements or [])] or None,
+                elements=[e.model_dump(by_alias=True)
+                          for e in (p.elements or [])] or None,
             )
             for p in dto.pages
         ]
@@ -148,15 +159,14 @@ async def extract_pdf_db(
 
         await extract_job.update(job.id,  {"status": "succeeded", "page_count_actual": len(dto.pages)})
 
-
         # 6) Return your typed response
         return ResponseModel(
-                message="Document extracted successfully",
-                job_id=job.id,
-                extraction_result=dto,
-                json_output=json_name,
-                markdown_output=md_name,
-            )
+            message="Document extracted successfully",
+            job_id=job.id,
+            extraction_result=dto,
+            json_output=json_name,
+            markdown_output=md_name,
+        )
 
     except Exception as e:
         if job:
@@ -166,7 +176,8 @@ async def extract_pdf_db(
                 pass
         return JSONResponse(
             status_code=500,
-            content={"message": "PDF extraction failed", "error": str(e), "traceback": traceback.format_exc()},
+            content={"message": "PDF extraction failed", "error": str(
+                e), "traceback": traceback.format_exc()},
         )
 
 
@@ -179,7 +190,7 @@ async def extract_pdf(
     handler: DocParserHandler = Depends(),
     user: dict = Depends(verify_internal_call),
 ) -> ResponseModel:
-    
+
     print(f"Document extracted by user {user['user_id']}")
     # 1) Validate file type
     if not file.filename or not (
