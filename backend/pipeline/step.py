@@ -1,6 +1,6 @@
 # backend/pipeline/step.py
 from abc import ABC, abstractmethod
-from typing import TypeVar, Generic
+from typing import TypeVar, Generic, Optional
 
 # Define a type variable for the context
 TContext = TypeVar('TContext')
@@ -11,7 +11,7 @@ class PipelineStep(ABC, Generic[TContext]):
         self.name = name
 
     @abstractmethod
-    def run(self, ctx: TContext) -> TContext:
+    def run(self, ctx: TContext, job_id: Optional[str] = None) -> TContext:
         pass
 
     def get_pipeline_name(self) -> str:

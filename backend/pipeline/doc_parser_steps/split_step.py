@@ -1,5 +1,6 @@
 # backend/pipeline/steps/split_step.py
 from dataclasses import asdict
+from typing import Optional
 from backend.pipeline.doc_parser_steps.doc_parser_step import DocParserStep
 from backend.pipeline.doc_parser_steps.context import DocParserContext, Page
 from backend.services.file_handler import handle_file
@@ -10,10 +11,14 @@ class SplitStep(DocParserStep):
     def __init__(self):
         super().__init__(name="Split")
 
-    def run(self, ctx: DocParserContext) -> DocParserContext:
+    def run(self, ctx: DocParserContext, job_id: Optional[str] = None) -> DocParserContext:
         # 1. Split the PDF into raw page metadata
         # raw_pages = handle_file(ctx.pdf_path)
-        raw_pages = ingest.handle_file(ctx.pdf_path)
+        resolved_job_id = job_id or getattr(
+            ctx, "job_id", None) or f"adhoc-{uuid.uuid4().hex[:12]}"
+
+        raw_pages = ingest.handle_file(ctx.pdf_path, resolved_job_id)
+
         # print(f"raw_pages: {raw_pages}")
 
         # 2. Convert each dict into a Page model (elements defaults to [])
@@ -23,9 +28,12 @@ class SplitStep(DocParserStep):
             for p in raw_pages
         ]
 
-
         # print(f"pages split: {pages}")
         # 3. Update the context
         ctx.pages = pages
+
+        # Persist the resolved job_id back to context if not set
+        if not getattr(ctx, "job_id", None):
+            setattr(ctx, "job_id", resolved_job_id)
 
         return ctx

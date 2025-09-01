@@ -7366,3 +7366,28 @@ Syntax Error: Document stream is empty
 2025-09-01 14:08:06,828 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 34.68s
 2025-09-01 14:46:47,431 - backend.main - INFO - Application shutdown begins...
 2025-09-01 14:46:47,431 - backend.main - INFO - Application shutdown complete.
+2025-09-01 15:23:51,272 - backend.main - INFO - FastAPI application created and configured.
+2025-09-01 15:23:51,273 - backend.main - INFO - Application startup begins...
+2025-09-01 15:23:51,273 - backend.main - INFO - Application startup complete.
+2025-09-01 15:24:48,848 - backend.main - INFO - Application shutdown begins...
+2025-09-01 15:24:48,848 - backend.main - INFO - Application shutdown complete.
+2025-09-01 15:35:36,571 - backend.main - INFO - FastAPI application created and configured.
+2025-09-01 15:35:36,572 - backend.main - INFO - Application startup begins...
+2025-09-01 15:35:36,572 - backend.main - INFO - Application startup complete.
+2025-09-01 15:37:25,496 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-01 15:38:10,598 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-01 15:38:45,185 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-01 15:40:40,571 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-01 15:41:57,637 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-01 15:45:07,822 - backend.main - INFO - Application shutdown begins...
+2025-09-01 15:45:07,823 - backend.main - INFO - Application shutdown complete.
+2025-09-01 15:45:40,688 - backend.main - INFO - FastAPI application created and configured.
+2025-09-01 15:45:40,689 - backend.main - INFO - Application startup begins...
+2025-09-01 15:45:40,689 - backend.main - INFO - Application startup complete.
+2025-09-01 15:47:18,082 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-01 15:47:18,181 - backend.services.base_service - ERROR - Error fetching ExtractJob 1c3f5b92-8c48-48f5-a2b0-7b90b8e8f52a: 404: ExtractJob 1c3f5b92-8c48-48f5-a2b0-7b90b8e8f52a not found
+2025-09-01 15:48:34,814 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-01 15:55:02,054 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-01 15:56:14,609 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-01 16:57:24,282 - backend.main - INFO - Application shutdown begins...
+2025-09-01 16:57:24,282 - backend.main - INFO - Application shutdown complete.

@@ -1,3 +1,4 @@
+# backend/file_ingestion/handlers/image_handler.py
 from __future__ import annotations
 from pathlib import Path
 from typing import List
@@ -7,8 +8,10 @@ from PIL import Image, ImageOps, UnidentifiedImageError
 from backend.schemas.ingest import PageMetadata
 from backend.utils.helpers import resize_img, save_jpeg
 from backend.utils.trackers import log_processing_time
+from backend.utils.storage_paths import page_image_key, ensure_parent_dir
 
 logger = logging.getLogger(__name__)
+
 
 class ImageHandler:
     def __init__(self, img_pages_dir: Path, max_side: int, jpeg_quality: int):
@@ -16,10 +19,8 @@ class ImageHandler:
         self.max_side = max_side
         self.jpeg_quality = jpeg_quality
 
-    def _target(self, src: Path) -> Path:
-        return self.img_pages_dir / f"{src.stem}.jpeg"
     @log_processing_time
-    def handle(self, img_path: Path) -> List[PageMetadata]:
+    def handle(self, img_path: Path, job_id: str) -> List[PageMetadata]:
         try:
             img = Image.open(img_path)
         except UnidentifiedImageError:
@@ -37,6 +38,8 @@ class ImageHandler:
             resized = img.copy()
             resized.thumbnail((self.max_side, self.max_side))
 
-        out_path = self._target(img_path)
+        # single-page, index 0
+        storage_key = page_image_key(job_id, 0, ext="jpeg")
+        out_path = ensure_parent_dir(storage_key)
         save_jpeg(resized, out_path, quality=self.jpeg_quality)
-        return [PageMetadata(index=0, image=out_path.as_posix(), elements=[])]
+        return [PageMetadata(index=0, image=storage_key, elements=[])]

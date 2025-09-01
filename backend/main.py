@@ -2,15 +2,16 @@
 import logging
 import os
 from typing import List, Dict, Any, Optional
-from fastapi import FastAPI, Request, status
+from fastapi import FastAPI, Request, HTTPException, status
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
+from datetime import datetime
 
 # Assuming your backend structure
-from backend.routes import extraction_routes, jobs
+from backend.routes import extraction_routes, jobs, extractor_routes
 
 from backend.core.config import settings
 from backend.utils.logger import configure_logging
@@ -93,6 +94,7 @@ def create_app() -> FastAPI:
     # --- Include routes ---
     app.include_router(extraction_routes.router, prefix="/api/v1")
     app.include_router(jobs.router)
+    app.include_router(extractor_routes.router, prefix="/api/v1")
 
     # --- Define basic endpoints within create_app or as separate handlers ---
     # For now, we'll keep them here for simplicity, but for more complex apps,
@@ -110,6 +112,28 @@ def create_app() -> FastAPI:
         # Access templates from app.state
         return request.app.state.templates.TemplateResponse("index.html", {"request": request})
 
+    # Custom error handlers
+    @app.exception_handler(HTTPException)
+    async def http_exception_handler(request: Request, exc: HTTPException):
+        return JSONResponse(
+            status_code=exc.status_code,
+            content={
+                "error": exc.detail,
+                "status_code": exc.status_code,
+                "timestamp": datetime.utcnow().isoformat(),  # use datetime here
+            },
+        )
+
+    @app.exception_handler(ValueError)
+    async def value_error_handler(request: Request, exc: ValueError):
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={
+                "error": f"Validation error: {str(exc)}",
+                "status_code": 400,
+                "timestamp": datetime.utcnow().isoformat(),
+            },
+        )
     logger.info("FastAPI application created and configured.")
     return app
 

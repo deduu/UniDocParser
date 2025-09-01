@@ -1,0 +1,347 @@
+# services/extract_job.py
+from typing import List, Optional, Dict, Any, Union
+from fastapi import HTTPException, status
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select, delete, and_, or_, func, update
+from sqlalchemy.dialects.postgresql import insert
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+from sqlalchemy.orm import selectinload, joinedload
+import logging
+from contextlib import asynccontextmanager
+
+from backend.services.base_service import BaseService, PKType
+from backend.db.doc_parser import ExtractJob, ExtractPage, ExtractResult
+from backend.schemas.extractor import (
+    ExtractJobCreate,
+    ExtractJobUpdate,
+    ExtractPageCreate,
+    ExtractPageUpdate,
+    ExtractResultCreate,
+    ExtractResultUpdate,
+    ExtractResultUpsert,
+    ExtractJobFilter,
+    ExtractPageFilter
+)
+
+logger = logging.getLogger(__name__)
+
+_ALLOWED_STATUS = {"queued", "running", "succeeded", "failed", "canceled"}
+_VALID_TRANSITIONS = {
+    "queued": {"running", "canceled"},
+    "running": {"succeeded", "failed", "canceled"},
+    "succeeded": set(),  # final state
+    "failed": {"queued"},  # allow retry
+    "canceled": {"queued"}  # allow restart
+}
+
+
+class ExtractJobService(BaseService):
+    """Enhanced service for ExtractJob with complete CRUD operations"""
+
+    def __init__(self, db: AsyncSession):
+        super().__init__(db, ExtractJob)
+
+    @asynccontextmanager
+    async def transaction(self):
+        """Context manager for manual transaction control"""
+        try:
+            yield self.db
+            await self.db.commit()
+        except Exception:
+            await self.db.rollback()
+            raise
+
+    async def create_job(self, data: ExtractJobCreate, created_by_user_id: str) -> ExtractJob:
+        """Create a new extraction job with validation"""
+        try:
+            job_data = data.model_dump()
+            job_data['created_by_user_id'] = created_by_user_id
+
+            # Validate options_json if provided
+            if 'options_json' in job_data and job_data['options_json']:
+                if not isinstance(job_data['options_json'], dict):
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail="options_json must be a valid JSON object"
+                    )
+
+            job = ExtractJob(**job_data)
+            self.db.add(job)
+            await self.db.commit()
+            await self.db.refresh(job)
+
+            logger.info(
+                f"Created extract job {job.id} for tenant {job.tenant_id}")
+            return job
+
+        except IntegrityError as e:
+            await self.db.rollback()
+            logger.error(f"Integrity error creating job: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Integrity constraint violation"
+            )
+        except HTTPException:
+            await self.db.rollback()
+            raise
+        except Exception as e:
+            await self.db.rollback()
+            logger.error(f"Unexpected error creating job: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to create extraction job"
+            )
+
+    async def get_job_with_pages(self, job_id: str, tenant_id: str) -> ExtractJob:
+        """Get job with all pages loaded"""
+        try:
+            stmt = (
+                select(ExtractJob)
+                .options(selectinload(ExtractJob.pages))
+                .where(
+                    and_(
+                        ExtractJob.id == job_id,
+                        ExtractJob.tenant_id == tenant_id
+                    )
+                )
+            )
+            result = await self.db.execute(stmt)
+            job = result.scalar_one_or_none()
+
+            if not job:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail=f"Job {job_id} not found"
+                )
+            return job
+
+        except HTTPException:
+            raise
+        except Exception as e:
+            logger.error(f"Error fetching job with pages {job_id}: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to fetch job details"
+            )
+
+    async def get_job_with_result(self, job_id: str, tenant_id: str) -> ExtractJob:
+        """Get job with result loaded"""
+        try:
+            stmt = (
+                select(ExtractJob)
+                .options(joinedload(ExtractJob.result))
+                .where(
+                    and_(
+                        ExtractJob.id == job_id,
+                        ExtractJob.tenant_id == tenant_id
+                    )
+                )
+            )
+            result = await self.db.execute(stmt)
+            job = result.scalar_one_or_none()
+
+            if not job:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail=f"Job {job_id} not found"
+                )
+            return job
+
+        except HTTPException:
+            raise
+        except Exception as e:
+            logger.error(f"Error fetching job with result {job_id}: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to fetch job with result"
+            )
+
+    async def update_job(self, job_id: str, data: ExtractJobUpdate, tenant_id: str) -> ExtractJob:
+        """Update job with tenant validation"""
+        try:
+            job = await self.assert_access(job_id, tenant_id)
+
+            # Validate status transition if status is being updated
+            update_data = data.model_dump(exclude_unset=True)
+            if 'status' in update_data:
+                new_status = update_data['status']
+                if new_status not in _ALLOWED_STATUS:
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail=f"Invalid status '{new_status}'"
+                    )
+
+                current_status = job.status
+                if (current_status in _VALID_TRANSITIONS and
+                        new_status not in _VALID_TRANSITIONS[current_status]):
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail=f"Cannot transition from '{current_status}' to '{new_status}'"
+                    )
+
+            for key, value in update_data.items():
+                setattr(job, key, value)
+
+            await self.db.commit()
+            await self.db.refresh(job)
+
+            logger.info(f"Updated job {job_id}: {update_data}")
+            return job
+
+        except HTTPException:
+            await self.db.rollback()
+            raise
+        except Exception as e:
+            await self.db.rollback()
+            logger.error(f"Error updating job {job_id}: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to update job"
+            )
+
+    async def set_status(self, job_id: str, status: str, error: Optional[str] = None,
+                         page_count: Optional[int] = None) -> ExtractJob:
+        """Set job status with optional error message and page count"""
+        update_data = {"status": status}
+        if error is not None:
+            update_data["error_message"] = error
+        if page_count is not None:
+            update_data["page_count_actual"] = page_count
+
+        return await self.update(job_id, ExtractJobUpdate(**update_data))
+
+    async def list_by_tenant(
+        self,
+        tenant_id: str,
+        filters: Optional[ExtractJobFilter] = None,
+        skip: int = 0,
+        limit: int = 50
+    ) -> List[ExtractJob]:
+        """List jobs by tenant with optional filtering"""
+        try:
+            stmt = select(ExtractJob).where(ExtractJob.tenant_id == tenant_id)
+
+            if filters:
+                if filters.status:
+                    stmt = stmt.where(ExtractJob.status.in_(filters.status))
+                if filters.created_by_user_id:
+                    stmt = stmt.where(
+                        ExtractJob.created_by_user_id == filters.created_by_user_id)
+                if filters.source_file_name:
+                    stmt = stmt.where(ExtractJob.source_file_name.ilike(
+                        f"%{filters.source_file_name}%"))
+                if filters.created_after:
+                    stmt = stmt.where(ExtractJob.created_at >=
+                                      filters.created_after)
+                if filters.created_before:
+                    stmt = stmt.where(ExtractJob.created_at <=
+                                      filters.created_before)
+
+            stmt = stmt.order_by(ExtractJob.created_at.desc()
+                                 ).offset(skip).limit(limit)
+            result = await self.db.execute(stmt)
+            return result.scalars().all()
+
+        except Exception as e:
+            logger.error(f"Error listing jobs for tenant {tenant_id}: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to list jobs"
+            )
+
+    async def count_by_tenant(self, tenant_id: str, status: Optional[str] = None) -> int:
+        """Count jobs by tenant and optional status"""
+        try:
+            stmt = select(func.count(ExtractJob.id)).where(
+                ExtractJob.tenant_id == tenant_id)
+            if status:
+                stmt = stmt.where(ExtractJob.status == status)
+
+            result = await self.db.execute(stmt)
+            return result.scalar() or 0
+
+        except Exception as e:
+            logger.error(f"Error counting jobs for tenant {tenant_id}: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to count jobs"
+            )
+
+    async def assert_access(self, job_id: str, tenant_id: str) -> ExtractJob:
+        """Verify user has access to job"""
+        job = await self.get_by_id(job_id)
+        print("tenant_id: ", job.tenant_id)
+        if job.tenant_id != tenant_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied to this job"
+            )
+        return job
+
+    async def delete_job(self, job_id: str, tenant_id: str) -> bool:
+        """Delete job with access validation"""
+        try:
+            job = await self.assert_access(job_id, tenant_id)
+
+            # Prevent deletion of running jobs
+            if job.status == "running":
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Cannot delete running job"
+                )
+
+            await self.db.delete(job)
+            await self.db.commit()
+
+            logger.info(f"Deleted job {job_id}")
+            return True
+
+        except HTTPException:
+            await self.db.rollback()
+            raise
+        except Exception as e:
+            await self.db.rollback()
+            logger.error(f"Error deleting job {job_id}: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to delete job"
+            )
+
+    async def bulk_update_status(self, job_ids: List[str], status: str, tenant_id: str) -> int:
+        """Bulk update job status with tenant validation"""
+        try:
+            if status not in _ALLOWED_STATUS:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"Invalid status '{status}'"
+                )
+
+            stmt = (
+                update(ExtractJob)
+                .where(
+                    and_(
+                        ExtractJob.id.in_(job_ids),
+                        ExtractJob.tenant_id == tenant_id
+                    )
+                )
+                .values(status=status, updated_at=func.now())
+            )
+
+            result = await self.db.execute(stmt)
+            await self.db.commit()
+
+            updated_count = result.rowcount
+            logger.info(
+                f"Bulk updated {updated_count} jobs to status '{status}'")
+            return updated_count
+
+        except HTTPException:
+            await self.db.rollback()
+            raise
+        except Exception as e:
+            await self.db.rollback()
+            logger.error(f"Error bulk updating jobs: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to bulk update jobs"
+            )

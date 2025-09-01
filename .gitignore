@@ -12,3 +12,4 @@ docs
 frontend/node_modules
 test/
 test_output/
+.env

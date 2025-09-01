@@ -1,7 +1,7 @@
 # models_dto.py
 
 from typing import List, Optional, Literal
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, field_validator
 
 
 class ImageMetadataOut(BaseModel):
@@ -22,10 +22,21 @@ class ElementOut(BaseModel):
 
 class PageOut(BaseModel):
     index: int
-    image: Optional[str]
-    text: str = ""
-    markdown: str = ""
+    image_url: Optional[str] = None          # <= default channel
+    image_base64: Optional[str] = None       # <= opt-in
+    text: Optional[str] = None
+    markdown: Optional[str] = None
     elements: List[ElementOut] = Field(default_factory=list)
+
+    @field_validator("image_url")
+    @classmethod
+    def validate_image_url(cls, v: Optional[str]):
+        if v is None:
+            return v
+        if not (v.startswith("http://") or v.startswith("https://") or v.startswith("/")):
+            raise ValueError(
+                "image_url must be an http(s) or absolute app path")
+        return v
 
 
 class FigureOut(BaseModel):
