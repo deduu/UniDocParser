@@ -3,6 +3,7 @@ import uuid
 import traceback
 import logging
 import aiofiles
+from sqlalchemy.ext.asyncio import AsyncSession
 from PIL.Image import Image
 from pydantic import BaseModel
 from typing import List, Dict, Any
@@ -10,19 +11,24 @@ from pathlib import Path
 import io
 import base64
 import json
+from typing import Optional
 from fastapi import APIRouter, File, UploadFile, HTTPException, BackgroundTasks, Form, Depends
 from fastapi.responses import JSONResponse, FileResponse, PlainTextResponse
 
 # from backend.services.pipeline import PDFExtractionPipeline
 from backend.core.config import settings
+from backend.db.base import session_manager
 
 from backend.pipeline.model.schemas_dto import DocParserContextOut
-
 from backend.pipeline.doc_parse_service import DocParserService
 from backend.pipeline.doc_parse_handler import DocParserHandler
 from backend.pipeline.model.schemas import SplitPDFResponse
 
+
+from backend.services.extractor_services import ExtractJobService, ExtractPageService, ExtractResultService
+from backend.schemas.extractor import ExtractJobCreate, ExtractPageCreate, ExtractResultUpsert
 from backend.deps.verify import verify_internal_call
+from backend.deps import Principal, get_principal_from_headers
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -42,10 +48,23 @@ class ExtractOut(BaseModel):
 
 class ResponseModel(BaseModel):
     message: str
+    job_id: Optional[str]
     extraction_result: DocParserContextOut
     json_output: str
     markdown_output: str
 
+async def get_db_session():
+    async with session_manager.create_session() as session:
+        yield session
+
+async def get_extract_job(db: AsyncSession = Depends(get_db_session)):
+    return ExtractJobService(db)
+
+async def get_extract_page(db: AsyncSession = Depends(get_db_session)):
+    return ExtractPageService(db)
+
+async def get_extract_result(db: AsyncSession = Depends(get_db_session)):
+    return ExtractResultService(db)
 
 # ------------------------------------------------------------------------------
 @router.post("/ocrpdf", response_model=DocParserContextOut)
@@ -59,6 +78,96 @@ async def ocr_pdf(
 @router.post("/splitpdf", response_model=SplitPDFResponse)
 async def handle_file(file: UploadFile = File(...), handler: DocParserHandler = Depends()):
     return await handler.split(file)
+
+@router.post("/extractpdf_db", response_model=ResponseModel)
+async def extract_pdf_db(
+    file: UploadFile = File(...),
+    handler: DocParserHandler = Depends(),
+    principal: Principal = Depends(get_principal_from_headers),
+    user: dict = Depends(verify_internal_call),
+    extract_job: ExtractJobService = Depends(get_extract_job),
+    extract_page: ExtractPageService = Depends(get_extract_page),
+    extract_result: ExtractResultService = Depends(get_extract_result),
+) -> ResponseModel:
+    
+    job = None
+    
+    print(f"Document extracted by user {user['user_id']}")
+    # 1) Validate file type
+    fname = (file.filename or "").lower()
+    if not fname.endswith((".pdf", ".xls", ".xlsx")):
+        raise HTTPException(400, "Only PDF or Excel files (.xls/.xlsx) are supported")
+    
+    try:
+        # 1) Create Job: queued
+        job = await extract_job.create_job(ExtractJobCreate(
+            tenant_id = principal.tenant_id or principal.user_id,  # fallback if you don't have orgs yet
+            created_by_user_id = principal.user_id,
+            source_file_name = file.filename,
+            options_json = {},
+            status = "queued",
+        ))
+
+        await extract_job.set_status(job.id, "running")
+
+        # 2) Upload file to S3
+        # 3) Run the full pipeline (upload → OCR, split, extract, etc.)
+        if fname.endswith((".xls", ".xlsx")):
+            dto: DocParserContextOut = await handler.extract_only(file)
+        else:
+            dto: DocParserContextOut = await handler.full_pipeline(file)
+
+        # 4) Persist JSONL & Markdown on disk
+        json_name, md_name = await handler.save_results(
+            dto,
+            Path(dto.pdf_path).name,
+        )
+
+        # 5) Persist per-page rows
+        pages = [
+            ExtractPageCreate(
+                job_id=job.id,
+                page_index=p.index,
+                image_url=p.image,
+                text=p.text,
+                markdown=p.markdown,
+                elements=[e.model_dump(by_alias=True) for e in (p.elements or [])] or None,
+            )
+            for p in dto.pages
+        ]
+
+        await extract_page.replace_pages(job.id, pages)
+
+        # Persist result summary
+        await extract_result.upsert(ExtractResultUpsert(
+            job_id=job.id,
+            json_url=json_name,
+            markdown_url=md_name,
+            processing_time=int(dto.processing_time or 0),
+        ))
+
+        await extract_job.update(job.id,  {"status": "succeeded", "page_count_actual": len(dto.pages)})
+
+
+        # 6) Return your typed response
+        return ResponseModel(
+                message="Document extracted successfully",
+                job_id=job.id,
+                extraction_result=dto,
+                json_output=json_name,
+                markdown_output=md_name,
+            )
+
+    except Exception as e:
+        if job:
+            try:
+                await extract_job.set_status(job.id, "failed", error=str(e))
+            except Exception:
+                pass
+        return JSONResponse(
+            status_code=500,
+            content={"message": "PDF extraction failed", "error": str(e), "traceback": traceback.format_exc()},
+        )
 
 
 @router.post(

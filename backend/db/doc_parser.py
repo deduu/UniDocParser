@@ -1,3 +1,4 @@
+# backend/db/doc_parser.py
 import uuid
 from sqlalchemy import Column, String, DateTime, Integer, Text, ForeignKey, CheckConstraint, Index
 from sqlalchemy.dialects.postgresql import JSONB
