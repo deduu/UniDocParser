@@ -1,5 +1,5 @@
 # backend/pipeline/steps/extract_elements_step.py
-
+from typing import Optional
 from backend.pipeline.doc_parser_steps.doc_parser_step import DocParserStep
 from backend.pipeline.doc_parser_steps.context import DocParserContext, Page, Figure
 # your existing function
@@ -7,6 +7,7 @@ from backend.pipeline.doc_parser_steps.context import DocParserContext, Page, Fi
 # from backend.services.element_extractor import extract_elements
 from backend.extraction.services.element_extractor import extract_elements
 from dataclasses import asdict
+
 
 def to_builtin(obj):
     try:
@@ -27,27 +28,28 @@ def to_builtin(obj):
         return tuple(to_builtin(v) for v in obj)  # <- preserve tuple
     return obj
 
+
 class ExtractElementsStep(DocParserStep):
     def __init__(self):
         super().__init__(name="Extract Elements")
 
-    def run(self, ctx: DocParserContext) -> DocParserContext:
+    def run(self, ctx: DocParserContext, job_id: Optional[str] = None) -> DocParserContext:
         # 1. Convert our Page models into the raw dicts your extractor expects
         raw_pages = [p.dict() for p in ctx.pages]
         # print(f"raw_pages: {raw_pages}")
         # print(f"ctx.path: {ctx.pdf_path}")
 
         # 2. Run extraction, getting back updated pages + a flat list of figures
-        updated_pages_data, figure_list_data = extract_elements(raw_pages, ctx.pdf_path)
+        updated_pages_data, figure_list_data = extract_elements(
+            raw_pages, ctx.file_path)
 
-    
         # 2) Normalize numpy → builtins (deep-walk)
         updated_pages_data = to_builtin(updated_pages_data)
-        figure_list_data   = to_builtin(figure_list_data)
+        figure_list_data = to_builtin(figure_list_data)
 
         # 3) Build models (Pydantic BaseModel assumed)
-        ctx.pages       = [Page(**p)   for p in updated_pages_data] # p is dictionary
-        ctx.figure_list = [Figure.model_validate(f) for f in figure_list_data] # f is object
+        ctx.pages = [Page(**p) for p in updated_pages_data]  # p is dictionary
+        ctx.figure_list = [Figure.model_validate(
+            f) for f in figure_list_data]  # f is object
 
         return ctx
-

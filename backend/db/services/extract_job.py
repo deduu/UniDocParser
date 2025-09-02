@@ -307,6 +307,113 @@ class ExtractJobService(BaseService):
                 detail="Failed to delete job"
             )
 
+    async def bulk_delete_by_ids(
+        self,
+        tenant_id: str,
+        job_ids: List[str],
+        *,
+        allow_running: bool = False,
+        max_batch: int = 1000,
+    ) -> Dict[str, Any]:
+        """
+        Delete multiple jobs in one transaction, scoped to tenant.
+
+        - Skips jobs in 'running' status (unless allow_running=True)
+        - Returns detailed breakdown (deleted ids, skipped_running, not_found)
+        - Rolls back on unexpected errors
+        - Uses SELECT ... FOR UPDATE to avoid races with concurrent updates/deletes
+        """
+        # Normalize inputs
+        unique_ids = list({jid for jid in (job_ids or []) if jid})
+        if not unique_ids:
+            return {"requested": 0, "matched": 0, "deleted": 0, "skipped_running": [], "not_found": []}
+
+        if len(unique_ids) > max_batch:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Too many ids in one request (>{max_batch})"
+            )
+
+        try:
+            # 1) Fetch candidate rows for this tenant and lock to prevent races
+            #    (e.g., someone marking a job 'running' while we delete)
+            stmt = (
+                select(ExtractJob.id, ExtractJob.status)
+                .where(
+                    ExtractJob.tenant_id == tenant_id,
+                    ExtractJob.id.in_(unique_ids),
+                )
+                # Avoid blocking if another tx is touching rows
+                .with_for_update(skip_locked=True)
+            )
+            res = await self.db.execute(stmt)
+            rows = res.all()
+
+            matched_ids = [r[0] for r in rows]
+            not_found = sorted(set(unique_ids) - set(matched_ids))
+
+            running_ids = [jid for (jid, st) in rows if st == "running"]
+            if allow_running:
+                deletable_ids = matched_ids
+                skipped_running: List[str] = []
+            else:
+                deletable_ids = [jid for (jid, st) in rows if st != "running"]
+                skipped_running = running_ids
+
+            deleted_count = 0
+            deleted_ids: List[str] = []
+
+            # 2) Delete only the deletable subset (fast single statement)
+            if deletable_ids:
+                del_stmt = (
+                    delete(ExtractJob)
+                    .where(
+                        ExtractJob.tenant_id == tenant_id,
+                        ExtractJob.id.in_(deletable_ids),
+                    )
+                )
+                res = await self.db.execute(del_stmt.execution_options(synchronize_session=False))
+                deleted_count = res.rowcount or 0
+                # For reporting, we assume all matched & non-running rows deleted
+                # (PG DELETE rowcount is reliable)
+                if deleted_count != len(deletable_ids):
+                    # Extremely rare (race on rows not locked due to SKIP LOCKED)
+                    logger.warning(
+                        "Bulk delete rowcount (%s) != deletable_ids (%s)",
+                        deleted_count, len(deletable_ids)
+                    )
+                deleted_ids = deletable_ids
+
+            # 3) Commit the transaction
+            await self.db.commit()
+
+            summary = {
+                "requested": len(unique_ids),
+                "matched": len(matched_ids),
+                "deleted": deleted_count,
+                "deleted_ids": deleted_ids or [],
+                "skipped_running": skipped_running or [],
+                "not_found": not_found or [],
+            }
+            logger.info(
+                "Bulk delete summary tenant=%s: %s",
+                tenant_id, {k: v for k, v in summary.items() if k !=
+                            "deleted_ids"}
+            )
+            return summary
+
+        except HTTPException:
+            await self.db.rollback()
+            raise
+        except Exception as e:
+            await self.db.rollback()
+            logger.exception(
+                "Bulk delete failed tenant=%s ids=%s: %s", tenant_id, unique_ids, e)
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to bulk delete jobs",
+            )
+
     async def bulk_update_status(self, job_ids: List[str], status: str, tenant_id: str) -> int:
         """Bulk update job status with tenant validation"""
         try:

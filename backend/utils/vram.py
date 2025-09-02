@@ -71,8 +71,8 @@ def flush_vram(
         if reset_peak:
             torch.cuda.reset_peak_memory_stats(device)
         after = _mem(device)
-        log.info("[vram:%s] before: %s", tag, _fmt(before))
-        log.info("[vram:%s]  after: %s", tag, _fmt(after))
+        # log.info("[vram:%s] before: %s", tag, _fmt(before))
+        # log.info("[vram:%s]  after: %s", tag, _fmt(after))
     except Exception as e:
         log.warning("[vram:%s] flush failed: %r", tag, e)
 
@@ -83,7 +83,7 @@ def vram_scope(tag: str, device: int = 0, *, reset_peak_on_exit: bool = True):
     Context manager that logs VRAM on enter, and flushes/logs on exit.
     Use around heavyweight steps (build_inputs, generate, etc.).
     """
-    log_vram(f"{tag}:enter", device)
+    # log_vram(f"{tag}:enter", device)
     try:
         yield
     finally:

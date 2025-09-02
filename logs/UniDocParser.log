@@ -7391,3 +7391,341 @@ Syntax Error: Document stream is empty
 2025-09-01 15:56:14,609 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
 2025-09-01 16:57:24,282 - backend.main - INFO - Application shutdown begins...
 2025-09-01 16:57:24,282 - backend.main - INFO - Application shutdown complete.
+2025-09-02 09:16:54,037 - backend.main - INFO - FastAPI application created and configured.
+2025-09-02 09:16:54,038 - backend.main - INFO - Application startup begins...
+2025-09-02 09:16:54,038 - backend.main - INFO - Application startup complete.
+2025-09-02 09:18:11,529 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 09:18:11,687 - backend.db.services.extract_job - INFO - Deleted job a1663e99-f837-43f4-911f-eef104610e11
+2025-09-02 09:18:57,002 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 09:21:22,293 - backend.main - INFO - Application shutdown begins...
+2025-09-02 09:21:22,293 - backend.main - INFO - Application shutdown complete.
+2025-09-02 09:21:54,131 - backend.main - INFO - FastAPI application created and configured.
+2025-09-02 09:21:54,132 - backend.main - INFO - Application startup begins...
+2025-09-02 09:21:54,132 - backend.main - INFO - Application startup complete.
+2025-09-02 09:22:03,800 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 09:22:04,796 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-09-02 09:22:04,797 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8498 seconds.
+2025-09-02 09:31:10,289 - backend.main - INFO - Application shutdown begins...
+2025-09-02 09:31:10,289 - backend.main - INFO - Application shutdown complete.
+2025-09-02 09:31:43,969 - backend.main - INFO - FastAPI application created and configured.
+2025-09-02 09:31:43,970 - backend.main - INFO - Application startup begins...
+2025-09-02 09:31:43,970 - backend.main - INFO - Application startup complete.
+2025-09-02 09:32:59,300 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 09:33:00,339 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-09-02 09:33:00,340 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.9127 seconds.
+2025-09-02 09:33:00,341 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.92s
+2025-09-02 09:49:30,316 - backend.main - INFO - Application shutdown begins...
+2025-09-02 09:49:30,317 - backend.main - INFO - Application shutdown complete.
+2025-09-02 09:50:00,988 - backend.main - INFO - FastAPI application created and configured.
+2025-09-02 09:50:00,990 - backend.main - INFO - Application startup begins...
+2025-09-02 09:50:00,990 - backend.main - INFO - Application startup complete.
+2025-09-02 09:51:30,082 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 09:51:31,076 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-09-02 09:51:31,076 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8715 seconds.
+2025-09-02 09:51:31,077 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.87s
+2025-09-02 09:51:31,077 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser_prod/UniDocParser/uploads/32aff817-117e-4315-b48d-ddcca27b2cf0_dummy_scanned1.pdf
+2025-09-02 09:51:31,078 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-09-02 09:51:34,557 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser_prod/UniDocParser/uploads/32aff817-117e-4315-b48d-ddcca27b2cf0_dummy_scanned1.pdf
+2025-09-02 09:51:35,635 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser_prod/UniDocParser/uploads/32aff817-117e-4315-b48d-ddcca27b2cf0_dummy_scanned1.pdf ...
+2025-09-02 09:51:40,734 - unstructured_inference - INFO - Loading the Table agent ...
+2025-09-02 09:51:40,992 - unstructured_inference - INFO - Loading the table structure model ...
+2025-09-02 09:51:41,559 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-09-02 09:51:41,811 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-09-02 09:51:41,819 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-09-02 09:51:42,385 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-09-02 09:51:43,408 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-09-02 09:51:43,410 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-09-02 09:51:43,410 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-09-02 09:51:43,414 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-09-02 09:51:43,423 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-09-02 09:51:43,423 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-09-02 09:51:43,441 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser_prod/UniDocParser/uploads/32aff817-117e-4315-b48d-ddcca27b2cf0_dummy_scanned1.pdf
+2025-09-02 09:51:43,467 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 12.39s
+2025-09-02 09:51:43,500 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-09-02 09:51:43,505 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-09-02 09:51:44,150 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.20GB peak=0.19GB total=23.59GB
+2025-09-02 09:51:44,151 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-02 09:51:44,152 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-02 09:51:50,719 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-02 09:51:50,719 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-02 09:51:50,727 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "3a176fff-99be-438f-8a90-5be5a4eb6aae", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 130, "total_tokens": 862, "time_total_s": 6.568647756008431, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 131.22944508807265, "first_token_latency_s": null}
+2025-09-02 09:51:51,114 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-02 09:51:51,114 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-02 09:51:51,169 - backend.utils.vram - INFO - [vram:build_inputs:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-02 09:51:51,177 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-09-02 09:51:51,653 - backend.utils.vram - INFO - [vram:build_inputs:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-02 09:51:51,654 - backend.utils.vram - INFO - [vram:build_inputs:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-02 09:51:51,655 - backend.utils.vram - INFO - [vram:generate:enter] alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-02 09:52:00,791 - backend.utils.vram - INFO - [vram:generate:exit] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-02 09:52:00,791 - backend.utils.vram - INFO - [vram:generate:exit]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-02 09:52:00,799 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "38d7ddfb-66f6-44f1-aa6c-5e0546abda68", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 210, "total_tokens": 982, "time_total_s": 9.136931317974813, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 107.47590912368364, "first_token_latency_s": null}
+2025-09-02 09:52:01,227 - backend.utils.vram - INFO - [vram:post-decode] before: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-02 09:52:01,227 - backend.utils.vram - INFO - [vram:post-decode]  after: alloc=0.11GB reserved=0.12GB peak=0.11GB total=23.59GB
+2025-09-02 09:52:01,231 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 17.76s
+2025-09-02 09:52:01,236 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-09-02 09:52:01,236 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-09-02 09:52:01,237 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 31.03s
+2025-09-02 10:12:02,769 - backend.main - INFO - Application shutdown begins...
+2025-09-02 10:12:02,769 - backend.main - INFO - Application shutdown complete.
+2025-09-02 10:13:35,133 - backend.main - INFO - FastAPI application created and configured.
+2025-09-02 10:13:35,134 - backend.main - INFO - Application startup begins...
+2025-09-02 10:13:35,134 - backend.main - INFO - Application startup complete.
+2025-09-02 10:13:48,106 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 10:13:49,051 - backend.file_ingestion.handlers.pdf_handler - INFO - storage_key: jobs/adhoc-f9d5cd836d82/pages/0000.jpeg
+2025-09-02 10:13:49,126 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-09-02 10:13:49,126 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.9014 seconds.
+2025-09-02 10:13:49,127 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.90s
+2025-09-02 10:13:49,128 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser_prod/UniDocParser/uploads/8d2facc0-3fac-4230-a5a8-041300b9b337_dummy_scanned1.pdf
+2025-09-02 10:13:49,128 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-09-02 10:13:52,142 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser_prod/UniDocParser/uploads/8d2facc0-3fac-4230-a5a8-041300b9b337_dummy_scanned1.pdf
+2025-09-02 10:13:53,174 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser_prod/UniDocParser/uploads/8d2facc0-3fac-4230-a5a8-041300b9b337_dummy_scanned1.pdf ...
+2025-09-02 10:13:58,503 - unstructured_inference - INFO - Loading the Table agent ...
+2025-09-02 10:13:58,765 - unstructured_inference - INFO - Loading the table structure model ...
+2025-09-02 10:13:59,296 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-09-02 10:13:59,544 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-09-02 10:13:59,554 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-09-02 10:14:00,124 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-09-02 10:14:00,957 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-09-02 10:14:00,959 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-09-02 10:14:00,959 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-09-02 10:14:00,962 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-09-02 10:14:00,971 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-09-02 10:14:00,971 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-09-02 10:14:00,987 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser_prod/UniDocParser/uploads/8d2facc0-3fac-4230-a5a8-041300b9b337_dummy_scanned1.pdf
+2025-09-02 10:14:01,010 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 11.88s
+2025-09-02 10:14:01,047 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-09-02 10:14:07,159 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "44dba9a3-f6bd-42a5-a700-f63ba3cc2917", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 103, "total_tokens": 835, "time_total_s": 5.624988908995874, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 148.4447371379897, "first_token_latency_s": null}
+2025-09-02 10:14:07,644 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-09-02 10:14:15,945 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "37945f4c-e756-4d66-9342-b880b78be44c", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 187, "total_tokens": 959, "time_total_s": 7.883256781031378, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 121.6502299287697, "first_token_latency_s": null}
+2025-09-02 10:14:16,330 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 15.32s
+2025-09-02 10:14:16,334 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-09-02 10:14:16,334 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-09-02 10:14:16,335 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 28.11s
+2025-09-02 10:17:18,252 - backend.main - INFO - Application shutdown begins...
+2025-09-02 10:17:18,252 - backend.main - INFO - Application shutdown complete.
+2025-09-02 10:17:52,080 - backend.main - INFO - FastAPI application created and configured.
+2025-09-02 10:17:52,081 - backend.main - INFO - Application startup begins...
+2025-09-02 10:17:52,081 - backend.main - INFO - Application startup complete.
+2025-09-02 10:18:34,300 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 10:18:35,190 - backend.file_ingestion.handlers.pdf_handler - INFO - storage_key: jobs/adhoc-405205321156/pages/0000.jpeg
+2025-09-02 10:18:35,271 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-09-02 10:18:35,272 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8505 seconds.
+2025-09-02 10:18:35,272 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.85s
+2025-09-02 10:18:35,273 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser_prod/UniDocParser/uploads/cbc68a60-c2bd-42dc-86c4-cc31c68f23a0_dummy_scanned1.pdf
+2025-09-02 10:18:35,273 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-09-02 10:18:38,401 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser_prod/UniDocParser/uploads/cbc68a60-c2bd-42dc-86c4-cc31c68f23a0_dummy_scanned1.pdf
+2025-09-02 10:18:44,520 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser_prod/UniDocParser/uploads/cbc68a60-c2bd-42dc-86c4-cc31c68f23a0_dummy_scanned1.pdf ...
+2025-09-02 10:18:49,605 - unstructured_inference - INFO - Loading the Table agent ...
+2025-09-02 10:18:49,864 - unstructured_inference - INFO - Loading the table structure model ...
+2025-09-02 10:18:50,434 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-09-02 10:18:50,694 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-09-02 10:18:50,707 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-09-02 10:18:51,362 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-09-02 10:18:52,149 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-09-02 10:18:52,151 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-09-02 10:18:52,151 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-09-02 10:18:52,154 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-09-02 10:18:52,164 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-09-02 10:18:52,164 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-09-02 10:18:52,179 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser_prod/UniDocParser/uploads/cbc68a60-c2bd-42dc-86c4-cc31c68f23a0_dummy_scanned1.pdf
+2025-09-02 10:18:52,203 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 16.93s
+2025-09-02 10:18:52,239 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-09-02 10:18:59,298 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "05bb6915-d68d-4000-be73-21554bed6593", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 128, "total_tokens": 860, "time_total_s": 6.525948892987799, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 131.78160204780013, "first_token_latency_s": null}
+2025-09-02 10:18:59,784 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-09-02 10:19:07,170 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "d801146a-c91e-4aec-bab0-e66bfb100b0f", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 173, "total_tokens": 945, "time_total_s": 6.991688173031434, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 135.16049008665524, "first_token_latency_s": null}
+2025-09-02 10:19:07,569 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 15.37s
+2025-09-02 10:19:07,572 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-09-02 10:19:07,573 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-09-02 10:19:07,574 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 33.15s
+2025-09-02 10:26:34,266 - backend.main - INFO - Application shutdown begins...
+2025-09-02 10:26:34,266 - backend.main - INFO - Application shutdown complete.
+2025-09-02 10:27:09,594 - backend.main - INFO - FastAPI application created and configured.
+2025-09-02 10:27:09,596 - backend.main - INFO - Application startup begins...
+2025-09-02 10:27:09,596 - backend.main - INFO - Application startup complete.
+2025-09-02 10:27:16,776 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 10:27:17,694 - backend.file_ingestion.handlers.pdf_handler - INFO - storage_key: jobs/adhoc-48313215618e/pages/0000.jpeg
+2025-09-02 10:27:17,770 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-09-02 10:27:17,770 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8541 seconds.
+2025-09-02 10:27:17,771 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.86s
+2025-09-02 10:27:17,772 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser_prod/UniDocParser/uploads/3ae64806-1553-4c32-8823-13648cfa0559_dummy_scanned1.pdf
+2025-09-02 10:27:17,772 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-09-02 10:27:21,229 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser_prod/UniDocParser/uploads/3ae64806-1553-4c32-8823-13648cfa0559_dummy_scanned1.pdf
+2025-09-02 10:27:22,357 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser_prod/UniDocParser/uploads/3ae64806-1553-4c32-8823-13648cfa0559_dummy_scanned1.pdf ...
+2025-09-02 10:27:27,474 - unstructured_inference - INFO - Loading the Table agent ...
+2025-09-02 10:27:27,739 - unstructured_inference - INFO - Loading the table structure model ...
+2025-09-02 10:27:28,277 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-09-02 10:27:28,523 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-09-02 10:27:28,532 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-09-02 10:27:29,093 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-09-02 10:27:29,819 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-09-02 10:27:29,822 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-09-02 10:27:29,822 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-09-02 10:27:29,825 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-09-02 10:27:29,835 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-09-02 10:27:29,836 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-09-02 10:27:29,851 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser_prod/UniDocParser/uploads/3ae64806-1553-4c32-8823-13648cfa0559_dummy_scanned1.pdf
+2025-09-02 10:27:29,878 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 12.11s
+2025-09-02 10:27:29,917 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-09-02 10:27:37,165 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "6204168c-da16-4999-a6ab-7fe5c6c7b0b4", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 130, "total_tokens": 862, "time_total_s": 6.72657616896322, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 128.14840393502325, "first_token_latency_s": null}
+2025-09-02 10:27:37,585 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-09-02 10:27:44,809 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "e43d5159-7c44-42ec-9031-acfb94a2b6a4", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 160, "total_tokens": 932, "time_total_s": 6.81834582798183, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 136.69004528564133, "first_token_latency_s": null}
+2025-09-02 10:27:45,236 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 15.36s
+2025-09-02 10:27:45,241 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-09-02 10:27:45,241 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-09-02 10:27:45,243 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 28.33s
+2025-09-02 10:30:23,164 - backend.main - INFO - Application shutdown begins...
+2025-09-02 10:30:23,164 - backend.main - INFO - Application shutdown complete.
+2025-09-02 10:30:56,137 - backend.main - INFO - FastAPI application created and configured.
+2025-09-02 10:30:56,138 - backend.main - INFO - Application startup begins...
+2025-09-02 10:30:56,138 - backend.main - INFO - Application startup complete.
+2025-09-02 11:03:09,500 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 11:03:10,535 - backend.file_ingestion.handlers.pdf_handler - INFO - storage_key: jobs/adhoc-209791bd0da2/pages/0000.jpeg
+2025-09-02 11:03:10,614 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-09-02 11:03:10,615 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.9667 seconds.
+2025-09-02 11:03:10,616 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.97s
+2025-09-02 11:03:10,616 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser_prod/UniDocParser/uploads/7ee1f117-2765-4683-8011-fb408e8ef6f7_dummy_scanned1.pdf
+2025-09-02 11:03:10,617 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-09-02 11:03:13,984 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser_prod/UniDocParser/uploads/7ee1f117-2765-4683-8011-fb408e8ef6f7_dummy_scanned1.pdf
+2025-09-02 11:03:15,015 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser_prod/UniDocParser/uploads/7ee1f117-2765-4683-8011-fb408e8ef6f7_dummy_scanned1.pdf ...
+2025-09-02 11:03:19,973 - unstructured_inference - INFO - Loading the Table agent ...
+2025-09-02 11:03:20,228 - unstructured_inference - INFO - Loading the table structure model ...
+2025-09-02 11:03:20,766 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-09-02 11:03:21,019 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-09-02 11:03:21,027 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-09-02 11:03:21,576 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-09-02 11:03:22,295 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-09-02 11:03:22,297 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-09-02 11:03:22,297 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-09-02 11:03:22,300 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-09-02 11:03:22,310 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-09-02 11:03:22,311 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-09-02 11:03:22,326 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser_prod/UniDocParser/uploads/7ee1f117-2765-4683-8011-fb408e8ef6f7_dummy_scanned1.pdf
+2025-09-02 11:03:22,350 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 11.73s
+2025-09-02 11:03:22,389 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-09-02 11:03:31,372 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "916032d2-5b82-40a7-8865-f42ca2218211", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 182, "total_tokens": 914, "time_total_s": 8.468070068047382, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 107.93486504661806, "first_token_latency_s": null}
+2025-09-02 11:03:31,792 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-09-02 11:03:39,790 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "1604ffaa-c85e-4aab-b45b-6641eae24e80", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 179, "total_tokens": 951, "time_total_s": 7.571323855954688, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 125.60551075252954, "first_token_latency_s": null}
+2025-09-02 11:03:40,157 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 17.81s
+2025-09-02 11:03:40,161 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-09-02 11:03:40,162 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-09-02 11:03:40,163 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 30.52s
+2025-09-02 11:09:14,376 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 11:10:06,078 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 11:14:12,609 - backend.main - INFO - Application shutdown begins...
+2025-09-02 11:14:12,609 - backend.main - INFO - Application shutdown complete.
+2025-09-02 11:14:46,405 - backend.main - INFO - FastAPI application created and configured.
+2025-09-02 11:14:46,406 - backend.main - INFO - Application startup begins...
+2025-09-02 11:14:46,406 - backend.main - INFO - Application startup complete.
+2025-09-02 11:14:51,161 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 11:15:39,958 - backend.main - INFO - Application shutdown begins...
+2025-09-02 11:15:39,959 - backend.main - INFO - Application shutdown complete.
+2025-09-02 11:16:16,515 - backend.main - INFO - FastAPI application created and configured.
+2025-09-02 11:16:16,516 - backend.main - INFO - Application startup begins...
+2025-09-02 11:16:16,516 - backend.main - INFO - Application startup complete.
+2025-09-02 11:16:45,074 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 11:17:20,884 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 11:48:14,125 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 11:48:14,130 - backend.services.base_service - ERROR - Error fetching ExtractJob 1c3f5b92-8c48-48f5-a2b0-7b90b8e8f52a: 404: ExtractJob 1c3f5b92-8c48-48f5-a2b0-7b90b8e8f52a not found
+2025-09-02 11:48:36,896 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 11:50:21,543 - backend.main - INFO - Application shutdown begins...
+2025-09-02 11:50:21,543 - backend.main - INFO - Application shutdown complete.
+2025-09-02 11:50:56,518 - backend.main - INFO - FastAPI application created and configured.
+2025-09-02 11:50:56,519 - backend.main - INFO - Application startup begins...
+2025-09-02 11:50:56,519 - backend.main - INFO - Application startup complete.
+2025-09-02 11:51:33,901 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 11:52:22,188 - backend.main - INFO - Application shutdown begins...
+2025-09-02 11:52:22,188 - backend.main - INFO - Application shutdown complete.
+2025-09-02 11:52:53,940 - backend.main - INFO - FastAPI application created and configured.
+2025-09-02 11:52:53,941 - backend.main - INFO - Application startup begins...
+2025-09-02 11:52:53,941 - backend.main - INFO - Application startup complete.
+2025-09-02 11:53:24,591 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 11:55:00,915 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 11:55:36,495 - backend.main - INFO - Application shutdown begins...
+2025-09-02 11:55:36,495 - backend.main - INFO - Application shutdown complete.
+2025-09-02 11:56:06,600 - backend.main - INFO - FastAPI application created and configured.
+2025-09-02 11:56:06,601 - backend.main - INFO - Application startup begins...
+2025-09-02 11:56:06,601 - backend.main - INFO - Application startup complete.
+2025-09-02 11:56:40,702 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 11:56:40,784 - backend.routes.files_router - INFO - fpath: /home/dedya/UniDocParser_prod/UniDocParser/storage/jobs/47119734-0369-423b-9f8d-e2aad9f82e9a/pages/0000.jpeg
+2025-09-02 11:56:46,053 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 11:56:46,061 - backend.routes.files_router - INFO - fpath: /home/dedya/UniDocParser_prod/UniDocParser/storage/jobs/47119734-0369-423b-9f8d-e2aad9f82e9a/pages/0000.jpeg
+2025-09-02 11:59:34,491 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 11:59:35,313 - backend.file_ingestion.handlers.pdf_handler - INFO - storage_key: jobs/d8bede72-e0fb-4660-be3f-63055b5efb0f/pages/0000.jpeg
+2025-09-02 11:59:35,393 - backend.file_ingestion.handlers.pdf_handler - INFO - PDF pages processed: 1
+2025-09-02 11:59:35,394 - backend.utils.trackers - INFO - [file_ingest.py -> PDFHandler] Function 'handle' took 0.8687 seconds.
+2025-09-02 11:59:35,394 - backend.pipeline.doc_parser_pipeline - INFO - Split took 0.87s
+2025-09-02 11:59:35,395 - backend.extraction.services.element_extractor - INFO - Extracting elements from: /home/dedya/UniDocParser_prod/UniDocParser/uploads/ef0361a5-2461-43c7-b999-5479e478046d_dummy_scanned1.pdf
+2025-09-02 11:59:35,395 - backend.extraction.services.element_extractor - INFO - Detected file type: FileType.PDF
+2025-09-02 11:59:38,614 - backend.extraction.extractors.pdf_extractor - INFO - Partitioning PDF: /home/dedya/UniDocParser_prod/UniDocParser/uploads/ef0361a5-2461-43c7-b999-5479e478046d_dummy_scanned1.pdf
+2025-09-02 11:59:39,717 - unstructured_inference - INFO - Reading PDF for file: /home/dedya/UniDocParser_prod/UniDocParser/uploads/ef0361a5-2461-43c7-b999-5479e478046d_dummy_scanned1.pdf ...
+2025-09-02 11:59:44,800 - unstructured_inference - INFO - Loading the Table agent ...
+2025-09-02 11:59:45,059 - unstructured_inference - INFO - Loading the table structure model ...
+2025-09-02 11:59:45,608 - timm.models._builder - INFO - Loading pretrained weights from Hugging Face hub (timm/resnet18.a1_in1k)
+2025-09-02 11:59:45,860 - timm.models._hub - INFO - [timm/resnet18.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-09-02 11:59:45,868 - timm.models._builder - INFO - Missing keys (fc.weight, fc.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-09-02 11:59:46,438 - unstructured - WARNING - short text: "PFU Business report". Defaulting to English.
+2025-09-02 11:59:47,239 - unstructured - WARNING - short text: "From the product headquarters". Defaulting to English.
+2025-09-02 11:59:47,242 - unstructured - WARNING - short text: "@Image business". Defaulting to English.
+2025-09-02 11:59:47,242 - unstructured - WARNING - short text: "1) Scanner class". Defaulting to English.
+2025-09-02 11:59:47,245 - unstructured - WARNING - short text: ",". Defaulting to English.
+2025-09-02 11:59:47,255 - unstructured - WARNING - short text: "[approach on business risk]". Defaulting to English.
+2025-09-02 11:59:47,255 - unstructured - WARNING - short text: "In-house activity". Defaulting to English.
+2025-09-02 11:59:47,271 - backend.extraction.services.element_extractor - INFO - Extracted 1 elements from /home/dedya/UniDocParser_prod/UniDocParser/uploads/ef0361a5-2461-43c7-b999-5479e478046d_dummy_scanned1.pdf
+2025-09-02 11:59:47,295 - backend.pipeline.doc_parser_pipeline - INFO - Extract Elements took 11.90s
+2025-09-02 11:59:47,336 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-09-02 11:59:54,188 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "29f89985-06c9-4216-abd6-4c1154dbcb40", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 732, "generated_tokens": 124, "total_tokens": 856, "time_total_s": 6.285744084045291, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 136.1811725954181, "first_token_latency_s": null}
+2025-09-02 11:59:54,618 - backend.generation.mm_adapter - INFO - [mm] _to_qwen_messages built 1 msgs, 1 images
+2025-09-02 12:00:01,964 - backend.generation.hf_adapter - INFO - [llm_perf]{"run_id": "9d51680b-db84-4b34-8952-c593028f598c", "model_path": "unsloth/Qwen2.5-VL-7B-Instruct", "device": "cuda:3", "torch_dtype": "float16", "attn_impl": "sdpa", "quantization": null, "gpu_name": "NVIDIA GeForce RTX 3090", "torch_version": "2.7.0+cu126", "transformers_version": "4.55.3", "prompt_tokens": 772, "generated_tokens": 161, "total_tokens": 933, "time_total_s": 6.925800992990844, "time_prefill_s": null, "time_decode_s": null, "prefill_tps": null, "decode_tps": null, "total_tps": 134.71365997149343, "first_token_latency_s": null}
+2025-09-02 12:00:02,329 - backend.pipeline.doc_parser_pipeline - INFO - Extract Images took 15.03s
+2025-09-02 12:00:02,334 - backend.pipeline.doc_parser_pipeline - INFO - Format Extracted Text took 0.00s
+2025-09-02 12:00:02,334 - backend.pipeline.doc_parser_pipeline - INFO - Format Markdown took 0.00s
+2025-09-02 12:00:02,336 - backend.pipeline.doc_parser_pipeline - INFO - Total pipeline time: 27.81s
+2025-09-02 12:00:42,592 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 12:00:42,597 - backend.routes.files_router - INFO - fpath: /home/dedya/UniDocParser_prod/UniDocParser/storage/jobs/d8bede72-e0fb-4660-be3f-63055b5efb0f/pages/0000.jpeg
+2025-09-02 12:57:04,881 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 12:58:05,573 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 12:58:33,015 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 12:59:20,492 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 13:01:50,204 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 13:02:20,549 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 13:03:16,841 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 13:04:02,014 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 13:04:02,017 - backend.services.base_service - ERROR - Error fetching ExtractJob bulk-delete: 404: ExtractJob bulk-delete not found
+2025-09-02 13:05:58,844 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 13:05:58,847 - backend.services.base_service - ERROR - Error fetching ExtractJob bulk-delete: 404: ExtractJob bulk-delete not found
+2025-09-02 13:09:03,209 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 13:09:03,212 - backend.services.base_service - ERROR - Error fetching ExtractJob bulk-delete: 404: ExtractJob bulk-delete not found
+2025-09-02 13:19:18,620 - backend.main - INFO - Application shutdown begins...
+2025-09-02 13:19:18,620 - backend.main - INFO - Application shutdown complete.
+2025-09-02 13:19:49,512 - backend.main - INFO - FastAPI application created and configured.
+2025-09-02 13:19:49,513 - backend.main - INFO - Application startup begins...
+2025-09-02 13:19:49,513 - backend.main - INFO - Application startup complete.
+2025-09-02 13:20:53,073 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 13:20:53,165 - backend.services.base_service - ERROR - Error fetching ExtractJob bulk-delete: 404: ExtractJob bulk-delete not found
+2025-09-02 13:24:04,385 - backend.main - INFO - Application shutdown begins...
+2025-09-02 13:24:04,385 - backend.main - INFO - Application shutdown complete.
+2025-09-02 13:24:41,571 - backend.main - INFO - FastAPI application created and configured.
+2025-09-02 13:24:41,572 - backend.main - INFO - Application startup begins...
+2025-09-02 13:24:41,572 - backend.main - INFO - Application startup complete.
+2025-09-02 13:25:03,938 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 13:25:04,055 - backend.db.services.extract_job - INFO - Bulk delete summary tenant=1c3f5b92-8c48-48f5-a2b0-7b90b8e8f52a: {'requested': 1, 'matched': 1, 'deleted': 1, 'skipped_running': [], 'not_found': []}
+2025-09-02 13:25:59,658 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 13:26:29,144 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 13:27:00,045 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 13:27:00,056 - backend.db.services.extract_orchestrator - INFO - Completely deleted job 151fe692-56a1-4ef5-b46c-72bb7dd8cd25 and all related data
+2025-09-02 13:27:36,294 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 13:27:46,369 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 13:28:01,176 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 13:33:21,793 - backend.main - INFO - Application shutdown begins...
+2025-09-02 13:33:21,793 - backend.main - INFO - Application shutdown complete.
+2025-09-02 13:33:54,527 - backend.main - INFO - FastAPI application created and configured.
+2025-09-02 13:33:54,528 - backend.main - INFO - Application startup begins...
+2025-09-02 13:33:54,528 - backend.main - INFO - Application startup complete.
+2025-09-02 13:34:11,102 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 13:35:00,184 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 13:35:03,647 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 13:35:44,671 - backend.deps.security - INFO - Origin header: http://localhost:8010 -> netloc=localhost:8010
+2025-09-02 13:36:15,640 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 13:37:05,125 - backend.deps.security - INFO - No Origin header. client_ip=127.0.0.1
+2025-09-02 16:23:27,909 - backend.main - INFO - Application shutdown begins...
+2025-09-02 16:23:27,910 - backend.main - INFO - Application shutdown complete.

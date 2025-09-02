@@ -1,5 +1,6 @@
 # backend/pipeline/steps/format_extracted_text_step.py
 import logging
+from typing import Optional
 from backend.pipeline.doc_parser_steps.doc_parser_step import DocParserStep
 from backend.pipeline.doc_parser_steps.context import DocParserContext, Page
 from backend.services.output_formatter import format_extracted_text
@@ -17,7 +18,7 @@ class FormatExtractedTextStep(DocParserStep):
     def __init__(self):
         super().__init__(name="Format Extracted Text")
 
-    def run(self, ctx: DocParserContext) -> DocParserContext:
+    def run(self, ctx: DocParserContext, job_id: Optional[str] = None) -> DocParserContext:
         if not ctx.pages:
             raise RuntimeError(
                 "FormatExtractedTextStep: pages are missing – run previous steps first")

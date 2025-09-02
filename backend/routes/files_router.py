@@ -1,16 +1,17 @@
 # backend/routes/files.py
+import logging
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import FileResponse
 from pathlib import Path
 from backend.deps.security import get_verified_principal, Principal
 from backend.services.extractor_services import ExtractJobService
 from backend.utils.storage_paths import fs_path_from_key
-from backend.db.services import get_job_service  # your DI helper
 
 from backend.db.base import session_manager
 from sqlalchemy.ext.asyncio import AsyncSession
 
-files_router = APIRouter()
+logger = logging.getLogger(__name__)
+router = APIRouter()
 
 
 async def get_db_session():
@@ -32,7 +33,7 @@ def _safe_join(storage_key: str) -> Path:
     return p
 
 
-@files_router.get("/jobs/{job_id}/pages/{page_index}.jpeg", response_class=FileResponse)
+@router.get("/{job_id}/pages/{page_index}", response_class=FileResponse)
 async def get_page_image(
     job_id: str,
     page_index: int,
@@ -48,6 +49,7 @@ async def get_page_image(
     # Build storage key from canonical pattern
     storage_key = f"jobs/{job_id}/pages/{page_index:04d}.jpeg"
     fpath = _safe_join(storage_key)
+    logger.info(f"fpath: {fpath}")
     if not fpath.exists():
         raise HTTPException(status_code=404, detail="File not found")
 

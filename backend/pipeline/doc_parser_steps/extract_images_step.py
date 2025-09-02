@@ -1,4 +1,5 @@
 # backend/pipeline/steps/extract_images_step.py
+from typing import Optional
 from backend.pipeline.doc_parser_steps.doc_parser_step import DocParserStep
 from backend.pipeline.doc_parser_steps.context import DocParserContext, Page
 from backend.services.image_extractor import extract_images
@@ -10,7 +11,7 @@ class ExtractImagesStep(DocParserStep):
     def __init__(self):
         super().__init__(name="Extract Images")
 
-    def run(self, ctx: DocParserContext) -> DocParserContext:
+    def run(self, ctx: DocParserContext, job_id: Optional[str] = None) -> DocParserContext:
         if not ctx.pages:
             raise ValueError(
                 "ExtractImagesStep: ctx.pages is empty – did you run Split & ExtractElements?")

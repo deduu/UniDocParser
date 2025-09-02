@@ -1,4 +1,5 @@
 # backend/pipeline/steps/split_step.py
+import uuid  #
 from dataclasses import asdict
 from typing import Optional
 from backend.pipeline.doc_parser_steps.doc_parser_step import DocParserStep
@@ -17,9 +18,9 @@ class SplitStep(DocParserStep):
         resolved_job_id = job_id or getattr(
             ctx, "job_id", None) or f"adhoc-{uuid.uuid4().hex[:12]}"
 
-        raw_pages = ingest.handle_file(ctx.pdf_path, resolved_job_id)
+        raw_pages = ingest.handle_file(ctx.file_path, resolved_job_id)
 
-        # print(f"raw_pages: {raw_pages}")
+        print(f"raw_pages: {raw_pages}")
 
         # 2. Convert each dict into a Page model (elements defaults to [])
         # pages = [Page(**asdict(page_data)) for page_data in raw_pages]
@@ -33,7 +34,7 @@ class SplitStep(DocParserStep):
         ctx.pages = pages
 
         # Persist the resolved job_id back to context if not set
-        if not getattr(ctx, "job_id", None):
-            setattr(ctx, "job_id", resolved_job_id)
+        # if not getattr(ctx, "job_id", None):
+        #     setattr(ctx, "job_id", resolved_job_id)
 
         return ctx

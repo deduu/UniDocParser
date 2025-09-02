@@ -45,6 +45,7 @@ class PDFHandler:
 
             # jobs/<job_id>/pages/0000.jpeg
             storage_key = page_image_key(job_id, idx, ext="jpeg")
+            logger.info(f"storage_key: {storage_key}")
             out_path = ensure_parent_dir(storage_key)
             save_jpeg(resized, out_path, quality=self.jpeg_quality)
             return PageMetadata(index=idx, image=storage_key)

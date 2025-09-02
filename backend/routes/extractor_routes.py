@@ -1,7 +1,8 @@
 # routers/extractor.py
 import logging
+from uuid import UUID
 from typing import List, Optional, Dict, Any
-from fastapi import APIRouter, Depends, HTTPException, status, Query, BackgroundTasks
+from fastapi import APIRouter, Depends, HTTPException, status, Query, BackgroundTasks, Body
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import func, select
 
@@ -124,18 +125,16 @@ async def get_job_complete(
 ):
     """Get job with pages and result"""
     job = await extractor_service.job_service.get_job_with_pages(job_id, principal.tenant_id)
-
-    # Try to get result
     try:
         result = await extractor_service.result_service.get_by_job_id(job_id)
     except HTTPException:
         result = None
 
-    return ExtractJobComplete(
-        **job.__dict__,
-        pages=[ExtractPageResponse(**page.__dict__) for page in job.pages],
-        result=ExtractResultResponse(**result.__dict__) if result else None
-    )
+    # Temporarily attach result to the job object (or pass separately)
+    job.result = result
+
+    # Now Pydantic can walk relationships
+    return ExtractJobComplete.model_validate(job)
 
 
 @router.get("/jobs/{job_id}/summary", response_model=CompleteJobSummary)
@@ -194,18 +193,20 @@ async def retry_job(
     return await extractor_service.retry_job(job_id, principal.tenant_id)
 
 
-@router.delete("/jobs/{job_id}")
+@router.delete("/jobs/{job_id:uuid}")
 async def delete_job(
-    job_id: str,
+    job_id: UUID,
     complete: bool = Query(False, description="Delete all related data"),
     extractor_service: ExtractorService = Depends(get_extractor_service),
     principal: Principal = Depends(get_verified_principal)
 ):
     """Delete a job (optionally with all related data)"""
+
+    job_id_str = str(job_id)  # your DB PK is a string
     if complete:
-        await extractor_service.delete_complete_job(job_id, principal.tenant_id)
+        await extractor_service.delete_complete_job(job_id_str, principal.tenant_id)
     else:
-        await extractor_service.job_service.delete_job(job_id, principal.tenant_id)
+        await extractor_service.job_service.delete_job(job_id_str, principal.tenant_id)
 
     return {"message": "Job deleted successfully"}
 
@@ -445,29 +446,14 @@ async def bulk_update_job_status(
 
 @router.delete("/jobs/bulk-delete")
 async def bulk_delete_jobs(
-    job_ids: List[str],
+    job_ids: List[str] = Body(...),
+    allow_running: bool = False,
     service: ExtractJobService = Depends(get_job_service),
-    principal: Principal = Depends(get_verified_principal)
+    principal: Principal = Depends(get_verified_principal),
 ):
-    """Bulk delete jobs"""
-    # Verify all jobs belong to tenant
-    for job_id in job_ids:
-        await service.assert_access(job_id, principal.tenant_id)
-
-    deleted_count = 0
-    errors = []
-
-    for job_id in job_ids:
-        try:
-            await service.delete_job(job_id, principal.tenant_id)
-            deleted_count += 1
-        except Exception as e:
-            errors.append(f"Failed to delete {job_id}: {str(e)}")
-
-    return {
-        "message": f"Deleted {deleted_count} jobs",
-        "errors": errors if errors else None
-    }
+    tenant_id = principal.tenant_id or principal.user_id
+    result = await service.bulk_delete_by_ids(tenant_id, job_ids, allow_running=allow_running)
+    return result
 
 # === STATISTICS AND MONITORING ===
 

@@ -7,6 +7,7 @@ from backend.utils.helpers import ensure_dir
 
 logger = logging.getLogger(__name__)
 
+
 class OCRService:
     def ocr_pdf_to_pdf(self, pdf_path: str | Path, output_dir: str | Path) -> str | None:
         pdf_path = Path(pdf_path)

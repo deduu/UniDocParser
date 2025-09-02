@@ -1,3 +1,4 @@
+from typing import Optional
 from backend.pipeline.doc_parser_pipeline import DocParserPipeline
 
 from backend.pipeline.doc_parser_steps.context import DocParserContext
@@ -19,12 +20,12 @@ class DocParserService:
         self.split_pipeline = DocParserPipeline([
             SplitStep()
         ])
-        self.extract_only_pipeline = DocParserPipeline([    
+        self.extract_only_pipeline = DocParserPipeline([
             SplitStep(),
             ExtractElementsStep(),
             ExtractImagesStep(),
             FormatExtractedTextStep(),])
-        
+
         self.full_pipeline = DocParserPipeline([
             SplitStep(),
             ExtractElementsStep(),
@@ -33,14 +34,14 @@ class DocParserService:
             MarkdownStep()
         ])
 
-    async def ocr(self, pdf_path: str) -> DocParserContext:
-        return await self.ocr_pipeline.process(pdf_path)
+    async def ocr(self, file_path: str, job_id: Optional[str] = None) -> DocParserContext:
+        return await self.ocr_pipeline.process(file_path, job_id)
 
-    async def split(self, pdf_path: str) -> DocParserContext:
-        return await self.split_pipeline.process(pdf_path)
-    
-    async def extract_only (self, file_path: str) -> DocParserContext:
-        return await self.extract_only_pipeline.process(file_path)
+    async def split(self, file_path: str, job_id: Optional[str] = None) -> DocParserContext:
+        return await self.split_pipeline.process(file_path, job_id)
 
-    async def full(self, pdf_path: str) -> DocParserContext:
-        return await self.full_pipeline.process(pdf_path)
+    async def extract_only(self, file_path: str, job_id: Optional[str] = None) -> DocParserContext:
+        return await self.extract_only_pipeline.process(file_path, job_id)
+
+    async def full(self, file_path: str, job_id: Optional[str] = None) -> DocParserContext:
+        return await self.full_pipeline.process(file_path, job_id)

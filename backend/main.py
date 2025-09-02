@@ -11,7 +11,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime
 
 # Assuming your backend structure
-from backend.routes import extraction_routes, jobs, extractor_routes
+from backend.routes import extraction_routes, jobs, extractor_routes, files_router
 
 from backend.core.config import settings
 from backend.utils.logger import configure_logging
@@ -95,6 +95,7 @@ def create_app() -> FastAPI:
     app.include_router(extraction_routes.router, prefix="/api/v1")
     app.include_router(jobs.router)
     app.include_router(extractor_routes.router, prefix="/api/v1")
+    app.include_router(files_router.router, prefix="/api/v1", tags=["files"])
 
     # --- Define basic endpoints within create_app or as separate handlers ---
     # For now, we'll keep them here for simplicity, but for more complex apps,

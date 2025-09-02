@@ -3,7 +3,7 @@ import json
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 from fastapi import UploadFile
-from typing import Tuple
+from typing import Tuple, Optional
 from pathlib import Path
 import uuid
 import aiofiles
@@ -39,7 +39,7 @@ class DocParserHandler:
             await buf.write(await file.read())
         return dest
 
-    async def ocr(self, file: UploadFile) -> DocParserContextOut:
+    async def ocr(self, file: UploadFile, job_id: Optional[str] = None) -> DocParserContextOut:
         path = await self._save_upload(file)
         try:
             ctx = await self.svc.ocr(path)
@@ -47,7 +47,7 @@ class DocParserHandler:
             raise HTTPException(500, f"OCR failed: {e}")
         return self._dto_from_ctx(ctx)
 
-    async def split(self, file: UploadFile) -> SplitPDFResponse:
+    async def split(self, file: UploadFile, job_id: Optional[str] = None) -> SplitPDFResponse:
         path = await self._save_upload(file)
         try:
             ctx = await self.svc.split(path)
@@ -55,18 +55,18 @@ class DocParserHandler:
             raise HTTPException(500, f"Split failed: {e}")
         return SplitPDFResponse.from_context(ctx)
 
-    async def extract_only(self, file: UploadFile) -> DocParserContextOut:
+    async def extract_only(self, file: UploadFile, job_id: Optional[str] = None) -> DocParserContextOut:
         path = await self._save_upload(file)
         try:
-            ctx = await self.svc.extract_only(path)
+            ctx = await self.svc.extract_only(path, job_id=job_id)
         except Exception as e:
             raise HTTPException(500, f"Extract only pipeline failed: {e}")
         return self._dto_from_ctx(ctx)
 
-    async def full_pipeline(self, file: UploadFile) -> DocParserContextOut:
+    async def full_pipeline(self, file: UploadFile, job_id: Optional[str] = None) -> DocParserContextOut:
         path = await self._save_upload(file)
         try:
-            ctx = await self.svc.full(path)
+            ctx = await self.svc.full(path, job_id=job_id)
         except Exception as e:
             raise HTTPException(500, f"Full pipeline failed: {e}")
         return self._dto_from_ctx(ctx)
@@ -106,18 +106,18 @@ class DocParserHandler:
                     )
                 )
 
-            image_b64 = None
-            if save_page_images:
-                try:
-                    image_b64 = pil_to_base64(Image.open(p.image))
-                except (FileNotFoundError, UnidentifiedImageError) as e:
-                    print(f"[WARNING] Image not found for page {p.index}: {e}")
-                    image_b64 = None
+            # image_b64 = None
+            # if save_page_images:
+            #     try:
+            #         image_b64 = pil_to_base64(Image.open(p.image))
+            #     except (FileNotFoundError, UnidentifiedImageError) as e:
+            #         print(f"[WARNING] Image not found for page {p.index}: {e}")
+            #         image_b64 = None
 
             pages.append(
                 PageOut(
                     index=p.index,
-                    image=image_b64,
+                    image_url=p.image,
                     text=p.text,
                     markdown=p.markdown,
                     elements=elements_out,
@@ -136,7 +136,7 @@ class DocParserHandler:
         ]
 
         return DocParserContextOut(
-            pdf_path=ctx.pdf_path,
+            file_path=ctx.file_path,
             # ocr_pdf_path=ctx.ocr_pdf_path,
             pages=pages,
             figure_list=figures,
@@ -160,8 +160,8 @@ class DocParserHandler:
         md_path = Path(self.output_dir) / f"{unique_filename}.md"
         print(f"json_path: {json_path}")
         payload = {
-            "pdf_path":        dto.pdf_path,
-            "ocr_pdf_path":    dto.ocr_pdf_path,
+            "file_path":        dto.file_path,
+            "ocr_pdf_path":    dto.ocr_file_path,
             "processing_time": dto.processing_time,
             "pages":           [p.dict() for p in dto.pages],
         }

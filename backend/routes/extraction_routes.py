@@ -123,14 +123,14 @@ async def extract_pdf_db(
         # 2) Upload file to S3
         # 3) Run the full pipeline (upload → OCR, split, extract, etc.)
         if fname.endswith((".xls", ".xlsx")):
-            dto: DocParserContextOut = await handler.extract_only(file)
+            dto: DocParserContextOut = await handler.extract_only(file, job.id)
         else:
-            dto: DocParserContextOut = await handler.full_pipeline(file)
+            dto: DocParserContextOut = await handler.full_pipeline(file, job.id)
 
         # 4) Persist JSONL & Markdown on disk
         json_name, md_name = await handler.save_results(
             dto,
-            Path(dto.pdf_path).name,
+            Path(dto.file_path).name,
         )
 
         # 5) Persist per-page rows
@@ -138,7 +138,7 @@ async def extract_pdf_db(
             ExtractPageCreate(
                 job_id=job.id,
                 page_index=p.index,
-                image_url=p.image,
+                image_url=p.image_url,
                 text=p.text,
                 markdown=p.markdown,
                 elements=[e.model_dump(by_alias=True)
@@ -209,12 +209,12 @@ async def extract_pdf(
         else:
             dto: DocParserContextOut = await handler.full_pipeline(file)
 
-        print(f"dto.pdf_path: {dto.pdf_path}")
+        print(f"dto.pdf_path: {dto.file_path}")
 
         # 4) Persist JSONL & Markdown on disk
         json_name, md_name = await handler.save_results(
             dto,
-            Path(dto.pdf_path).name,
+            Path(dto.file_path).name,
         )
 
         # 5) Return your typed response

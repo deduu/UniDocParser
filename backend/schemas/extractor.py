@@ -166,6 +166,7 @@ class ExtractJobComplete(ExtractJobResponse):
     """Complete job response with both pages and result"""
     pages: List[ExtractPageResponse] = Field(default_factory=list)
     result: Optional[ExtractResultResponse] = None
+    model_config = ConfigDict(from_attributes=True)
 
 # Filter schemas
 

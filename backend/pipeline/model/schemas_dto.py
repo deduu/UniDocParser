@@ -33,10 +33,10 @@ class PageOut(BaseModel):
     def validate_image_url(cls, v: Optional[str]):
         if v is None:
             return v
-        if not (v.startswith("http://") or v.startswith("https://") or v.startswith("/")):
-            raise ValueError(
-                "image_url must be an http(s) or absolute app path")
-        return v
+        if v.startswith(("http://", "https://", "/")):
+            return v
+        # auto-normalize relative → root-absolute
+        return "/" + v.lstrip("/")
 
 
 class FigureOut(BaseModel):
@@ -49,8 +49,8 @@ class FigureOut(BaseModel):
 class DocParserContextOut(BaseModel):
     # ✅ auto-omit None fields
     model_config = ConfigDict(ser_json_exclude_none=True)
-    pdf_path: Optional[str] = None
-    ocr_pdf_path: Optional[str] = None
+    file_path: Optional[str] = None
+    ocr_file_path: Optional[str] = None
     pages: List[PageOut] = Field(default_factory=list)
     figure_list: List[FigureOut]
     processing_time: float
