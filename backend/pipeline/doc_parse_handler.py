@@ -6,6 +6,7 @@ from fastapi import UploadFile
 from typing import Tuple, Optional
 from pathlib import Path
 import uuid
+import logging
 import aiofiles
 from starlette.concurrency import run_in_threadpool
 from fastapi import Depends, HTTPException, UploadFile
@@ -19,6 +20,8 @@ from backend.pipeline.model.schemas_dto import (
 )
 from backend.pipeline.utils import pil_to_base64
 from backend.core.config import settings
+
+logger = logging.getLogger(__name__)
 
 
 class DocParserHandler:
@@ -61,7 +64,7 @@ class DocParserHandler:
             ctx = await self.svc.extract_only(path, job_id=job_id)
         except Exception as e:
             raise HTTPException(500, f"Extract only pipeline failed: {e}")
-        return self._dto_from_ctx(ctx)
+        return self._dto_from_ctx(ctx, job_id=job_id)
 
     async def full_pipeline(self, file: UploadFile, job_id: Optional[str] = None) -> DocParserContextOut:
         path = await self._save_upload(file)
@@ -69,11 +72,12 @@ class DocParserHandler:
             ctx = await self.svc.full(path, job_id=job_id)
         except Exception as e:
             raise HTTPException(500, f"Full pipeline failed: {e}")
-        return self._dto_from_ctx(ctx)
+        return self._dto_from_ctx(ctx, job_id=job_id)
 
     def _dto_from_ctx(
         self,
         ctx: DocParserContext,
+        job_id: Optional[str] = None,
         save_page_images: bool = True,
         save_figure_images: bool = False,
         include_image_metadata: bool = False,
@@ -117,11 +121,24 @@ class DocParserHandler:
             pages.append(
                 PageOut(
                     index=p.index,
-                    image_url=p.image,
+                    image_url=f"/jobs/{job_id}/pages/{p.index}",
                     text=p.text,
                     markdown=p.markdown,
                     elements=elements_out,
+                    # NEW: pass through coord space + orientation
+                    coord_width=getattr(p, "coord_width", None),
+                    coord_height=getattr(p, "coord_height", None),
+                    y_origin=getattr(p, "y_origin", "top-left"),
+                    rotation_deg=getattr(p, "rotation_deg", 0),
                 )
+                # PageOut(
+                #     index=p.index,
+                #     # image_url=p.image,
+                #     image_url=f"/jobs/{job_id}/pages/{p.index}",
+                #     text=p.text,
+                #     markdown=p.markdown,
+                #     elements=elements_out,
+                # )
             )
 
         figures = [
@@ -134,6 +151,10 @@ class DocParserHandler:
             )
             for f in ctx.figure_list
         ]
+        for po in pages[:3]:
+            logger.info(
+                f"[dto] page {po.index} url={po.image_url} coord=({po.coord_width},{po.coord_height}) y_origin={po.y_origin} rot={po.rotation_deg}"
+            )
 
         return DocParserContextOut(
             file_path=ctx.file_path,

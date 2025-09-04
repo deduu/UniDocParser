@@ -7,6 +7,7 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import selectinload, joinedload
 
+from datetime import datetime, timedelta
 import logging
 from contextlib import asynccontextmanager
 
@@ -273,54 +274,77 @@ class ExtractorService:
 
     async def cleanup_failed_jobs(self, tenant_id: str, older_than_days: int = 7) -> int:
         """Clean up old failed jobs and their data"""
-        try:
-            cutoff_date = func.now() - func.interval(f"{older_than_days} days")
+        logger.info(
+            f"Starting cleanup for tenant {tenant_id}, older_than_days: {older_than_days}")
 
+        try:
             async with self.job_service.transaction():
-                # Find failed jobs older than cutoff
+                # Build the WHERE clause conditionally
+                where_conditions = [
+                    ExtractJob.tenant_id == tenant_id,
+                    ExtractJob.status == "failed"
+                ]
+
+                # Only add date filter if older_than_days > 0
+                if older_than_days > 0:
+                    cutoff_date = datetime.utcnow() - timedelta(days=older_than_days)
+                    where_conditions.append(
+                        ExtractJob.created_at < cutoff_date)
+                    logger.info(f"Cutoff date: {cutoff_date}")
+                else:
+                    logger.info("Cleaning ALL failed jobs (no date filter)")
+
+                # Find failed jobs
                 stmt = (
                     select(ExtractJob.id)
-                    .where(
-                        and_(
-                            ExtractJob.tenant_id == tenant_id,
-                            ExtractJob.status == "failed",
-                            ExtractJob.created_at < cutoff_date
-                        )
-                    )
+                    .where(and_(*where_conditions))
                 )
+
+                logger.info(f"Executing query to find failed jobs")
                 result = await self.db.execute(stmt)
                 job_ids = [row[0] for row in result.fetchall()]
 
+                logger.info(f"Found {len(job_ids)} failed jobs to cleanup")
+
                 if not job_ids:
+                    logger.info("No failed jobs found to cleanup")
                     return 0
 
-                # Delete pages
-                await self.db.execute(
+                # Delete pages first (due to foreign key constraints)
+                logger.info(f"Deleting pages for {len(job_ids)} jobs")
+                pages_result = await self.db.execute(
                     delete(ExtractPage).where(ExtractPage.job_id.in_(job_ids))
                 )
+                logger.info(f"Deleted {pages_result.rowcount} pages")
 
                 # Delete results
-                await self.db.execute(
+                logger.info(f"Deleting results for {len(job_ids)} jobs")
+                results_result = await self.db.execute(
                     delete(ExtractResult).where(
                         ExtractResult.job_id.in_(job_ids))
                 )
+                logger.info(f"Deleted {results_result.rowcount} results")
 
-                # Delete jobs
-                await self.db.execute(
+                # Delete jobs last
+                logger.info(f"Deleting {len(job_ids)} jobs")
+                jobs_result = await self.db.execute(
                     delete(ExtractJob).where(ExtractJob.id.in_(job_ids))
                 )
+                logger.info(f"Deleted {jobs_result.rowcount} jobs")
 
                 logger.info(
-                    f"Cleaned up {len(job_ids)} failed jobs for tenant {tenant_id}")
+                    f"Successfully cleaned up {len(job_ids)} failed jobs for tenant {tenant_id}")
                 return len(job_ids)
 
         except Exception as e:
             logger.error(
                 f"Error cleaning up failed jobs for tenant {tenant_id}: {e}")
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Failed to cleanup failed jobs"
-            )
+            logger.error(f"Exception type: {type(e).__name__}")
+            import traceback
+            logger.error(f"Full traceback: {traceback.format_exc()}")
+
+            # Re-raise the original exception with more context
+            raise RuntimeError(f"Cleanup failed: {str(e)}") from e
 
     async def cancel_job(self, job_id: str, tenant_id: str) -> ExtractJob:
         """Cancel a running or queued job"""

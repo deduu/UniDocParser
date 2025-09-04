@@ -11,7 +11,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime
 
 # Assuming your backend structure
-from backend.routes import extraction_routes, jobs, extractor_routes, files_router
+from backend.routes import extraction_routes, job_routes, files_router
 
 from backend.core.config import settings
 from backend.utils.logger import configure_logging
@@ -76,7 +76,7 @@ def create_app() -> FastAPI:
     # Moved inside create_app as it's part of the app's configuration
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],  # Be more specific in production
+        allow_origins=["http://localhost:5173"],  # your frontend
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -92,9 +92,9 @@ def create_app() -> FastAPI:
     app.state.templates = templates  # Important: attach to app.state
 
     # --- Include routes ---
-    app.include_router(extraction_routes.router, prefix="/api/v1")
-    app.include_router(jobs.router)
-    app.include_router(extractor_routes.router, prefix="/api/v1")
+    app.include_router(extraction_routes.router,
+                       prefix="/api/v1", tags=["extractions"])
+    app.include_router(job_routes.router, prefix="/api/v1", tags=["jobs"])
     app.include_router(files_router.router, prefix="/api/v1", tags=["files"])
 
     # --- Define basic endpoints within create_app or as separate handlers ---

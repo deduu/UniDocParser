@@ -40,6 +40,8 @@ async def get_page_image(
     principal: Principal = Depends(get_verified_principal),
     job_service: ExtractJobService = Depends(get_extract_job),
 ):
+    logger.info(f"[extractor] get_page_image {job_id}/{page_index}")
+
     # Enforce access
     job = await job_service.get_by_id(job_id)
     # Choose your policy: strict tenant, or allow creator

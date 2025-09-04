@@ -40,13 +40,17 @@ class FileIngestor:
         )
         image = ImageHandler(
             img_pages_dir=settings.IMG_PAGES_DIR,
+
             max_side=settings.IMG_MAX_SIDE,
             jpeg_quality=settings.JPEG_QUALITY,
+
         )
         excel = ExcelHandler(
             img_pages_dir=settings.IMG_PAGES_DIR,
+            dpi=settings.PDF_DPI,
             max_side=settings.IMG_MAX_SIDE,
             jpeg_quality=settings.JPEG_QUALITY,
+            poppler_path=settings.POPPLER_PATH,
         )
         for ext in [".pdf"]:
             self._handlers[ext] = pdf.handle

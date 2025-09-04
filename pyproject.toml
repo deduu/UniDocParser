@@ -30,7 +30,10 @@ dependencies = [
     "celery (>=5.5.3,<6.0.0)",
     "redis (>=6.4.0,<7.0.0)",
     "asyncpg (>=0.30.0,<0.31.0)",
-    "psycopg2-binary (>=2.9.10,<3.0.0)"
+    "psycopg2-binary (>=2.9.10,<3.0.0)",
+    "openpyxl (>=3.1.0,<4.0.0)",           # <-- Add this line
+    "excel2img (>=1.4.0,<2.0.0)",        # <-- And this line
+    
 ]
 
 

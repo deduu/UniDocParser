@@ -481,16 +481,55 @@ async def get_job_count(
 @router.post("/cleanup/failed-jobs")
 async def cleanup_failed_jobs(
     older_than_days: int = Query(
-        7, ge=1, description="Delete failed jobs older than N days"),
+        7, ge=0, description="Delete failed jobs older than N days (use 0 to delete all failed jobs)"),
     extractor_service: ExtractorService = Depends(get_extractor_service),
     principal: Principal = Depends(get_verified_principal)
 ):
     """Clean up old failed jobs and their data"""
-    cleaned_count = await extractor_service.cleanup_failed_jobs(
-        principal.tenant_id,
-        older_than_days
+    try:
+        logger.info(
+            f"Cleanup request: tenant_id={principal.tenant_id}, older_than_days={older_than_days}")
+
+        cleaned_count = await extractor_service.cleanup_failed_jobs(
+            principal.tenant_id,
+            older_than_days
+        )
+
+        return {"message": f"Cleaned up {cleaned_count} failed jobs"}
+
+    except Exception as e:
+        logger.error(f"Cleanup endpoint error: {e}")
+        logger.error(f"Exception type: {type(e).__name__}")
+        import traceback
+        logger.error(f"Full traceback: {traceback.format_exc()}")
+
+        # Provide more specific error message
+        if isinstance(e, RuntimeError):
+            detail = str(e)
+        else:
+            detail = f"Failed to cleanup failed jobs: {str(e)}"
+
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=detail
+        )
+# backend/routes/jobs.py
+
+
+@router.delete("/jobs/by-user/{user_id}")
+async def delete_jobs_by_user(
+    user_id: str,
+    allow_running: bool = Query(False),
+    principal: Principal = Depends(get_verified_principal),
+    service: ExtractJobService = Depends(get_job_service),
+):
+    # enforce tenant scope from principal
+    return await service.delete_all_for_user(
+        tenant_id=principal.tenant_id,
+        user_id=user_id,
+        allow_running=allow_running,
     )
-    return {"message": f"Cleaned up {cleaned_count} failed jobs"}
+
 
 # === HEALTH AND MONITORING ===
 

@@ -21,13 +21,37 @@ class PDFExtractor(BaseExtractor):
         logger.info("Partitioning PDF: %s", file_path)
         raw_elements = partition_pdf(
             filename=str(file_path),
-             strategy="hi_res",                         # required for model-based (GPU-capable) path
+            # required for model-based (GPU-capable) path
+            strategy="hi_res",
             hi_res_model_name="yolox",
             extract_images_in_pdf=self.config.extract_images_in_pdf,
             extract_image_block_to_payload=self.config.extract_image_block_to_payload,
-            extract_image_block_output_dir=self._get_output_directory(file_path),
+            extract_image_block_output_dir=self._get_output_directory(
+                file_path),
             infer_table_structure=self.config.infer_table_structure,
             languages=self.config.languages,
         )
+
+        page_meta = {}  # page_number -> {coord_width, coord_height}
+        for el in raw_elements:
+            coords = getattr(el.metadata, "coordinates", None)
+            page_num = getattr(el.metadata, "page_number", None)
+            if coords and getattr(coords, "system", None):
+                system = coords.system
+                w = getattr(system, "width", None)
+                h = getattr(system, "height", None)
+                if w and h and page_num and page_num not in page_meta:
+                    page_meta[page_num] = {
+                        "coord_width": float(w),
+                        "coord_height": float(h),
+                    }
+                    logger.debug(f"[extract] Page {page_num} size={w}x{h}")
+
+        logger.info(f"[extract] page_meta = {page_meta}")
+
         # Normalize/split into per-page lists if your helpers provide that
-        return helpers.split_elements(raw_elements)
+        per_page_elements = helpers.split_elements(raw_elements)
+
+        return per_page_elements, page_meta
+        # Normalize/split into per-page lists if your helpers provide that
+        # return helpers.split_elements(raw_elements)

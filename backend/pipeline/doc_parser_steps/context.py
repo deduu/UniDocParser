@@ -103,6 +103,9 @@ class Page(BaseModel):
     markdown: str = ""
     elements: List[Element] = Field(default_factory=list)
 
+    coord_width: float | None = None
+    coord_height: float | None = None
+
 
 class DocParserContext(BaseModel):
     file_path: str

@@ -452,3 +452,89 @@ class ExtractJobService(BaseService):
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail="Failed to bulk update jobs"
             )
+
+    async def delete_all_for_user(
+        self,
+        tenant_id: str,
+        user_id: str,
+        *,
+        allow_running: bool = False,
+    ) -> Dict[str, Any]:
+        """
+        Delete all jobs created by `user_id` in a given tenant.
+
+        - Skips jobs in 'running' unless allow_running=True
+        - Returns a summary dict including deleted ids and skipped_running
+        - Uses row locks with SKIP LOCKED to avoid races
+        - Relies on DB-level ON DELETE CASCADE to remove pages/results
+        """
+        try:
+            # 1) Lock matching rows to avoid races with concurrent updates/deletes
+            sel = (
+                select(ExtractJob.id, ExtractJob.status)
+                .where(
+                    ExtractJob.tenant_id == tenant_id,
+                    ExtractJob.created_by_user_id == user_id,
+                )
+                .with_for_update(skip_locked=True)
+            )
+            res = await self.db.execute(sel)
+            rows = res.all()
+
+            if not rows:
+                return {
+                    "requested_user_id": user_id,
+                    "matched": 0,
+                    "deleted": 0,
+                    "deleted_ids": [],
+                    "skipped_running": [],
+                }
+
+            matched_ids = [jid for (jid, _) in rows]
+            running_ids = [jid for (jid, st) in rows if st == "running"]
+
+            if allow_running:
+                target_ids = matched_ids
+                skipped_running: list[str] = []
+            else:
+                target_ids = [jid for (jid, st) in rows if st != "running"]
+                skipped_running = running_ids
+
+            deleted_ids: list[str] = []
+            deleted_count = 0
+
+            if target_ids:
+                del_stmt = (
+                    delete(ExtractJob)
+                    .where(ExtractJob.id.in_(target_ids))
+                )
+                del_res = await self.db.execute(
+                    del_stmt.execution_options(synchronize_session=False)
+                )
+                deleted_count = del_res.rowcount or 0
+                deleted_ids = target_ids  # expected == rowcount on Postgres
+
+            await self.db.commit()
+
+            summary = {
+                "requested_user_id": user_id,
+                "matched": len(matched_ids),
+                "deleted": deleted_count,
+                "deleted_ids": deleted_ids,
+                "skipped_running": skipped_running,
+            }
+            logger.info("delete_all_for_user summary: %s", {
+                        **summary, "deleted_ids": f"{len(deleted_ids)} ids"})
+            return summary
+
+        except HTTPException:
+            await self.db.rollback()
+            raise
+        except Exception as e:
+            await self.db.rollback()
+            logger.exception(
+                "delete_all_for_user failed tenant=%s user=%s: %s", tenant_id, user_id, e)
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to delete all jobs for user",
+            )
