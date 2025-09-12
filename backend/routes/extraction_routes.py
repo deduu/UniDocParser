@@ -23,7 +23,7 @@ from backend.pipeline.model.schemas_dto import DocParserContextOut
 from backend.pipeline.doc_parse_service import DocParserService
 from backend.pipeline.doc_parse_handler import DocParserHandler
 from backend.pipeline.model.schemas import SplitPDFResponse
-
+from backend.schemas.response import ResponseModel
 
 from backend.services.extractor_services import ExtractJobService, ExtractPageService, ExtractResultService
 from backend.schemas.extractor import ExtractJobCreate, ExtractPageCreate, ExtractResultUpsert
@@ -35,24 +35,24 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-class PageOut(BaseModel):
-    page:  int
-    text:  str
-    images: List[str]
+# class PageOut(BaseModel):
+#     page:  int
+#     text:  str
+#     images: List[str]
 
 
-class ExtractOut(BaseModel):
-    source:          str
-    pages:           List[Dict[str, Any]]     # ← accept any dict here
-    processing_time: float
+# class ExtractOut(BaseModel):
+#     source:          str
+#     pages:           List[Dict[str, Any]]     # ← accept any dict here
+#     processing_time: float
 
 
-class ResponseModel(BaseModel):
-    message: str
-    job_id: Optional[str]
-    extraction_result: DocParserContextOut
-    json_output: str
-    markdown_output: str
+# class ResponseModel(BaseModel):
+#     message: str
+#     job_id: Optional[str]
+#     extraction_result: Optional[DocParserContextOut] = None
+#     json_output: Optional[str] = None
+#     markdown_output: Optional[str] = None
 
 
 async def get_db_session():
@@ -103,9 +103,16 @@ async def extract_pdf_db(
     print(f"Document extracted by user {principal.user_id}")
     # 1) Validate file type
     fname = (file.filename or "").lower()
-    if not fname.endswith((".pdf", ".xls", ".xlsx")):
+    if not fname.endswith((
+        ".pdf",
+        ".xls", ".xlsx",                  # Excel
+        ".ppt", ".pptx",                  # PowerPoint
+        ".doc", ".docx",                  # Word
+        ".jpg", ".jpeg", ".png", ".gif",  # Images
+    )):
         raise HTTPException(
-            400, "Only PDF or Excel files (.xls/.xlsx) are supported")
+            400, "Only PDF, Excel, PowerPoint, Word, or image files are supported"
+        )
 
     try:
         # 1) Create Job: queued
@@ -188,18 +195,21 @@ async def extract_pdf_db(
 async def extract_pdf(
     file: UploadFile = File(...),
     handler: DocParserHandler = Depends(),
-    user: dict = Depends(verify_internal_call),
+    # user: dict = Depends(verify_internal_call),
 ) -> ResponseModel:
 
-    print(f"Document extracted by user {user['user_id']}")
+    # print(f"Document extracted by user {user['user_id']}")
     # 1) Validate file type
-    if not file.filename or not (
-        file.filename.lower().endswith(".pdf")
-        or file.filename.lower().endswith(".xls")
-        or file.filename.lower().endswith(".xlsx")
-    ):
+    fname = (file.filename or "").lower()
+    if not fname.endswith((
+        ".pdf",
+        ".xls", ".xlsx",                  # Excel
+        ".ppt", ".pptx",                  # PowerPoint
+        ".doc", ".docx",                  # Word
+        ".jpg", ".jpeg", ".png", ".gif",  # Images
+    )):
         raise HTTPException(
-            status_code=400, detail="Only PDF or Excel files (.xls/.xlsx) are supported"
+            400, "Only PDF, Excel, PowerPoint, Word, or image files are supported"
         )
 
     try:
@@ -220,6 +230,7 @@ async def extract_pdf(
         # 5) Return your typed response
         return ResponseModel(
             message="Document extracted successfully",
+            job_id="None",
             extraction_result=dto,
             json_output=json_name,
             markdown_output=md_name,

@@ -37,7 +37,8 @@ class Fig2TabLLM:
         dtype: str = "float16",
         quantization: Optional[str] = None,   # e.g. "bitsandbytes" for 4-bit
         temperature: float = 1.5,
-        min_p: Optional[float] = 0.1,        # forwarded if your transformers supports it
+        # forwarded if your transformers supports it
+        min_p: Optional[float] = 0.1,
         top_p: Optional[float] = None,       # optional; forwarded
         max_new_tokens: int = 4096,
         merge_adapter: bool = False,         # if you want to merge LoRA into base at load
@@ -117,6 +118,8 @@ class Fig2TabLLM:
         return await self.client.chat(messages, **self.gen_defaults)
 
 # Lazy singleton to avoid model load at import time
+
+
 @lru_cache(maxsize=1)
 def get_fig2tab_vlm() -> Fig2TabLLM:
     """
@@ -126,7 +129,7 @@ def get_fig2tab_vlm() -> Fig2TabLLM:
     return Fig2TabLLM(
         base_repo="unsloth/Qwen2.5-VL-7B-Instruct",
         adapter_repo="ZeArkh/Qwen2.5-VL-7B-Instruct-unsloth-Extract-Figure",
-        device="cuda:3",
+        device="cuda:2",
         quantization=None,   # or "bitsandbytes" if you use a 4-bit adapter
         temperature=1.5,
         min_p=0.1,

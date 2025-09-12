@@ -6,6 +6,7 @@ from pathlib import Path
 from backend.deps.security import get_verified_principal, Principal
 from backend.services.extractor_services import ExtractJobService
 from backend.utils.storage_paths import fs_path_from_key
+from backend.core.config import settings
 
 from backend.db.base import session_manager
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -61,4 +62,26 @@ async def get_page_image(
         media_type="image/jpeg",
         filename=f"{job_id}-{page_index:04d}.jpeg",
         headers={"Cache-Control": "public, max-age=86400"},
+    )
+
+
+@router.get("/{filename}/markdown", response_class=FileResponse)
+async def get_markdown(
+    filename: str,
+    # principal: Principal = Depends(get_verified_principal),
+):
+    logger.info(f"[extractor] get_markdown {filename}")
+
+    # Use .md as suffix
+    fpath = Path(settings.OUTPUT_DIR) / f"{filename}.md"
+
+    logger.info(f"fpath: {fpath}")
+    if not fpath.exists():
+        raise HTTPException(status_code=404, detail="File not found")
+
+    return FileResponse(
+        path=fpath,
+        media_type="text/markdown",
+        filename=f"{filename}.md",
+        headers={"Cache-Control": "public, max-age=3600"},
     )

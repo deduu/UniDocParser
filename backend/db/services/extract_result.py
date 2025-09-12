@@ -179,3 +179,39 @@ class ExtractResultService(BaseService):
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail="Failed to fetch results"
             )
+
+    async def get_results_by_user_or_tenant(
+        self,
+        user_id: Optional[str] = None,
+        tenant_id: Optional[str] = None,
+        limit: int = 100,
+        offset: int = 0
+    ) -> list[ExtractResult]:
+        try:
+            stmt = (
+                select(ExtractResult)
+                .join(ExtractResult.job)
+                .options(selectinload(ExtractResult.job))
+            )
+
+            conditions = []
+            if user_id:
+                conditions.append(ExtractJob.created_by_user_id == user_id)
+            if tenant_id:
+                conditions.append(ExtractJob.tenant_id == tenant_id)
+
+            if conditions:
+                stmt = stmt.where(or_(*conditions))
+
+            stmt = stmt.order_by(ExtractResult.created_at.desc()).limit(
+                limit).offset(offset)
+
+            result = await self.db.execute(stmt)
+            return result.scalars().all()
+
+        except Exception as e:
+            logger.error(f"Error fetching results by user or tenant: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to fetch results"
+            )

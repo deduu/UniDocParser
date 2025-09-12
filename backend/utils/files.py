@@ -1,9 +1,15 @@
 # app/utils/files.py
+import json
+import mimetypes
 from pathlib import Path
+
 from fastapi import HTTPException
 from fastapi.responses import FileResponse, Response
-import mimetypes
-from backend.core.settings import settings
+
+from backend.core.config import settings
+
+from backend.pipeline.model.schemas_dto import DocParserContextOut
+
 
 def resolve_safe_path(raw_path: str | Path) -> Path:
     """
@@ -20,9 +26,11 @@ def resolve_safe_path(raw_path: str | Path) -> Path:
         raise HTTPException(status_code=400, detail="Not a file")
     return p
 
+
 def guess_mime(path: Path) -> str:
     mt, _ = mimetypes.guess_type(path.name)
     return mt or "application/octet-stream"
+
 
 def build_download_response(
     path: Path,
@@ -55,3 +63,21 @@ def build_download_response(
         filename=download_name,              # sets Content-Disposition for you
         # headers={"Content-Disposition": content_disp},  # (optional explicit)
     )
+
+
+def load_extraction_result_from_file(json_path: str) -> DocParserContextOut:
+    """
+    Load DocParserContextOut from saved JSON file (from result.json_url).
+    Raises FileNotFoundError if missing.
+    """
+
+    path = Path(settings.OUTPUT_DIR) / json_path
+
+    if not path.exists():
+        raise FileNotFoundError(
+            f"Extraction result file not found: {json_path}")
+
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    return DocParserContextOut.model_validate(data)

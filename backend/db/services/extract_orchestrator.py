@@ -21,8 +21,10 @@ from backend.schemas.extractor import (
     ExtractResultCreate,
     ExtractResultUpdate,
     ExtractResultUpsert,
+    ExtractResultResponse,
     ExtractJobFilter,
-    ExtractPageFilter
+    ExtractPageFilter,
+
 )
 
 from backend.db.services import (
@@ -406,8 +408,48 @@ class ExtractorService:
                 detail="Failed to retry job"
             )
 
+    async def get_extraction_results(
+        self,
+        user_id: Optional[str] = None,
+        tenant_id: Optional[str] = None,
+        limit: int = 100,
+        offset: int = 0
+    ) -> List[ExtractResultResponse]:
+        """
+        Orchestrator method to get extract results for a user or tenant,
+        returned as Pydantic response models.
+        """
+        try:
+            results = await self.result_service.get_results_by_user_or_tenant(
+                user_id=user_id,
+                tenant_id=tenant_id,
+                limit=limit,
+                offset=offset
+            )
+
+            return [
+                ExtractResultResponse(
+                    job_id=r.job_id,
+                    json_url=r.json_url,
+                    markdown_url=r.markdown_url,
+                    preview_png_url=r.preview_png_url,
+                    bytes_stored=r.bytes_stored,
+                    processing_time=r.processing_time,
+                    created_at=r.created_at
+                )
+                for r in results
+            ]
+
+        except Exception as e:
+            logger.error(f"Error in get_extraction_results: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to retrieve extract results"
+            )
 
 # Factory functions for dependency injection
+
+
 def get_extract_job_service(db: AsyncSession) -> ExtractJobService:
     """Factory function for ExtractJobService"""
     return ExtractJobService(db)

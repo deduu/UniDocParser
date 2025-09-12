@@ -185,6 +185,7 @@ class DocParserHandler:
             "ocr_pdf_path":    dto.ocr_file_path,
             "processing_time": dto.processing_time,
             "pages":           [p.dict() for p in dto.pages],
+            "figure_list":     [f.dict() for f in dto.figure_list],
         }
 
         # --- write JSONL ---

@@ -40,6 +40,8 @@ from backend.core.config import settings
 from backend.db.base import session_manager
 from backend.deps.security import Principal, get_verified_principal
 
+from backend.schemas.response import ResponseModel
+from backend.utils.files import load_extraction_result_from_file
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -386,6 +388,49 @@ async def delete_job_result(
     await service.delete_result(job_id)
     return {"message": "Result deleted successfully"}
 
+
+@router.get("/jobs/{job_id}/extract-summary", response_model=ResponseModel)
+async def get_extracted_summary(
+    job_id: str,
+    job_service: ExtractJobService = Depends(get_job_service),
+    result_service: ExtractResultService = Depends(get_result_service),
+    principal: Principal = Depends(get_verified_principal)
+):
+    """
+    Get extracted result summary from DB + JSON file (as DocParserContextOut).
+    """
+    # Step 1: Enforce access
+    job = await job_service.assert_access(job_id, principal.tenant_id)
+
+    # Step 2: Fetch extract result
+    try:
+        result = await result_service.get_by_job_id(job_id)
+    except HTTPException:
+        raise HTTPException(
+            status_code=404, detail="Extraction result not found.")
+
+    # Step 3: Load structured content from saved JSON
+    extraction_result = None
+    if result.json_url:
+        try:
+            extraction_result = load_extraction_result_from_file(
+                result.json_url)
+        except FileNotFoundError:
+            raise HTTPException(
+                status_code=404, detail="Result file not found.")
+        except Exception as e:
+            raise HTTPException(
+                status_code=500, detail=f"Failed to load result: {str(e)}")
+
+    # Step 4: Return response
+    return ResponseModel(
+        message="Document previously extracted",
+        job_id=job_id,
+        extraction_result=extraction_result,
+        json_output=result.json_url,
+        markdown_output=result.markdown_url,
+    )
+
 # === COMPOSITE OPERATIONS ===
 
 
@@ -661,6 +706,22 @@ async def get_page_count(
     return {"job_id": job_id, "page_count": count}
 
 # === EXPORT OPERATIONS ===
+
+
+@router.get("/extract/results", response_model=List[ExtractResultResponse])
+async def list_results(
+    user_id: Optional[str] = Query(None),
+    tenant_id: Optional[str] = Query(None),
+    limit: int = Query(50),
+    offset: int = Query(0),
+    extractor_service: ExtractorService = Depends(get_extractor_service),
+):
+    return await extractor_service.get_extraction_results(
+        user_id=user_id,
+        tenant_id=tenant_id,
+        limit=limit,
+        offset=offset
+    )
 
 
 @router.get("/jobs/{job_id}/export/markdown")
