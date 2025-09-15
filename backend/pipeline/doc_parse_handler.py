@@ -121,7 +121,8 @@ class DocParserHandler:
             pages.append(
                 PageOut(
                     index=p.index,
-                    image_url=f"/jobs/{job_id}/pages/{p.index}",
+                    # image_url=f"/jobs/{job_id}/pages/{p.index}",
+                    image_url=p.image,
                     text=p.text,
                     markdown=p.markdown,
                     elements=elements_out,

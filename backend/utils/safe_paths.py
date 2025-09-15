@@ -28,7 +28,10 @@ def _safe_join_under(base_dir: Path, key: str) -> Path:
     stays within `base_dir` (guards against traversal and symlink escapes).
     """
     base = base_dir.resolve()
+    key = key.lstrip("/")
+    print(f"base: {base}")
     candidate = (base / key).resolve()
+    print(f"candidate: {candidate}")
     # Python 3.11+: Path.is_relative_to
     if not candidate.is_relative_to(base):
         raise HTTPException(status_code=400, detail="Invalid path")
@@ -43,8 +46,11 @@ def safe_join(
     """
     Safe-join for both storage (fs) and output roots.
     """
+    if key is None:
+        return None
     base_dir = Path(settings.STORAGE_BASE_DIR) if where == "fs" else Path(
         settings.OUTPUT_DIR)
+    print(f"key: {key}, where: {where}, base_dir: {base_dir}")
     return _safe_join_under(base_dir, key)
 
 

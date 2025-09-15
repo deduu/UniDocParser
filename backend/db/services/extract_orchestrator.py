@@ -64,7 +64,9 @@ class ExtractorService:
         rows = await self.db.scalars(
             select(ExtractPage.image_url).where(ExtractPage.job_id == job_id)
         )
-        for url in rows.all():
+        urls = rows.all()
+        for url in urls:
+            print(f"[pages] url={url}")
             p = safe_join(url, where="fs")
             if p:
                 paths.append(str(p))
@@ -72,11 +74,15 @@ class ExtractorService:
         # Result
         result = await self.db.get(ExtractResult, job_id)
         if result:
+            print(
+                f"ExtractResult: json={result.json_url}, md={result.markdown_url}, png={result.preview_png_url}")
             for url in (result.json_url, result.markdown_url, result.preview_png_url):
                 p = safe_join(url, where="output")
                 if p:
                     paths.append(str(p))
-
+        else:
+            print("ExtractResult: no result")
+        print(f"paths: {paths}")
         return paths
 
     async def create_complete_job(

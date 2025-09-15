@@ -52,7 +52,7 @@ class ExtractJobService(BaseService):
             await self.db.rollback()
             raise
 
-    async def create_job(self, data: ExtractJobCreate, created_by_user_id: str) -> ExtractJob:
+    async def create_job(self, data: ExtractJobCreate) -> ExtractJob:
         """Create a new extraction job with validation"""
         try:
             job_data = data.model_dump() if hasattr(data, "model_dump") else dict(data)

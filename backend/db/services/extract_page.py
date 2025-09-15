@@ -105,27 +105,14 @@ class ExtractPageService(BaseService):
     async def replace_pages(self, job_id: str, pages: List[ExtractPageCreate]) -> int:
         """Replace all pages for a job in a single transaction"""
         try:
-            async with self.transaction():
-                # Delete existing pages
-                await self.db.execute(
-                    delete(ExtractPage).where(ExtractPage.job_id == job_id)
-                )
+            await self.db.execute(delete(ExtractPage).where(ExtractPage.job_id == job_id))
+            if pages:
+                objs = [ExtractPage(**p.model_dump()) for p in pages]
+                self.db.add_all(objs)
+            await self.db.commit()
 
-                # Insert new pages
-                if pages:
-                    page_objects = []
-                    for i, page_data in enumerate(pages):
-                        page_dict = page_data.model_dump()
-                        page_dict['job_id'] = job_id
-                        # Ensure page_index is set correctly
-                        if 'page_index' not in page_dict:
-                            page_dict['page_index'] = i
-                        page_objects.append(ExtractPage(**page_dict))
-
-                    self.db.add_all(page_objects)
-
-                logger.info(f"Replaced {len(pages)} pages for job {job_id}")
-                return len(pages)
+            logger.info(f"Replaced {len(pages)} pages for job {job_id}")
+            return len(pages)
 
         except Exception as e:
             logger.error(f"Error replacing pages for job {job_id}: {e}")
