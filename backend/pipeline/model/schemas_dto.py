@@ -45,25 +45,6 @@ class PageOut(BaseModel):
         return "/" + v.lstrip("/")
 
 
-# class PageOut(BaseModel):
-#     index: int
-#     image_url: Optional[str] = None          # <= default channel
-#     image_base64: Optional[str] = None       # <= opt-in
-#     text: Optional[str] = None
-#     markdown: Optional[str] = None
-#     elements: List[ElementOut] = Field(default_factory=list)
-
-#     @field_validator("image_url")
-#     @classmethod
-#     def validate_image_url(cls, v: Optional[str]):
-#         if v is None:
-#             return v
-#         if v.startswith(("http://", "https://", "/")):
-#             return v
-#         # auto-normalize relative → root-absolute
-#         return "/" + v.lstrip("/")
-
-
 class FigureOut(BaseModel):
     page_num: int
     idx: int

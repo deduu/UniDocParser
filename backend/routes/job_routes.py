@@ -42,6 +42,7 @@ from backend.deps.security import Principal, get_verified_principal
 
 from backend.schemas.response import ResponseModel
 from backend.utils.files import load_extraction_result_from_file
+from backend.utils.unlink_files import unlink_paths
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -200,7 +201,8 @@ async def delete_job(
     job_id: UUID,
     complete: bool = Query(False, description="Delete all related data"),
     extractor_service: ExtractorService = Depends(get_extractor_service),
-    principal: Principal = Depends(get_verified_principal)
+    principal: Principal = Depends(get_verified_principal),
+    background_tasks: BackgroundTasks = None,
 ):
     """Delete a job (optionally with all related data)"""
 
@@ -210,7 +212,15 @@ async def delete_job(
     else:
         await extractor_service.job_service.delete_job(job_id_str, principal.tenant_id)
 
-    return {"message": "Job deleted successfully"}
+    paths = await extractor_service.collect_job_file_paths(job_id_str, principal.tenant_id)
+    # 2) Unlink files (background or blocking)
+    if paths:
+        if background_tasks is not None:
+            background_tasks.add_task(
+                unlink_paths, paths)
+        else:
+            await unlink_paths(paths)
+    return {"message": "Job deleted successfully", "files_scheduled_for_delete": len(paths)}
 
 # === PAGE ENDPOINTS ===
 

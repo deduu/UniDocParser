@@ -87,7 +87,7 @@ class ExtractResultCreate(ExtractResultBase):
 
 class ExtractJobUpdate(BaseModel):
     """Schema for updating an ExtractJob"""
-    source_file_name: Optional[str] = Field(None, max_length=255)
+    source_file_name: Optional[str] = None
     source_file_url: Optional[str] = Field(None, max_length=2048)
     options_json: Optional[Dict[str, Any]] = None
     status: Optional[JobStatus] = None

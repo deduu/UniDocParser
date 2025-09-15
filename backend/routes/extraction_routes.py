@@ -24,12 +24,13 @@ from backend.pipeline.doc_parse_service import DocParserService
 from backend.pipeline.doc_parse_handler import DocParserHandler
 from backend.pipeline.model.schemas import SplitPDFResponse
 from backend.schemas.response import ResponseModel
-
-from backend.services.extractor_services import ExtractJobService, ExtractPageService, ExtractResultService
+from backend.utils.unlink_files import unlink_paths
+# from backend.services.extractor_services import ExtractJobService, ExtractPageService, ExtractResultService
 from backend.schemas.extractor import ExtractJobCreate, ExtractPageCreate, ExtractResultUpsert
 from backend.deps.verify import verify_internal_call
 from backend.deps import Principal, get_principal_from_headers
 from backend.deps.security import Principal, get_verified_principal
+from backend.db.services import ExtractJobService, ExtractPageService, ExtractResultService, ExtractorService
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -71,6 +72,10 @@ async def get_extract_page(db: AsyncSession = Depends(get_db_session)):
 async def get_extract_result(db: AsyncSession = Depends(get_db_session)):
     return ExtractResultService(db)
 
+
+async def get_extractor_service(db: AsyncSession = Depends(get_db_session)) -> ExtractorService:
+    return ExtractorService(db)
+
 # ------------------------------------------------------------------------------
 
 
@@ -96,6 +101,8 @@ async def extract_pdf_db(
     extract_job: ExtractJobService = Depends(get_extract_job),
     extract_page: ExtractPageService = Depends(get_extract_page),
     extract_result: ExtractResultService = Depends(get_extract_result),
+    extractor_service: ExtractorService = Depends(get_extractor_service),
+    background_tasks: BackgroundTasks = None,
 ) -> ResponseModel:
 
     job = None
@@ -140,6 +147,8 @@ async def extract_pdf_db(
             Path(dto.file_path).name,
         )
 
+        await extract_job.update_source_file_name(job.id, Path(dto.file_path).name)
+
         # 5) Persist per-page rows
         pages = [
             ExtractPageCreate(
@@ -181,6 +190,15 @@ async def extract_pdf_db(
                 await extract_job.set_status(job.id, "failed", error=str(e))
             except Exception:
                 pass
+        paths = await extractor_service.collect_job_file_paths(job.id, principal.user_id)
+
+        if paths:
+            if background_tasks is not None:
+                background_tasks.add_task(
+                    unlink_paths, paths)
+            else:
+                await unlink_paths(paths)
+
         return JSONResponse(
             status_code=500,
             content={"message": "PDF extraction failed", "error": str(

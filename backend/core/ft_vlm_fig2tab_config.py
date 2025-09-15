@@ -19,11 +19,13 @@ fine_tuned_model_list = [
 prompt = Fig2Text_Prompt()
 
 # VLM Fig2Tab class
+
+
 class FT_Fig2Tab_PIPELINE:
     def __init__(
         self,
         model_id="ZeArkh/Qwen2.5-VL-7B-Instruct-unsloth-Extract-Figure",
-        device="cuda:1" if torch.cuda.is_available() else "cpu",
+        device="cuda:0" if torch.cuda.is_available() else "cpu",
     ):
         self.device = device
         self.model, self.processor = FastVisionModel.from_pretrained(
@@ -48,22 +50,22 @@ class FT_Fig2Tab_PIPELINE:
         ]
 
         input_text = self.processor.apply_chat_template(
-            messages, add_generation_prompt = True
+            messages, add_generation_prompt=True
         )
 
         inputs = self.processor(
             image,
             input_text,
-            add_special_tokens = False,
-            return_tensors = "pt",
+            add_special_tokens=False,
+            return_tensors="pt",
         ).to(self.model.device)
 
         generated_ids = self.model.generate(
-            **inputs, 
-            max_new_tokens = 4096,
-            use_cache = True, 
-            temperature = 1.5, 
-            min_p = 0.1
+            **inputs,
+            max_new_tokens=4096,
+            use_cache=True,
+            temperature=1.5,
+            min_p=0.1
         )
 
         trimmed_generated_ids = [
@@ -77,6 +79,7 @@ class FT_Fig2Tab_PIPELINE:
         )
 
         return output_text[0]
-    
+
+
 # fig2tab_vlm = FT_Fig2Tab_PIPELINE()
 fig2tab_vlm = None

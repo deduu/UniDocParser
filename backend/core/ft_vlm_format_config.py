@@ -18,11 +18,13 @@ fine_tuned_model_list = [
 prompt = Formatter_Prompt()
 
 # VLM Formatter class
+
+
 class FT_Formatter_PIPELINE:
     def __init__(
         self,
         model_id="ZeArkh/Qwen2.5-VL-7B-Instruct-unsloth-Markdown-Formatter",
-        device="cuda:2" if torch.cuda.is_available() else "cpu",
+        device="cuda:0" if torch.cuda.is_available() else "cpu",
     ):
         self.device = device
         self.model, self.processor = FastVisionModel.from_pretrained(
@@ -30,7 +32,7 @@ class FT_Formatter_PIPELINE:
             load_in_4bit=False,
             device_map=self.device,
         )
-        FastVisionModel.for_inference(self.model) # Enable for inference!
+        FastVisionModel.for_inference(self.model)  # Enable for inference!
 
     def generate(self, extracted_text: str, image):
         """
@@ -41,29 +43,30 @@ class FT_Formatter_PIPELINE:
                 "role": "user",
                 "content": [
                     {"type": "image"},
-                    {"type": "text", "text": prompt.get_ft_prompt(extracted_text)},
+                    {"type": "text", "text": prompt.get_ft_prompt(
+                        extracted_text)},
                 ]
             }
         ]
 
         input_text = self.processor.apply_chat_template(
-            messages, add_generation_prompt = True
+            messages, add_generation_prompt=True
         )
 
         inputs = self.processor(
             image,
             input_text,
-            add_special_tokens = False,
-            return_tensors = "pt",
+            add_special_tokens=False,
+            return_tensors="pt",
         ).to(self.model.device)
 
         generated_ids = self.model.generate(
-            **inputs, 
-            max_new_tokens = 8 * 1024,  # 8k tokens
-            
-            use_cache = True, 
-            temperature = 1.5, 
-            min_p = 0.1
+            **inputs,
+            max_new_tokens=8 * 1024,  # 8k tokens
+
+            use_cache=True,
+            temperature=1.5,
+            min_p=0.1
         )
 
         trimmed_generated_ids = [
@@ -77,6 +80,7 @@ class FT_Formatter_PIPELINE:
         )
 
         return output_text[0]
-    
+
+
 # formatter_vlm = FT_Formatter_PIPELINE()
 formatter_vlm = None

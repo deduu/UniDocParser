@@ -13,6 +13,7 @@ from backend.deps.deps import Principal
 
 _ALLOWED_STATUS = {"queued", "running", "succeeded", "failed", "canceled"}
 
+
 class ExtractJobService(BaseService):
     def __init__(self, db: AsyncSession):
         super().__init__(db, ExtractJob)
@@ -20,9 +21,17 @@ class ExtractJobService(BaseService):
     async def create_job(self, data: ExtractJobCreate) -> ExtractJob:
         return await self.create(data)
 
+    async def update_source_file_name(self, job_id: str, new_name: str) -> ExtractJob:
+        """
+        Update the source_file_name of an extract job.
+        """
+        update_data = ExtractJobUpdate(source_file_name=new_name)
+        return await self.update(job_id, update_data)
+
     async def set_status(self, job_id: str, status: str, error: Optional[str] = None) -> ExtractJob:
         if status not in _ALLOWED_STATUS:
-            raise HTTPException(status_code=400, detail=f"invalid status '{status}'")
+            raise HTTPException(
+                status_code=400, detail=f"invalid status '{status}'")
         return await self.update(job_id, ExtractJobUpdate(status=status, error_message=error))
 
     async def list_by_tenant(
@@ -38,7 +47,8 @@ class ExtractJobService(BaseService):
     async def assert_access(self, job_id: str, tenant_id: str) -> ExtractJob:
         job = await self.get_by_id(job_id)
         if job.tenant_id != tenant_id:
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="forbidden")
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN, detail="forbidden")
         return job
 
 
@@ -64,13 +74,14 @@ class ExtractResultService(BaseService):
         payload = data.model_dump()
         # Postgres UPSERT on primary key job_id
         stmt = (
-                insert(ExtractResult)
-                .values(**payload)
-                .on_conflict_do_update(
-                    index_elements=[ExtractResult.__table__.c.job_id],  # explicit
-                    set_={k: v for k, v in payload.items() if k != "job_id"},
-                )
+            insert(ExtractResult)
+            .values(**payload)
+            .on_conflict_do_update(
+                index_elements=[
+                    ExtractResult.__table__.c.job_id],  # explicit
+                set_={k: v for k, v in payload.items() if k != "job_id"},
             )
+        )
         await self.db.execute(stmt)
         await self.db.commit()
         # return the fresh row

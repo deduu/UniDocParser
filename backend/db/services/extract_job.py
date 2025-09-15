@@ -23,6 +23,7 @@ from backend.schemas.extractor import (
     ExtractPageFilter
 )
 
+
 logger = logging.getLogger(__name__)
 
 _ALLOWED_STATUS = {"queued", "running", "succeeded", "failed", "canceled"}
@@ -54,8 +55,7 @@ class ExtractJobService(BaseService):
     async def create_job(self, data: ExtractJobCreate, created_by_user_id: str) -> ExtractJob:
         """Create a new extraction job with validation"""
         try:
-            job_data = data.model_dump()
-            job_data['created_by_user_id'] = created_by_user_id
+            job_data = data.model_dump() if hasattr(data, "model_dump") else dict(data)
 
             # Validate options_json if provided
             if 'options_json' in job_data and job_data['options_json']:
@@ -91,6 +91,13 @@ class ExtractJobService(BaseService):
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail="Failed to create extraction job"
             )
+
+    async def update_source_file_name(self, job_id: str, new_name: str) -> ExtractJob:
+        """
+        Update the source_file_name of an extract job.
+        """
+        update_data = ExtractJobUpdate(source_file_name=new_name)
+        return await self.update(job_id, update_data)
 
     async def get_job_with_pages(self, job_id: str, tenant_id: str) -> ExtractJob:
         """Get job with all pages loaded"""
@@ -199,9 +206,13 @@ class ExtractJobService(BaseService):
                 detail="Failed to update job"
             )
 
-    async def set_status(self, job_id: str, status: str, error: Optional[str] = None,
-                         page_count: Optional[int] = None) -> ExtractJob:
-        """Set job status with optional error message and page count"""
+    async def set_status(
+        self, job_id: str, status: str, error: Optional[str] = None,
+        page_count: Optional[int] = None
+    ) -> ExtractJob:
+        if status not in _ALLOWED_STATUS:
+            raise HTTPException(400, f"invalid status '{status}'")
+
         update_data = {"status": status}
         if error is not None:
             update_data["error_message"] = error

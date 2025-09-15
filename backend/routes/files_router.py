@@ -5,7 +5,7 @@ from fastapi.responses import FileResponse
 from pathlib import Path
 from backend.deps.security import get_verified_principal, Principal
 from backend.services.extractor_services import ExtractJobService
-from backend.utils.storage_paths import fs_path_from_key
+from backend.utils.safe_paths import fs_path_from_key, safe_join
 from backend.core.config import settings
 
 from backend.db.base import session_manager
@@ -24,14 +24,14 @@ async def get_extract_job(db: AsyncSession = Depends(get_db_session)):
     return ExtractJobService(db)
 
 
-def _safe_join(storage_key: str) -> Path:
-    # basic traversal guard
-    p = fs_path_from_key(storage_key).resolve()
-    # => resolves to STORAGE_BASE_DIR
-    base = Path(fs_path_from_key("")).resolve()
-    if base not in p.parents and p != base:
-        raise HTTPException(400, "Invalid path")
-    return p
+# def _safe_join(storage_key: str) -> Path:
+#     # basic traversal guard
+#     p = fs_path_from_key(storage_key).resolve()
+#     # => resolves to STORAGE_BASE_DIR
+#     base = Path(fs_path_from_key("")).resolve()
+#     if base not in p.parents and p != base:
+#         raise HTTPException(400, "Invalid path")
+#     return p
 
 
 @router.get("/{job_id}/pages/{page_index}", response_class=FileResponse)
@@ -51,7 +51,7 @@ async def get_page_image(
 
     # Build storage key from canonical pattern
     storage_key = f"jobs/{job_id}/pages/{page_index:04d}.jpeg"
-    fpath = _safe_join(storage_key)
+    fpath = safe_join(storage_key, where="fs")
     logger.info(f"fpath: {fpath}")
     if not fpath.exists():
         raise HTTPException(status_code=404, detail="File not found")

@@ -26,7 +26,7 @@ from backend.schemas.extractor import (
     ExtractPageFilter,
 
 )
-
+from backend.utils.safe_paths import fs_path_from_key, safe_join, output_path_from_key
 from backend.db.services import (
     ExtractJobService,
     ExtractPageService,
@@ -53,6 +53,31 @@ class ExtractorService:
         self.job_service = ExtractJobService(db)
         self.page_service = ExtractPageService(db)
         self.result_service = ExtractResultService(db)
+
+    async def collect_job_file_paths(self, job_id: str, tenant_id: str) -> list[str]:
+
+        await self.job_service.assert_access(job_id, tenant_id)
+
+        paths: list[str] = []
+
+        # Pages
+        rows = await self.db.scalars(
+            select(ExtractPage.image_url).where(ExtractPage.job_id == job_id)
+        )
+        for url in rows.all():
+            p = safe_join(url, where="fs")
+            if p:
+                paths.append(str(p))
+
+        # Result
+        result = await self.db.get(ExtractResult, job_id)
+        if result:
+            for url in (result.json_url, result.markdown_url, result.preview_png_url):
+                p = safe_join(url, where="output")
+                if p:
+                    paths.append(str(p))
+
+        return paths
 
     async def create_complete_job(
         self,

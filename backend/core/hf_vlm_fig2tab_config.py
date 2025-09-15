@@ -33,7 +33,7 @@ class Fig2TabLLM:
         # Default to Qwen2.5-VL base + your Unsloth adapter repo
         base_repo: str = "unsloth/Qwen2.5-VL-7B-Instruct",
         adapter_repo: Optional[str] = "ZeArkh/Qwen2.5-VL-7B-Instruct-unsloth-Extract-Figure",
-        device: str = "cuda:1",
+        device: str = "cuda:0",
         dtype: str = "float16",
         quantization: Optional[str] = None,   # e.g. "bitsandbytes" for 4-bit
         temperature: float = 1.5,
@@ -129,7 +129,7 @@ def get_fig2tab_vlm() -> Fig2TabLLM:
     return Fig2TabLLM(
         base_repo="unsloth/Qwen2.5-VL-7B-Instruct",
         adapter_repo="ZeArkh/Qwen2.5-VL-7B-Instruct-unsloth-Extract-Figure",
-        device="cuda:2",
+        device="cuda:1",
         quantization=None,   # or "bitsandbytes" if you use a 4-bit adapter
         temperature=1.5,
         min_p=0.1,

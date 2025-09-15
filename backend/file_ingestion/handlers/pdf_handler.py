@@ -11,7 +11,7 @@ import logging
 from backend.schemas.ingest import PageMetadata
 from backend.utils.helpers import ensure_dir, resize_img, save_jpeg
 from backend.utils.trackers import log_processing_time
-from backend.utils.storage_paths import page_image_key, ensure_parent_dir
+from backend.utils.safe_paths import page_image_key, ensure_parent_dir
 
 logger = logging.getLogger(__name__)
 
