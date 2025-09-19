@@ -196,22 +196,22 @@ async def retry_job(
     return await extractor_service.retry_job(job_id, principal.tenant_id)
 
 
-@router.delete("/jobs/{job_id_str}")
+@router.delete("/jobs/{job_id}")
 async def delete_job(
-    job_id_str: str,
+    job_id: str,
     complete: bool = Query(False, description="Delete all related data"),
     extractor_service: ExtractorService = Depends(get_extractor_service),
     principal: Principal = Depends(get_verified_principal),
     background_tasks: BackgroundTasks = None,
 ):
     """Delete a job (optionally with all related data)"""
-    paths = await extractor_service.collect_job_file_paths(job_id_str, principal.tenant_id)
+    paths = await extractor_service.collect_job_file_paths(job_id, principal.tenant_id)
     logger.info(f"paths: {paths}")
     # job_id_str = str(job_id)  # your DB PK is a string
     if complete:
-        await extractor_service.delete_complete_job(job_id_str, principal.tenant_id)
+        await extractor_service.delete_complete_job(job_id, principal.tenant_id)
     else:
-        await extractor_service.job_service.delete_job(job_id_str, principal.tenant_id)
+        await extractor_service.job_service.delete_job(job_id, principal.tenant_id)
 
     # 2) Unlink files (background or blocking)
     if paths:

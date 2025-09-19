@@ -28,6 +28,7 @@ class ElementProcessor:
         min_counter = 0
 
         for i, element in enumerate(elements):
+            print(f"element: {element}")
             try:
                 metadata, figure = self._process_single_element(
                     element, i, min_counter, temp_table, page_num
@@ -40,7 +41,8 @@ class ElementProcessor:
 
                 # You can adjust counters here for tables if needed later
             except Exception as e:
-                logger.error("Error processing element %s on page %s: %s", i, page_num, e, exc_info=True)
+                logger.error(
+                    "Error processing element %s on page %s: %s", i, page_num, e, exc_info=True)
                 continue
 
         return element_metadata, figure_list
@@ -58,7 +60,8 @@ class ElementProcessor:
         """Process a single element."""
         unstructured_element = {}
         try:
-            unstructured_element = element.metadata.to_dict()  # type: ignore[attr-defined]
+            # type: ignore[attr-defined]
+            unstructured_element = element.metadata.to_dict()
         except Exception:
             # Fallback if object doesn't have metadata; treat as text
             pass
@@ -104,9 +107,11 @@ class ElementProcessor:
         pil_image = None
         try:
             if image_path:
-                pil_image = resize_img_from_path(image_path, size=self.config.image_resize)
+                pil_image = resize_img_from_path(
+                    image_path, size=self.config.image_resize)
         except Exception as e:
-            logger.warning("Failed to open/resize image at %s: %s", image_path, e)
+            logger.warning(
+                "Failed to open/resize image at %s: %s", image_path, e)
 
         element_metadata = {
             "idx": idx - min_counter,

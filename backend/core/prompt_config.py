@@ -129,9 +129,11 @@ Extracted Text:
 
 """
 
-FT_FORMAT_PROMPT_TEMPLATE = """Transform the provided "Extracted Text" (which includes main text content AND directly embedded data from figures, such as Markdown tables) into a single, coherent Markdown document.
-The final Markdown output should accurately represent all content and closely emulate the layout and reading order of the original document page image.
+# FT_FORMAT_PROMPT_TEMPLATE = """Transform the provided "Extracted Text" (which includes main text content AND directly embedded data from figures, such as Markdown tables) into a single, coherent Markdown document.
+# The final Markdown output should accurately represent all content and closely emulate the layout and reading order of the original document page image.
+# """
 
+FT_FORMAT_PROMPT_TEMPLATE = """ Based on the image attached, please fix any incorrect information and add any missing information of the Extracted Text. 
 Requirements:
 - **Output Only Markdown:** Your entire response must be *only* the final Markdown content.
 - **No Explanations:** Do not include any comments, notes, or explanations outside of the Markdown itself.
@@ -159,6 +161,7 @@ Extracted Text:
 
 """
 
+
 class Fig2Text_Prompt:
     def __init__(
         self,
@@ -173,7 +176,8 @@ class Fig2Text_Prompt:
 
     def get_prompt(self):
         return self.prompt
-    
+
+
 class Formatter_Prompt:
     def __init__(
         self,
@@ -191,14 +195,14 @@ class Formatter_Prompt:
     def get_prompt(self, extracted_text):
         user_prompt = self.prompt + extracted_text
         return user_prompt
-    
+
     def get_ft_prompt(self, extracted_text):
         user_prompt = self.ft_prompt + extracted_text
         return user_prompt
 
     def get_llm_system_prompt(self):
         return SYSTEM_LLM_FORMAT_PROMPT
-    
+
     def get_llm_prompt(self, extracted_text):
         user_prompt = self.ft_prompt + extracted_text
         return user_prompt

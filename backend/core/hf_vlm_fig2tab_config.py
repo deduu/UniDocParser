@@ -127,6 +127,8 @@ def get_fig2tab_vlm() -> Fig2TabLLM:
     Adjust default base/adapter here if you want a global choice.
     """
     return Fig2TabLLM(
+        # base_repo="Qwen/Qwen2.5-VL-7B-Instruct",
+        # adapter_repo=None,
         base_repo="unsloth/Qwen2.5-VL-7B-Instruct",
         adapter_repo="ZeArkh/Qwen2.5-VL-7B-Instruct-unsloth-Extract-Figure",
         device="cuda:1",

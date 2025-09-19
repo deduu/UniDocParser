@@ -33,6 +33,8 @@ class SplitStep(DocParserStep):
         # 3. Update the context
         ctx.pages = pages
 
+        print(f"handler: {ctx.file_path}")
+
         # Persist the resolved job_id back to context if not set
         # if not getattr(ctx, "job_id", None):
         #     setattr(ctx, "job_id", resolved_job_id)

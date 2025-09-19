@@ -1,12 +1,18 @@
 import re
+
+import asyncio
 from backend.utils.helpers import process_string
 from pathlib import Path
+
 from PIL import Image
 from backend.utils.helpers import process_string, resize_img
 from backend.core.ft_vlm_format_config import formatter_vlm
-
+from backend.utils.safe_paths import ensure_parent_dir
+from backend.core.hf_vlm_format_config import get_formatter_vlm
 # Combining Extracted element into text
 # Function to clean the OCR text
+
+
 def clean_text(ocr_text):
     # Clean broken words
     # Join hyphenated words split across lines
@@ -27,7 +33,8 @@ def clean_text(ocr_text):
     ocr_text = re.sub(r'([,=_])\s([a-z0-9"“‘])', r'\1 \2', ocr_text)
 
     # Remove spaces before and after all punctuation marks
-    ocr_text = re.sub(r'\s+([.,!?%\'\)\]])', r'\1',ocr_text)    # Remove spaces before punctuation
+    ocr_text = re.sub(r'\s+([.,!?%\'\)\]])', r'\1',
+                      ocr_text)    # Remove spaces before punctuation
 
     # Remove spaces after opening brackets
     ocr_text = re.sub(r'([\(\[])\s+', r'\1', ocr_text)
@@ -39,6 +46,8 @@ def clean_text(ocr_text):
     return ocr_text
 
 # Function to process the extracted text
+
+
 def format_extracted_text(pages):
     for i, page in enumerate(pages):
         text = ""
@@ -93,12 +102,14 @@ def format_extracted_text(pages):
 
 # Final formatting function to format the extracted text into Markdown
 # Function to clean the markdown text
+
+
 def clean_md(result_text):
     md_text = result_text
 
     # remove all code blocks
     if "```" in md_text and not ("```markdown" in md_text or "```mermaid" in md_text):
-        md_text  = re.sub(r'```', '', md_text)
+        md_text = re.sub(r'```', '', md_text)
 
     # markdown block handling
     if "```markdown" in md_text:
@@ -146,28 +157,69 @@ TMP_DIR = Path("./tmp")            # ←  centralise tmp folder
 TMP_DIR.mkdir(exist_ok=True)       # ←  create once
 
 
+async def format_markdown_async(pages: list[dict], pdf_name: str) -> list[dict]:
+    """
+    • Resizes page snapshot to 1080 px width (keeps aspect ratio)
+    • Saves the resized image under ./tmp/
+    • Calls VLM to generate markdown and stores it back into the page
+    """
+    formatter = get_formatter_vlm()   # lazy cached singleton
+
+    for page in pages:
+        idx = page["index"]
+        print(f"Processing {pdf_name} page {idx} for page {page['image']}")
+
+        image_path = ensure_parent_dir(page["image"])
+
+        # -------- 1. load & resize image ---------------------------------
+        pil_image = Image.open(image_path)
+        pil_image = resize_img(pil_image, size=1080)
+
+        # -------- 2. run VLM formatter -----------------------------------
+        extracted_text = page["text"]
+        print(f"extracted_text: {extracted_text}")
+
+        output = await formatter.generate(  # ← async call
+            extracted_text=extracted_text,
+            image=pil_image
+        )
+
+        # -------- 3. post-process & store --------------------------------
+        page["markdown"] = clean_md(output)
+
+    return pages
+
+
 def format_markdown(pages: list[dict], pdf_name: str) -> list[dict]:
     """
     • Resizes page snapshot to 1080 px width (keeps aspect ratio)
     • Saves the resized image under ./tmp/
     • Calls VLM to generate markdown and stores it back into the page
     """
-    for page in pages:
-        idx = page["index"]
-        print(f"Processing {pdf_name} page {idx}")
+    return asyncio.run(format_markdown_async(pages, pdf_name))
+#     • Resizes page snapshot to 1080 px width (keeps aspect ratio)
+#     • Saves the resized image under ./tmp/
+#     • Calls VLM to generate markdown and stores it back into the page
+#     """
+#     for page in pages:
+#         idx = page["index"]
+#         print(f"Processing {pdf_name} page {idx} for page {page['image']}")
 
-        # -------- 1. load & resize image ---------------------------------
-        pil_image = Image.open(page["image"])
-        pil_image = resize_img(pil_image, size=1080)
+#         image_path = ensure_parent_dir(page["image"])
+#         # -------- 1. load & resize image ---------------------------------
+#         pil_image = Image.open(image_path)
+#         pil_image = resize_img(pil_image, size=1080)
 
-        # -------- 3. run VLM formatter -----------------------------------
-        extracted_text = page["text"]
-        # output = formatter_vlm.generate(
-        #     extracted_text=extracted_text, 
-        #     image=pil_image
-        # )
+#         # -------- 3. run VLM formatter -----------------------------------
+#         extracted_text = page["text"]
 
-        # -------- 4. post-process & store --------------------------------
-        # page["markdown"] = clean_md(output)
+#         print(f"extracted_text: {extracted_text}")
+#         output = formatter_vlm.generate(
+#             extracted_text=extracted_text,
+#             image=pil_image
+#         )
 
-    return pages
+#         # -------- 4. post-process & store --------------------------------
+#         page["markdown"] = clean_md(output)
+
+#     return pages

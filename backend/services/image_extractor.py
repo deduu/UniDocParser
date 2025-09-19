@@ -1,7 +1,7 @@
 # from backend.core.ft_vlm_fig2tab_config import fig2tab_vlm
 from backend.core.hf_vlm_fig2tab_config import get_fig2tab_vlm
 
-fig2tab_vlm = get_fig2tab_vlm()
+# fig2tab_vlm = get_fig2tab_vlm()
 
 import asyncio
 import base64
@@ -10,13 +10,16 @@ import logging
 from typing import Any, Dict, List, Optional
 
 from PIL import Image
-from backend.core.hf_vlm_fig2tab_config import get_fig2tab_vlm  # <-- use the LAZY getter
+# <-- use the LAZY getter
+from backend.core.hf_vlm_fig2tab_config import get_fig2tab_vlm
 
 logger = logging.getLogger(__name__)
+
 
 def _data_url_to_pil(url: str) -> Image.Image:
     header, b64data = url.split(",", 1)
     return Image.open(io.BytesIO(base64.b64decode(b64data))).convert("RGB")
+
 
 def _coerce_to_pil(v: Any) -> Image.Image:
     if isinstance(v, Image.Image):
@@ -30,6 +33,7 @@ def _coerce_to_pil(v: Any) -> Image.Image:
         return Image.open(v).convert("RGB")
     raise KeyError("No usable image payload")
 
+
 async def _fig_to_table_async(figure_list: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     vlm = get_fig2tab_vlm()  # lazy init; won’t explode at import time
     out: List[Dict[str, Any]] = []
@@ -41,7 +45,8 @@ async def _fig_to_table_async(figure_list: List[Dict[str, Any]]) -> List[Dict[st
             or rec.get("path")
         )
         if img_val is None:
-            logger.warning("[fig2tab] skipping figure without image keys: %s", rec.keys())
+            logger.warning(
+                "[fig2tab] skipping figure without image keys: %s", rec.keys())
             out.append(rec)
             continue
 
@@ -60,6 +65,7 @@ async def _fig_to_table_async(figure_list: List[Dict[str, Any]]) -> List[Dict[st
         out.append(rec)
     return out
 
+
 def fig_to_table(figure_list: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """
     Synchronous facade used by the thread-executed step.
@@ -76,6 +82,7 @@ def fig_to_table(figure_list: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
 #     return figure_list
 
+
 def take_data(result_text):
     data_text = result_text
     if "data:" in data_text:
@@ -87,8 +94,9 @@ def take_data(result_text):
             data_text = data_text.split("Concise Description:")[0].strip()
     else:
         return take_desc(result_text)
-    
+
     return data_text
+
 
 def take_desc(result_text):
     desc_text = result_text
@@ -96,6 +104,7 @@ def take_desc(result_text):
         return ""
     desc_text = desc_text.split("Short Description:")[1].strip()
     return desc_text
+
 
 def take_caption(result_text):
     caption_text = result_text
@@ -109,6 +118,7 @@ def take_caption(result_text):
     caption_text = caption_text.split("\n")[0].strip()
     return caption_text
 
+
 def take_type(result_text):
     type_text = result_text
     if "Type:" not in type_text:
@@ -116,6 +126,7 @@ def take_type(result_text):
     type_text = type_text.split("Type:")[1].strip()
     type_text = type_text.split("\n")[0].strip()
     return type_text.lower()
+
 
 def extract_images(pages, figure_list):
 
@@ -125,13 +136,16 @@ def extract_images(pages, figure_list):
         # check if the result is empty
         if fig["generated_text"] == "":
             continue
-        
+
         for el in pages[fig["page_num"]]["elements"]:
             if el["idx"] == fig["idx"]:
                 el["text"] = take_data(fig["generated_text"])
-                el['image_metadata']["image_type"] = take_type(fig["generated_text"])
-                el['image_metadata']["caption"] = take_caption(fig["generated_text"])
-                el['image_metadata']["description"] = take_desc(fig["generated_text"])
+                el['image_metadata']["image_type"] = take_type(
+                    fig["generated_text"])
+                el['image_metadata']["caption"] = take_caption(
+                    fig["generated_text"])
+                el['image_metadata']["description"] = take_desc(
+                    fig["generated_text"])
                 break
 
     return pages

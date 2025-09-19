@@ -21,6 +21,7 @@ class ImageHandler:
 
     @log_processing_time
     def handle(self, img_path: Path, job_id: str) -> List[PageMetadata]:
+        print(f"handle[image]: {img_path}")
         try:
             img = Image.open(img_path)
         except UnidentifiedImageError:
@@ -40,6 +41,8 @@ class ImageHandler:
 
         # single-page, index 0
         storage_key = page_image_key(job_id, 0, ext="jpeg")
+        print(f"storage_key: {storage_key}")
         out_path = ensure_parent_dir(storage_key)
+        print(f"out_path: {out_path}")
         save_jpeg(resized, out_path, quality=self.jpeg_quality)
         return [PageMetadata(index=0, image=storage_key, elements=[])]
