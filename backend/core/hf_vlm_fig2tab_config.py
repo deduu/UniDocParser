@@ -48,6 +48,7 @@ class Fig2TabLLM:
         If 'adapter_repo' is provided, we load base_repo then apply adapter_repo via PEFT.
         """
         self.prompt = Fig2Text_Prompt().get_prompt()
+        self.fix_prompt = Fig2Text_Prompt().get_fix_prompt()
 
         # Heuristic: if adapter name hints 4bit, default quantization
         if quantization is None and adapter_repo and "4bit" in adapter_repo.lower():
@@ -90,11 +91,25 @@ class Fig2TabLLM:
     # -----------------------
     # public APIs
     # -----------------------
-    async def generate(self, image: Image.Image) -> str:
+    async def generate(self, image: Image.Image, ref: Optional[str] = None) -> str:
         """
         Generate text from a PIL.Image using a data URL block + text prompt.
         """
         data_url = self._to_data_url(image)
+        if ref:
+            ref_path = Image.open(ref)
+            ref_url = self._to_data_url(ref_path)
+
+            messages = [{
+                "role": "user",
+                "content": [
+
+                    {"type": "image_url", "image_url": {"url": ref_url}},
+                    {"type": "text", "text": self.fix_prompt},
+                    {"type": "image_url", "image_url": {"url": data_url}},
+                ],
+            }]
+
         messages = [{
             "role": "user",
             "content": [

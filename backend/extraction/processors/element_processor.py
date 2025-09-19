@@ -28,7 +28,7 @@ class ElementProcessor:
         min_counter = 0
 
         for i, element in enumerate(elements):
-            print(f"element: {element}")
+            print(f"element content: {element}")
             try:
                 metadata, figure = self._process_single_element(
                     element, i, min_counter, temp_table, page_num
@@ -62,6 +62,7 @@ class ElementProcessor:
         try:
             # type: ignore[attr-defined]
             unstructured_element = element.metadata.to_dict()
+            logger.info(f"Unstructured element: {unstructured_element}")
         except Exception:
             # Fallback if object doesn't have metadata; treat as text
             pass
@@ -71,7 +72,7 @@ class ElementProcessor:
         if self._is_image_element(element):
             return self._process_image_element(element, unstructured_element, idx, min_counter, element_bbox, page_num)
         if self._is_table_element(element):
-            return self._process_table_element(element, unstructured_element, idx, min_counter, temp_table)
+            return self._process_table_element(element, unstructured_element, idx, min_counter, temp_table, element_bbox)
         return self._process_text_element(element, idx, min_counter, element_bbox)
 
     def _extract_bbox(self, metadata: Dict) -> Optional[Dict]:
@@ -144,6 +145,7 @@ class ElementProcessor:
         idx: int,
         min_counter: int,
         temp_table: str,
+        bbox: Optional[Dict],
     ) -> Tuple[Optional[Dict], None]:
         """Process table element."""
         try:
@@ -156,10 +158,35 @@ class ElementProcessor:
                     "idx": idx - min_counter,
                     "type": "table",
                     "text": table,
+                    "bbox": bbox,   # ✅ now included
                 }, None
         except Exception as e:
             logger.debug("Failed to parse table element: %s", e)
         return None, None
+
+    # def _process_table_element(
+    #     self,
+    #     element: Any,
+    #     metadata: Dict,
+    #     idx: int,
+    #     min_counter: int,
+    #     temp_table: str,
+    # ) -> Tuple[Optional[Dict], None]:
+    #     """Process table element."""
+    #     try:
+    #         html_text = metadata.get("text_as_html") or ""
+    #         md_table = markdownify.markdownify(html_text)
+    #         md_table = helpers.filter_table(md_table)
+    #         table = helpers.format_table(md_table)
+    #         if len(table) > 0:
+    #             return {
+    #                 "idx": idx - min_counter,
+    #                 "type": "table",
+    #                 "text": table,
+    #             }, None
+    #     except Exception as e:
+    #         logger.debug("Failed to parse table element: %s", e)
+    #     return None, None
 
     def _process_text_element(
         self,

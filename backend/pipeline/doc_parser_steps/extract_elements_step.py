@@ -46,7 +46,7 @@ class ExtractElementsStep(DocParserStep):
         for i, page in enumerate(updated_pages_data):
             # print(f"page {i}: {page}")
             print(f"page {i}: {page["coord_width"]}x{page["coord_height"]}")
-            print(f"page {i}: {page['markdown']}")
+            # print(f"page {i}: {page['markdown']}")
 
         # 2) Normalize numpy → builtins (deep-walk)
         updated_pages_data = to_builtin(updated_pages_data)

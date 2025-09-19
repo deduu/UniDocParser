@@ -19,8 +19,79 @@ Follow these steps meticulously:
 
 Your output MUST strictly adhere to the format specified in the user prompt and the visual information in the image.
 """
+FIX_PROMPT_TEMPLATE = """
+    You are an expert figure analysis assistant. You will be given:
+    1. A reference image (provides context on correct formatting or content style).
+    2. A user instruction.
+    3. A target figure image to analyze and fix.
 
-FIG_PROMPT_TEMPLATE = """Analyze the provided figure image and extract structured information according to its type.
+    Your job:
+    - Extract structured information from the target image.
+    - Correct mistakes using the reference image where possible.
+    - If information is missing, unreadable, or uncertain → do NOT guess. Output the placeholder "MISSING".
+    - Always maintain the specified format exactly (no extra commentary).
+
+    ---
+
+    Output format if the image is a chart/graph:
+    - Figure Caption: (Exact caption/title if visible, otherwise "No caption detected")
+    - Type: (Specific chart type: Bar Chart, Line Graph, Pie Chart, Scatter Plot, Area Chart, Combo Chart, etc. If unclear, output "MISSING")
+    data:
+    | Header 1 | Header 2 | Header 3 | ... |
+    |----------|----------|----------|-----|
+    | Value 1A | Value 2A | Value 3A | ... |
+    | Value 1B | Value 2B | Value 3B | ... |
+    (Ensure the Markdown table has aligned headers and rows. If a value is missing/unreadable, insert "MISSING".)
+    enddata;
+    - Concise Description: (1-2 sentences summarizing key insights. If unclear, write "MISSING")
+
+    ---
+
+    Output format if the image is a flowchart/diagram:
+    - Figure Caption: (Exact caption/title if visible, otherwise "No caption detected")
+    - Type: Flowchart
+    data:
+    ```mermaid
+    graph TD; // or LR, TB depending on orientation
+        A[Node 1 Text] --> B(Node 2 Text);
+        A --> C{Decision Point};
+        C -- Yes --> D[Outcome 1];
+        C -- No --> E[Outcome 2];
+        // Represent ALL nodes and edges. If a node/label is unreadable, use "MISSING".
+    enddata;
+
+    Concise Description: (1-2 sentences summarizing the process. If unclear, write "MISSING")
+
+    Output format if the image is a logo:
+
+    Figure Caption: (Exact caption/title if visible, otherwise "No caption detected")
+
+    Type: Logo
+
+    Concise Description: (Company or product name. If not identifiable, output "MISSING")
+
+    Output format if the image is another type (General Image):
+
+    Figure Caption: (Exact caption/title if visible, otherwise "No caption detected")
+
+    Type: General Image
+
+    Concise Description: (A factual 1-2 sentence description of visible content. If unclear, write "MISSING")
+
+    STRICT RULES:
+
+    Do NOT output free-form explanations.
+
+    Do NOT hallucinate text, numbers, or labels.
+
+    If anything is missing/unreadable, explicitly output "MISSING".
+
+    Always include the markers data: and enddata; exactly when required.
+
+    Your final answer must match one of the above formats.
+
+    """
+FIG_PROMPT_TEMPLATE = """Based on the reference image above, analyze the provided figure image below and extract structured information according to its type.
 
 ---
 
@@ -129,12 +200,10 @@ Extracted Text:
 
 """
 
-# FT_FORMAT_PROMPT_TEMPLATE = """Transform the provided "Extracted Text" (which includes main text content AND directly embedded data from figures, such as Markdown tables) into a single, coherent Markdown document.
-# The final Markdown output should accurately represent all content and closely emulate the layout and reading order of the original document page image.
-# """
+FT_FORMAT_PROMPT_TEMPLATE = """Transform the provided "Extracted Text" (which includes main text content AND directly embedded data from figures, such as Markdown tables) into a single, coherent Markdown document.
+The final Markdown output should accurately represent all content and closely emulate the layout and reading order of the original document page image.
 
-FT_FORMAT_PROMPT_TEMPLATE = """ Based on the image attached, please fix any incorrect information and add any missing information of the Extracted Text. 
-Requirements:
+
 - **Output Only Markdown:** Your entire response must be *only* the final Markdown content.
 - **No Explanations:** Do not include any comments, notes, or explanations outside of the Markdown itself.
 - **No Delimiters for the Whole Output:** Do not wrap the entire output in ```markdown ... ``` or any other global code fences. (However, if Mermaid code were present *within* the document, it would need its standard ```mermaid ... ``` fences.)
@@ -143,6 +212,11 @@ Extracted Text:
 
 """
 
+EXTRACTION_PROMPT = """Extract all information from the image attached and keep the extracted information in the original format in Markdown.
+- **Output Only Markdown:** Your entire response must be *only* the final Markdown content.
+- **No Explanations:** Do not include any comments, notes, or explanations outside of the Markdown itself.
+- **No Delimiters for the Whole Output:** Do not wrap the entire output in ```markdown ... ``` or any other global code fences. (However, if Mermaid code were present *within* the document, it would need its standard ```mermaid ... ``` fences.)
+"""
 
 SYSTEM_LLM_FORMAT_PROMPT = """You are a helpful assistant who helps users format the extracted data from a document page image into Markdown format.
 You are not allowed to change or summarize the given text; only reorder the wrong paragraph order, correct any broken words, and delete any unsuccessful OCR results, if any."""
@@ -167,15 +241,20 @@ class Fig2Text_Prompt:
         self,
         system_prompt=SYSTEM_FIG_TEMPLATE,
         prompt=FIG_PROMPT_TEMPLATE,
+        fix_prompt=FIX_PROMPT_TEMPLATE,
     ):
         self.system_prompt = system_prompt
         self.prompt = prompt
+        self.fix_prompt = fix_prompt
 
     def get_system_prompt(self):
         return self.system_prompt
 
     def get_prompt(self):
         return self.prompt
+
+    def get_fix_prompt(self):
+        return self.fix_prompt
 
 
 class Formatter_Prompt:
@@ -184,10 +263,12 @@ class Formatter_Prompt:
         system_prompt=SYSTEM_FORMAT_PROMPT,
         prompt=FORMAT_PROMPT_TEMPLATE,
         ft_prompt=FT_FORMAT_PROMPT_TEMPLATE,
+        extraction_prompt=EXTRACTION_PROMPT,
     ):
         self.system_prompt = system_prompt
         self.prompt = prompt
         self.ft_prompt = ft_prompt
+        self.extraction_prompt = extraction_prompt
 
     def get_system_prompt(self):
         return self.system_prompt
@@ -206,3 +287,6 @@ class Formatter_Prompt:
     def get_llm_prompt(self, extracted_text):
         user_prompt = self.ft_prompt + extracted_text
         return user_prompt
+
+    def get_extraction_prompt(self):
+        return self.extraction_prompt

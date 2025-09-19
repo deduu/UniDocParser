@@ -1,4 +1,5 @@
 # app/llm/local_client.py
+from typing import Optional
 import os
 import json
 import uuid
@@ -88,8 +89,8 @@ def sdpa_context():
             return _sdpa_kernel(enable_flash=True, enable_mem_efficient=True, enable_math=True)
         except Exception:
             return nullcontext()
-        
-from typing import Optional
+
+
 # try:
 #     from peft import PeftModel
 #     # backend/main.py (very top, before any transformers imports happen)
@@ -100,6 +101,7 @@ from typing import Optional
 
 # except Exception:
 #     PeftModel = None
+
 
 class LocalHuggingFaceClient(BaseLLM):
     def __init__(
@@ -112,9 +114,11 @@ class LocalHuggingFaceClient(BaseLLM):
         api_key: Optional[str] = None,
 
         # finetuned
-        base_model_hint: Optional[str] = None,   # e.g. "Qwen/Qwen2.5-VL-7B-Instruct"
-        adapter_path: Optional[str] = None,      # e.g. "ZeArkh/Qwen2.5-...-unsloth-Extract-Figure"
-        merge_adapter: bool = False, 
+        # e.g. "Qwen/Qwen2.5-VL-7B-Instruct"
+        base_model_hint: Optional[str] = None,
+        # e.g. "ZeArkh/Qwen2.5-...-unsloth-Extract-Figure"
+        adapter_path: Optional[str] = None,
+        merge_adapter: bool = False,
         # "flash_attention_2" | "sdpa" | None (auto)
         attn_implementation: Optional[str] = None,
 
@@ -126,7 +130,8 @@ class LocalHuggingFaceClient(BaseLLM):
         self.last_metrics: Optional[Dict[str, Any]] = None
         self._vram = VRAMLimiter(device)
         self._concurrency = asyncio.Semaphore(
-            int(os.getenv("LOCAL_LLM_MAX_CONCURRENCY", "16")))  # high cap; VRAM gate will be the real limiter
+            # high cap; VRAM gate will be the real limiter
+            int(os.getenv("LOCAL_LLM_MAX_CONCURRENCY", "16")))
         # ---- Tokenizer ----
         self.tokenizer = AutoTokenizer.from_pretrained(
             model_path, use_fast=False, trust_remote_code=True)
@@ -158,11 +163,12 @@ class LocalHuggingFaceClient(BaseLLM):
 
         # ---- Model ----
         self.torch_dtype = getattr(torch, dtype)
-         # ---- Try get a config from the target repo; otherwise fall back to base ----
+        # ---- Try get a config from the target repo; otherwise fall back to base ----
         cfg = None
         model_id_for_processor = model_path
         try:
-            cfg = AutoConfig.from_pretrained(model_path, trust_remote_code=True)
+            cfg = AutoConfig.from_pretrained(
+                model_path, trust_remote_code=True)
         except Exception as e:
             if base_model_hint is None and adapter_path is None:
                 # no fallback → re-raise the original error
@@ -177,7 +183,7 @@ class LocalHuggingFaceClient(BaseLLM):
             hasattr(cfg, k) for k in ("vision_config", "mm_vision_tower", "vision_tower", "perceiver_config")
         )
 
-         # ---- Load base weights (either from model_path if it’s a full model repo,
+        # ---- Load base weights (either from model_path if it’s a full model repo,
         #      or from base_model_hint if we’re going to apply an adapter) ----
         is_adapter = adapter_path is not None
         weights_source = (base_model_hint if is_adapter else model_path)
@@ -192,9 +198,11 @@ class LocalHuggingFaceClient(BaseLLM):
             **quant_kwargs,
         )
         if has_vision:
-            base_model = AutoModelForVision2Seq.from_pretrained(weights_source, **loader_kwargs)
+            base_model = AutoModelForVision2Seq.from_pretrained(
+                weights_source, **loader_kwargs)
         else:
-            base_model = AutoModelForCausalLM.from_pretrained(weights_source, **loader_kwargs)
+            base_model = AutoModelForCausalLM.from_pretrained(
+                weights_source, **loader_kwargs)
 
            # 3) Apply adapter if provided
         if adapter_path:
@@ -203,29 +211,8 @@ class LocalHuggingFaceClient(BaseLLM):
             base_model = PeftModel.from_pretrained(base_model, adapter_path)
             if merge_adapter:
                 base_model = base_model.merge_and_unload()
-                
+
         self.model = base_model.eval()
-        # if has_vision:
-        #     self.model = AutoModelForVision2Seq.from_pretrained(
-        #         model_path,
-        #         torch_dtype=self.torch_dtype,
-        #         device_map={"": device},
-        #         low_cpu_mem_usage=True,
-        #         attn_implementation=attn_impl,
-        #         trust_remote_code=True,
-        #         **quant_kwargs,
-        #     )
-        # else:
-        #     self.model = AutoModelForCausalLM.from_pretrained(
-        #         model_path,
-        #         torch_dtype=self.torch_dtype,
-        #         device_map={"": device},
-        #         low_cpu_mem_usage=True,
-        #         attn_implementation=attn_impl,
-        #         trust_remote_code=True,
-        #         **quant_kwargs,
-        #     )
-        # self.model.eval()
 
         # ---- Try processor (enables VLM mode when present) ----
         self.processor = None
@@ -342,9 +329,8 @@ class LocalHuggingFaceClient(BaseLLM):
 
         # inside chat()/stream(), after gen_kwargs is defined:
         passthrough = {k: v for k, v in kwargs.items()
-                    if k not in {"max_new_tokens","max_tokens","do_sample","temperature","on_metrics","ctx_window"}}
+                       if k not in {"max_new_tokens", "max_tokens", "do_sample", "temperature", "on_metrics", "ctx_window"}}
         gen_kwargs.update(passthrough)
-
 
         need_bytes = self._estimate_request_bytes(
             prompt_tokens, gen_kwargs["max_new_tokens"])
@@ -433,7 +419,7 @@ class LocalHuggingFaceClient(BaseLLM):
         }
         # inside chat()/stream(), after gen_kwargs is defined:
         passthrough = {k: v for k, v in kwargs.items()
-                    if k not in {"max_new_tokens","max_tokens","do_sample","temperature","on_metrics","ctx_window"}}
+                       if k not in {"max_new_tokens", "max_tokens", "do_sample", "temperature", "on_metrics", "ctx_window"}}
         gen_kwargs.update(passthrough)
 
         # gen_kwargs = {

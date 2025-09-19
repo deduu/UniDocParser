@@ -9,6 +9,7 @@ from backend.pipeline.doc_parser_steps.extract_elements_step import ExtractEleme
 from backend.pipeline.doc_parser_steps.extract_images_step import ExtractImagesStep
 from backend.pipeline.doc_parser_steps.format_extracted_step import FormatExtractedTextStep
 from backend.pipeline.doc_parser_steps.markdown_step import MarkdownStep
+from backend.pipeline.doc_parser_steps.vlm_extractor_step import VLMExtractorStep
 
 
 # app/services/pdf_service.py
@@ -31,7 +32,12 @@ class DocParserService:
             ExtractElementsStep(),
             ExtractImagesStep(),
             FormatExtractedTextStep(),
-            MarkdownStep()
+            # MarkdownStep()
+        ])
+        self.vlm_extract_pipeline = DocParserPipeline([
+            SplitStep(),
+            ExtractElementsStep(),
+            VLMExtractorStep(),
         ])
 
     async def ocr(self, file_path: str, job_id: Optional[str] = None) -> DocParserContext:
@@ -45,3 +51,6 @@ class DocParserService:
 
     async def full(self, file_path: str, job_id: Optional[str] = None) -> DocParserContext:
         return await self.full_pipeline.process(file_path, job_id)
+
+    async def vlm_extract(self, file_path: str, job_id: Optional[str] = None) -> DocParserContext:
+        return await self.vlm_extract_pipeline.process(file_path, job_id)

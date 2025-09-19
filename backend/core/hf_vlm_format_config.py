@@ -101,6 +101,24 @@ class FormatterLLM:
 
         return await self.client.chat(messages, **self.gen_defaults)
 
+    async def generate_from_image(self, image: Image.Image) -> str:
+        """
+        Generate formatted markdown from extracted_text + image.
+        """
+        data_url = self._to_data_url(image)
+        messages = [{
+            "role": "user",
+            "content": [
+                {"type": "image_url", "image_url": {"url": data_url}},
+                {"type": "text", "text": self.prompt_template.get_extraction_prompt()},
+            ],
+        }]
+
+        logger.info(
+            f"Generating with prompt: {messages[0]['content'][1]['text']}")
+
+        return await self.client.chat(messages, **self.gen_defaults)
+
     async def generate_from_path(self, extracted_text: str, image_path: str) -> str:
         """
         Same as generate(), but pass a file path instead of a PIL image.
@@ -123,8 +141,10 @@ def get_formatter_vlm() -> FormatterLLM:
     Adjust defaults here for global choice.
     """
     return FormatterLLM(
-        base_repo="Qwen/Qwen2.5-VL-7B-Instruct",
-        adapter_repo=None,  # or your unsloth adapter
+        # base_repo="Qwen/Qwen2.5-VL-7B-Instruct",
+        base_repo="unsloth/Qwen2.5-VL-7B-Instruct",
+        adapter_repo="ZeArkh/Qwen2.5-VL-7B-Instruct-unsloth-Markdown-Formatter",
+        # adapter_repo=None,  # or your unsloth adapter
         device="cuda:2",
         quantization=None,
         temperature=1.5,

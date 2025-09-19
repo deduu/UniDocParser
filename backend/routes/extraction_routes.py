@@ -36,26 +36,6 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-# class PageOut(BaseModel):
-#     page:  int
-#     text:  str
-#     images: List[str]
-
-
-# class ExtractOut(BaseModel):
-#     source:          str
-#     pages:           List[Dict[str, Any]]     # ← accept any dict here
-#     processing_time: float
-
-
-# class ResponseModel(BaseModel):
-#     message: str
-#     job_id: Optional[str]
-#     extraction_result: Optional[DocParserContextOut] = None
-#     json_output: Optional[str] = None
-#     markdown_output: Optional[str] = None
-
-
 async def get_db_session():
     async with session_manager.create_session() as session:
         yield session
@@ -140,6 +120,7 @@ async def extract_pdf_db(
             dto: DocParserContextOut = await handler.extract_only(file, job.id)
         else:
             dto: DocParserContextOut = await handler.full_pipeline(file, job.id)
+            # dto: DocParserContextOut = await handler.vlm_extract_pipeline(file, job.id)
 
         # 4) Persist JSONL & Markdown on disk
         json_name, md_name = await handler.save_results(

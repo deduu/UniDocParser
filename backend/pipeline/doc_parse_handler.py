@@ -74,6 +74,14 @@ class DocParserHandler:
             raise HTTPException(500, f"Full pipeline failed: {e}")
         return self._dto_from_ctx(ctx, job_id=job_id)
 
+    async def vlm_extract_pipeline(self, file: UploadFile, job_id: Optional[str] = None) -> DocParserContextOut:
+        path = await self._save_upload(file)
+        try:
+            ctx = await self.svc.vlm_extract(path, job_id=job_id)
+        except Exception as e:
+            raise HTTPException(500, f"VLM extract pipeline failed: {e}")
+        return self._dto_from_ctx(ctx, job_id=job_id)
+
     def _dto_from_ctx(
         self,
         ctx: DocParserContext,

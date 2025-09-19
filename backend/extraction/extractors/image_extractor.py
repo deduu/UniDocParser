@@ -64,6 +64,13 @@ class ImageExtractor(BaseExtractor):
 
         # Ensure a page_number exists (images are effectively single-page = 1)
         for el in raw_elements:
+            # bbox = None
+            # if hasattr(el.metadata, "coordinates") and el.metadata.coordinates:
+            #     # coordinates is usually a dict with 'points' or 'bounding_box'
+            #     bbox = el.metadata.coordinates.to_dict() if hasattr(
+            #         el.metadata.coordinates, "to_dict") else el.metadata.coordinates
+
+            # logger.info("Element: %s | BBox: %s", el.category, bbox)
             if not getattr(el.metadata, "page_number", None):
                 try:
                     el.metadata.page_number = 1

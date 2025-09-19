@@ -12,6 +12,7 @@ from typing import Any, Dict, List, Optional
 from PIL import Image
 # <-- use the LAZY getter
 from backend.core.hf_vlm_fig2tab_config import get_fig2tab_vlm
+from backend.utils.safe_paths import ensure_parent_dir
 
 logger = logging.getLogger(__name__)
 
@@ -34,10 +35,21 @@ def _coerce_to_pil(v: Any) -> Image.Image:
     raise KeyError("No usable image payload")
 
 
-async def _fig_to_table_async(figure_list: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+async def _fig_to_table_async(figure_list: List[Dict[str, Any]], pages: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     vlm = get_fig2tab_vlm()  # lazy init; won’t explode at import time
     out: List[Dict[str, Any]] = []
+    # logger.info(f"pages: {pages}")
+
+    page_lookup = {p["index"]: p for p in pages}
+
+    # logger.info(f"page_lookup: {page_lookup}")
     for rec in figure_list:
+        # page_el = page_lookup.get(rec.get("page_num"))
+        page_el = page_lookup.get(rec.get("page_num"))
+
+        # logger.info(f"page_el: {page_el}")
+        image_path = ensure_parent_dir(page_el["image"])
+
         img_val: Optional[Any] = (
             rec.get("pil_image")
             or rec.get("image")
@@ -58,7 +70,8 @@ async def _fig_to_table_async(figure_list: List[Dict[str, Any]]) -> List[Dict[st
             continue
 
         try:
-            text = await vlm.generate(pil)  # Fig2TabLLM.generate is async
+            # Fig2TabLLM.generate is async
+            text = await vlm.generate(pil, image_path)
             rec["generated_text"] = text
         except Exception as e:
             logger.exception("[fig2tab] VLM generate failed: %r", e)
@@ -66,13 +79,13 @@ async def _fig_to_table_async(figure_list: List[Dict[str, Any]]) -> List[Dict[st
     return out
 
 
-def fig_to_table(figure_list: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+def fig_to_table(figure_list: List[Dict[str, Any]], pages: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """
     Synchronous facade used by the thread-executed step.
     Safe to call asyncio.run() here because ExtractImagesStep.run() is executed
     inside asyncio.to_thread (i.e., not on the main event loop thread).
     """
-    return asyncio.run(_fig_to_table_async(figure_list))
+    return asyncio.run(_fig_to_table_async(figure_list, pages))
 # Figure to Table VLM
 # def fig_to_table(figure_list):
 
@@ -130,9 +143,11 @@ def take_type(result_text):
 
 def extract_images(pages, figure_list):
 
-    figure_list = fig_to_table(figure_list)
+    figure_list = fig_to_table(figure_list, pages)
 
     for i, fig in enumerate(figure_list):
+        logger.info(
+            f"Figure: {fig} and generated_text: {fig['generated_text']}")
         # check if the result is empty
         if fig["generated_text"] == "":
             continue
