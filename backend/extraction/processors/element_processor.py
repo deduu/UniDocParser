@@ -108,8 +108,10 @@ class ElementProcessor:
         pil_image = None
         try:
             if image_path:
+                # pil_image = resize_img_from_path(
+                #     image_path, size=self.config.image_resize)
                 pil_image = resize_img_from_path(
-                    image_path, size=self.config.image_resize)
+                    image_path)
         except Exception as e:
             logger.warning(
                 "Failed to open/resize image at %s: %s", image_path, e)

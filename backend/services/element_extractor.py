@@ -5,6 +5,8 @@ import backend.utils.unstructured_extractor_helpers as helpers
 from backend.core.config import settings
 
 # Function to extract elements from image pages
+
+
 def element_extractor(file_path: str):
     """
     Extract elements from an image using Unstructured's partition_image function.
@@ -19,8 +21,9 @@ def element_extractor(file_path: str):
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"File not found: {file_path}")
 
-    type = file_path.split('.')[-1].lower()  # Get the file type from the extension
-    
+    # Get the file type from the extension
+    type = file_path.split('.')[-1].lower()
+
     if type == "jpeg" or type == "jpg" or type == "png":
         from unstructured.partition.image import partition_image
 
@@ -76,6 +79,8 @@ def element_extractor(file_path: str):
     return elements
 
 # Fuction to extract metadata from Unstructured elements
+
+
 def extract_unstructured_elements(elements, page_num):
     element_metadata = []
     figure_list = []
@@ -87,15 +92,17 @@ def extract_unstructured_elements(elements, page_num):
         unstructured_element = element.metadata.to_dict()
 
         if "coordinates" in unstructured_element:
-            element_bbox = helpers.extract_bbox(unstructured_element["coordinates"]["points"])
+            element_bbox = helpers.extract_bbox(
+                unstructured_element["coordinates"]["points"])
         else:
             element_bbox = None
-
 
         if "unstructured.documents.elements.Image" in str(type(element)):
             image_path = unstructured_element["image_path"]
 
-            pil_image = resize_img_from_path(image_path, size=560)
+            pil_image = resize_img_from_path(image_path)
+
+            # pil_image = resize_img_from_path(image_path, size=560)
 
             element_metadata.append({
                 "idx": i - min_counter,
@@ -120,7 +127,8 @@ def extract_unstructured_elements(elements, page_num):
 
         elif "unstructured.documents.elements.Table" in str(type(element)):
 
-            md_table = markdownify.markdownify(unstructured_element["text_as_html"])
+            md_table = markdownify.markdownify(
+                unstructured_element["text_as_html"])
             md_table = helpers.filter_table(md_table)
 
             if helpers.get_len_columns(md_table) == helpers.get_len_columns(temp_table):
@@ -160,6 +168,8 @@ def extract_unstructured_elements(elements, page_num):
     return element_metadata, figure_list
 
 # Extract elements from PDF
+
+
 def extract_elements(pages, file_path=None):
     figure_list = []
     elements = []
@@ -174,7 +184,8 @@ def extract_elements(pages, file_path=None):
 
     for i, page in enumerate(pages):
         if i < len(elements):
-            page["elements"], figures = extract_unstructured_elements(elements=elements[i], page_num=i)
+            page["elements"], figures = extract_unstructured_elements(
+                elements=elements[i], page_num=i)
             figure_list += figures
         else:
             # Handle missing elements appropriately

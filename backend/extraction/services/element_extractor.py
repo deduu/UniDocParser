@@ -4,7 +4,7 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
-
+from backend.utils.safe_paths import ensure_parent_dir
 from ..config import ExtractionConfig
 from ..detectors import FileTypeDetector
 from ..factory import ExtractorFactory
@@ -179,6 +179,102 @@ def extract_unstructured_elements(
     return processor.process_elements(elements, page_num)
 
 
+# def extract_elements(
+#     pages: List[Dict], file_path: Optional[str] = None, config: Optional["ExtractionConfig"] = None
+# ) -> Tuple[List[Dict], List["FigureData"]]:
+#     figure_list: List["FigureData"] = []
+#     elements_per_page: List[List[Any]] = []
+#     page_meta_by_index: Dict[int, Dict] = {}
+
+#     print("=" * 80)
+#     print(
+#         f"[extract_elements] Start - file_path: {file_path}, num_pages: {len(pages)}")
+#     if config:
+#         print(f"[extract_elements] Config: {config}")
+
+#     if not file_path:
+#         print("[extract_elements] Running per-page extraction (no global file_path).")
+#         for i, page in enumerate(pages):
+#             print(
+#                 f"  -> Extracting elements from page index {i}, image: {page.get('image')}")
+#             elems, meta_dict = element_extractor(
+#                 file_path=ensure_parent_dir(page.get("image")), config=config)
+#             print(
+#                 f"     Returned elems type: {type(elems)}, len: {len(elems) if elems else 0}")
+#             print(f"     Returned meta_dict: {meta_dict}")
+
+#             elements_per_page.append(elems if elems else [])
+
+#             if isinstance(meta_dict, dict) and meta_dict:
+#                 first_meta = next(iter(meta_dict.values()))
+#                 page_meta_by_index[i] = {
+#                     "coord_width": float(first_meta.get("coord_width", 0) or 0),
+#                     "coord_height": float(first_meta.get("coord_height", 0) or 0),
+#                 }
+#                 print(f"     Saved meta for page {i}: {page_meta_by_index[i]}")
+#     else:
+#         print("[extract_elements] Running global extraction (file_path present).")
+#         all_elems, meta_dict = element_extractor(
+#             file_path=file_path, config=config)
+#         print(
+#             f"  -> all_elems type: {type(all_elems)}, sample: {all_elems[:1] if all_elems else None}")
+#         print(f"  -> meta_dict: {meta_dict}")
+
+#         if all_elems and isinstance(all_elems[0], list):
+#             elements_per_page = all_elems
+#             print(
+#                 f"  -> Interpreted all_elems as per-page list with {len(elements_per_page)} pages.")
+#         else:
+#             elements_per_page = [all_elems if all_elems else []] + [[]
+#                                                                     for _ in range(len(pages) - 1)]
+#             print(
+#                 f"  -> Wrapped all_elems into first page, rest empty. Total: {len(elements_per_page)}")
+
+#         if isinstance(meta_dict, dict):
+#             for pnum, meta in meta_dict.items():
+#                 try:
+#                     idx = int(pnum) - 1
+#                     if 0 <= idx < len(pages):
+#                         page_meta_by_index[idx] = {
+#                             "coord_width": float(meta.get("coord_width", 0) or 0),
+#                             "coord_height": float(meta.get("coord_height", 0) or 0),
+#                         }
+#                         print(
+#                             f"  -> Saved meta for page {idx}: {page_meta_by_index[idx]}")
+#                 except Exception as e:
+#                     print(
+#                         f"  !! Failed to parse page number from meta_dict key={pnum}, error={e}")
+
+#     # Merge results into pages
+#     for i, page in enumerate(pages):
+#         if i < len(elements_per_page):
+#             print(
+#                 f"[Page {i}] Processing {len(elements_per_page[i])} elements")
+#             try:
+#                 page["elements"], figures = extract_unstructured_elements(
+#                     elements=elements_per_page[i], page_num=i, config=config
+#                 )
+#                 print(
+#                     f"   -> Extracted {len(page['elements'])} structured elements, {len(figures)} figures")
+#             except Exception as e:
+#                 print(
+#                     f"   !! Error in extract_unstructured_elements for page {i}: {e}")
+#                 page["elements"], figures = [], []
+
+#             meta = page_meta_by_index.get(i)
+#             if meta:
+#                 page["coord_width"] = meta["coord_width"]
+#                 page["coord_height"] = meta["coord_height"]
+#             figure_list += figures
+#         else:
+#             page["elements"] = []
+#             print(f"   !! Warning: No elements found for page index {i}")
+
+#     print(
+#         f"[extract_elements] Done - Extracted {len(figure_list)} figures from {len(pages)} pages.")
+#     print("=" * 80)
+#     return pages, figure_list
+
 def extract_elements(
     pages: List[Dict], file_path: Optional[str] = None, config: Optional[ExtractionConfig] = None
 ) -> Tuple[List[Dict], List[FigureData]]:
@@ -191,7 +287,7 @@ def extract_elements(
     if not file_path:
         for i, page in enumerate(pages):
             elems, meta_dict = element_extractor(
-                file_path=page.get("image"), config=config)
+                file_path=ensure_parent_dir(page.get("image")), config=config)
             elements_per_page.append(elems)
             if isinstance(meta_dict, dict) and meta_dict:
                 first_meta = next(iter(meta_dict.values()))
@@ -218,6 +314,9 @@ def extract_elements(
                         "coord_width": float(meta.get("coord_width", 0) or 0),
                         "coord_height": float(meta.get("coord_height", 0) or 0),
                     }
+    print(f"[DEBUG] elements_per_page (len={len(elements_per_page)}): "
+          f"types={[type(e) for e in elements_per_page]}")
+    print("[DEBUG] elements_per_page full content:", elements_per_page)
 
     for i, page in enumerate(pages):
         if i < len(elements_per_page):

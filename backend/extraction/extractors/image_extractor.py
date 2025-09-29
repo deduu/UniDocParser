@@ -61,6 +61,8 @@ class ImageExtractor(BaseExtractor):
             infer_table_structure=self.config.infer_table_structure,
             languages=self.config.languages,
         )
+        logger.info(
+            f"[DEBUG] partition_image returned {len(raw_elements)} elements")
 
         # Ensure a page_number exists (images are effectively single-page = 1)
         for el in raw_elements:
