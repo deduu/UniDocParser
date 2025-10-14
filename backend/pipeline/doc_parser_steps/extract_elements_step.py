@@ -1,4 +1,5 @@
 # backend/pipeline/steps/extract_elements_step.py
+import logging
 from typing import Optional
 from backend.pipeline.doc_parser_steps.doc_parser_step import DocParserStep
 from backend.pipeline.doc_parser_steps.context import DocParserContext, Page, Figure
@@ -6,7 +7,10 @@ from backend.pipeline.doc_parser_steps.context import DocParserContext, Page, Fi
 
 # from backend.services.element_extractor import extract_elements
 from backend.extraction.services.element_extractor import extract_elements
+from backend.utils.logger import safe_context_dump
 from dataclasses import asdict
+
+logger = logging.getLogger(__name__)
 
 
 def to_builtin(obj):
@@ -36,12 +40,15 @@ class ExtractElementsStep(DocParserStep):
     def run(self, ctx: DocParserContext, job_id: Optional[str] = None) -> DocParserContext:
         # 1. Convert our Page models into the raw dicts your extractor expects
         raw_pages = [p.dict() for p in ctx.pages]
-        # print(f"raw_pages: {raw_pages}")
-        # print(f"ctx.path: {ctx.pdf_path}")
+
+        logger.info(f"raw_pages: {raw_pages}")
 
         # 2. Run extraction, getting back updated pages + a flat list of figures
         updated_pages_data, figure_list_data = extract_elements(
             raw_pages, ctx.file_path)
+
+        # logger.info(f"updated_pages_data: {updated_pages_data}")
+        # logger.info(f"figure_list_data: {figure_list_data}")
 
         # for i, page in enumerate(updated_pages_data):
         # print(f"page {i}: {page}")
@@ -56,5 +63,11 @@ class ExtractElementsStep(DocParserStep):
         ctx.pages = [Page(**p) for p in updated_pages_data]  # p is dictionary
         ctx.figure_list = [Figure.model_validate(
             f) for f in figure_list_data]  # f is object
+
+        # logger.info(f"ctx:\n{ctx.model_dump_json(indent=2)}")
+        try:
+            logger.info(f"ctx summary:\n{safe_context_dump(ctx)}")
+        except Exception:
+            logger.exception("Failed to dump ctx safely")
 
         return ctx

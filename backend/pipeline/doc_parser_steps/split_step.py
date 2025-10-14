@@ -1,11 +1,15 @@
 # backend/pipeline/steps/split_step.py
 import uuid  #
+import logging
 from dataclasses import asdict
 from typing import Optional
 from backend.pipeline.doc_parser_steps.doc_parser_step import DocParserStep
 from backend.pipeline.doc_parser_steps.context import DocParserContext, Page
 from backend.services.file_handler import handle_file
 from backend.file_ingestion.file_ingest import ingest
+from backend.utils.logger import safe_context_dump
+
+logger = logging.getLogger(__name__)
 
 
 class SplitStep(DocParserStep):
@@ -20,7 +24,7 @@ class SplitStep(DocParserStep):
 
         raw_pages = ingest.handle_file(ctx.file_path, resolved_job_id)
 
-        print(f"raw_pages: {raw_pages}")
+        logger.info(f"raw_pages: {raw_pages}")
 
         # 2. Convert each dict into a Page model (elements defaults to [])
         # pages = [Page(**asdict(page_data)) for page_data in raw_pages]
@@ -32,8 +36,10 @@ class SplitStep(DocParserStep):
         # print(f"pages split: {pages}")
         # 3. Update the context
         ctx.pages = pages
+        # logger.info(f"ctx:\n{ctx.model_dump_json(indent=2)}")
+        logger.info(f"[{self.name}] ctx summary:\n{safe_context_dump(ctx)}")
 
-        print(f"handler: {ctx.file_path}")
+        # print(f"handler: {ctx.file_path}")
 
         # Persist the resolved job_id back to context if not set
         # if not getattr(ctx, "job_id", None):

@@ -37,7 +37,7 @@ class DocParserHandler:
         unique_name = f"{uuid.uuid4()}_{file.filename}"
         dest = os.path.join(self.upload_dir, unique_name)
 
-        print(f"dest: {dest}")
+        print(f"File uploaded path: {dest}")
         async with aiofiles.open(dest, "wb") as buf:
             await buf.write(await file.read())
         return dest

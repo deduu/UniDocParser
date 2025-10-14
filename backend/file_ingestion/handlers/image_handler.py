@@ -21,7 +21,7 @@ class ImageHandler:
 
     @log_processing_time
     def handle(self, img_path: Path, job_id: str) -> List[PageMetadata]:
-        print(f"handle[image]: {img_path}")
+        # print(f"handle[image]: {img_path}")
         try:
             img = Image.open(img_path)
         except UnidentifiedImageError:

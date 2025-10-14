@@ -1,8 +1,12 @@
 # backend/pipeline/steps/extract_images_step.py
+import logging
 from typing import Optional
 from backend.pipeline.doc_parser_steps.doc_parser_step import DocParserStep
 from backend.pipeline.doc_parser_steps.context import DocParserContext, Page
 from backend.services.image_extractor import extract_images
+from backend.utils.logger import safe_context_dump
+
+logger = logging.getLogger(__name__)
 
 
 class ExtractImagesStep(DocParserStep):
@@ -35,5 +39,11 @@ class ExtractImagesStep(DocParserStep):
 
         # Wrap back into Page models and store
         ctx.pages = [Page(**page_data) for page_data in updated_pages_raw]
+
+        # logger.info(f"ctx:\n{ctx.model_dump_json(indent=2)}")
+        try:
+            logger.info(f"ctx summary:\n{safe_context_dump(ctx)}")
+        except Exception:
+            logger.exception("Failed to dump ctx safely")
 
         return ctx

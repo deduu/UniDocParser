@@ -282,7 +282,7 @@ def extract_elements(
     elements_per_page: List[List[Any]] = []
     page_meta_by_index: Dict[int, Dict] = {}
 
-    print(f"Extract elements path: {file_path}")
+    # print(f"Extract elements path: {file_path}")
 
     if not file_path:
         for i, page in enumerate(pages):
@@ -314,9 +314,9 @@ def extract_elements(
                         "coord_width": float(meta.get("coord_width", 0) or 0),
                         "coord_height": float(meta.get("coord_height", 0) or 0),
                     }
-    print(f"[DEBUG] elements_per_page (len={len(elements_per_page)}): "
-          f"types={[type(e) for e in elements_per_page]}")
-    print("[DEBUG] elements_per_page full content:", elements_per_page)
+    # print(f"[DEBUG] elements_per_page (len={len(elements_per_page)}): "
+    #       f"types={[type(e) for e in elements_per_page]}")
+    # print("[DEBUG] elements_per_page full content:", elements_per_page)
 
     for i, page in enumerate(pages):
         if i < len(elements_per_page):

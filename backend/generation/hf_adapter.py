@@ -365,7 +365,7 @@ class LocalHuggingFaceClient(BaseLLM):
             time_decode=None,
         )
         self.last_metrics = metrics
-        self._log_metrics(metrics)
+        # self._log_metrics(metrics)
         cb = kwargs.get("on_metrics")
         if callable(cb):
             cb(metrics)

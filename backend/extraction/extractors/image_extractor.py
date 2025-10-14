@@ -104,4 +104,6 @@ class ImageExtractor(BaseExtractor):
         # Split into per-page lists just like PDF
         per_page_elements = helpers.split_elements(raw_elements)
 
+        logger.info(f"[extract:image] per_page_elements: {per_page_elements}")
+
         return per_page_elements, page_meta

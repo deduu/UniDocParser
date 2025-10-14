@@ -29,9 +29,10 @@ def _safe_join_under(base_dir: Path, key: str) -> Path:
     """
     base = base_dir.resolve()
     key = key.lstrip("/")
-    print(f"base: {base}")
+    # print(f"base: {base}")
     candidate = (base / key).resolve()
-    print(f"candidate: {candidate}")
+    # print(f"candidate: {candidate}")
+
     # Python 3.11+: Path.is_relative_to
     if not candidate.is_relative_to(base):
         raise HTTPException(status_code=400, detail="Invalid path")

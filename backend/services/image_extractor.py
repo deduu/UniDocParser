@@ -71,7 +71,8 @@ async def _fig_to_table_async(figure_list: List[Dict[str, Any]], pages: List[Dic
 
         try:
             # Fig2TabLLM.generate is async
-            text = await vlm.generate(pil, image_path)
+            # text = await vlm.generate(pil, image_path)
+            text = await vlm.generate_from_path(image_path)
             rec["generated_text"] = text
         except Exception as e:
             logger.exception("[fig2tab] VLM generate failed: %r", e)
@@ -146,8 +147,8 @@ def extract_images(pages, figure_list):
     figure_list = fig_to_table(figure_list, pages)
 
     for i, fig in enumerate(figure_list):
-        logger.info(
-            f"Figure: {fig} and generated_text: {fig['generated_text']}")
+        # logger.info(
+        #     f"Figure: {fig} and generated_text: {fig['generated_text']}")
         # check if the result is empty
         if fig["generated_text"] == "":
             continue

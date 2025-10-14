@@ -28,7 +28,7 @@ class ElementProcessor:
         min_counter = 0
 
         for i, element in enumerate(elements):
-            print(f"element content: {element}")
+            # print(f"element content: {element}")
             try:
                 metadata, figure = self._process_single_element(
                     element, i, min_counter, temp_table, page_num
@@ -62,7 +62,7 @@ class ElementProcessor:
         try:
             # type: ignore[attr-defined]
             unstructured_element = element.metadata.to_dict()
-            logger.info(f"Unstructured element: {unstructured_element}")
+            # logger.info(f"Unstructured element: {unstructured_element}")
         except Exception:
             # Fallback if object doesn't have metadata; treat as text
             pass
