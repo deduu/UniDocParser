@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     """Application settings loaded from environment variables or .env file."""
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-    DATABASE_URL: str = "postgresql+asyncpg://postgres:admin@localhost:5432/doc_parser"
+    DATABASE_URL: str = "postgresql+asyncpg://postgres:skk123data@localhost:5432/doc_parser"
     DEBUG_MODE: bool = False
     TIMEZONE: str = "Asia/Bangkok"
 

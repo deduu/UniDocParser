@@ -1,33 +1,4 @@
 # # backend/extraction/extractors/image_extractor.py
-# from __future__ import annotations
-
-# import logging
-# from pathlib import Path
-# from typing import Any, List
-
-# from ..base import BaseExtractor
-
-# logger = logging.getLogger(__name__)
-
-
-# class ImageExtractor(BaseExtractor):
-#     """Extractor for image files."""
-
-#     def extract(self, file_path: Path) -> List[Any]:
-#         """Extract elements from image file."""
-#         # Local import to avoid hard dependency at module import time
-#         from unstructured.partition.image import partition_image
-
-#         logger.info("Partitioning image: %s", file_path)
-#         return partition_image(
-#             filename=str(file_path),
-#             extract_images_in_pdf=self.config.extract_images_in_pdf,
-#             extract_image_block_to_payload=self.config.extract_image_block_to_payload,
-#             extract_image_block_output_dir=self._get_output_directory(file_path),
-#             infer_table_structure=self.config.infer_table_structure,
-#             languages=self.config.languages,
-#         )
-# backend/extraction/extractors/image_extractor.py
 from __future__ import annotations
 
 import logging
@@ -51,59 +22,106 @@ class ImageExtractor(BaseExtractor):
         from unstructured.partition.image import partition_image
 
         logger.info("Partitioning image: %s", file_path)
-        raw_elements = partition_image(
-            filename=str(file_path),
-            # keep the same knobs you use for PDF so pipeline behaves consistently
-            extract_images_in_pdf=self.config.extract_images_in_pdf,
-            extract_image_block_to_payload=self.config.extract_image_block_to_payload,
-            extract_image_block_output_dir=self._get_output_directory(
-                file_path),
-            infer_table_structure=self.config.infer_table_structure,
-            languages=self.config.languages,
-        )
-        logger.info(
-            f"[DEBUG] partition_image returned {len(raw_elements)} elements")
+        
+        # Validate file exists and is readable
+        if not file_path.exists():
+            logger.error(f"Image file does not exist: {file_path}")
+            raise FileNotFoundError(f"Image file not found: {file_path}")
+        
+        if not file_path.is_file():
+            logger.error(f"Path is not a file: {file_path}")
+            raise ValueError(f"Path is not a file: {file_path}")
+        
+        try:
+            raw_elements = partition_image(
+                filename=str(file_path),
+                extract_images_in_pdf=self.config.extract_images_in_pdf,
+                extract_image_block_to_payload=self.config.extract_image_block_to_payload,
+                extract_image_block_output_dir=self._get_output_directory(file_path),
+                infer_table_structure=self.config.infer_table_structure,
+                languages=self.config.languages,
+            )
+            logger.info(f"[DEBUG] partition_image returned {len(raw_elements)} elements")
+            
+        except ImportError as e:
+            logger.error(f"Missing dependency for image processing: {e}", exc_info=True)
+            raise ImportError(f"Failed to import required image processing library: {e}") from e
+            
+        except OSError as e:
+            # File access issues, corrupted files, unsupported formats
+            logger.error(f"OS error while processing image {file_path}: {e}", exc_info=True)
+            raise OSError(f"Failed to read or process image file: {e}") from e
+            
+        except MemoryError as e:
+            logger.error(f"Out of memory while processing image {file_path}", exc_info=True)
+            raise MemoryError(f"Image file too large to process: {file_path}") from e
+            
+        except ValueError as e:
+            # Invalid parameters or unsupported image format
+            logger.error(f"Invalid image or parameters for {file_path}: {e}", exc_info=True)
+            raise ValueError(f"Invalid image format or parameters: {e}") from e
+            
+        except Exception as e:
+            # Catch-all for unexpected errors
+            logger.error(
+                f"Unexpected error partitioning image {file_path}: {type(e).__name__}: {e}", 
+                exc_info=True
+            )
+            raise RuntimeError(
+                f"Failed to partition image {file_path}: {type(e).__name__}: {e}"
+            ) from e
+
+        # Validate output
+        if not raw_elements:
+            logger.warning(f"No elements extracted from image: {file_path}")
+            # Return empty result instead of failing
+            return [[]], {1: {"coord_width": 0, "coord_height": 0}}
 
         # Ensure a page_number exists (images are effectively single-page = 1)
-        for el in raw_elements:
-            # bbox = None
-            # if hasattr(el.metadata, "coordinates") and el.metadata.coordinates:
-            #     # coordinates is usually a dict with 'points' or 'bounding_box'
-            #     bbox = el.metadata.coordinates.to_dict() if hasattr(
-            #         el.metadata.coordinates, "to_dict") else el.metadata.coordinates
-
-            # logger.info("Element: %s | BBox: %s", el.category, bbox)
-            if not getattr(el.metadata, "page_number", None):
-                try:
-                    el.metadata.page_number = 1
-                except Exception:
-                    # metadata object might be frozen; that's OK if helpers.split_elements
-                    # only reads the attribute when present on some elements
-                    pass
+        try:
+            for el in raw_elements:
+                if not getattr(el.metadata, "page_number", None):
+                    try:
+                        el.metadata.page_number = 1
+                    except Exception as e:
+                        # metadata object might be frozen; that's OK
+                        logger.debug(f"Could not set page_number on element: {e}")
+                        pass
+        except Exception as e:
+            logger.error(f"Error setting page numbers: {e}", exc_info=True)
+            # Continue processing even if page number setting fails
 
         # Build page_meta similarly to PDFExtractor
         page_meta: Dict[int, dict] = {}
-        for el in raw_elements:
-            coords = getattr(el.metadata, "coordinates", None)
-            page_num = getattr(el.metadata, "page_number", 1)
-            if coords and getattr(coords, "system", None):
-                system = coords.system
-                w = getattr(system, "width", None)
-                h = getattr(system, "height", None)
-                if w and h and page_num not in page_meta:
-                    page_meta[page_num] = {
-                        "coord_width": float(w),
-                        "coord_height": float(h),
-                    }
-                    logger.debug(
-                        f"[extract:image] Page {page_num} size={w}x{h}")
+        try:
+            for el in raw_elements:
+                coords = getattr(el.metadata, "coordinates", None)
+                page_num = getattr(el.metadata, "page_number", 1)
+                if coords and getattr(coords, "system", None):
+                    system = coords.system
+                    w = getattr(system, "width", None)
+                    h = getattr(system, "height", None)
+                    if w and h and page_num not in page_meta:
+                        page_meta[page_num] = {
+                            "coord_width": float(w),
+                            "coord_height": float(h),
+                        }
+                        logger.debug(f"[extract:image] Page {page_num} size={w}x{h}")
+        except Exception as e:
+            logger.error(f"Error building page metadata: {e}", exc_info=True)
+            # Use default if metadata extraction fails
+            page_meta = {1: {"coord_width": 0, "coord_height": 0}}
 
         logger.info(
-            f"[extract:image] page_meta = {page_meta or {1: {'coord_width': 0, 'coord_height': 0}}}")
+            f"[extract:image] page_meta = {page_meta or {1: {'coord_width': 0, 'coord_height': 0}}}"
+        )
 
         # Split into per-page lists just like PDF
-        per_page_elements = helpers.split_elements(raw_elements)
-
-        logger.info(f"[extract:image] per_page_elements: {per_page_elements}")
+        try:
+            per_page_elements = helpers.split_elements(raw_elements)
+        except Exception as e:
+            logger.error(f"Error splitting elements: {e}", exc_info=True)
+            # Fallback: treat all elements as single page
+            per_page_elements = [raw_elements]
 
         return per_page_elements, page_meta

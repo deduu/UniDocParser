@@ -16,3 +16,5 @@ test_output/
 storage/
 cuda_12.4.1_550.54.15_linux.run
 cuda_installer.pyz
+
+.logs/
