@@ -32,7 +32,7 @@ class DocParserService:
             ExtractElementsStep(),
             ExtractImagesStep(),
             FormatExtractedTextStep(),
-            # MarkdownStep()
+            #     MarkdownStep()
         ])
         self.vlm_extract_pipeline = DocParserPipeline([
             SplitStep(),

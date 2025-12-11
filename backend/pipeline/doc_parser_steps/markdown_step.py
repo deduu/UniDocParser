@@ -5,6 +5,7 @@ from typing import Optional
 from backend.pipeline.doc_parser_steps.doc_parser_step import DocParserStep
 from backend.pipeline.doc_parser_steps.context import DocParserContext, Page
 from backend.services.output_formatter import format_markdown  # same file as above
+from backend.utils.logger import safe_context_dump
 
 logger = logging.getLogger(__name__)
 
@@ -27,5 +28,8 @@ class MarkdownStep(DocParserStep):
 
         ctx.pages = [Page(**p) for p in updated_pages_raw]
 
-        logger.info("%s completed", self.name)
+        try:
+            logger.info(f"ctx summary:\n{safe_context_dump(ctx)}")
+        except Exception:
+            logger.exception("Failed to dump ctx safely")
         return ctx
