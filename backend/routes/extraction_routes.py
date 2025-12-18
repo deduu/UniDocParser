@@ -78,7 +78,7 @@ async def extract_pdf(
     folder: str = Form("test_folder"),  # default folder
     file: UploadFile = File(...),
     handler: DocParserHandler = Depends(),
-    fig2tab_type: str = Form("ft"),  # default model
+    fig2tab_type: str = Form("base"),  # default model
     formatter_type: str = Form("base"),  # default model
 ) -> ResponseModel:
     # check if the user token is available

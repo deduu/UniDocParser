@@ -28,8 +28,8 @@ class Settings(BaseSettings):
     # IMG_FIGURES_DIR: ClassVar[str] = os.path.join(IMG_DIR, IMG_FIGURES_SUBDIR)
 
     # Cuda Settings for Each Models
-    FIG2TAB_MODEL_DEVICE: str = "cuda:1"
-    FORMATTER_MODEL_DEVICE: str = "cuda:2"
+    FIG2TAB_MODEL_DEVICE: str = "cuda:0"
+    FORMATTER_MODEL_DEVICE: str = "cuda:1"
 
     # Ensure upload and output directories exist
     def __init__(self, *args, **kwargs):
