@@ -1,0 +1,41 @@
+# ------------------------------------------------------------------------------
+# UniDoc Agent - Model Definitions
+# ------------------------------------------------------------------------------
+# Models are now separated by family, which corresponds to the task they perform.
+# The 'provider' points to a specific class that implements the required interface.
+# ------------------------------------------------------------------------------
+
+models:
+  # Fig2Tab models must implement the ImageModelProvider interface
+  fig2tab:
+    - name: "qwen_local"
+      provider: "unidoc_agent.backend.model_providers.huggingface.HuggingFaceImageProvider"
+      args:
+        model_id: "Qwen/Qwen2.5-VL-7B-Instruct"
+        device: "${FIG2TAB_MODEL_DEVICE}"
+
+    - name: "openai_vision"
+      provider: "unidoc_agent.backend.model_providers.openai.OpenAIImageProvider"
+      args:
+        model_id: "gpt-4-vision-preview"
+        api_key: "${OPENAI_API_KEY}"
+        base_url: "${OPENAI_BASE_URL}"
+        temperature: 0.5
+        max_new_tokens: 4096
+
+  # Formatter models must implement the TextModelProvider interface
+  formatter:
+    - name: "local_formatter"
+      provider: "unidoc_agent.backend.model_providers.huggingface.HuggingFaceTextProvider"
+      args:
+        model_id: "google/flan-t5-base" # Using a default text2text model as an example
+        device: "${FORMATTER_MODEL_DEVICE}"
+
+    - name: "openai_formatter"
+      provider: "unidoc_agent.backend.model_providers.openai.OpenAITextProvider"
+      args:
+        model_id: "gpt-3.5-turbo" # Cheaper, faster model for text tasks
+        api_key: "${OPENAI_API_KEY}"
+        base_url: "${OPENAI_BASE_URL}"
+        temperature: 0.1
+        max_new_tokens: 8192

@@ -1,0 +1,33 @@
+# ------------------------------------------------------------------------------
+# UniDoc Agent - Pipeline Definitions
+# ------------------------------------------------------------------------------
+# This file defines the processing pipelines available to the application.
+# Each pipeline is a named sequence of steps. The PipelineRunner will
+# dynamically construct and execute a pipeline based on its name.
+#
+# The 'steps' are references to the step classes. The runner will map
+# these names to the actual step implementations.
+# ------------------------------------------------------------------------------
+
+pipelines:
+  - name: "default_pdf_pipeline"
+    description: "A comprehensive pipeline for scanned and native PDFs."
+    steps:
+      - "SplitStep"
+      - "ExtractElementsStep"
+      - "ExtractImagesStep"
+      - "FormatExtractedTextStep"
+      - "MarkdownStep"
+
+  - name: "excel_pipeline"
+    description: "A lightweight pipeline for processing Excel files."
+    steps:
+      - "SplitStep"
+      - "ExtractElementsStep"
+      - "ExtractImagesStep"
+      - "FormatExtractedTextStep"
+
+  - name: "ocr_only_pipeline"
+    description: "A simple pipeline that only performs OCR on a document."
+    steps:
+      - "OcrStep"

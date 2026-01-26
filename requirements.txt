@@ -1,0 +1,34 @@
+# Core Web Framework & Server
+fastapi>=0.110.0,<0.112.0
+uvicorn[standard]>=0.29.0,<0.31.0
+aiofiles>=23.2.0,<25.0.0
+python-multipart>=0.0.9,<0.0.21
+jinja2>=3.1.0,<3.2.0
+
+# Data Validation & Settings
+pydantic>=2.5.0,<2.8.0
+pydantic-settings>=2.2.0,<2.9.0
+aiofiles
+
+# Machine Learning & NLP
+torch>=2.2.0,<2.7.0
+torchvision>=0.17.0,<0.22.0
+transformers
+qwen-vl-utils[decord]==0.0.8
+peft==0.17.1
+accelerate==1.7.0
+langchain>=0.1.15,<0.4.0
+ollama>=0.2.0,<0.5.0
+unsloth==2025.5.7 
+unsloth-zoo==2025.5.8
+
+# Document Processing
+unstructured[local-inference]>=0.12.0,<0.18.0 # Includes dependencies for local inference
+pdf2image>=1.16.0,<1.18.0
+ocrmypdf>=16.4.0,<16.11.0
+pillow>=10.2.0,<11.2.0
+markdownify>=0.11.0,<1.2.0
+
+# General Utilities
+requests>=2.31.0,<2.33.0 # If needed as a direct dependency or by a sub-dependency not specifying it.
+pynvml
