@@ -21,6 +21,7 @@ langchain>=0.1.15,<0.4.0
 ollama>=0.2.0,<0.5.0
 unsloth==2025.5.7 
 unsloth-zoo==2025.5.8
+openai
 
 # Document Processing
 unstructured[local-inference]>=0.12.0,<0.18.0 # Includes dependencies for local inference
@@ -32,3 +33,4 @@ markdownify>=0.11.0,<1.2.0
 # General Utilities
 requests>=2.31.0,<2.33.0 # If needed as a direct dependency or by a sub-dependency not specifying it.
 pynvml
+itsdangerous

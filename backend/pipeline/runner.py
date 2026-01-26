@@ -24,7 +24,7 @@ class PipelineRunner:
         It maps the class name to the class itself.
         """
         steps_map = {}
-        steps_module_path = "unidoc_agent.backend.pipeline.steps"
+        steps_module_path = "backend.pipeline.steps"
         
         try:
             # Import the top-level 'steps' package

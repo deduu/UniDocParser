@@ -11,9 +11,12 @@ from starlette.middleware.sessions import SessionMiddleware
 from contextlib import asynccontextmanager
 
 # Assuming your backend structure
-from backend.routes import extraction as extraction_routes
 from backend.config.settings import get_settings
 from backend.utils.logger import configure_logging
+
+from backend.api.v1 import health as health_routes  # Uncomment if you have health routes
+from backend.api.v1 import extraction as extraction_routes
+from backend.api.v1 import models as model_routes
 
 # Configure logging early
 configure_logging()
@@ -93,31 +96,17 @@ def create_app() -> FastAPI:
 
     # --- Mount static files and templates ---
     # Ensure these paths are correct relative to where main.py is run
-    app.mount("/static", StaticFiles(directory="unidoc_agent/frontend/static"), name="static")
-    app.mount("/outputs", StaticFiles(directory="unidoc_agent/outputs"), name="outputs")
+    app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
+    app.mount("/outputs", StaticFiles(directory="outputs"), name="outputs")
 
     # Store templates in app.state for easier access in routes
-    templates = Jinja2Templates(directory="unidoc_agent/frontend/templates")
+    templates = Jinja2Templates(directory="frontend/templates")
     app.state.templates = templates  # Important: attach to app.state
 
     # --- Include routes ---
+    app.include_router(health_routes.router)
+    app.include_router(model_routes.router, prefix="/api/v1")
     app.include_router(extraction_routes.router, prefix="/api/v1")
-
-    # --- Define basic endpoints within create_app or as separate handlers ---
-    # For now, we'll keep them here for simplicity, but for more complex apps,
-    # you might move them into their own route files (e.g., health_routes.py)
-
-    @app.get("/health")
-    async def health_check_endpoint():  # Renamed to avoid conflict if `create_app` is called
-        """Health check endpoint."""
-        return {"status": "ok"}
-
-    @app.get("/", response_class=HTMLResponse)
-    # Renamed to avoid conflict
-    async def serve_frontend_root(request: Request):
-        """Root route for serving the frontend."""
-        # Access templates from app.state
-        return request.app.state.templates.TemplateResponse("index.html", {"request": request})
 
     logger.info("FastAPI application created and configured.")
     return app

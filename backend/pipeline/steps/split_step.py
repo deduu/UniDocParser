@@ -32,10 +32,10 @@ class SplitStep(PipelineStep):
         print(f"INFO: Splitting document {file_path} into pages...")
         
         # handle_file returns a list of dictionaries, each representing a page.
-        pages_data = handle_file(user_id, folder, file_path)
-        
-        if pages_data is None:
-            raise RuntimeError(f"Failed to handle or split file: {file_path}")
+        try:
+            pages_data = handle_file(user_id, folder, file_path)
+        except Exception as e:
+            raise RuntimeError(f"Failed to handle or split file: {file_path}. {e}") from e
 
         # The schemas can be added later for validation, for now, dicts are fine.
         context["pages"] = pages_data

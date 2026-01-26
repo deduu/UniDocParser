@@ -16,9 +16,10 @@ from fastapi.responses import JSONResponse, FileResponse, PlainTextResponse
 
 from backend.config.settings import get_settings
 from backend.pipeline.runner import pipeline_runner
+from backend.api.v1.models import _resolve_model_preferences
 
 logger = logging.getLogger(__name__)
-router = APIRouter()
+router = APIRouter(tags=["Extraction"])
 settings = get_settings()
 
 
@@ -135,11 +136,12 @@ async def extract_pdf(
             "formatter_model_id": preferences.get("formatter_model_id"),
         }
         result = _run_pipeline(pipeline_name, context)
+        safe_result = convert_pil_to_data_uri(result)
 
         # 4) Persist JSON + Markdown on disk
         print(f"Saving results for user {user_id} in folder {folder}")
         json_output, md_output = await _save_results(
-            extraction_result=result,
+            extraction_result=safe_result,
             unique_filename=Path(file_path).name,
             user_id=user_id,
             folder=folder,
@@ -150,7 +152,7 @@ async def extract_pdf(
             message="PDF extracted successfully",
             user_id=user_id,
             folder=folder,
-            extraction_result=result,
+            extraction_result=safe_result,
             json_output=json_output,
             markdown_output=md_output,
         )

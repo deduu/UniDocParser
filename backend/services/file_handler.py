@@ -8,9 +8,11 @@ from backend.config.settings import get_settings
 
 def handle_file(user_id: str, folder:str, file_path: str):
     settings = get_settings()
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"File not found: {file_path}")
     pages = []
     file_name = os.path.basename(file_path).split('.')[0]
-    save_dir = os.path.join(settings.IMG_DIR, user_id, folder, file_name, "pages")
+    save_dir = os.path.join(settings.output_dir, user_id, folder, file_name, "pages")
     os.makedirs(save_dir, exist_ok=True)
 
     # Check if the file is a PDF
@@ -31,8 +33,7 @@ def handle_file(user_id: str, folder:str, file_path: str):
                 }
                 pages.append(metadata)
         except Exception as e:
-            print(f"Error converting PDF to images: {e}")
-            return None
+            raise RuntimeError(f"Error converting PDF to images: {e}") from e
     # Check if the file is an image
     elif file_path.lower().endswith(('.png', '.jpg', '.jpeg')):
         try:
@@ -57,8 +58,7 @@ def handle_file(user_id: str, folder:str, file_path: str):
             }
             pages.append(metadata)
         except Exception as e:
-            print(f"Error processing image: {e}")
-            return None
+            raise RuntimeError(f"Error processing image: {e}") from e
     # Check if the file is an excel file
     elif file_path.lower().endswith(('.xls', '.xlsx')):
         # import 
@@ -84,11 +84,9 @@ def handle_file(user_id: str, folder:str, file_path: str):
                 }
                 pages.append(metadata)
         except Exception as e:
-            print(f"Error processing Excel file: {e}")
-            return None
+                raise RuntimeError(f"Error processing Excel file: {e}") from e
     else:
-        print("Unsupported file format.")
-        return None
+            raise ValueError("Unsupported file format.")
     return pages
 
 def ocr_pdf_to_pdf(file_path, output_dir):

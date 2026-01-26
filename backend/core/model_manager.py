@@ -3,7 +3,7 @@ import time
 import torch
 import importlib
 import hashlib
-from typing import Dict, Any, Optional, Tuple
+from typing import Dict, Any, Optional, Tuple, List
 
 from backend.config.settings import get_settings
 from backend.core.interfaces import ModelProvider
@@ -29,8 +29,8 @@ class ModelManager:
     def __init__(self):
         """Initializes the ModelManager by loading configurations."""
         self.settings = get_settings()
-        self._fig2tab_providers: Dict[str, Any] = {}
-        self._formatter_providers: Dict[str, Any] = {}
+        self._fig2tab_providers: Dict[str, Dict[str, Any]] = {}
+        self._formatter_providers: Dict[str, Dict[str, Any]] = {}
         self._loaded_models: Dict[str, ModelProvider] = {}
         self._current_fig2tab_key: str | None = None
         self._current_formatter_key: str | None = None
@@ -46,17 +46,57 @@ class ModelManager:
             for provider_config in providers:
                 name = provider_config['name']
                 provider_class_path = provider_config['provider']
-                provider_args = provider_config['args']
+                provider_args = provider_config.get('args', {})
+                available_model_ids = provider_config.get('available_model_ids', [])
                 
                 if family == 'fig2tab':
-                    self._fig2tab_providers[name] = (provider_class_path, provider_args)
+                    self._fig2tab_providers[name] = {
+                        "provider": provider_class_path,
+                        "args": provider_args,
+                        "available_model_ids": available_model_ids,
+                    }
                 elif family == 'formatter':
-                    self._formatter_providers[name] = (provider_class_path, provider_args)
+                    self._formatter_providers[name] = {
+                        "provider": provider_class_path,
+                        "args": provider_args,
+                        "available_model_ids": available_model_ids,
+                    }
+
+    def reload(self):
+        """Reload settings and re-register providers."""
+        self.settings.reload()
+        self._fig2tab_providers.clear()
+        self._formatter_providers.clear()
+        self._loaded_models.clear()
+        self._current_fig2tab_key = None
+        self._current_formatter_key = None
+        self._register_providers()
 
     def list_model_types(self, model_family: str) -> list[str]:
         """Returns the available model types for a given family."""
         provider_map = self._fig2tab_providers if model_family == "fig2tab" else self._formatter_providers
         return list(provider_map.keys())
+
+    def list_model_types_with_ids(self, model_family: str) -> Dict[str, List[str]]:
+        """Returns a mapping of model types to their available model IDs."""
+        provider_map = self._fig2tab_providers if model_family == "fig2tab" else self._formatter_providers
+        return {
+            model_type: self.get_available_model_ids(model_family, model_type)
+            for model_type in provider_map.keys()
+        }
+
+    def get_available_model_ids(self, model_family: str, model_type: str) -> List[str]:
+        """Returns the available model IDs for a given model type."""
+        provider_map = self._fig2tab_providers if model_family == "fig2tab" else self._formatter_providers
+        config = provider_map.get(model_type, {})
+        available_model_ids = config.get("available_model_ids") or []
+
+        if available_model_ids:
+            return list(available_model_ids)
+
+        args = config.get("args") or {}
+        model_id = args.get("model_id")
+        return [model_id] if model_id else []
 
     def get_default_model_type(self, model_family: str) -> Optional[str]:
         """Returns the first configured model type for a given family."""
@@ -100,8 +140,9 @@ class ModelManager:
         if model_type not in provider_map:
             raise ValueError(f"Unknown model type '{model_type}' for family '{model_family}'")
 
-        provider_class_path, model_args = provider_map[model_type]
-        model_args = dict(model_args) if model_args else {}
+        provider_config = provider_map[model_type]
+        provider_class_path = provider_config["provider"]
+        model_args = dict(provider_config.get("args", {}))
 
         if model_id_override:
             model_args["model_id"] = model_id_override

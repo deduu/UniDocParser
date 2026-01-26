@@ -2,7 +2,7 @@
 __pycache__
 DOCS/
 figures
-img/
+images/
 outputs/
 uploads/
 test*.py
@@ -11,3 +11,6 @@ unsloth_compiled_cache
 docs
 frontend/node_modules
 .env
+backend/config/runtime.yaml
+logs/
+*.log

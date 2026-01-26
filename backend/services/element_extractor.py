@@ -1,7 +1,7 @@
 import markdownify
 import os
 from backend.utils.helpers import resize_img_from_path, image_to_base64
-import unidoc_agent.backend.utils.unstructured_extractor_helpers as helpers
+import backend.utils.unstructured_extractor_helpers as helpers
 from backend.config.settings import get_settings
 
 # Function to extract elements from image pages
@@ -24,7 +24,7 @@ def element_extractor(user_id: str, folder:str, file_path: str):
     
     # Construct the save directory based on user_id, folder, and file_name
     file_name = os.path.basename(file_path).split('.')[0]
-    image_filepath = os.path.join(settings.base_dir, "outputs", user_id, folder, file_name, "figures")
+    image_filepath = os.path.join(settings.output_dir, user_id, folder, file_name, "figures")
     os.makedirs(image_filepath, exist_ok=True)
     
     if type == "jpeg" or type == "jpg" or type == "png":
